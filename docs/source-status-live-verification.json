@@ -1,0 +1,122 @@
+{
+  "reviewedCommit": "99b2b24bc9f98383918927cce834a69366697f7f",
+  "applicationCommit": "cf43b2aaff69ba693c13e56540160deed3f8fffd",
+  "pipelineCompatibilityCommit": "d8f8f2d492c37e3f80985d6754fdd11d0a3ef578",
+  "workerVersion": "3fda9b54-1a87-48f4-8ac2-0915ae83ce07",
+  "verifiedAt": "2026-10-23T10:45:55Z",
+  "site": "https://est.tickerlantern.com/",
+  "snapshotVersion": 3,
+  "snapshotId": "fd0be6a4b83c2ba70170b99095b5d25bf8a1bb35b731afda1b947036e8e33b75",
+  "publishedAt": "2026-10-23T10:22:07Z",
+  "sourceCheckAt": "2026-10-23T09:17:16Z",
+  "growthCheckAt": "2026-10-23T09:18:44Z",
+  "lastScheduledCheckAt": null,
+  "transport": "github",
+  "financialValuesAndSourceEvidenceUnchanged": true,
+  "publisherChecksNotAdvanced": true,
+  "statusMetadataRepair": {
+    "appliedAt": "2026-10-23T10:22:07Z",
+    "reason": "Resolve existing same-document failed check outcomes; no publisher request",
+    "metrics": [
+      {
+        "benchmark": "msci-canada",
+        "metric": "dividendYield"
+      },
+      {
+        "benchmark": "eafe",
+        "metric": "dividendYield"
+      },
+      {
+        "benchmark": "uk",
+        "metric": "dividendYield"
+      }
+    ]
+  },
+  "tests": {
+    "javascript": 95,
+    "python": 122,
+    "focusedNewRegressions": 17,
+    "build": "passed"
+  },
+  "deployedAssetHashes": {
+    "model.js": "620b405bc08b7bce4a4dd50fe6c13f030566615cc0f7f4a76597e9019ca29691",
+    "update-status.js": "a4b13bf2f54c9d0ed1b9f86df1f9bd37baed3a3797ceb2b60e672e9cf7f09f15",
+    "app.js": "2f5ee5dae878687117f156a2f9c3a62c52d3290a9d5a42ec2987549d71f60ef6"
+  },
+  "liveYieldCases": [
+    {
+      "benchmark": "msci-canada",
+      "yield": 2.19,
+      "observationDate": "2026-09-30",
+      "sync": {
+        "status": "retained",
+        "lastAttempt": "2026-10-23T09:17:16Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
+        "error": "Truncated PDF or non-PDF response"
+      }
+    },
+    {
+      "benchmark": "eafe",
+      "yield": 2.67,
+      "observationDate": "2026-09-30",
+      "sync": {
+        "status": "retained",
+        "lastAttempt": "2026-10-23T09:17:16Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
+        "error": "Truncated PDF or non-PDF response"
+      }
+    },
+    {
+      "benchmark": "uk",
+      "yield": 3.17,
+      "observationDate": "2026-09-30",
+      "sync": {
+        "status": "retained",
+        "lastAttempt": "2026-10-23T09:17:16Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
+        "error": "Truncated PDF or non-PDF response"
+      }
+    }
+  ],
+  "csvContentsVerified": [
+    {
+      "benchmark": "eafe",
+      "source": "live DOM-visible inputs and byte-matched deployed export modules",
+      "cashIRR": "12.57%",
+      "rows": 3,
+      "sha256": "db3011b4ad192b49d7d20aae06c0c1a8c947e36733d3c28550c8460a57f859e9",
+      "healthEvaluatedAt": "2026-10-23T10:44:44.332Z"
+    },
+    {
+      "benchmark": "russell2000",
+      "source": "live DOM-visible inputs and byte-matched deployed export modules",
+      "cashIRR": "42.30%",
+      "rows": 3,
+      "sha256": "496756ed1721abfc3fee3cb6b266dacf565502fbdf159d75105bdabe507fa7da",
+      "healthEvaluatedAt": "2026-10-23T10:44:44.347Z"
+    },
+    {
+      "benchmark": "japan",
+      "source": "live DOM-visible inputs and byte-matched deployed export modules",
+      "cashIRR": "16.80%",
+      "rows": 3,
+      "sha256": "0d9f927cdfeec8b15101ee36be11d9eabe0fca228030d7e00c3e672b4d597663",
+      "healthEvaluatedAt": "2026-10-23T10:44:44.348Z"
+    }
+  ],
+  "browserDownloadArtifact": "Not captured: the website-scoped download event timed out. Chrome internal downloads navigation was blocked by browser policy; no browser-internal workaround was used. CSV content verification used byte-matched deployed export modules and live DOM-visible inputs, not downloaded browser bytes.",
+  "renderedPrint": {
+    "origin": "live website",
+    "pdf": "qa/status-live-eafe-print.pdf",
+    "pages": 16,
+    "visuallyInspectedPages": [
+      2,
+      5,
+      6
+    ],
+    "result": "yield and active sourced-assumption warnings, original observation date, last attempt and last success are present and readable"
+  },
+  "simulationQualification": "Primary failures/recovery, partial success, primary-only health, aging and protected custom edits were tested only in isolated fixtures/localhost. No simulated publisher changes were published.",
+  "automation": "Existing daily schedule and 13:00 Vancouver publisher heartbeat preserved; no new automation. Actual scheduled execution still not evidenced.",
+  "resultingImplementationCommit": "d8f8f2d492c37e3f80985d6754fdd11d0a3ef578"
+}

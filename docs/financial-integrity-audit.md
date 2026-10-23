@@ -27,6 +27,8 @@ The preceding expansion added JPM, Nasdaq, LSEG, Raymond James, Edelweiss, indep
 
 `npm test`: **86/86**; `python3 -m unittest discover -s tests -p 'test_*.py'`: **114/114**. Build, JavaScript syntax and whitespace checks passed. Source-shaped synthetic fixtures are identified in tests and never published as production observations.
 
+The final local recheck also used the actual post-refresh feed. That exposed a stale raw-metadata case when a previously numeric metric becomes explicitly N/M. The registry now preserves only a recognized non-meaningful label for that state; an earlier numeric raw value cannot leak into its evidence record. The regression explicitly supplies the old numeric value and also checks preservation of the publisher's `NM` label. Both complete suites then passed again. Current production metrics were numerical and did not require a changed observation for this fix.
+
 Independent math includes one-year 20×/6%/30% payout = **7.50%**, five-year 25×→20×/6%/30% = **1.3733649777% price CAGR** and **2.6865056300% IRR**, payout/yield equivalence, and a declining-price case with cash wealth **35**, reinvested wealth **33**, IRR **−42.6707195%** and reinvested CAGR **−42.5543735%**. A 1,536-scenario supported-domain grid independently checks NPV residuals. No supported-domain financial formula defect was found.
 
 Browser failure injection at an isolated localhost preview verified changed forecasts, blank and custom edit retention, untouched focused fields, index switches in flight, invalid remote plus invalid fallback, HTTP failures and older-snapshot rejection. These are simulated change-detection tests; they are not evidence that a publisher changed a number during this audit.

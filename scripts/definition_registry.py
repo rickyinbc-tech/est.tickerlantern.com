@@ -159,8 +159,12 @@ def _metric(row, key, registry, previous, feed):
     if key=='dividendYield' and family!='msci-fundamentals':
         economic['horizon']='dividend-yield construction not disclosed'
         economic['earningsBasis']='not applicable to yield'
+    raw_value = (row.get('metricRawValues') or {}).get(key)
+    # An explicit non-meaningful state cannot reuse a prior numeric raw value.
+    # Preserve a recognized publisher label; otherwise use the canonical N/M.
+    raw_value = raw_value if isinstance(raw_value,str) and raw_value.strip().upper() in ('N/M','NM') else 'N/M'
     record=dict(definitionId=family+':'+key,definitionVersion=registry['registryVersion'],state=state,observationDate=asof,dateBasis=evidence['dateBasis'],rawReportedLabel=label,
-                rawReportedValue=[dict(year=e.get('year'),value=e.get('growth'),periodLabel=e.get('periodLabel')) for e in (value or {}).get('estimates',[])] if growth else ((row.get('metricRawValues') or {}).get(key) or 'N/M' if state=='not-meaningful' else value),
+                rawReportedValue=[dict(year=e.get('year'),value=e.get('growth'),periodLabel=e.get('periodLabel')) for e in (value or {}).get('estimates',[])] if growth else raw_value if state=='not-meaningful' else value,
                 units='percent' if key in ('dividendYield','growthForecast') else 'times',precisionDecimals=base['precisionDecimals'],
                 classification='unavailable' if not available else 'published-house-forecast' if growth and value.get('forecastType')=='house' else 'estimate-based-published-statistic' if growth or key=='forwardPE' else 'reported-historical-reference' if key=='mean10YearForwardPE' else 'published-dividend-statistic',
                 evidence=evidence,economic=economic,evidenceStatus='publisher-withdrawal' if state=='withdrawn' else 'publisher-not-meaningful' if state=='not-meaningful' else 'unavailable' if not available else 'definition-review-required' if family=='unknown' else 'published-transcription',

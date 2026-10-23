@@ -63,6 +63,7 @@ class DefinitionRegistryTests(unittest.TestCase):
     def test_missing_not_meaningful_and_zero_are_distinct(self):
         self.rows['sp500']['forwardPE']=None
         self.rows['sp500']['metricStates']={'forwardPE':'not-meaningful'}
+        self.rows['sp500']['metricRawValues']={'forwardPE':19.0}  # Prior numeric evidence must not survive N/M.
         self.rows['sp500']['sync']['status']='not-meaningful'
         self.rows['sp500']['dividendYield']=0
         self.enrich()
@@ -73,6 +74,9 @@ class DefinitionRegistryTests(unittest.TestCase):
         self.assertEqual(d['dividendYield']['state'],'numeric')
         self.assertEqual(d['dividendYield']['rawReportedValue'],0)
         self.assertFalse(self.rows['sp500']['historicalCompatibility']['allowExitDefault'])
+        self.rows['sp500']['metricRawValues']['forwardPE']='NM'
+        self.enrich()
+        self.assertEqual(self.rows['sp500']['metricDefinitions']['forwardPE']['rawReportedValue'],'NM')
 
     def test_check_only_change_does_not_invent_observation_or_accepted_change(self):
         self.enrich();previous=copy.deepcopy(self.feed)

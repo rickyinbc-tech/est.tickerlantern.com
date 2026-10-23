@@ -57,5 +57,12 @@ class JpmAndMergeTests(unittest.TestCase):
             update_metrics(row, {'forwardPE':16, 'asOf':'2026-10-22', 'dividendYield':99}, {}, 'checked')
         self.assertEqual(row['forwardPE'],15)
 
+    def test_equal_date_prefers_explicit_forward_horizon_but_newer_date_wins(self):
+        row = {'forwardPE':12.3, 'asOf':'2026-09-30', 'source':{'adapterId':'edelweiss-reference'}}
+        update_metrics(row, {'forwardPE':12, 'asOf':'2026-09-30'}, {'adapterId':'raymond-james-tsx'}, 'checked')
+        self.assertEqual(row['forwardPE'],12.3)
+        update_metrics(row, {'forwardPE':12.1, 'asOf':'2026-10-01'}, {'adapterId':'raymond-james-tsx'}, 'checked')
+        self.assertEqual(row['forwardPE'],12.1)
+
 
 if __name__ == '__main__': unittest.main()

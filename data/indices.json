@@ -818,32 +818,32 @@
       "landingUrl": null,
       "pdfUrl": null,
       "adapter": null,
-      "forwardPE": 12.0,
+      "forwardPE": 12.3,
       "mean10YearForwardPE": 12.6,
       "dividendYield": null,
       "asOf": "2026-09-30",
       "meanAsOf": "2026-09-30",
       "meanMethod": "Edelweiss Mutual Fund TEMPO / Bloomberg reported 10-year average of 12-month-forward P/E; historical sampling frequency not specified in the report",
       "source": {
-        "publisher": "Raymond James / FactSet",
-        "url": "https://www.goodridgegroup.ca/-/media/RJ/DotCom-Canada/Files/Commentary-and-Insights/Insights-and-strategies/Insights--Strategies-October-2026.pdf",
-        "discoveryUrl": "https://www.goodridgegroup.ca/knowledge-centre",
-        "sha256": "12d105564453271a9714439583bb7f8ca498ad9524e7ce579ddb5a3e30fc194b",
+        "publisher": "Edelweiss Mutual Fund / Bloomberg",
+        "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
+        "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
+        "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:36:34Z",
-        "adapterId": "raymond-james-tsx",
-        "page": 21
+        "adapterId": "edelweiss-reference",
+        "checkedAt": "2026-10-23T05:38:29Z",
+        "page": 4
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:38:29Z",
+        "lastSuccess": "2026-10-23T05:38:29Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
-      "forwardMethod": "Raymond James / FactSet reported current next-twelve-month P/E; exact unstarred index row",
+      "forwardMethod": null,
       "meanSource": {
         "publisher": "Edelweiss Mutual Fund / Bloomberg",
         "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
@@ -852,15 +852,15 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:30:10Z",
         "adapterId": "edelweiss-reference",
+        "checkedAt": "2026-10-23T05:38:29Z",
         "page": 4
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:30:10Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:38:29Z",
+        "lastSuccess": "2026-10-23T05:38:29Z",
+        "error": null
       }
     },
     {
@@ -1115,32 +1115,32 @@
       "landingUrl": null,
       "pdfUrl": null,
       "adapter": null,
-      "forwardPE": 10.2,
+      "forwardPE": 10.3,
       "mean10YearForwardPE": 10.4,
       "dividendYield": null,
       "asOf": "2026-09-30",
       "meanAsOf": "2026-09-30",
       "meanMethod": "Edelweiss Mutual Fund TEMPO / Bloomberg reported 10-year average of 12-month-forward P/E; historical sampling frequency not specified in the report",
       "source": {
-        "publisher": "Raymond James / FactSet",
-        "url": "https://www.goodridgegroup.ca/-/media/RJ/DotCom-Canada/Files/Commentary-and-Insights/Insights-and-strategies/Insights--Strategies-October-2026.pdf",
-        "discoveryUrl": "https://www.goodridgegroup.ca/knowledge-centre",
-        "sha256": "12d105564453271a9714439583bb7f8ca498ad9524e7ce579ddb5a3e30fc194b",
+        "publisher": "Edelweiss Mutual Fund / Bloomberg",
+        "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
+        "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
+        "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:36:34Z",
-        "adapterId": "raymond-james-tsx",
-        "page": 21
+        "adapterId": "edelweiss-reference",
+        "checkedAt": "2026-10-23T05:38:29Z",
+        "page": 4
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:38:29Z",
+        "lastSuccess": "2026-10-23T05:38:29Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
-      "forwardMethod": "Raymond James / FactSet reported current next-twelve-month P/E; exact unstarred index row",
+      "forwardMethod": null,
       "meanSource": {
         "publisher": "Edelweiss Mutual Fund / Bloomberg",
         "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
@@ -1149,15 +1149,15 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:30:10Z",
         "adapterId": "edelweiss-reference",
+        "checkedAt": "2026-10-23T05:38:29Z",
         "page": 4
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:30:10Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:38:29Z",
+        "lastSuccess": "2026-10-23T05:38:29Z",
+        "error": null
       }
     },
     {

@@ -153,7 +153,7 @@ class _Session:
 
             def route_request(route):
                 request = route.request
-                if request.is_navigation_request():
+                if request.is_navigation_request() and request.frame == page.main_frame:
                     try:
                         _validate_url(request.url)
                     except ValueError:
@@ -170,8 +170,13 @@ class _Session:
                 if request.is_navigation_request() and request.frame == page.main_frame:
                     responses.append(response)
 
+            def record_download(download):
+                # Playwright caches wrappers as attributes of callbacks. A
+                # built-in bound method such as list.append cannot hold them.
+                downloads.append(download)
+
             context.route('**/*', route_request)
-            page.on('download', downloads.append)
+            page.on('download', record_download)
             page.on('response', record_response)
             navigation_error = None
             try:

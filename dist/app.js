@@ -237,7 +237,7 @@ async function loadIndexData({ manual = false } = {}) {
     $('data-check-date').textContent = 'Source checks (PT): ' + dateLabel(feed.sourceCheckAt);
     $('history-coverage').textContent = historyCoverage(feed);
     applySourceValues(); renderIndexList(); renderIndexDetail();
-    $('index-update-status').textContent = feed.transport === 'bundled-fallback' ? 'Showing the bundled verified snapshot. The latest published feed could not be reached; source dates have not been advanced.' : `Latest published snapshot loaded. Sources checked ${dateLabel(feed.sourceCheckAt)}. Publisher observations update on their own schedules; edited assumptions remain protected.`;
+    $('index-update-status').textContent = feed.transport === 'bundled-fallback' ? 'Showing the bundled verified snapshot. The latest published feed could not be reached; source dates have not been advanced.' : feed.transport === 'bundled-newer' ? 'Showing the newer verified snapshot included with this report while the published feed cache catches up. Source dates and custom assumptions remain protected.' : `Latest published snapshot loaded. Sources checked ${dateLabel(feed.sourceCheckAt)}. Publisher observations update on their own schedules; edited assumptions remain protected.`;
   } catch {
     $('index-update-status').textContent = indexFeed ? 'The update check failed. Previously loaded observations and your scenario are retained.' : 'Index data is temporarily unavailable. The original illustrative model remains usable.';
   } finally { updateInProgress = false; $('check-data').disabled = false; }

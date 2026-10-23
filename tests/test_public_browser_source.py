@@ -78,7 +78,13 @@ class BrowserSourceTests(unittest.TestCase):
         page.url = response.url
         page.content.return_value = html
         callbacks = {}
-        page.on.side_effect = lambda event, callback: callbacks.update({event: callback})
+
+        def on(event, callback):
+            # Real Playwright's ImplToApiMapping.wrap_handler caches a wrapper
+            # with setattr. Built-in list.append fails this actual API contract.
+            setattr(callback, '_pw_impl_instance_', callback)
+            callbacks[event] = callback
+        page.on.side_effect = on
         response.request.is_navigation_request.return_value = True
         response.request.frame = page.main_frame
 
@@ -87,6 +93,14 @@ class BrowserSourceTests(unittest.TestCase):
             return response
         page.goto.side_effect = goto
         return session, context, page, callbacks
+
+    def test_download_callback_supports_real_playwright_wrapper_cache(self):
+        response = Mock(url=NASDAQ, status=200, headers={'content-type': 'application/pdf'})
+        response.body.return_value = b'%PDF-public'
+        session, _, _, callbacks = self.make_session(response)
+        session.fetch(NASDAQ)
+        self.assertTrue(hasattr(callbacks['download'], '_pw_impl_instance_'))
+        self.assertTrue(hasattr(callbacks['response'], '_pw_impl_instance_'))
 
     def test_pdf_response_and_context_cleanup(self):
         response = Mock(url=NASDAQ, status=200, headers={'content-type': 'application/pdf'})
@@ -141,12 +155,25 @@ class BrowserSourceTests(unittest.TestCase):
         route = Mock()
         route.request.url = 'https://www.edelweissmf.com/login'
         route.request.is_navigation_request.return_value = True
+        route.request.frame = page.main_frame
         context.route.side_effect = lambda glob, callback: callback(route)
         with self.assertRaisesRegex(ValueError, 'left reviewed'):
             session.fetch(LISTING)
         route.abort.assert_called_once_with()
         route.continue_.assert_not_called()
         context.close.assert_called_once_with()
+
+    def test_ordinary_https_iframe_is_not_a_top_level_redirect(self):
+        response = Mock(url=LISTING, status=200, headers={'content-type': 'text/html'})
+        session, context, _, _ = self.make_session(response)
+        route = Mock()
+        route.request.url = 'https://public-cdn.example/embedded-frame'
+        route.request.is_navigation_request.return_value = True
+        route.request.frame = object()
+        context.route.side_effect = lambda glob, callback: callback(route)
+        self.assertIn(b'TEMPO', session.fetch(LISTING))
+        route.continue_.assert_called_once_with()
+        route.abort.assert_not_called()
 
 
 if __name__ == '__main__':

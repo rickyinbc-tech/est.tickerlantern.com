@@ -16,6 +16,15 @@ test('upstream failure retains the bundled snapshot and identifies fallback',asy
   const body=await response.json();
   assert.equal(body.transport,'bundled-fallback'); assert.equal(body.publishedAt,'2026-10-01T00:00:00Z');
 });
+test('a stale GitHub cache cannot regress a newer bundled publication',async t=>{
+  const snapshot=date=>({schemaVersion:1,indices:[validRow],publishedAt:date});
+  t.mock.method(globalThis,'fetch',async()=>Response.json(snapshot('2026-10-01T00:00:00Z')));
+  const env={ASSETS:{fetch:async()=>Response.json(snapshot('2026-10-22T00:00:00Z'))}};
+  const response=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices'),env);
+  const body=await response.json();
+  assert.equal(body.transport,'bundled-newer');
+  assert.equal(body.publishedAt,'2026-10-22T00:00:00Z');
+});
 test('API rejects writes and leaves static routing to asset handling',async()=>{
   const write=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices',{method:'POST'}),{});
   assert.equal(write.status,405);

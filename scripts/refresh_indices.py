@@ -139,12 +139,17 @@ def update_metrics(record, values, source, checked):
     if values.get('forwardPE') is not None and not date: raise ValueError('Missing forward observation date')
     if values.get('mean10YearForwardPE') is not None and (not mean_date or not values.get('meanMethod')): raise ValueError('Missing mean provenance')
     if values.get('dividendYield') is not None and (not date or not isinstance(values['dividendYield'], (int, float)) or not 0 <= values['dividendYield'] <= 15): raise ValueError('Invalid or undated source dividend yield')
+    def accepted(incoming, retained, source_key):
+        # On equal dates prefer explicit 12-month-forward primary tables over
+        # secondary tables whose forward horizon is less precisely described.
+        rank = lambda evidence: 70 if (evidence or {}).get('adapterId') in ('edelweiss-reference', 'nasdaq-dashboard') else 50
+        return not retained or incoming > retained or (incoming == retained and rank(source) >= rank(record.get(source_key)))
     status = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)
-    if values.get('forwardPE') is not None and (not record.get('asOf') or date >= record['asOf']):
+    if values.get('forwardPE') is not None and accepted(date, record.get('asOf'), 'source'):
         record.update(forwardPE=values['forwardPE'], asOf=date, source=source, sync=status, earningsBasis=values.get('earningsBasis', 'Forward 12-month earnings'), forwardMethod=values.get('forwardMethod'))
-    if values.get('dividendYield') is not None and (not record.get('yieldAsOf') or date >= record['yieldAsOf']):
+    if values.get('dividendYield') is not None and accepted(date, record.get('yieldAsOf'), 'yieldSource'):
         record.update(dividendYield=values['dividendYield'], yieldAsOf=date, yieldSource=source)
-    if values.get('mean10YearForwardPE') is not None and (not record.get('meanAsOf') or mean_date >= record['meanAsOf']):
+    if values.get('mean10YearForwardPE') is not None and accepted(mean_date, record.get('meanAsOf'), 'meanSource'):
         if not values.get('meanMethod') or not mean_date: raise ValueError('Missing mean provenance')
         record.update(mean10YearForwardPE=values['mean10YearForwardPE'], meanAsOf=mean_date, meanMethod=values['meanMethod'], meanSource=source, meanSync=status)
 

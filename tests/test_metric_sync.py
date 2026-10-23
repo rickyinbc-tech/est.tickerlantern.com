@@ -68,3 +68,8 @@ class MetricSyncTests(unittest.TestCase):
  def test_not_meaningful_is_availability_not_failed_check(self):
   r=row('sp500');update_metrics(r,{'forwardPE':None,'asOf':r['asOf'],'metricStates':{'forwardPE':'not-meaningful'},'rawForwardPE':'N/M'},r['source'],RECOVERY)
   self.assertEqual(r['metricStates']['forwardPE'],'not-meaningful');self.assertEqual(r['sync']['status'],'ok');self.assertIsNone(r['forwardPE'])
+ def test_legacy_nm_availability_survives_independent_health_normalization(self):
+  f=feed();r=next(r for r in f['indices'] if r['id']=='sp500');r['forwardPE']=None;r.pop('metricStates',None);r['metricRawValues']={'forwardPE':'N/M'};r['sync']['status']='not-meaningful'
+  apply_registry(f)
+  self.assertEqual(r['metricDefinitions']['forwardPE']['state'],'not-meaningful');self.assertEqual(r['metricDefinitions']['forwardPE']['rawReportedValue'],'N/M')
+  self.assertEqual(r['metricDefinitions']['forwardPE']['evidence']['checkStatus'],'ok')

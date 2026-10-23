@@ -8,7 +8,7 @@ import copy
 import datetime as dt
 import json
 from pathlib import Path
-from metric_sync import metric_source, resolved_sync
+from metric_sync import metric_source, resolved_sync, own_sync
 
 ROOT = Path(__file__).resolve().parents[1]
 METRICS = ('forwardPE', 'mean10YearForwardPE', 'dividendYield', 'growthForecast')
@@ -117,7 +117,10 @@ def _evidence(row, key, source, sync, asof, family, previous, feed):
 
 def _metric(row, key, registry, previous, feed):
     source, sync, asof = _source(row,key)
-    declared_state=(row.get('metricStates') or {}).get(key) or (sync.get('status') if row.get(key) is None else None)
+    # Older schema-1 records stored availability in sync.status. Preserve that
+    # evidence while the resolved check outcome is independently normalized.
+    legacy_state=own_sync(row,key).get('status')
+    declared_state=(row.get('metricStates') or {}).get(key) or (legacy_state if row.get(key) is None and legacy_state in ('not-meaningful','withdrawn') else sync.get('status') if row.get(key) is None else None)
     if row.get(key) is None and declared_state not in ('not-meaningful','withdrawn'):
         source,sync,asof={},{},None
     family = _family(row,source,key)

@@ -32,6 +32,8 @@ In the scenario lab, choose **Different rate each year** to enter a separate EPS
 
 Settings persist in this browser’s local storage under `tickerlantern.est.scenarios.v1`; they are not synchronized across devices or browsers. Source refreshes and Restore source values preserve custom growth paths. Reset affects only the selected benchmark. Shortening the horizon keeps later rates for reuse. Added years use that benchmark’s default rate. The 6% starting rate remains an illustrative assumption, not a sourced earnings forecast. Sensitivity cells explicitly use constant annual growth and selecting one switches to constant mode while retaining the saved yearly path for switching back.
 
+Optional browser regression checks require `agent-browser` and a running preview: `python3 tests/browser_growth_sync.py http://127.0.0.1:8764/`. They use a separate browser session, verify immediate mode switching, independent schedules, reload persistence, source protection and matching CSV output, and close the session afterward.
+
 ## Daily index source checks
 
 `.github/workflows/index-data.yml` checks the configured public sources daily at 23:15 UTC and supports manual dispatch. The workflow uses the repository-scoped GitHub Actions token to commit only `data/indices.json`; it requires no external API secret. Source observation dates and check dates are separate.

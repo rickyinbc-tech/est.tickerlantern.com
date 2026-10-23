@@ -346,7 +346,12 @@ $('model-fields').disabled = false;
 for (const button of document.querySelectorAll('[data-preset], #reset-model, #print-report')) button.disabled = false;
 $('assumptions').addEventListener('submit', event => event.preventDefault());
 $('assumptions').addEventListener('input', event => {
+  if (event.target.matches('select')) return;
   if (event.target.matches('[data-growth-year]')) annualGrowth[+event.target.dataset.growthYear] = event.target.value;
+  lockField(event.target.name); update();
+});
+$('assumptions').addEventListener('change', event => {
+  if (!event.target.matches('select')) return;
   lockField(event.target.name); update();
 });
 $('fill-annual-growth').addEventListener('click', () => {

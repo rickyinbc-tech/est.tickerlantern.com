@@ -15,7 +15,7 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
   if (next.growthMode === 'source') {
     const path = sourceGrowthPath(row, next.years, now);
     if (!locked.years) next.years = path.coveredYears || DEFAULTS.years;
-    const selected = sourceGrowthPath(row, next.years, now);
+    const selected = sourceGrowthPath(row, next.years, now, next.growthOverrides);
     next.annualGrowth = selected.rates;
     next.growthStartYear = selected.startYear;
   }
@@ -64,6 +64,7 @@ export function loadScenarios(storage) {
       if (typeof id !== 'string' || !values || typeof values !== 'object') continue;
       const clean = Object.fromEntries(SCENARIO_KEYS.filter(key => typeof values[key] === 'number' || typeof values[key] === 'string').map(key => [key, values[key]]));
       if (Array.isArray(values.annualGrowth)) clean.annualGrowth = values.annualGrowth.slice(0, 20).map(value => typeof value === 'number' || typeof value === 'string' ? value : '');
+      clean.growthOverrides = Object.fromEntries(Object.entries(values.growthOverrides || {}).filter(([year,value])=>/^20\d{2}$/.test(year) && ['number','string'].includes(typeof value)));
       empty.scenarios.set(id, clean);
     }
     for (const [id, locks] of data.overrides) if (typeof id === 'string' && locks && typeof locks === 'object') empty.overrides.set(id, Object.fromEntries(SCENARIO_KEYS.filter(key => locks[key] === true).map(key => [key, true])));

@@ -18,13 +18,13 @@ export function nextForecastYear(now = new Date()) {
   return Number(new Intl.DateTimeFormat('en', { year: 'numeric', timeZone: 'America/Vancouver' }).format(now)) + 1;
 }
 
-export function sourceGrowthPath(row, years, now = new Date()) {
+export function sourceGrowthPath(row, years, now = new Date(), overrides = {}) {
   const startYear = nextForecastYear(now), forecast = row?.growthForecast;
   const estimates = new Map((forecast?.estimates || []).map(point => [point.year, point.growth]));
   let coveredYears = 0;
   while (estimates.has(startYear + coveredYears)) coveredYears++;
   const count = Number.isInteger(+years) && +years >= 1 && +years <= 20 ? +years : 0;
-  const rates = Array.from({ length: count }, (_, i) => estimates.get(startYear + i) ?? '');
+  const rates = Array.from({ length: count }, (_, i) => Object.hasOwn(overrides, startYear+i) ? overrides[startYear+i] : estimates.get(startYear + i) ?? '');
   return { startYear, coveredYears, rates, missingYears: rates.flatMap((rate, i) => rate === '' ? [startYear + i] : []) };
 }
 

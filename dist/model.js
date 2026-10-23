@@ -14,7 +14,7 @@ export function validate(input) {
   if (input.growthMode === 'source' && (!Number.isInteger(+input.growthStartYear) || +input.growthStartYear < 2020 || +input.growthStartYear > 2100)) errors.growthMode = 'Published forecast year is unavailable.';
   if (['annual', 'source'].includes(input.growthMode) && !errors.years) {
     const rates = input.annualGrowth;
-    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = input.growthMode === 'source' ? 'Published EPS estimates do not cover every selected year. Shorten the holding period or choose custom yearly rates for the uncovered years.' : `Enter an EPS growth rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for every year.`;
+    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = input.growthMode === 'source' ? `Enter a rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for each uncovered year, or shorten the holding period. Published estimates are not repeated.` : `Enter an EPS growth rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for every year.`;
   }
   if (input.dividendMode && !['payout', 'yield'].includes(input.dividendMode)) errors.dividendMode = 'Select a dividend convention.';
   if (input.dividendMode === 'yield' && (input.dividendYield === '' || input.dividendYield == null || !Number.isFinite(+input.dividendYield) || +input.dividendYield < 0 || +input.dividendYield > 15)) errors.dividendYield = 'Enter an initial yield between 0 and 15%.';
@@ -66,7 +66,7 @@ export function project(input = DEFAULTS) {
   const multipleEffect = (exitPE / entryPE) ** (1 / years) - 1;
   const epsOnlyPrice = initialPrice * last.eps / initialEPS;
   const epsCAGR = (last.eps / initialEPS) ** (1 / years) - 1;
-  return { input: { growth, growthMode, growthStartYear, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
+  return { input: { growth, growthMode, growthStartYear, growthOverrides:{...(input.growthOverrides || {})}, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
 function boundedAxis(values, min, max, anchor) {
@@ -100,7 +100,9 @@ export function annualCSV(model, forecast) {
   const header = 'Year,Normalized EPS,Valuation PE,Price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,EPS growth percent';
   const cell = v => typeof v === 'number' ? Number(v.toFixed(8)) : /[,"\n]/.test(String(v)) ? '"' + String(v).replaceAll('"', '""') + '"' : v;
   return [header, ...model.points.map(p => {
-    const sourced = model.input.growthMode === 'source', point = sourced && forecast?.estimates.find(x => x.year === model.input.growthStartYear + p.year - 1);
-    return [p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth, p.year && sourced ? point?.periodLabel || model.input.growthStartYear + p.year - 1 : '', sourced ? forecast?.forecastType || 'published' : 'custom assumption', sourced ? forecast?.asOf || '' : '', sourced ? forecast?.source?.url || '' : '', p.growth ?? ''].map(cell).join(',');
+    const year = model.input.growthStartYear + p.year - 1;
+    const point = model.input.growthMode === 'source' && forecast?.estimates.find(x => x.year === year);
+    const sourced = !!p.year && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point;
+    return [p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth, p.year && model.input.growthMode === 'source' ? point?.periodLabel || year : '', p.year ? sourced ? forecast.forecastType : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '', p.growth ?? ''].map(cell).join(',');
   })].join('\n');
 }

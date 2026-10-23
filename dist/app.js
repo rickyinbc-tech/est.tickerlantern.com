@@ -23,13 +23,14 @@ try { browserStorage = window.localStorage; } catch { /* Session-only editing re
 const stored = loadScenarios(browserStorage);
 let indexFeed = null, selectedIndexId = new URL(location.href).searchParams.get('index') || stored.selectedIndexId, sourceFollowing = stored.following, updateInProgress = false;
 const indexOverrides = stored.overrides, savedScenarios = stored.scenarios;
-let annualGrowth = [], growthStartYear = null;
+let annualGrowth = [], growthStartYear = null, growthOverrides = {};
 const selectedIndex = () => indexFeed?.indices.find(row => row.id === selectedIndexId);
-const readInputs = () => ({ ...Object.fromEntries(editableKeys.map(key => [key, $(key).value])), growthStartYear, annualGrowth: [...annualGrowth] });
+const readInputs = () => ({ ...Object.fromEntries(editableKeys.map(key => [key, $(key).value])), growthStartYear, growthOverrides:{...growthOverrides}, annualGrowth: [...annualGrowth] });
 function writeInputs(values) {
   for (const key of editableKeys) if (values[key] != null) $(key).value = values[key];
   annualGrowth = [...(values.annualGrowth || [])];
   growthStartYear = values.growthStartYear ?? null;
+  growthOverrides = {...(values.growthOverrides || {})};
   renderGrowthEditor();
 }
 function lockField(key) { if ([...editableKeys, 'annualGrowth'].includes(key)) indexOverrides.set(selectedIndexId, { ...(indexOverrides.get(selectedIndexId) || {}), [key]: true }); }
@@ -41,15 +42,19 @@ function rememberScenario() {
 function renderGrowthEditor() {
   const sourced = $('growthMode').value === 'source', annual = $('growthMode').value !== 'constant', years = +$('years').value;
   $('annual-growth-panel').hidden = !annual;
+  const forecast = selectedIndex()?.growthForecast;
+  $('scenario-growth-source').innerHTML = forecast ? `<strong>${forecast.forecastType==='house'?'Publisher house forecast':'Published consensus estimates'}${growthIsStale(selectedIndex())?' · dated or retained':''}</strong><span>${escape(forecast.source.publisher)} · observed ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small>Publisher periods are scenario inputs, not a date-matched rolling-NTM EPS forecast.</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
   $('growth').closest('.field').hidden = sourced;
   $('fill-annual-growth').hidden = sourced;
   $('annual-growth-heading-text').textContent = sourced ? 'Published annual growth inputs' : 'Your yearly EPS path';
-  $('annual-growth-explanation').textContent = sourced ? 'Publisher year labels are shown below. Unpublished years stay blank. Choose custom yearly rates to supply your own assumptions.' : 'Change any year independently. Shortening the holding period keeps later years saved for when you extend it again.';
+  $('annual-growth-explanation').textContent = sourced ? 'Linked years follow source revisions. Edit any year to protect your own assumption; other years keep syncing. Unpublished years stay blank until you supply a rate.' : 'Change any year independently. Shortening the holding period keeps later years saved for when you extend it again.';
+  if (sourced && !sourceFollowing) $('annual-growth-explanation').textContent = 'Source following is paused. Saved rates are kept. Restore published years to resume linked updates.';
+  $('restore-growth-years').hidden = !sourced;
   $('growth-label').textContent = annual ? 'Default for added years' : 'Annual EPS growth';
   $('growth-help').textContent = annual ? 'New years start at this rate. Edit each year below, or apply this rate to all years.' : 'One rate for every year of this benchmark’s scenario.';
   if (!annual || !Number.isInteger(years) || years < 1 || years > 20) return;
   if (sourced && sourceFollowing) {
-    const path = sourceGrowthPath(selectedIndex(), years);
+    const path = sourceGrowthPath(selectedIndex(), years, new Date(), growthOverrides);
     annualGrowth = path.rates; growthStartYear = path.startYear;
   }
   while (annualGrowth.length < years) annualGrowth.push(sourced ? '' : $('growth').value);
@@ -57,11 +62,12 @@ function renderGrowthEditor() {
   if (editor.children.length !== years) editor.innerHTML = Array.from({ length: years }, (_, i) => `<div class="annual-growth-field"><label for="growth-year-${i + 1}"></label><div class="input-wrap"><input id="growth-year-${i + 1}" name="annualGrowth" data-growth-year="${i}" type="number" min="${BOUNDS.growth[0]}" max="${BOUNDS.growth[1]}" step="any" required aria-describedby="annualGrowth-error"><span>%</span></div></div>`).join('');
   for (const input of editor.querySelectorAll('[data-growth-year]')) {
     const i = +input.dataset.growthYear;
-    input.readOnly = sourced;
+    input.readOnly = false;
     input.placeholder = sourced ? 'Not published' : '';
     const point = selectedIndex()?.growthForecast?.estimates.find(point => point.year === growthStartYear + i);
-    input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? point?.periodLabel || `${growthStartYear + i} · not published` : `Year ${i + 1} EPS growth`;
-    if (input !== document.activeElement || sourced) input.value = annualGrowth[i];
+    const custom = sourced && Object.hasOwn(growthOverrides,growthStartYear+i);
+    input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? `${point?.periodLabel || growthStartYear+i}${custom ? ' · your assumption' : point ? ' · linked' : ' · enter assumption'}` : `Year ${i + 1} EPS growth`;
+    if (input !== document.activeElement) input.value = annualGrowth[i];
   }
 }
 
@@ -237,12 +243,13 @@ function renderScenarioContext() {
   $('scenario-index-label').textContent = name;
   $('compact-benchmark').textContent = name;
   $('compact-irr').textContent = activeModel ? pct(activeModel.cashIRR) : 'Fix inputs';
-  const protectedCount = Object.keys(locks).length;
+  const protectedCount = Object.keys(locks).length + Object.keys(growthOverrides).length;
   $('scenario-mode-label').textContent = `${row?.forwardPE == null ? 'Manual assumptions · source valuation unavailable' : sourceFollowing ? 'Available source fields follow updates' : 'Source following paused'} · ${protectedCount ? `${protectedCount} edited inputs protected` : $('growthMode').value === 'source' ? 'published growth follows updates' : 'custom growth assumption'}`;
   const provenance = (key, evidence, date) => `${escape(evidence?.publisher || 'Publisher')} · ${dateLabel(date)}${evidence?.url ? ` · <a href="${escape(evidence.url)}" target="_blank" rel="noopener noreferrer">Source</a>` : ''}`;
   for (const key of ['growth','entryPE','exitPE','payout','dividendYield','years']) {
     const basis = fieldBasis(key, row, locks, sourceFollowing);
-    const label = {custom:'Your assumption',manual:'Manual scenario',default:'Model default',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
+    const forecastHorizon = key==='years' && basis==='default' && $('growthMode').value==='source';
+    const label = forecastHorizon ? 'Available forecast horizon' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
     let detail = '';
     if (basis === 'source') detail = key === 'dividendYield' ? provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf) : provenance(key,row.source,row.asOf);
     if (basis === 'forecast') detail = provenance(key,row.growthForecast.source,row.growthForecast.asOf);
@@ -251,6 +258,7 @@ function renderScenarioContext() {
     if (basis === 'default') detail = key === 'growth' ? '6% EPS growth assumption; no forecast connected.' : key === 'years' ? 'Five-year holding period assumption.' : key === 'payout' ? '30% payout assumption; no reported payout connected.' : key === 'dividendYield' ? 'No reported yield. Enter your own assumption.' : 'No source valuation. Edit this illustrative assumption.';
     if (basis === 'custom') detail = 'Saved for this benchmark; protected from source updates.';
     if (basis === 'manual') detail = 'Source following is paused. Your current scenario is kept.';
+    if (forecastHorizon) detail = 'Consecutive published future years. Extend the horizon by supplying your own rates.';
     $(key + '-basis').innerHTML = `<strong class="basis-${basis}">${label}</strong><br>${detail}`;
   }
   if (!activeModel) {
@@ -265,7 +273,7 @@ function renderScenarioContext() {
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
   const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : row.mean10YearForwardPE != null ? `${isDatedMean(row) ? 'dated 10-year reference' : 'reported 10-year mean'} as of ${dateLabel(row.meanAsOf)}` : 'flat-multiple assumption; 10-year mean unavailable';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendMode && !locks.dividendYield ? ' anchored to the historical source yield' : ' (custom)'}` : `${short(input.payout)}% assumed payout; not a reported payout`;
-  const growthBasis = input.growthMode === 'source' ? `published growth path [${input.annualGrowth.map((value, i) => `${input.growthStartYear + i}: ${rateLabel(value)}%`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
+  const growthBasis = input.growthMode === 'source' ? `yearly growth path [${input.annualGrowth.map((value, i) => `${input.growthStartYear + i}: ${rateLabel(value)}%${Object.hasOwn(growthOverrides,input.growthStartYear+i)?' custom':' linked'}`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
   $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. ${input.growthMode === 'source' ? 'Publisher years are applied in sequence as scenario inputs; they are not a date-matched rolling-NTM forecast.' : 'Custom growth rates are your assumptions.'}`;
 }
 
@@ -373,9 +381,15 @@ $('use-source-growth').addEventListener('click', () => {
   const locks = { ...(indexOverrides.get(selectedIndexId) || {}) };
   for (const key of ['growth', 'growthMode', 'annualGrowth', 'years']) delete locks[key];
   indexOverrides.set(selectedIndexId, locks);
+  growthOverrides = {};
   sourceFollowing = true; $('follow-source').checked = true;
   applySourceValues(); renderIndexDetail();
   $('index-update-status').textContent = 'Published growth loaded. The holding period matches the available future estimates; no unpublished years have been filled.';
+});
+$('restore-growth-years').addEventListener('click', () => {
+  for (const point of selectedIndex()?.growthForecast?.estimates || []) delete growthOverrides[point.year];
+  sourceFollowing = true; $('follow-source').checked = true;
+  update({reanchor:true});
 });
 setInterval(() => { if (document.visibilityState === 'visible') loadIndexData(); }, 300000);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadIndexData(); });
@@ -424,7 +438,7 @@ function update({ announce = true, reanchor = false } = {}) {
   wealthChart(m); waterfall(m); sensitivityTable(m); annualTable(m);
   const multipleText = m.input.exitPE < m.input.entryPE ? 'a lower exit P/E reduces price appreciation' : m.input.exitPE > m.input.entryPE ? 'a higher exit P/E amplifies price appreciation' : 'an unchanged P/E lets the price track EPS growth';
   const payoutText = m.last.cumulativeDividend === 0 ? 'With no dividends, all three annualized return measures coincide.' : `Cash dividends total ${n(m.last.cumulativeDividend)} per original unit; investor cash-flow IRR is ${pct(m.cashIRR)}.`;
-  const growthDescription = m.input.growthMode !== 'constant' ? `${m.input.growthMode === 'source' ? 'The published growth inputs compound' : 'Your yearly EPS path compounds'} at ${pct(m.epsCAGR)} a year overall` : `At ${short(m.input.growth)}% annual EPS growth`;
+  const growthDescription = m.input.growthMode !== 'constant' ? `Your yearly EPS path compounds at ${pct(m.epsCAGR)} a year overall` : `At ${short(m.input.growth)}% annual EPS growth`;
   $('model-takeaway').textContent = `${growthDescription}, ${multipleText}. ${payoutText}`;
   $('annual-growth-summary').textContent = `Equivalent EPS CAGR: ${pct(m.epsCAGR)} · ${m.input.growthMode === 'source' ? 'publisher year labels are scenario inputs' : 'years compound in the order shown'}.`;
   renderScenarioContext();
@@ -439,8 +453,13 @@ for (const button of document.querySelectorAll('[data-preset], #reset-model, #pr
 $('assumptions').addEventListener('submit', event => event.preventDefault());
 $('assumptions').addEventListener('input', event => {
   if (event.target.matches('select')) return;
-  if (event.target.matches('[data-growth-year]')) annualGrowth[+event.target.dataset.growthYear] = event.target.value;
-  lockField(event.target.name); update({reanchor:['growth','growthMode','annualGrowth'].includes(event.target.name)});
+  if (event.target.matches('[data-growth-year]')) {
+    const i=+event.target.dataset.growthYear;
+    annualGrowth[i] = event.target.value;
+    if ($('growthMode').value === 'source') growthOverrides[growthStartYear+i] = event.target.value;
+  }
+  if (!(event.target.name === 'annualGrowth' && $('growthMode').value === 'source')) lockField(event.target.name);
+  update({reanchor:['growth','growthMode','annualGrowth'].includes(event.target.name)});
 });
 $('assumptions').addEventListener('change', event => {
   if (!event.target.matches('select')) return;
@@ -460,7 +479,7 @@ $('reset-model').addEventListener('click', () => {
   indexOverrides.delete(selectedIndexId);
   sourceFollowing = true; $('follow-source').checked = true;
   writeInputs(scenarioInputs(selectedIndex(), DEFAULTS)); update({reanchor:true});
-  $('selection-context').textContent = 'Current scenario reset: source valuations and available yield, 6% growth, five years and 30% payout assumption. Other saved benchmarks are kept.';
+  $('selection-context').textContent = 'Current scenario reset to source valuations, available yield, published future growth and its available horizon. Other saved benchmarks are kept.';
 });
 for (const button of document.querySelectorAll('[data-preset]')) button.addEventListener('click', () => {
   if (!activeModel) { $('model-status').textContent = 'Correct the invalid assumptions before applying a preset.'; return; }

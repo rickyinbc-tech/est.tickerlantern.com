@@ -233,3 +233,8 @@ button,a,input,select{transition:border-color .15s,color .15s,background-color .
  .prose p,.prose .lead,.detail-content,.detail-content p,.valuation-columns p,.bridge-commentary p,.explanation-stack p,.ex-dividend-strip p,.worked-example p,.appendix-note p,.research-conclusion p{font-size:10pt}
  .source-register ol,.source-register li p,.framework-table th,.framework-table td{font-size:9pt}.footer-bottom{font-size:8pt}
 }
+
+.restore-growth-years{margin-top:14px;min-height:44px;padding:8px 12px;border:1px solid #9dc3bb;background:#fff;color:#075f58;border-radius:3px;font:inherit;font-size:13px;cursor:pointer}
+@media print{.restore-growth-years{display:none}}
+
+.scenario-growth-source{grid-column:1/-1;margin-bottom:4px;padding:12px;background:#edf6f3;border:1px solid #b3cbc6;border-left:3px solid var(--teal);font-size:13px;line-height:1.6;overflow-wrap:anywhere}.scenario-growth-source strong,.scenario-growth-source span,.scenario-growth-source small{display:block}.scenario-growth-source small{font-size:12px;margin-top:7px;color:var(--muted)}

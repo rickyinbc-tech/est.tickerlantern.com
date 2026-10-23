@@ -50,3 +50,13 @@ The audit checked 63 market observations and 49 published growth points. All gro
 Public adapters include FactSet, MSCI, JPM, Nasdaq, LSEG, Raymond James, Edelweiss and named public research references. Exact benchmark/column/period checks are mandatory. No trailing P/E, CAPE, median, related-index or ETF distribution yield substitutes for a requested metric. Hosted Nasdaq/Edelweiss failures also use the existing 13:00 Vancouver browser check, dependent on the owner’s Mac and Codex. See [browser source runbook](docs/browser-source-runbook.md). No access challenge is bypassed.
 
 Cloudflare Workers serves `dist/` at **https://tickerlantern.com/**. The former `est.tickerlantern.com` address and `www.tickerlantern.com` permanently redirect to the HTTPS apex, preserving paths and queries. All asset requests run through the Worker so these redirects also cover static files. The GitHub repository and snapshot URL retain their existing names. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.
+
+The same host serves structured-note research at `/notes/research`, its screener
+and detail pages at `/notes` and `/notes/RBC…`, and the equity-linked GIC study at
+`/gics`. Indices, probabilities, scenarios, methodology, sources and downloads
+retain their study paths on the apex domain. The `NOTES_RESEARCH` binding calls
+the existing `tickerlantern-notes` Worker; its reviewed datasets and publication
+gate remain independent. Study bundles use `/notes-app/assets/`, avoiding the
+index workbench's files. The index snapshot API stays at `/api/indices`; study
+health is `/api/notes/health`. The old notes host is retained only for permanent
+redirects, with its homepage mapped to `/notes/research`.

@@ -1,4 +1,5 @@
 import { validateFeed } from './index-data.js';
+import { isNotesResearchPath, handleNotesResearch } from './notes-research.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
 const MAX_BYTES = 2_000_000;
 async function verified(response, { githubRaw = false } = {}) {
@@ -26,6 +27,7 @@ export default {
       url.protocol = 'https:';
       return Response.redirect(url.href, 308);
     }
+    if (isNotesResearchPath(url.pathname)) return handleNotesResearch(request, env);
     if (url.pathname !== '/api/indices') return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     let remote, bundled;

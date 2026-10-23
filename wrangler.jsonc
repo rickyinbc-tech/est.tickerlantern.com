@@ -9,5 +9,6 @@
     { "pattern": "www.tickerlantern.com", "custom_domain": true },
     { "pattern": "est.tickerlantern.com", "custom_domain": true }
   ],
-  "workers_dev": false
+  "workers_dev": false,
+  "services": [{ "binding": "NOTES_RESEARCH", "service": "tickerlantern-notes" }]
 }

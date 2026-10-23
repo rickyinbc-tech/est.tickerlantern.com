@@ -32,4 +32,14 @@ numerically with the original. Build, Wrangler dry run and `git diff --check`
 passed. Local Worker QA uses `--host localhost` and compatibility date 2026-10-19;
 production retains its configured date.
 
-Production verification will be recorded after publication.
+Application commit `f3d3906` was deployed to the existing `tickerlantern-est`
+Worker, version `de2919e0-7ae5-4723-9575-792970e04285`. All thirteen live
+research asset hashes match the reviewed build. The homepage, article, structured
+notes, GIC calculator and sitemap return HTTP 200. The homepage navigation and
+sitemap contain the restored canonical link.
+
+All three adapted browser suites also passed against the production domain:
+16 article, 20 senior-analysis and 21 return-study checks. The mobile homepage
+menu was used to open the live article, its calculator rendered successfully,
+and the 390px live opening was visually inspected. No browser errors were
+reported. Documentation and QA capture updates do not require another deploy.

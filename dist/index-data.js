@@ -1,4 +1,5 @@
 import { DEFAULTS } from './model.js';
+import { validateGrowthForecast } from './growth-data.js';
 
 export function validateFeed(feed) {
   if (feed?.schemaVersion !== 1 || !Array.isArray(feed.indices) || !feed.indices.length || feed.indices.length > 100) throw new Error('Unsupported index snapshot.');
@@ -6,6 +7,7 @@ export function validateFeed(feed) {
   for (const row of feed.indices) {
     if (!/^[a-z0-9-]+$/.test(row.id) || ids.has(row.id) || typeof row.name !== 'string') throw new Error('Invalid index identity.');
     ids.add(row.id);
+    validateGrowthForecast(row.growthForecast);
     for (const key of ['forwardPE', 'mean10YearForwardPE']) if (row[key] !== null && (!Number.isFinite(row[key]) || row[key] < 1 || row[key] > 100)) throw new Error('Invalid valuation metric.');
     if (row.dividendYield !== null && (!Number.isFinite(row.dividendYield) || row.dividendYield < 0 || row.dividendYield > 15)) throw new Error('Invalid dividend yield.');
     if (row.forwardPE !== null && !/^\d{4}-\d{2}-\d{2}$/.test(row.asOf || '')) throw new Error('Missing observation date.');

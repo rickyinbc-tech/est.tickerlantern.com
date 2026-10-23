@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "jobs": [
+    {
+      "adapter": "factset",
+      "publisher": "FactSet",
+      "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_101626.pdf",
+      "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
+      "indices": {
+        "sp500": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E."
+        }
+      }
+    },
+    {
+      "adapter": "ubs",
+      "publisher": "UBS Chief Investment Office",
+      "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html",
+      "discoveryUrl": "https://www.ubs.com/global/en.sitemap.xml",
+      "indices": {
+        "nasdaq100": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "UBS-published Nasdaq-100 consensus annual earnings growth. This year and next year refer to the article publication year. The article does not specify its consensus vendor, a separate underlying observation date, currency or per-share aggregation method."
+        }
+      }
+    },
+    {
+      "adapter": "firsteagle",
+      "publisher": "First Eagle Investments; underlying LSEG I/B/E/S",
+      "url": "https://www.firsteagle.com/sites/default/files/2026-07/Small-Cap-Market-Overview-2026Q2_M-TL-SCT-MO26Q2-D-LT.pdf",
+      "discoveryUrl": "https://www.firsteagle.com/all-insights",
+      "indices": {
+        "russell2000": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "First Eagle publishes exact Russell 2000 annual earnings forecasts from LSEG I/B/E/S. Observation date is the explicit underlying data date, which may precede publication. Per-share aggregation and currency conventions are not specified."
+        }
+      }
+    },
+    {
+      "adapter": "nbi",
+      "publisher": "National Bank Investments CIO Office; underlying Refinitiv",
+      "url": "https://www.nbinvestments.ca/content/dam/bni/publication/cio-asset-sllocation-strategy-2026-10.pdf",
+      "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
+      "indices": {
+        "tsx": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "National Bank Investments CIO annual earnings-growth chart, exact Canada (S&P/TSX) series, underlying Refinitiv. Report date is used because no distinct chart observation date is printed. Earnings aggregation, currency and fiscal/calendar conventions are not explicitly specified."
+        },
+        "eafe": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "National Bank Investments CIO annual earnings-growth chart, exact EAFE (MSCI) series, underlying Refinitiv. Report date is used because no distinct chart observation date is printed. Earnings aggregation, currency and fiscal/calendar conventions are not explicitly specified."
+        }
+      }
+    },
+    {
+      "adapter": "nbf",
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "indices": {
+        "acwi": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "NBF Monthly Equity Monitor, exact MSCI benchmark row in the annual EPS Performance table, underlying Refinitiv. The separate 12-month-forward column is excluded. Currency and fiscal/calendar aggregation are not explicitly defined."
+        },
+        "world": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "NBF Monthly Equity Monitor, exact MSCI benchmark row in the annual EPS Performance table, underlying Refinitiv. The separate 12-month-forward column is excluded. Currency and fiscal/calendar aggregation are not explicitly defined."
+        },
+        "msci-canada": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "NBF Monthly Equity Monitor, exact MSCI benchmark row in the annual EPS Performance table, underlying Refinitiv. The separate 12-month-forward column is excluded. Currency and fiscal/calendar aggregation are not explicitly defined."
+        },
+        "europe": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "NBF Monthly Equity Monitor, exact MSCI benchmark row in the annual EPS Performance table, underlying Refinitiv. The separate 12-month-forward column is excluded. Currency and fiscal/calendar aggregation are not explicitly defined."
+        }
+      }
+    },
+    {
+      "adapter": "jpm",
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "indices": {
+        "australia": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "J.P. Morgan Asia Guide, exact MSCI benchmark; FactSet calendar-year consensus EPS growth. Country rows are checked against the earnings chart methodology. Japan is printed rounded to whole percentages. Source currency conventions are preserved; no conversion is applied."
+        },
+        "china": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "J.P. Morgan Asia Guide, exact MSCI benchmark; FactSet calendar-year consensus EPS growth. Country rows are checked against the earnings chart methodology. Japan is printed rounded to whole percentages. Source currency conventions are preserved; no conversion is applied."
+        },
+        "india": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "J.P. Morgan Asia Guide, exact MSCI benchmark; FactSet calendar-year consensus EPS growth. Country rows are checked against the earnings chart methodology. Japan is printed rounded to whole percentages. Source currency conventions are preserved; no conversion is applied."
+        },
+        "asia-ex-japan": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "J.P. Morgan Asia Guide, exact MSCI benchmark; FactSet calendar-year consensus EPS growth. Country rows are checked against the earnings chart methodology. Japan is printed rounded to whole percentages. Source currency conventions are preserved; no conversion is applied."
+        },
+        "japan": {
+          "forecastType": "consensus",
+          "periodBasis": "calendar-year",
+          "method": "J.P. Morgan Asia Guide, exact MSCI benchmark; FactSet calendar-year consensus EPS growth. Country rows are checked against the earnings chart methodology. Japan is printed rounded to whole percentages. Source currency conventions are preserved; no conversion is applied."
+        }
+      }
+    },
+    {
+      "adapter": "hartford",
+      "publisher": "Hartford Funds; underlying LSEG and Schroders",
+      "url": "https://www.hartfordfunds.com/dam/en/docs/pub/funddocuments/flyers/estories/marketview/HF0044_Q426.pdf",
+      "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
+      "indices": {
+        "uk": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "Hartford Funds MarketView annual EPS-growth chart, exact MSCI benchmark defined in its footnote, underlying LSEG and Schroders. Whole-percentage precision as printed. Fiscal/calendar and earnings-currency aggregation are not explicitly defined."
+        },
+        "em": {
+          "forecastType": "consensus",
+          "periodBasis": "publisher-year",
+          "method": "Hartford Funds MarketView annual EPS-growth chart, exact MSCI benchmark defined in its footnote, underlying LSEG and Schroders. Whole-percentage precision as printed. Fiscal/calendar and earnings-currency aggregation are not explicitly defined."
+        }
+      }
+    },
+    {
+      "adapter": "amova",
+      "publisher": "Amova Asset Management Global Investment Strategy Committee",
+      "url": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
+      "indices": {
+        "ftse100": {
+          "forecastType": "house",
+          "periodBasis": "forecast-horizon",
+          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+        },
+        "stoxx600": {
+          "forecastType": "house",
+          "periodBasis": "forecast-horizon",
+          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+        },
+        "nikkei225": {
+          "forecastType": "house",
+          "periodBasis": "forecast-horizon",
+          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+        },
+        "hangseng": {
+          "forecastType": "house",
+          "periodBasis": "forecast-horizon",
+          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+        }
+      }
+    },
+    {
+      "adapter": "fsm",
+      "publisher": "FSM Global / iFAST Financial Research; underlying iFinD",
+      "url": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
+      "discoveryUrl": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
+      "contentUrl": "https://fsm.global/sg/rest/article/get-rcms-article-details?paramArticleId=370440&paramPlatformId=SGFSM",
+      "contentMethod": "POST",
+      "indices": {
+        "csi300": {
+          "forecastType": "house",
+          "periodBasis": "publisher-year",
+          "method": "FSM/iFAST Financial Research constituent-weighted CSI 300 (000300.SH) house model, underlying iFinD. Annual EPS Growth row; EPS levels are labelled RMB. Fiscal/calendar methodology is not explicit. This dated article is checked for revisions daily; discovery of replacement research is not automated."
+        }
+      }
+    }
+  ]
+}

@@ -1,20 +1,29 @@
 import { DEFAULTS, BOUNDS } from './model.js';
+import { sourceGrowthPath } from './growth-data.js';
 
 export const SOURCE_FIELDS = ['entryPE', 'exitPE', 'dividendMode', 'dividendYield'];
 
 // Resolve every benchmark independently, including when a source disappears.
-export function scenarioInputs(row, current = DEFAULTS, locked = {}, following = true) {
+export function scenarioInputs(row, current = DEFAULTS, locked = {}, following = true, now = new Date()) {
   const next = { ...DEFAULTS, ...current };
   if (!following) return next;
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
   if (!locked.exitPE) next.exitPE = row?.forwardPE == null ? DEFAULTS.exitPE : row.mean10YearForwardPE ?? row.forwardPE;
   if (!locked.dividendMode) next.dividendMode = row?.dividendYield == null ? 'payout' : 'yield';
   if (!locked.dividendYield) next.dividendYield = row?.dividendYield ?? DEFAULTS.dividendYield;
+  if (!locked.growthMode && !locked.growth && !locked.annualGrowth) next.growthMode = 'source';
+  if (next.growthMode === 'source') {
+    const path = sourceGrowthPath(row, next.years, now);
+    if (!locked.years) next.years = path.coveredYears || DEFAULTS.years;
+    const selected = sourceGrowthPath(row, next.years, now);
+    next.annualGrowth = selected.rates;
+    next.growthStartYear = selected.startYear;
+  }
   return next;
 }
 
-export function switchScenario(row, saved, locked = {}, following = true) {
-  const values = scenarioInputs(row, { ...DEFAULTS, ...saved }, locked, following);
+export function switchScenario(row, saved, locked = {}, following = true, now = new Date()) {
+  const values = scenarioInputs(row, { ...DEFAULTS, ...saved }, locked, following, now);
   return { ...values, annualGrowth: [...(values.annualGrowth || [])] };
 }
 
@@ -34,6 +43,7 @@ export function presetScenario(input, preset) {
 
 export function fieldBasis(key, row, locked = {}, following = true) {
   if (locked[key]) return 'custom';
+  if (key === 'growth' && following && sourceGrowthPath(row, 1).coveredYears) return 'forecast';
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
   if (key === 'entryPE') return row?.forwardPE != null ? 'source' : 'default';

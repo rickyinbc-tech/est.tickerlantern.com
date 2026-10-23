@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DEFAULTS, project, validate, sensitivity, annualCSV } from '../src/model.js';
+import { DEFAULTS, BOUNDS, project, validate, sensitivity, annualCSV } from '../src/model.js';
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-9, `${a} != ${b}`);
 const input = { ...DEFAULTS, years: 3, entryPE: 20, exitPE: 20, growthMode: 'annual', annualGrowth: [10, -5, 20] };
 
@@ -33,7 +33,7 @@ test('a constant annual path matches the single-rate model', () => {
 });
 
 test('blank, missing, infinite and out-of-bounds active annual rates fail validation', () => {
-  for (const rate of ['', null, undefined, Infinity, -16, 21]) {
+  for (const rate of ['', null, undefined, Infinity, BOUNDS.growth[0] - 1, BOUNDS.growth[1] + 1]) {
     const bad = { ...input, annualGrowth: [10, rate, 20] };
     assert.ok(validate(bad).annualGrowth);
     assert.throws(() => project(bad));
@@ -50,7 +50,7 @@ test('flat sensitivity alternatives replace the complete yearly path', () => {
 });
 
 test('sensitivity supports twenty annual rates at either supported bound', () => {
-  for (const growth of [-15, 20]) {
+  for (const growth of BOUNDS.growth) {
     const grid = sensitivity({ ...DEFAULTS, years: 20, growthMode: 'annual', annualGrowth: Array(20).fill(growth) });
     assert.equal(grid.rows.length, 5);
     assert.ok(grid.rows.flat().every(Number.isFinite));

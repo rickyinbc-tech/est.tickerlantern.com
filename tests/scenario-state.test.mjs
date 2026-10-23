@@ -12,7 +12,7 @@ test('a different benchmark starts with its own defaults rather than the previou
 });
 test('revisiting a benchmark restores its own complete annual schedule and horizon', () => {
   const saved = { ...DEFAULTS, growth: 9, years: 3, growthMode: 'annual', annualGrowth: [10, -5, 20] };
-  const next = switchScenario(row, saved, {});
+  const next = switchScenario(row, saved, { growthMode: true, annualGrowth: true, years: true });
   assert.deepEqual(next.annualGrowth, [10, -5, 20]);
   assert.equal(next.growthMode, 'annual');
   assert.equal(next.years, 3);

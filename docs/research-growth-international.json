@@ -1,0 +1,456 @@
+{
+  "acwi": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-08-28",
+    "method": "September 2026 Monthly Equity Monitor, MSCI composite index EPS Performance table; exact row MSCI ACWI. Published annual Refinitiv-sourced earnings expectations, separate from the 12-month-forward column. Currency and fiscal/calendar aggregation are not explicitly defined. Preserve the August 28 observation date and do not present this snapshot as October data.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 33.8,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 15.1,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 12.9,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "page": 3,
+      "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "world": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-08-28",
+    "method": "September 2026 Monthly Equity Monitor, MSCI composite index EPS Performance table; exact row MSCI World. Published annual Refinitiv-sourced earnings expectations, separate from the 12-month-forward column. Currency and fiscal/calendar aggregation are not explicitly defined. Preserve the August 28 observation date and do not present this snapshot as October data.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 27.2,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 13.2,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 13.5,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "page": 3,
+      "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "em": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-08-28",
+    "method": "September 2026 Monthly Equity Monitor, MSCI composite index EPS Performance table; exact row MSCI EM. Published annual Refinitiv-sourced earnings expectations, separate from the 12-month-forward column. Currency and fiscal/calendar aggregation are not explicitly defined. Preserve the August 28 observation date and do not present this snapshot as October data.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 71.5,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 23.4,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 10.4,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "page": 3,
+      "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "europe": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-08-28",
+    "method": "September 2026 Monthly Equity Monitor, MSCI composite index EPS Performance table; exact row MSCI Europe. Published annual Refinitiv-sourced earnings expectations, separate from the 12-month-forward column. Currency and fiscal/calendar aggregation are not explicitly defined. Preserve the August 28 observation date and do not present this snapshot as October data.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 19.4,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 9.9,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 10.5,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "page": 3,
+      "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "msci-canada": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-08-28",
+    "method": "September 2026 Monthly Equity Monitor, MSCI composite index EPS Performance table; exact row MSCI Canada. Published annual Refinitiv-sourced earnings expectations, separate from the 12-month-forward column. Currency and fiscal/calendar aggregation are not explicitly defined. Preserve the August 28 observation date and do not present this snapshot as October data.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 25.0,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 8.2,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 8.7,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "NBF Economics and Strategy; underlying Refinitiv",
+      "url": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "page": 3,
+      "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "china": {
+    "forecastType": "consensus",
+    "periodBasis": "calendar-year",
+    "asOf": "2026-10-22",
+    "method": "Daily Asia Guide, cover October 23, data October 22, 2026. Earnings-expectations chart explicitly defines calendar-year FactSet consensus and respective MSCI indexes; exact benchmark MSCI China. Values are year-over-year EPS changes. Preserve the source currency basis; no currency conversion applied. No 2028 estimate is published.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 1.4,
+        "periodLabel": "Calendar year 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 13.7,
+        "periodLabel": "Calendar year 2027"
+      }
+    ],
+    "source": {
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "page": 34,
+      "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "india": {
+    "forecastType": "consensus",
+    "periodBasis": "calendar-year",
+    "asOf": "2026-10-22",
+    "method": "Daily Asia Guide, cover October 23, data October 22, 2026. Earnings-expectations chart explicitly defines calendar-year FactSet consensus and respective MSCI indexes; exact benchmark MSCI India. Values are year-over-year EPS changes. Preserve the source currency basis; no currency conversion applied. No 2028 estimate is published.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 13.0,
+        "periodLabel": "Calendar year 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 16.6,
+        "periodLabel": "Calendar year 2027"
+      }
+    ],
+    "source": {
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "page": 34,
+      "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "asia-ex-japan": {
+    "forecastType": "consensus",
+    "periodBasis": "calendar-year",
+    "asOf": "2026-10-22",
+    "method": "Daily Asia Guide, cover October 23, data October 22, 2026. Earnings-expectations chart explicitly defines calendar-year FactSet consensus and respective MSCI indexes; exact benchmark MSCI AC Asia Pacific ex Japan. Values are year-over-year EPS changes. Preserve the source currency basis; no currency conversion applied. No 2028 estimate is published.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 69.5,
+        "periodLabel": "Calendar year 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 26.8,
+        "periodLabel": "Calendar year 2027"
+      }
+    ],
+    "source": {
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "page": 34,
+      "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "australia": {
+    "forecastType": "consensus",
+    "periodBasis": "calendar-year",
+    "asOf": "2026-10-22",
+    "method": "Daily Asia Guide, cover October 23, data October 22, 2026. Earnings-expectations chart explicitly defines calendar-year FactSet consensus and respective MSCI indexes; exact benchmark MSCI Australia. Values are year-over-year EPS changes. Preserve the source currency basis; no currency conversion applied. No 2028 estimate is published.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 7.7,
+        "periodLabel": "Calendar year 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 4.9,
+        "periodLabel": "Calendar year 2027"
+      }
+    ],
+    "source": {
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "page": 34,
+      "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "japan": {
+    "forecastType": "consensus",
+    "periodBasis": "calendar-year",
+    "asOf": "2026-10-22",
+    "method": "Daily Asia Guide, cover October 23, data October 22, 2026; Global equities: Earnings expectations, exact MSCI Japan benchmark. Calendar-year FactSet consensus EPS growth labels are rounded to whole percentages as published: 24% for 2026 and 15% for 2027. No additional precision, currency conversion or 2028 estimate is inferred.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 24,
+        "periodLabel": "Calendar year 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 15,
+        "periodLabel": "Calendar year 2027"
+      }
+    ],
+    "source": {
+      "publisher": "J.P. Morgan Asset Management; underlying FactSet and MSCI",
+      "url": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "page": 30,
+      "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "uk": {
+    "forecastType": "consensus",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-09-30",
+    "method": "Fourth Quarter 2026 MarketView, annual EPS-growth forecast chart, exact MSCI United Kingdom Index identity in footnote. Underlying LSEG and Schroders, October 2026. Published whole-percentage precision; the chart does not explicitly define fiscal versus calendar aggregation or earnings currency.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 23,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 5,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 8,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "Hartford Funds; underlying LSEG and Schroders",
+      "url": "https://www.hartfordfunds.com/dam/en/docs/pub/funddocuments/flyers/estories/marketview/HF0044_Q426.pdf",
+      "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
+      "page": 19,
+      "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "ftse100": {
+    "forecastType": "house",
+    "periodBasis": "forecast-horizon",
+    "asOf": "2026-09-30",
+    "method": "Amova Global Investment Strategy Committee Outlook Q4 2026, published October 9 after September 30 committee meeting. Exact FTSE 100 EPS Growth Scenarios median column; endpoint rows December 2026 and September 2027. These are house year-over-year horizon forecasts, not calendar-year consensus. Endpoint spacing is nine months; do not compound them as adjacent full calendar years or extend beyond September 2027. EPS currency basis is not explicit; no conversion applied.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 8,
+        "periodLabel": "Year to Dec 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 7,
+        "periodLabel": "Year to Sep 2027"
+      }
+    ],
+    "source": {
+      "publisher": "Amova Asset Management Global Investment Strategy Committee",
+      "url": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "discoveryUrl": "https://emea.amova-am.com/institutional/insights/detail/2610-global-investment-strategy-committee-outlook-q4-2026",
+      "page": 15,
+      "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "stoxx600": {
+    "forecastType": "house",
+    "periodBasis": "forecast-horizon",
+    "asOf": "2026-09-30",
+    "method": "Amova Global Investment Strategy Committee Outlook Q4 2026, published October 9 after September 30 committee meeting. Exact STOXX Europe 600 EPS Growth Scenarios median column; endpoint rows December 2026 and September 2027. These are house year-over-year horizon forecasts, not calendar-year consensus. Endpoint spacing is nine months; do not compound them as adjacent full calendar years or extend beyond September 2027. EPS currency basis is not explicit; no conversion applied.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 14,
+        "periodLabel": "Year to Dec 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 14,
+        "periodLabel": "Year to Sep 2027"
+      }
+    ],
+    "source": {
+      "publisher": "Amova Asset Management Global Investment Strategy Committee",
+      "url": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "discoveryUrl": "https://emea.amova-am.com/institutional/insights/detail/2610-global-investment-strategy-committee-outlook-q4-2026",
+      "page": 15,
+      "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "nikkei225": {
+    "forecastType": "house",
+    "periodBasis": "forecast-horizon",
+    "asOf": "2026-09-30",
+    "method": "Amova Global Investment Strategy Committee Outlook Q4 2026, published October 9 after September 30 committee meeting. Exact Nikkei 225 EPS Growth Scenarios median column; endpoint rows December 2026 and September 2027. These are house year-over-year horizon forecasts, not calendar-year consensus. Endpoint spacing is nine months; do not compound them as adjacent full calendar years or extend beyond September 2027. EPS currency basis is not explicit; no conversion applied.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 27,
+        "periodLabel": "Year to Dec 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 22,
+        "periodLabel": "Year to Sep 2027"
+      }
+    ],
+    "source": {
+      "publisher": "Amova Asset Management Global Investment Strategy Committee",
+      "url": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "discoveryUrl": "https://emea.amova-am.com/institutional/insights/detail/2610-global-investment-strategy-committee-outlook-q4-2026",
+      "page": 14,
+      "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "hangseng": {
+    "forecastType": "house",
+    "periodBasis": "forecast-horizon",
+    "asOf": "2026-09-30",
+    "method": "Amova Global Investment Strategy Committee Outlook Q4 2026, published October 9 after September 30 committee meeting. Exact Hang Seng Index EPS Growth Scenarios median column; endpoint rows December 2026 and September 2027. These are house year-over-year horizon forecasts, not calendar-year consensus. Endpoint spacing is nine months; do not compound them as adjacent full calendar years or extend beyond September 2027. EPS currency basis is not explicit; no conversion applied.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": -1,
+        "periodLabel": "Year to Dec 2026"
+      },
+      {
+        "year": 2027,
+        "growth": 3,
+        "periodLabel": "Year to Sep 2027"
+      }
+    ],
+    "source": {
+      "publisher": "Amova Asset Management Global Investment Strategy Committee",
+      "url": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "discoveryUrl": "https://emea.amova-am.com/institutional/insights/detail/2610-global-investment-strategy-committee-outlook-q4-2026",
+      "page": 15,
+      "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
+      "parserVersion": "annual-growth-1"
+    }
+  },
+  "csi300": {
+    "forecastType": "house",
+    "periodBasis": "publisher-year",
+    "asOf": "2026-05-14",
+    "method": "FSM/iFAST Financial Research constituent-weighted model for exact CSI 300 (000300.SH), published May 21, 2026. Use the printed annual 2026E/2027E/2028E EPS Growth row; this is a dated house forecast, not current market consensus. The table labels EPS levels RMB, with no fiscal/calendar methodology statement; no currency conversion or inferred growth is used. Source hash records the anonymous public article API JSON response, whose content field supplies the table. Normal article GET alone returns an app shell.",
+    "estimates": [
+      {
+        "year": 2026,
+        "growth": 9,
+        "periodLabel": "2026 annual EPS estimate"
+      },
+      {
+        "year": 2027,
+        "growth": 12,
+        "periodLabel": "2027 annual EPS estimate"
+      },
+      {
+        "year": 2028,
+        "growth": 6,
+        "periodLabel": "2028 annual EPS estimate"
+      }
+    ],
+    "source": {
+      "publisher": "FSM Global / iFAST Financial Research; underlying iFinD",
+      "url": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
+      "discoveryUrl": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
+      "page": null,
+      "sha256": "d5b298ec3dd605a02fd2bc5f8d6cf4d8953414a4487a4a62af237e5482bd542a",
+      "parserVersion": "annual-growth-1",
+      "contentUrl": "https://fsm.global/sg/rest/article/get-rcms-article-details?paramArticleId=370440&paramPlatformId=SGFSM",
+      "contentMethod": "POST",
+      "contentBody": ""
+    }
+  }
+}

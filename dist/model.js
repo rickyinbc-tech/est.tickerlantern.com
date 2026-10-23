@@ -1,19 +1,20 @@
 // All amounts are illustrative. EPS uses a consistent normalized basis.
-export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
-export const BOUNDS = Object.freeze({ growth: [-15, 20], entryPE: [1, 100], exitPE: [1, 100], payout: [0, 100], years: [1, 20] });
+export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
+export const BOUNDS = Object.freeze({ growth: [-99, 1000], entryPE: [1, 100], exitPE: [1, 100], payout: [0, 100], years: [1, 20] });
 
 export function validate(input) {
   const errors = {};
   for (const [key, [min, max]] of Object.entries(BOUNDS)) {
-    if (key === 'payout' && input.dividendMode === 'yield') continue;
+    if (key === 'payout' && input.dividendMode === 'yield' || key === 'growth' && input.growthMode === 'source') continue;
     if (input[key] === '' || input[key] === null || input[key] === undefined || !Number.isFinite(Number(input[key]))) errors[key] = 'Enter a number.';
     else if (+input[key] < min || +input[key] > max) errors[key] = `Use a value between ${min} and ${max}.`;
   }
   if (!errors.years && !Number.isInteger(+input.years)) errors.years = 'Use a whole number of years.';
-  if (input.growthMode && !['constant', 'annual'].includes(input.growthMode)) errors.growthMode = 'Select a growth schedule.';
-  if (input.growthMode === 'annual' && !errors.years) {
+  if (input.growthMode && !['constant', 'annual', 'source'].includes(input.growthMode)) errors.growthMode = 'Select a growth schedule.';
+  if (input.growthMode === 'source' && (!Number.isInteger(+input.growthStartYear) || +input.growthStartYear < 2020 || +input.growthStartYear > 2100)) errors.growthMode = 'Published forecast year is unavailable.';
+  if (['annual', 'source'].includes(input.growthMode) && !errors.years) {
     const rates = input.annualGrowth;
-    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = 'Enter an EPS growth rate between -15% and 20% for every year.';
+    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = input.growthMode === 'source' ? 'Published EPS estimates do not cover every selected year. Shorten the holding period or choose custom yearly rates for the uncovered years.' : `Enter an EPS growth rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for every year.`;
   }
   if (input.dividendMode && !['payout', 'yield'].includes(input.dividendMode)) errors.dividendMode = 'Select a dividend convention.';
   if (input.dividendMode === 'yield' && (input.dividendYield === '' || input.dividendYield == null || !Number.isFinite(+input.dividendYield) || +input.dividendYield < 0 || +input.dividendYield > 15)) errors.dividendYield = 'Enter an initial yield between 0 and 15%.';
@@ -39,7 +40,8 @@ export function project(input = DEFAULTS) {
   const { growth, entryPE, exitPE, payout, years } = Object.fromEntries(Object.keys(BOUNDS).map(k => [k, +input[k]]));
   const dividendMode = input.dividendMode || 'payout', dividendYield = dividendMode === 'yield' ? +input.dividendYield : null;
   const growthMode = input.growthMode || 'constant';
-  const annualGrowth = Array.from({ length: years }, (_, i) => growthMode === 'annual' ? +input.annualGrowth[i] : growth);
+  const annualGrowth = Array.from({ length: years }, (_, i) => growthMode === 'constant' ? growth : +input.annualGrowth[i]);
+  const growthStartYear = growthMode === 'source' ? +input.growthStartYear : null;
   const initialPrice = 100, initialEPS = initialPrice / entryPE, p = payout / 100;
   const points = [{ year: 0, eps: initialEPS, pe: entryPE, price: 100, dividend: 0, cumulativeDividend: 0, cashWealth: 100, reinvestedWealth: 100, shares: 1 }];
   const cashflows = [-initialPrice];
@@ -64,7 +66,7 @@ export function project(input = DEFAULTS) {
   const multipleEffect = (exitPE / entryPE) ** (1 / years) - 1;
   const epsOnlyPrice = initialPrice * last.eps / initialEPS;
   const epsCAGR = (last.eps / initialEPS) ** (1 / years) - 1;
-  return { input: { growth, growthMode, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
+  return { input: { growth, growthMode, growthStartYear, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
 function boundedAxis(values, min, max, anchor) {
@@ -80,11 +82,11 @@ function boundedAxis(values, min, max, anchor) {
 }
 
 export function sensitivityAxes(input) {
-  const entry = +input.entryPE, growth = input.growthMode === 'annual' ? Math.max(BOUNDS.growth[0], Math.min(BOUNDS.growth[1], +((project(input).epsCAGR * 100).toFixed(8)))) : +input.growth;
-  if (!Number.isFinite(entry) || entry < 1 || entry > 100 || !Number.isFinite(growth) || growth < -15 || growth > 20) throw new Error('Invalid sensitivity anchors');
+  const entry = +input.entryPE, growth = ['annual', 'source'].includes(input.growthMode) ? Math.max(BOUNDS.growth[0], Math.min(BOUNDS.growth[1], +((project(input).epsCAGR * 100).toFixed(8)))) : +input.growth;
+  if (!Number.isFinite(entry) || entry < 1 || entry > 100 || !Number.isFinite(growth) || growth < BOUNDS.growth[0] || growth > BOUNDS.growth[1]) throw new Error('Invalid sensitivity anchors');
   return {
     entryAnchor: entry,
-    growths: boundedAxis([-8, -4, 0, 4, 8].map(delta => growth + delta), -15, 20, growth),
+    growths: boundedAxis([-8, -4, 0, 4, 8].map(delta => growth + delta), ...BOUNDS.growth, growth),
     multiples: boundedAxis([.6, .8, 1, 1.2, 1.4].map(factor => entry * factor), 1, 100, entry)
   };
 }
@@ -94,7 +96,11 @@ export function sensitivity(input, axes = sensitivityAxes(input)) {
   return { growths, multiples, rows: growths.map(growth => multiples.map(exitPE => project({ ...input, growthMode: 'constant', growth, exitPE }).cashIRR)) };
 }
 
-export function annualCSV(model) {
-  const header = 'Year,Normalized EPS,Valuation PE,Price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,EPS growth percent';
-  return [header, ...model.points.map(p => [p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth, p.growth ?? ''].map(v => typeof v === 'number' ? Number(v.toFixed(8)) : v).join(','))].join('\n');
+export function annualCSV(model, forecast) {
+  const header = 'Year,Normalized EPS,Valuation PE,Price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,EPS growth percent';
+  const cell = v => typeof v === 'number' ? Number(v.toFixed(8)) : /[,"\n]/.test(String(v)) ? '"' + String(v).replaceAll('"', '""') + '"' : v;
+  return [header, ...model.points.map(p => {
+    const sourced = model.input.growthMode === 'source', point = sourced && forecast?.estimates.find(x => x.year === model.input.growthStartYear + p.year - 1);
+    return [p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth, p.year && sourced ? point?.periodLabel || model.input.growthStartYear + p.year - 1 : '', sourced ? forecast?.forecastType || 'published' : 'custom assumption', sourced ? forecast?.asOf || '' : '', sourced ? forecast?.source?.url || '' : '', p.growth ?? ''].map(cell).join(',');
+  })].join('\n');
 }

@@ -30,6 +30,10 @@ jobs:
         env:
           PUBLIC_BROWSER_FETCH: '1'
         run: python scripts/refresh_indices.py
+      - name: Check annual index earnings-growth forecasts
+        id: growth_refresh
+        continue-on-error: true
+        run: python scripts/refresh_growth.py
       - run: npm test
       - name: Publish changed observation snapshot
         run: |
@@ -41,5 +45,5 @@ jobs:
             git push
           fi
       - name: Report unavailable publisher jobs after retaining verified data
-        if: steps.source_refresh.outcome == 'failure'
+        if: steps.source_refresh.outcome == 'failure' || steps.growth_refresh.outcome == 'failure'
         run: exit 1

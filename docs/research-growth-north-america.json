@@ -1,0 +1,176 @@
+{
+  "researchDateVancouver": "2026-10-22",
+  "retrievedAt": "2026-10-23T06:51:42.872849+00:00",
+  "growthUnit": "percent per year; 32.8 means 32.8%, not 0.328",
+  "status": "research-candidates; root must independently validate before ingestion",
+  "records": [
+    {
+      "index": "sp500",
+      "indexName": "S&P 500",
+      "estimates": [
+        {
+          "year": 2026,
+          "growth": 32.8
+        },
+        {
+          "year": 2027,
+          "growth": 16.0
+        }
+      ],
+      "asOf": "2026-10-16",
+      "asOfBasis": "report-date",
+      "publishedOn": "2026-10-16",
+      "forecastType": "consensus",
+      "periodBasis": "calendar-year",
+      "method": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
+      "limitations": [
+        "Not a guaranteed return or real-time quote. No 2028 forecast verified. Actual and estimate definitions must retain FactSet basis."
+      ],
+      "source": {
+        "publisher": "FactSet",
+        "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_101626.pdf",
+        "discoveryUrl": "https://insight.factset.com/topic/earnings",
+        "page": 14,
+        "sha256": "816935307252ff26eb8d719c4874064aa5b8a018ed57568baac0cbc6241a4508"
+      },
+      "verification": {
+        "visual": "factset-2026-10-16-p14.png",
+        "status": "visually-verified"
+      },
+      "refreshNotes": "Discover newest dated earnings-season article, then find its dated Earnings Insight PDF. The article alone gives CY2026 but this edition does not include CY2027. Never assume the quarterly growth paragraph is annual."
+    },
+    {
+      "index": "nasdaq100",
+      "indexName": "Nasdaq-100",
+      "estimates": [
+        {
+          "year": 2026,
+          "growth": 43.0
+        },
+        {
+          "year": 2027,
+          "growth": 28.0
+        }
+      ],
+      "asOf": "2026-10-07",
+      "asOfBasis": "publication-date; underlying consensus observation not separately given",
+      "publishedOn": "2026-10-07",
+      "forecastType": "consensus",
+      "periodBasis": "publisher-year",
+      "method": "UBS-published Nasdaq-100 consensus annual earnings growth. This year and next year refer to the article publication year. The article does not specify its consensus vendor, a separate underlying observation date, currency or per-share aggregation method.",
+      "limitations": [
+        "No separate underlying data date or consensus vendor is stated in the article. No 2028 forecast verified. Preserve annual earnings wording rather than claiming a specified per-share methodology."
+      ],
+      "source": {
+        "publisher": "UBS Chief Investment Office",
+        "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html",
+        "discoveryUrl": "https://www.ubs.com/global/en.sitemap.xml",
+        "page": null,
+        "sha256": "714b7dafb57261bb5a51f6d7c372ee3fcdacf3795b94c13e1b14064e40898366"
+      },
+      "verification": {
+        "visual": "ubs-nasdaq-2026-10-07.png",
+        "status": "visually-verified"
+      },
+      "refreshNotes": "Robots publishes root sitemap, which links this English sitemap. Normal GET 200; 206 daily 2026 article URLs. Parse exact daily path and DDMMYYYY or DDMMYY filename dates only for ordering, then verify article publication date and full annual pair. Newest 11 Oct8-22 articles contained no replacement pair. Public ActivityStream POST works but /bin/ is robots-disallowed; do not use as scheduled crawler route."
+    },
+    {
+      "index": "russell2000",
+      "indexName": "Russell 2000",
+      "estimates": [
+        {
+          "year": 2026,
+          "growth": 85.0
+        },
+        {
+          "year": 2027,
+          "growth": 44.0
+        }
+      ],
+      "asOf": "2026-07-09",
+      "asOfBasis": "explicit data date in footnote 4",
+      "publishedOn": "2026-07-23",
+      "forecastType": "consensus",
+      "periodBasis": "publisher-year",
+      "method": "First Eagle publishes exact Russell 2000 annual earnings forecasts from LSEG I/B/E/S. Observation date is the explicit underlying data date, which may precede publication. Per-share aggregation and currency conventions are not specified.",
+      "limitations": [
+        "Older July snapshot; must not be labelled an October consensus update. No 2028 forecast verified. Not identical to constituent-average growth figures published by Royce."
+      ],
+      "source": {
+        "publisher": "First Eagle Investments; underlying LSEG I/B/E/S",
+        "url": "https://www.firsteagle.com/sites/default/files/2026-07/Small-Cap-Market-Overview-2026Q2_M-TL-SCT-MO26Q2-D-LT.pdf",
+        "discoveryUrl": "https://www.firsteagle.com/all-insights",
+        "page": 2,
+        "sha256": "d6e127b25e769c39a472886dfc9a61f4d57d4669ea67cfc9e83e522425ddf0ce"
+      },
+      "verification": {
+        "visual": "firsteagle-q2-2026-p2.png",
+        "status": "visually-verified"
+      },
+      "refreshNotes": "Discover newest Small Cap Market Overview and its Download PDF link. October 12 US Small Caps in Focus is a video and provides no annual forecasts in its text. Preserve source data date independently of page publication date."
+    },
+    {
+      "index": "tsx",
+      "indexName": "S&P/TSX Composite (publisher label: Canada S&P/TSX)",
+      "estimates": [
+        {
+          "year": 2026,
+          "growth": 28.3
+        },
+        {
+          "year": 2027,
+          "growth": 11.6
+        }
+      ],
+      "asOf": "2026-10-01",
+      "asOfBasis": "report-date; chart does not print a distinct exact observation date",
+      "publishedOn": "2026-10-01",
+      "forecastType": "consensus",
+      "periodBasis": "publisher-year",
+      "method": "National Bank Investments CIO annual earnings-growth chart, exact Canada (S&P/TSX) series, underlying Refinitiv. Report date is used because no distinct chart observation date is printed. Earnings aggregation, currency and fiscal/calendar conventions are not explicitly specified.",
+      "limitations": [
+        "Do not replace S&P/TSX with MSCI Canada. No 2028 forecast verified. Do not claim an explicit per-share basis absent a methodology definition."
+      ],
+      "source": {
+        "publisher": "National Bank Investments CIO Office; underlying Refinitiv",
+        "url": "https://www.nbinvestments.ca/content/dam/bni/publication/cio-asset-sllocation-strategy-2026-10.pdf",
+        "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
+        "page": 6,
+        "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88"
+      },
+      "verification": {
+        "visual": "nb-oct26-p6.png",
+        "status": "visually-verified"
+      },
+      "refreshNotes": "Discover newest asset-allocation-strategy article, then follow Download complete edition. Current article https://www.nbinvestments.ca/perspectives/article/asset-allocation-strategy-october-2026.html . The nbfwm.ca stable asset-allocation-strategy.pdf returns stale May 1, 2026 and is unsuitable as an undated latest endpoint. Parse chart text by coordinates and validate year/line/color identity; extracted text order alone can misassign values."
+    }
+  ],
+  "excludedCandidates": [
+    {
+      "publisher": "Royce Investment Partners",
+      "url": "https://www.royceinvest.com/insights/small-cap-recap",
+      "publishedOn": "2026-10-01",
+      "estimates": [
+        {
+          "year": 2026,
+          "growth": 40.5
+        },
+        {
+          "year": 2027,
+          "growth": 49.8
+        }
+      ],
+      "reason": "As of Sep 30, 2026, FactSet mean one-year constituent EPS growth excluding uncovered issuers; cannot directly compound aggregate index EPS. Visually verified, but not selected."
+    },
+    {
+      "publisher": "Krungsri",
+      "url": "https://www.krungsri.com/th/wealth/krungsri-exclusive/investment/investment-handbook",
+      "reason": "Latest listing dated Oct 6, 2026. Actual PDF link was unavailable from web extraction and normal browser/HTTP requests show Incapsula/hCaptcha. No bypass attempted; June PDF search-index snippets are not current original-page verification."
+    },
+    {
+      "publisher": "Nasdaq",
+      "url": "https://www.nasdaq.com/articles/global-indexes/biweekly-investment-insights/earnings-show-me-moment",
+      "reason": "Oct 16 report gives quarterly Q3 EPS growth, not annual calendar forecasts; excluded from annual model."
+    }
+  ]
+}

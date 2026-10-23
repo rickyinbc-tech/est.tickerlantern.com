@@ -33,7 +33,7 @@ def parse_scbam_text(text, page=4):
     if len(matches) != 1:
         raise ValueError('SCBAM exact numeric labels or category/series order changed')
     values = [float(x) for x in matches[0].split()]
-    if not all(1 <= x <= 100 for x in values):
+    if not all(0 <= x <= 1_000_000 for x in values):
         raise ValueError('SCBAM chart P/E labels outside supported range')
     return {'csi300': dict(
         mean10YearForwardPE=values[14], meanAsOf=as_of.isoformat(),

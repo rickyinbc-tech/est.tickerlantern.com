@@ -1,5 +1,6 @@
 import { DEFAULTS, BOUNDS } from './model.js';
 import { sourceGrowthPath } from './growth-data.js';
+import { sourceExitPE, eligibleExitMean } from './valuation-policy.js';
 
 export const SOURCE_FIELDS = ['entryPE', 'exitPE', 'dividendMode', 'dividendYield'];
 
@@ -8,7 +9,7 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
   const next = { ...DEFAULTS, ...current };
   if (!following) return next;
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
-  if (!locked.exitPE) next.exitPE = row?.forwardPE == null ? DEFAULTS.exitPE : row.mean10YearForwardPE ?? row.forwardPE;
+  if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
   if (!locked.dividendMode) next.dividendMode = row?.dividendYield == null ? 'payout' : 'yield';
   if (!locked.dividendYield) next.dividendYield = row?.dividendYield ?? DEFAULTS.dividendYield;
   if (!locked.growthMode && !locked.growth && !locked.annualGrowth) next.growthMode = 'source';
@@ -47,7 +48,7 @@ export function fieldBasis(key, row, locked = {}, following = true) {
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
   if (key === 'entryPE') return row?.forwardPE != null ? 'source' : 'default';
-  if (key === 'exitPE') return row?.mean10YearForwardPE != null && row?.forwardPE != null ? 'reference' : row?.forwardPE != null ? 'fallback' : 'default';
+  if (key === 'exitPE') return eligibleExitMean(row) ? 'reference' : 'fallback';
   if (key === 'dividendYield') return row?.dividendYield != null ? 'source' : 'default';
   return 'default';
 }

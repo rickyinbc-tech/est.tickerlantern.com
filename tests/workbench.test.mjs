@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DEFAULTS, BOUNDS, project, sensitivity, sensitivityAxes, validate, annualCSV } from '../src/model.js';
 import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis } from '../src/scenario-state.js';
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
-const em = { forwardPE:8.9, mean10YearForwardPE:12.25, dividendYield:2.02 };
+const em = { historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE:8.9, mean10YearForwardPE:12.25, dividendYield:2.02 };
 
 test('low-multiple benchmarks get lower, unchanged and higher exit valuations', () => {
   const axes = sensitivityAxes({...DEFAULTS, entryPE:8.9});
@@ -43,10 +43,10 @@ test('source refresh updates unlocked inputs and protects edits', () => {
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
   const next=switchScenario({},undefined);
-  assert.equal(next.entryPE,DEFAULTS.entryPE);assert.equal(next.exitPE,DEFAULTS.exitPE);
+  assert.equal(next.entryPE,DEFAULTS.entryPE);assert.equal(next.exitPE,DEFAULTS.entryPE);
   assert.equal(next.dividendYield,DEFAULTS.dividendYield);assert.equal(next.dividendMode,'payout');
   assert.equal(next.growth,6); assert.equal(next.years,5);
-  assert.equal(fieldBasis('entryPE',{}),'default');assert.equal(fieldBasis('exitPE',{}),'default');
+  assert.equal(fieldBasis('entryPE',{}),'default');assert.equal(fieldBasis('exitPE',{}),'fallback');
 });
 test('saved benchmark edits restore with its own growth and horizon', () => {
   const next=switchScenario(em,{...DEFAULTS,entryPE:17,exitPE:19,growth:2,years:4},{entryPE:true,exitPE:true,growth:true,years:true});

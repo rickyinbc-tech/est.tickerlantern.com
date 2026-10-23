@@ -5,6 +5,7 @@ earnings growth, constituent-average growth, or proxy indices are substituted.
 """
 import datetime as dt
 import io
+import math
 import json
 import re
 from html import unescape
@@ -24,10 +25,10 @@ def dated(value, fmt):
 
 
 def result(date, years, values, page=None, labels=None):
-    if len(years) != len(values) or len(set(years)) != len(years):
+    if len(years) != len(values) or len(set(years)) != len(years) or any(isinstance(value,bool) for value in values):
         raise ValueError('Ambiguous annual forecast columns')
     estimates = [dict(year=int(y), growth=float(g), periodLabel=labels[i] if labels else f'{y} annual earnings estimate') for i, (y, g) in enumerate(zip(years, values))]
-    if not estimates or any(not -100 < p['growth'] <= 1000 for p in estimates):
+    if not estimates or any(not isinstance(p['growth'], (int,float)) or isinstance(p['growth'], bool) or not math.isfinite(p['growth']) or abs(p['growth']) > 1_000_000 for p in estimates):
         raise ValueError('Annual earnings growth outside supported range')
     return dict(asOf=date, estimates=estimates, page=page)
 
@@ -168,7 +169,7 @@ def parse_amova(body):
             for row in block:
                 m, y, low, median, high, _ = row
                 if not float(low) <= float(median) <= float(high): raise ValueError('Amova quantile columns changed')
-                selected[int(y)] = (float(median), f'Year to {m} {y}')
+                selected[int(y)] = (float(median), f'{m}-{y} EPS growth scenario')
             ys = sorted(selected)
             out[id] = result(date, ys, [selected[y][0] for y in ys], i + 1, [selected[y][1] for y in ys])
     if set(out) != {'nikkei225', 'stoxx600', 'ftse100', 'hangseng'}: raise ValueError('Amova exact benchmark tables missing')

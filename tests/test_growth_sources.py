@@ -53,7 +53,7 @@ class GrowthSources(unittest.TestCase):
         text = header + '\n'.join(block + '\nEPS Growth Scenarios PE Ratio Index Price\n' + name for name in ['Nikkei 225','STOXX Europe 600','FTSE 100','Hang Seng Index'])
         with patch.object(g, 'pdf', return_value=document(text)):
             rows = g.parse_amova(b'fixture')
-        self.assertEqual(rows['ftse100']['estimates'], [dict(year=2026,growth=3.0,periodLabel='Year to Dec 2026'),dict(year=2027,growth=6.0,periodLabel='Year to Sep 2027')])
+        self.assertEqual(rows['ftse100']['estimates'], [dict(year=2026,growth=3.0,periodLabel='Dec-2026 EPS growth scenario'),dict(year=2027,growth=6.0,periodLabel='Sep-2027 EPS growth scenario')])
         with patch.object(g, 'pdf', return_value=document(text.replace('FTSE 100','MSCI UK'))):
             with self.assertRaises(ValueError): g.parse_amova(b'fixture')
 
@@ -75,16 +75,17 @@ class GrowthSources(unittest.TestCase):
         self.assertEqual(old['forwardPE'],21)
 
     def test_failed_growth_job_retains_original_rates_dates_and_valuation(self):
-        row = dict(id='test',forwardPE=21,growthForecast=dict(asOf='2026-08-28',estimates=[dict(year=2027,growth=15)],source=dict(url='https://example.com'),sync=dict(lastSuccess='2026-10-20T00:00:00Z')))
+        feed = json.loads((Path(__file__).resolve().parents[1]/'data/indices.json').read_text())
+        row = feed['indices'][0]
         original = copy.deepcopy(row)
         with tempfile.TemporaryDirectory() as folder:
-            path = Path(folder)/'indices.json'; path.write_text(json.dumps(dict(indices=[row])))
+            path = Path(folder)/'indices.json'; path.write_text(json.dumps(feed))
             with patch.object(refresh,'discover',side_effect=ValueError('Changed source layout')):
-                self.assertFalse(refresh.refresh(path,jobs=[dict(adapter='nbf',indices={'test':{}})],client=object()))
+                self.assertFalse(refresh.refresh(path,jobs=[dict(adapter='nbf',indices={'sp500':{}})],client=object()))
             row = json.loads(path.read_text())['indices'][0]
         for key in ['asOf','estimates','source']: self.assertEqual(row['growthForecast'][key], original['growthForecast'][key])
         self.assertEqual(row['growthForecast']['sync']['status'],'retained')
-        self.assertEqual(row['forwardPE'],21)
+        self.assertEqual(row['forwardPE'],original['forwardPE'])
 
 
 if __name__ == '__main__': unittest.main()

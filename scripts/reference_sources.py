@@ -21,7 +21,7 @@ def _date(value):
 
 def _pe(value):
     value = float(value)
-    if not 1 <= value <= 100:
+    if not 0 <= value <= 1_000_000:
         raise ValueError('Historical forward-P/E reference outside supported range')
     return value
 
@@ -40,7 +40,10 @@ def parse_msci_deck_text(text, page=7):
         raise ValueError('Expected one dated MSCI forward-valuation chart')
     as_of = _date(dt.datetime.strptime(dates[0], '%B %d, %Y').date().isoformat())
     order = r'ACWI WORLD USA WORLD ex USA EM \(EMERGING MARKETS\) EUROPE'
-    pattern = r'(?<![\d.])((?:\d+(?:\.\d+)?\s+){12})' + order + r'\s+Current P/Fwd Ear 10Yr Average P/Fwd Ear'
+    # This reviewed slide prints every numeric bar label to two decimals.
+    # Enforce that source precision so a missing bar cannot consume a year or
+    # page number elsewhere in the native text stream.
+    pattern = r'(?<![\d.])((?:\d+\.\d{2}\s+){12})' + order + r'\s+Current P/Fwd Ear 10Yr Average P/Fwd Ear'
     matches = re.findall(pattern, text)
     if len(matches) != 1:
         raise ValueError('MSCI chart values, category order or 10-year mean label changed')

@@ -7,6 +7,7 @@ This command never controls a browser, fetches a URL, or publishes PDF bytes.
 import argparse
 import datetime as dt
 import io
+import copy
 import json
 from pathlib import Path
 from pypdf import PdfReader
@@ -44,10 +45,12 @@ def main():
     cache['sources'][args.adapter] = entry
     feed_path = ROOT / 'data/indices.json'
     feed = json.loads(feed_path.read_text())
+    previous = copy.deepcopy(feed)
     rows = {r['id']: r for r in feed['indices']}
     for id, metrics in values.items(): update_metrics(rows[id], metrics, evidence, args.verified_at)
     # Validate all metrics before either file is written.
-    PATH.write_text(json.dumps(cache, indent=2, ensure_ascii=False) + '\n')
+    from snapshot import finalize, atomic_write
+    if not args.publish_snapshot: atomic_write(PATH, cache)
     if args.publish_snapshot:
         jobs = feed.setdefault('sourceJobs', [])
         old_failed = sum(j['status'] not in ('ok', 'browser-verified') for j in jobs)
@@ -58,7 +61,11 @@ def main():
         feed['browserSourceCheckAt'] = args.verified_at
         feed['refresh']['failed'] = base_failed + sum(j['status'] not in ('ok', 'browser-verified') for j in jobs)
         feed['refresh']['successful'] = sum(r.get('sync', {}).get('status') == 'ok' for r in rows.values())
-        feed_path.write_text(json.dumps(feed, indent=2, ensure_ascii=False) + '\n')
+        feed = finalize(feed, previous, 'browser-verified-publisher-refresh')
+        # Both candidates are fully validated before replacing either accepted
+        # file. A Git commit publishes the two files as one repository revision.
+        atomic_write(PATH, cache)
+        atomic_write(feed_path, feed)
     print(json.dumps(dict(adapter=args.adapter, verifiedAt=args.verified_at, values=values), indent=2))
 
 

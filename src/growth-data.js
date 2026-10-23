@@ -1,5 +1,6 @@
 // Forecast years keep the publisher's period labels. Never repeat the last
 // published growth rate into years for which the publisher has no estimate.
+import { metricHealth } from './update-status.js';
 export function validateGrowthForecast(forecast) {
   if (forecast == null) return;
   if (!['calendar-year', 'fiscal-year', 'publisher-year', 'forecast-horizon'].includes(forecast.periodBasis) || !Array.isArray(forecast.estimates) || forecast.estimates.length > 12 || !['consensus', 'house'].includes(forecast.forecastType)) throw new Error('Invalid EPS forecast periods.');
@@ -8,7 +9,7 @@ export function validateGrowthForecast(forecast) {
   if (!Number.isFinite(+date) || date.toISOString().slice(0, 10) !== forecast.asOf) throw new Error('Invalid growth observation date.');
   const years = new Set();
   for (const point of forecast.estimates) {
-    if (!Number.isInteger(point.year) || point.year < 2020 || point.year > 2100 || years.has(point.year) || !Number.isFinite(point.growth) || point.growth <= -100 || point.growth > 1000) throw new Error('Invalid annual EPS growth estimate.');
+    if (!Number.isInteger(point.year) || point.year < 2020 || point.year > 2100 || years.has(point.year) || !Number.isFinite(point.growth) || Math.abs(point.growth) > 1e6) throw new Error('Invalid annual EPS growth estimate.');
     if (forecast.periodBasis === 'forecast-horizon' && !point.periodLabel) throw new Error('Missing forecast endpoint label.');
     years.add(point.year);
   }
@@ -31,8 +32,8 @@ export function sourceGrowthPath(row, years, now = new Date(), overrides = {}) {
 export function growthIsStale(row, now = new Date()) {
   const forecast = row?.growthForecast;
   if (!forecast?.estimates?.length) return true;
-  const age = (+now - +new Date(forecast.asOf + 'T00:00:00Z')) / 86400000;
-  return !Number.isFinite(age) || age > 90 || forecast.sync?.status === 'retained';
+  const status = metricHealth(row,'growthForecast',now);
+  return status.observationStale || status.checkOverdue || status.sourceFailure || status.definitionReview || status.superseded;
 }
 
 export function growthCoverage(feed, now = new Date()) {

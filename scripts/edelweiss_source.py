@@ -106,7 +106,7 @@ def parse_edelweiss_text(text, page=4):
         if len(tokens) != 10 or not all(re.fullmatch(r'\(?-?\d[\d,]*(?:\.\d+)?%?\)?', x) for x in tokens):
             raise ValueError(f'TEMPO {id} row is missing a cell or its column layout changed')
         index, pe, mean, pb, mean_pb, roe = [float(x.replace(',', '').strip('()%')) for x in tokens[:6]]
-        if not (1000 <= index <= 100000 and 1 <= pe <= 100 and 1 <= mean <= 100
+        if not (1000 <= index <= 100000 and 0 <= pe <= 1_000_000 and 0 <= mean <= 1_000_000
                 and 0.1 <= pb <= 30 and 0.1 <= mean_pb <= 30 and 0 <= roe <= 100):
             raise ValueError(f'TEMPO {id} valuation values outside supported ranges')
         result[id] = dict(

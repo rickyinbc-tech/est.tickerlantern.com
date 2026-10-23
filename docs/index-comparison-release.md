@@ -1,3 +1,5 @@
+> Historical implementation record. Current definitions, coverage and acceptance results are documented in [the financial-integrity audit](financial-integrity-audit.md). Counts below describe their original release.
+
 # Global index comparison update — 22 October 2026
 
 ## Result and coverage

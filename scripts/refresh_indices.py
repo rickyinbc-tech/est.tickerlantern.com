@@ -9,6 +9,8 @@ import datetime as dt
 import hashlib
 import html
 import io
+import math
+import copy
 import json
 import logging
 import os
@@ -34,18 +36,19 @@ def plain(text):
     return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', text))).strip()
 
 
+HOSTS = {'www.msci.com', 'insight.factset.com', 'am.jpmorgan.com', 'www.nasdaq.com', 'lipperalpha.refinitiv.com', 'cambridgeretirementma.gov', 'www.ig.com', 'www.raymondjames.ca', 'www.manulife.com', 'cumberlandprivate.com', 'www.aranca.com', 'www.krungsri.com', 'www.ajbell.co.uk', 'www.goodridgegroup.ca', 'www.edelweissmf.com', 'www.scbam.com', 'meetings.sypensions.org.uk'}
+
+
 def fetch(url):
-    if urlparse(url).hostname not in ('www.msci.com', 'insight.factset.com', 'am.jpmorgan.com', 'www.nasdaq.com', 'lipperalpha.refinitiv.com', 'cambridgeretirementma.gov', 'www.ig.com', 'www.raymondjames.ca', 'www.manulife.com', 'cumberlandprivate.com', 'www.aranca.com', 'www.krungsri.com', 'www.ajbell.co.uk', 'www.goodridgegroup.ca', 'www.edelweissmf.com', 'www.scbam.com', 'meetings.sypensions.org.uk'):
-        raise ValueError('Unapproved source host')
-    result = subprocess.run(['curl', '--proto', '=https', '--proto-redir', '=https', '-fsSL', '--max-time', '40', '--retry', '1', '--max-filesize', '24000000', url], capture_output=True)
-    if result.returncode:
+    from public_http import request, checked_url, validate_body
+    checked_url(url, HOSTS)
+    try:
+        return request(url, HOSTS)[0]
+    except ValueError:
         if os.environ.get('PUBLIC_BROWSER_FETCH') == '1' and os.environ.get('GITHUB_ACTIONS') == 'true' and urlparse(url).hostname in ('www.nasdaq.com', 'www.edelweissmf.com'):
             from public_browser_source import fetch_public
-            return fetch_public(url)
-        raise ValueError('Public source request failed: ' + result.stderr.decode('utf-8', 'replace')[:160])
-    if not result.stdout or len(result.stdout) > 24000000:
-        raise ValueError('Empty or oversized source')
-    return result.stdout
+            return validate_body(fetch_public(url), '', url)
+        raise
 
 
 def valid_date(value, now=None):
@@ -58,8 +61,8 @@ def valid_date(value, now=None):
 
 
 def valid_pe(value):
-    if not isinstance(value, (int, float)) or not 1 <= value <= 100:
-        raise ValueError('Forward P/E outside the supported source range')
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or abs(value) > 1_000_000:
+        raise ValueError('Invalid or implausible published P/E; calculator bounds are separate')
     return value
 
 
@@ -71,41 +74,48 @@ def parse_factset(body, published):
     if len(pairs) != 1:
         raise ValueError('Expected exactly one forward-P/E / 10-year-mean paragraph')
     current, _, mean = pairs[0]
-    return dict(forwardPE=valid_pe(float(current)), mean10YearForwardPE=valid_pe(float(mean)), asOf=valid_date(published), meanAsOf=valid_date(published), meanMethod='FactSet reported 10-year average; underlying sampling frequency not specified in the article')
+    return dict(forwardPE=valid_pe(float(current)), mean10YearForwardPE=valid_pe(float(mean)), asOf=valid_date(published), meanAsOf=valid_date(published), meanMethod='FactSet reported 10-year average; underlying sampling frequency not specified in the article', dateBasis='article-publication-date; metric observation date not separately disclosed', publicationDate=published)
 
 
 def parse_msci_text(text, expected):
+    """Parse layout-preserved rows, never infer identity from numeric row order.
+
+    MSCI's fundamentals share a horizontal row with its named performance
+    table. Plain text extraction moves the names away from the fundamentals;
+    layout extraction keeps the label and all twelve cells on the same line.
+    """
     text = unicodedata.normalize('NFKC', text).replace('\xa0', ' ')
-    if not re.search(re.escape(expected) + r'\s+Index\s*\(', re.sub(r'\s+', ' ', text[:1500])):
+    if not re.search(re.escape(expected) + r'\s+Index\s*\(', re.sub(r'\s+', ' ', text[:1800])):
         raise ValueError('Factsheet identity does not match ' + expected)
     match = re.search(r'FUNDAMENTALS\s*\(([A-Za-z]{3}\s+\d{1,2},\s*\d{4})\)(.*?)INDEX RISK', text, re.S)
-    if not match:
-        raise ValueError('Dated fundamentals table not found')
+    if not match: raise ValueError('Dated fundamentals table not found')
     date = dt.datetime.strptime(match[1], '%b %d, %Y').date().isoformat()
     valid_date(date)
     section = match[2]
-    if not re.search(r'Div\s+Yld\s*\(%\)\s+P/E\s+P/E\s+Fwd\s+P/BV', section):
-        raise ValueError('Fundamentals column order changed')
-    rows = []
+    if not re.search(r'Div\s+Yld\s*\(%\)\s+P/E\s+P/E\s+Fwd\s+P/BV', section): raise ValueError('Fundamentals column order changed')
+    rows = {}
     for line in section.splitlines():
-        values = re.fullmatch(r'\s*(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\s*', line)
-        if values:
-            dividend, trailing, forward, book = map(float, values.groups())
-            if not 0 <= dividend <= 15 or not 0 < trailing <= 300 or not 0 < book <= 50:
-                raise ValueError('Invalid fundamentals row')
-            rows.append(dict(forwardPE=valid_pe(forward), dividendYield=dividend, asOf=date, mean10YearForwardPE=None, meanAsOf=None, meanMethod=None))
-    if len(rows) != 3:
-        raise ValueError('Expected three benchmark rows; review the table before refreshing')
+        match = re.fullmatch(r'\s*(MSCI [A-Za-z0-9 &()/-]+?)\s{2,}(.+?)\s*', line)
+        if not match: continue
+        name = re.sub(r'\s+', ' ', match[1]).strip()
+        cells = match[2].split()
+        if len(cells) != 12 or any(not re.fullmatch(r'-?\d+(?:\.\d+)?|N/M|N/A|-', cell) for cell in cells): raise ValueError('Named MSCI row or multi-level table structure changed')
+        if name in rows: raise ValueError('Duplicate named MSCI fundamentals row')
+        dividend, trailing, forward, book = cells[-4:]
+        numeric = lambda cell: None if cell in ('N/M', 'N/A', '-') else float(cell)
+        forward_value, dividend_value = numeric(forward), numeric(dividend)
+        if forward_value is not None: valid_pe(forward_value)
+        if dividend_value is not None and not 0 <= dividend_value <= 1000: raise ValueError('Invalid published dividend yield')
+        rows[name] = dict(forwardPE=forward_value, dividendYield=dividend_value, asOf=date, mean10YearForwardPE=None, meanAsOf=None, meanMethod=None, rawForwardPE=forward, rawDividendYield=dividend, metricStates={'forwardPE': 'not-meaningful' if forward == 'N/M' else 'unavailable' if forward_value is None else 'numeric', 'dividendYield': 'unavailable' if dividend_value is None else 'numeric'})
+    if len(rows) != 3 or expected not in rows: raise ValueError('Expected three unambiguous named benchmark rows')
     return rows
 
 
 def parse_msci_pdf(body, expected):
-    if not body.startswith(b'%PDF'):
-        raise ValueError('Source returned a challenge or HTML instead of a PDF')
+    if not body.startswith(b'%PDF'): raise ValueError('Source returned a challenge or HTML instead of a PDF')
     reader = PdfReader(io.BytesIO(body))
-    if not 1 <= len(reader.pages) <= 8:
-        raise ValueError('Unexpected factsheet page count')
-    return parse_msci_text(reader.pages[0].extract_text(), expected)
+    if not 1 <= len(reader.pages) <= 8: raise ValueError('Unexpected factsheet page count')
+    return parse_msci_text(reader.pages[0].extract_text(extraction_mode='layout'), expected)
 
 
 def discover_msci_pdf(body):
@@ -138,17 +148,28 @@ def update_metrics(record, values, source, checked):
     mean_date = valid_date(values['meanAsOf']) if values.get('meanAsOf') else None
     if values.get('forwardPE') is not None and not date: raise ValueError('Missing forward observation date')
     if values.get('mean10YearForwardPE') is not None and (not mean_date or not values.get('meanMethod')): raise ValueError('Missing mean provenance')
-    if values.get('dividendYield') is not None and (not date or not isinstance(values['dividendYield'], (int, float)) or not 0 <= values['dividendYield'] <= 15): raise ValueError('Invalid or undated source dividend yield')
+    if values.get('dividendYield') is not None and (not date or isinstance(values['dividendYield'], bool) or not isinstance(values['dividendYield'], (int, float)) or not math.isfinite(values['dividendYield']) or not 0 <= values['dividendYield'] <= 1000): raise ValueError('Invalid or undated source dividend yield')
     def accepted(incoming, retained, source_key):
         # On equal dates prefer explicit 12-month-forward primary tables over
         # secondary tables whose forward horizon is less precisely described.
         rank = lambda evidence: 70 if (evidence or {}).get('adapterId') in ('edelweiss-reference', 'nasdaq-dashboard') else 50
         return not retained or incoming > retained or (incoming == retained and rank(source) >= rank(record.get(source_key)))
     status = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)
+    for metric, state in values.get('metricStates', {}).items():
+        if state not in ('not-meaningful', 'withdrawn', 'unavailable'): continue
+        date_key, source_key, sync_key = ('asOf', 'source', 'sync') if metric == 'forwardPE' else ('yieldAsOf', 'yieldSource', 'yieldSync')
+        if date and accepted(date, record.get(date_key), source_key):
+            record.update({metric: None, date_key: date, source_key: source, sync_key: {**status, 'status': state}})
+            record.setdefault('metricStates', {})[metric] = state
+            record.setdefault('metricRawValues', {})[metric] = values.get('rawForwardPE' if metric == 'forwardPE' else 'rawDividendYield')
     if values.get('forwardPE') is not None and accepted(date, record.get('asOf'), 'source'):
-        record.update(forwardPE=values['forwardPE'], asOf=date, source=source, sync=status, earningsBasis=values.get('earningsBasis', 'Forward 12-month earnings'), forwardMethod=values.get('forwardMethod'))
+        record.setdefault('metricStates', {})['forwardPE'] = 'numeric'
+        record.setdefault('metricRawValues', {})['forwardPE'] = values.get('rawForwardPE', values['forwardPE'])
+        record.update(forwardPE=values['forwardPE'], asOf=date, source={**source, 'dateBasis': values.get('dateBasis', source.get('dateBasis', 'explicit-observation-date')), 'publicationDate': values.get('publicationDate', source.get('publicationDate'))}, sync=status, earningsBasis=values.get('earningsBasis', 'not disclosed'), forwardMethod=values.get('forwardMethod'))
     if values.get('dividendYield') is not None and accepted(date, record.get('yieldAsOf'), 'yieldSource'):
-        record.update(dividendYield=values['dividendYield'], yieldAsOf=date, yieldSource=source)
+        record.setdefault('metricStates', {})['dividendYield'] = 'numeric'
+        record.setdefault('metricRawValues', {})['dividendYield'] = values.get('rawDividendYield', values['dividendYield'])
+        record.update(dividendYield=values['dividendYield'], yieldAsOf=date, yieldSource=source, yieldSync=status)
     if values.get('mean10YearForwardPE') is not None and accepted(mean_date, record.get('meanAsOf'), 'meanSource'):
         if not values.get('meanMethod') or not mean_date: raise ValueError('Missing mean provenance')
         record.update(mean10YearForwardPE=values['mean10YearForwardPE'], meanAsOf=mean_date, meanMethod=values['meanMethod'], meanSource=source, meanSync=status)
@@ -193,18 +214,13 @@ def refresh(render_qa=False):
             if 'S&P 500' in title and urlparse(url).hostname == 'insight.factset.com':
                 date = parsedate_to_datetime(item.findtext('pubDate')).date().isoformat()
                 articles.append((date, url))
-        last_error = None
-        for date, url in sorted(articles, reverse=True)[:8]:
-            try:
-                body = fetch(url)
-                values = parse_factset(body.decode('utf-8', 'replace'), date)
-                update_metrics(by_id['sp500'], values, dict(publisher='FactSet', url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily'), checked)
-                successes.append('sp500')
-                break
-            except (ValueError, TypeError) as exc:
-                last_error = exc
-        else:
-            raise ValueError('No recent complete valuation paragraph: ' + str(last_error))
+        candidates = [(date, url) for date, url in articles if 'earnings-season' in url]
+        if not candidates: raise ValueError('No explicitly identified FactSet earnings-season article discovered')
+        date, url = max(candidates)
+        body = fetch(url)
+        values = parse_factset(body.decode('utf-8', 'replace'), date)
+        update_metrics(by_id['sp500'], values, dict(publisher='FactSet', url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily', publicationDate=date, dateBasis=values['dateBasis']), checked)
+        successes.append('sp500')
     except Exception as exc:
         failed(['sp500'], exc)
 
@@ -222,10 +238,15 @@ def refresh(render_qa=False):
                 qa = ROOT / 'qa/source-pages'
                 qa.mkdir(parents=True, exist_ok=True, mode=0o700)
                 subprocess.run(['pdftoppm', '-f', '1', '-singlefile', '-scale-to', '1500', '-jpeg', '-jpegopt', 'quality=70', '-', str(qa / id)], input=body, capture_output=True, check=True)
-            for i, target_id in enumerate(target_ids):
-                if id == 'acwi' and not all(label in PdfReader(io.BytesIO(body)).pages[0].extract_text() for label in ['MSCI ACWI', 'MSCI World', 'MSCI Emerging Markets']):
-                    raise ValueError('ACWI comparison row identities changed')
-                update_metrics(by_id[target_id], values[i], source, checked)
+            candidates = {}
+            for target_id in target_ids:
+                target_name = by_id[target_id]['name']
+                if target_name not in values: raise ValueError('Named MSCI comparison row missing: ' + target_name)
+                candidate = copy.deepcopy(by_id[target_id])
+                update_metrics(candidate, values[target_name], source, checked)
+                candidates[target_id] = candidate
+            for target_id, candidate in candidates.items():
+                by_id[target_id].update(candidate)
                 successes.append(target_id)
         except Exception as exc:
             failed(target_ids, exc)
@@ -233,8 +254,11 @@ def refresh(render_qa=False):
     from source_jobs import refresh_supplemental
     source_jobs = refresh_supplemental(by_id, fetch, update_metrics, checked, render_qa)
     healthy = ('ok', 'browser-verified')
-    result = dict(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC plus daily scheduled browser source checks', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] in healthy for id in job['indices']}), failed=len(failures) + sum(j['status'] not in healthy for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
-    path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
+    result = dict(previous)
+    result.update(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC plus daily scheduled browser source checks', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] in healthy for id in job['indices']}), failed=len(failures) + sum(j['status'] not in healthy for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
+    from snapshot import finalize, atomic_write
+    result = finalize(result, previous, 'valuation-publisher-refresh')
+    atomic_write(path, result)
     for job in source_jobs:
         print(f"Source {job['id']}: {job['status']}; {job['error'] or 'validated'}")
     for row in rows:

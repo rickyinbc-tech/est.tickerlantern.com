@@ -3,6 +3,9 @@ import { validateFeed, isStale, premium, isDatedMean, historyCoverage, browserCh
 
 import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis, loadScenarios, saveScenarios } from './scenario-state.js';
 import { sourceGrowthPath, growthCoverage, growthIsStale, nextForecastYear } from './growth-data.js';
+import { historicalAssessment, canCompareHistory, eligibleExitMean, metricDisplay, metricDateBasis } from './valuation-policy.js';
+import { assertSnapshotAdvance } from './snapshot-client.js';
+import { updateHealth, checkTime, metricStatusText } from './update-status.js';
 
 document.documentElement.classList.add('js-enabled');
 const $ = id => document.getElementById(id);
@@ -43,10 +46,10 @@ function renderGrowthEditor() {
   const sourced = $('growthMode').value === 'source', annual = $('growthMode').value !== 'constant', years = +$('years').value;
   $('annual-growth-panel').hidden = !annual;
   const forecast = selectedIndex()?.growthForecast;
-  $('scenario-growth-source').innerHTML = forecast ? `<strong>${forecast.forecastType==='house'?'Publisher house forecast':'Published consensus estimates'}${growthIsStale(selectedIndex())?' · dated or retained':''}</strong><span>${escape(forecast.source.publisher)} · observed ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small>Publisher periods are scenario inputs, not a date-matched rolling-NTM EPS forecast.</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
+  $('scenario-growth-source').innerHTML = forecast ? `<strong>${sourced?(forecast.forecastType==='house'?'Publisher house forecast':'Published consensus estimates'):(forecast.forecastType==='house'?'Available house forecast':'Available consensus estimates')}${metricStatusText(selectedIndex(),'growthForecast')?' · '+escape(metricStatusText(selectedIndex(),'growthForecast')):''}</strong><span>${escape(forecast.source.publisher)} · ${metricDateBasis(selectedIndex(),'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small>${sourced?'Publisher periods are scenario inputs, not a date-matched rolling-NTM EPS forecast.':'Manual growth mode is active. The published estimates are reference only.'}</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
   $('growth').closest('.field').hidden = sourced;
   $('fill-annual-growth').hidden = sourced;
-  $('annual-growth-heading-text').textContent = sourced ? 'Published annual growth inputs' : 'Your yearly EPS path';
+  $('annual-growth-heading-text').textContent = sourced ? 'Source-linked and custom yearly rates' : 'Your yearly EPS path';
   $('annual-growth-explanation').textContent = sourced ? 'Linked years follow source revisions. Edit any year to protect your own assumption; other years keep syncing. Unpublished years stay blank until you supply a rate.' : 'Change any year independently. Shortening the holding period keeps later years saved for when you extend it again.';
   if (sourced && !sourceFollowing) $('annual-growth-explanation').textContent = 'Source following is paused. Saved rates are kept. Restore published years to resume linked updates.';
   $('restore-growth-years').hidden = !sourced;
@@ -67,7 +70,7 @@ function renderGrowthEditor() {
     const point = selectedIndex()?.growthForecast?.estimates.find(point => point.year === growthStartYear + i);
     const custom = sourced && Object.hasOwn(growthOverrides,growthStartYear+i);
     input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? `${point?.periodLabel || growthStartYear+i}${custom ? ' · your assumption' : point ? ' · linked' : ' · enter assumption'}` : `Year ${i + 1} EPS growth`;
-    if (input !== document.activeElement) input.value = annualGrowth[i];
+    if (input !== document.activeElement || sourced && !custom) input.value = annualGrowth[i];
   }
 }
 
@@ -75,7 +78,7 @@ function renderGrowthForecast(row) {
   const forecast = row.growthForecast, path = sourceGrowthPath(row, 1);
   $('use-source-growth').disabled = !path.coveredYears;
   $('growth-forecast-body').innerHTML = forecast?.estimates?.length ? forecast.estimates.map(point => `<tr><th scope="row">${escape(point.periodLabel || point.year + ' estimate')}</th><td>${rateLabel(point.growth)}%</td></tr>`).join('') : '<tr><td colspan="2">No verified annual earnings-growth forecast is connected for this exact benchmark.</td></tr>';
-  $('growth-forecast-status').textContent = forecast?.estimates?.length ? `${forecast.forecastType === 'house' ? 'Publisher house forecast' : 'Published consensus estimates'} · observed ${dateLabel(forecast.asOf)}${growthIsStale(row) ? ' · dated or retained' : ''}` : 'Annual growth evidence unavailable';
+  $('growth-forecast-status').textContent = forecast?.estimates?.length ? `${forecast.forecastType === 'house' ? 'Publisher house forecast' : 'Published consensus estimates'} · ${metricDateBasis(row,'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)}${metricStatusText(row,'growthForecast') ? ' · '+metricStatusText(row,'growthForecast') : ''}` : 'Annual growth evidence unavailable';
   $('growth-forecast-method').textContent = forecast ? `${forecast.method} ${forecast.sync?.status === 'retained' ? 'The latest source check failed; the last verified estimates and dates are retained. ' : ''}${path.coveredYears ? `Published future coverage: ${path.startYear}–${path.startYear + path.coveredYears - 1}.` : `No published ${nextForecastYear()} estimate is connected.`}` : 'A valuation observation is not evidence of future earnings growth. No uniform 6% forecast or different-index proxy is substituted.';
   const link = $('growth-forecast-source');
   link.hidden = !forecast?.source?.url;
@@ -206,20 +209,24 @@ function renderIndexList() {
   const focusedContainer = focused?.closest('#index-list, #index-comparison-body')?.id;
   const query = $('index-search').value.trim().toLowerCase(), region = $('index-region').value;
   const rows = indexFeed.indices.filter(row => (region === 'all' || row.region === region) && `${row.name} ${row.region} ${row.description}`.toLowerCase().includes(query));
-  $('index-list').innerHTML = rows.map(row => `<button type="button" class="index-choice" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}"><span>${escape(row.name)}<small>${escape(row.region)}${isStale(row) ? ' · retained' : ''}</small></span><strong>${peLabel(row.forwardPE)}</strong></button>`).join('');
+  $('index-list').innerHTML = rows.map(row => `<button type="button" class="index-choice" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}"><span>${escape(row.name)}<small>${escape(row.region)}${isStale(row) ? ' · retained' : ''}</small></span><strong>${metricDisplay(row,'forwardPE')}</strong></button>`).join('');
   $('index-empty').hidden = rows.length > 0;
-  $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${peLabel(row.forwardPE)}</td><td>${peLabel(row.mean10YearForwardPE)}${row.meanAsOf ? `<small>${dateLabel(row.meanAsOf)}${isDatedMean(row) ? ' · dated reference' : ''}</small>` : ''}</td><td>${row.dividendYield == null ? '—' : n(row.dividendYield) + '%'}</td><td>${row.growthForecast?.estimates.map(p => `${escape(p.periodLabel || p.year)}: ${rateLabel(p.growth)}%`).join('<br>') || '—'}${row.growthForecast ? `<small>${row.growthForecast.forecastType === 'house' ? 'House forecast' : 'Consensus'} · ${dateLabel(row.growthForecast.asOf)}${growthIsStale(row) ? ' · dated/retained' : ''}</small>` : ''}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
+  $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${metricDisplay(row,'forwardPE')}</td><td>${metricDisplay(row,'mean10YearForwardPE')}${row.meanAsOf ? `<small>${dateLabel(row.meanAsOf)}${isDatedMean(row) ? ' · dated reference' : ''}</small>` : ''}</td><td>${metricDisplay(row,'dividendYield')}</td><td>${row.growthForecast?.estimates.map(p => `${escape(p.periodLabel || p.year)}: ${rateLabel(p.growth)}%`).join('<br>') || '—'}${row.growthForecast ? `<small>${row.growthForecast.forecastType === 'house' ? 'House forecast' : 'Consensus'} · ${dateLabel(row.growthForecast.asOf)}${metricStatusText(row,'growthForecast') ? ' · '+escape(metricStatusText(row,'growthForecast')) : ''}</small>` : ''}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
   if (focusedContainer && focusedId) $(focusedContainer).querySelector(`button[data-index="${focusedId}"]`)?.focus({preventScroll:true});
 }
 
 function indexValuationChart(row) {
+  if (!canCompareHistory(row)) {
+    $('index-valuation-chart').innerHTML = '<p class="chart-fallback">Direct comparison is withheld. Review the definition assessment under Sources, dates and limitations. The published reference remains visible above.</p>';
+    return;
+  }
   if (row.forwardPE == null) {
     $('index-valuation-chart').innerHTML = '<p class="chart-fallback">Forward valuation data is not connected for this exact benchmark. Open the provider page below; the scenario controls remain illustrative.</p>';
     return;
   }
   const width = Math.min(430,chartWidth('index-valuation-chart')), height = 156, left = 104, plotW = width - left - 65;
   const max = Math.ceil(Math.max(row.forwardPE, row.mean10YearForwardPE || 0) * 1.2 / 5) * 5;
-  let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="index-chart-title index-chart-desc"><title id="index-chart-title">${escape(row.name)} forward valuation comparison</title><desc id="index-chart-desc">Current ${peLabel(row.forwardPE)}. ${row.mean10YearForwardPE == null ? 'A ten-year average is not available.' : 'Publisher-reported ten-year mean ' + peLabel(row.mean10YearForwardPE) + '.'}</desc>`;
+  let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="index-chart-title index-chart-desc"><title id="index-chart-title">${escape(row.name)} forward valuation comparison</title><desc id="index-chart-desc">Current ${metricDisplay(row,'forwardPE')}. ${row.mean10YearForwardPE == null ? 'A ten-year average is not available.' : 'Publisher-reported ten-year mean ' + peLabel(row.mean10YearForwardPE) + '.'}</desc>`;
   for (let v = 0; v <= max; v += max / 4) {
     const x = left + plotW * v / max;
     svg += `<line x1="${x}" x2="${x}" y1="20" y2="118" stroke="#dce5ed"/>` + svgText(x, 140, short(v) + '×', 'fill="#556779" font-size="12" text-anchor="middle"');
@@ -230,7 +237,7 @@ function indexValuationChart(row) {
     if (value == null) svg += svgText(left + 8, y + 17, 'Not available', 'fill="#556779" font-size="13"');
     else {
       const barW = plotW * value / max;
-      svg += `<rect x="${left}" y="${y}" width="${barW}" height="27" fill="${color}" rx="2"/>` + svgText(left + barW + 9, y + 18, peLabel(value), `fill="${color}" font-size="12" font-weight="600"`);
+      svg += `<rect x="${left}" y="${y}" width="${barW}" height="27" fill="${color}" rx="2"/>` + svgText(left + barW + 9, y + 18, metricDisplay(row,i===0?'forwardPE':'mean10YearForwardPE'), `fill="${color}" font-size="12" font-weight="600"`);
     }
   }
   $('index-valuation-chart').innerHTML = svg + '</svg>';
@@ -247,14 +254,15 @@ function renderScenarioContext() {
   $('scenario-mode-label').textContent = `${row?.forwardPE == null ? 'Manual assumptions · source valuation unavailable' : sourceFollowing ? 'Available source fields follow updates' : 'Source following paused'} · ${protectedCount ? `${protectedCount} edited inputs protected` : $('growthMode').value === 'source' ? 'published growth follows updates' : 'custom growth assumption'}`;
   const provenance = (key, evidence, date) => `${escape(evidence?.publisher || 'Publisher')} · ${dateLabel(date)}${evidence?.url ? ` · <a href="${escape(evidence.url)}" target="_blank" rel="noopener noreferrer">Source</a>` : ''}`;
   for (const key of ['growth','entryPE','exitPE','payout','dividendYield','years']) {
-    const basis = fieldBasis(key, row, locks, sourceFollowing);
-    const forecastHorizon = key==='years' && basis==='default' && $('growthMode').value==='source';
+    let basis = fieldBasis(key, row, locks, sourceFollowing);
+    if (key==='growth' && $('growthMode').value!=='source' && !locks.growth) basis='default';
+    const forecastHorizon = key==='years' && basis==='default' && $('growthMode').value==='source' && sourceGrowthPath(row,1).coveredYears>0;
     const label = forecastHorizon ? 'Available forecast horizon' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
     let detail = '';
     if (basis === 'source') detail = key === 'dividendYield' ? provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf) : provenance(key,row.source,row.asOf);
     if (basis === 'forecast') detail = provenance(key,row.growthForecast.source,row.growthForecast.asOf);
     if (basis === 'reference') detail = provenance(key,row.meanSource || row.source,row.meanAsOf);
-    if (basis === 'fallback') detail = 'No ten-year mean; exit equals entry. Scenario assumption.';
+    if (basis === 'fallback') detail = 'No eligible historical default. Exit follows your active entry P/E until you edit the exit; this is an illustrative constant-multiple assumption.';
     if (basis === 'default') detail = key === 'growth' ? '6% EPS growth assumption; no forecast connected.' : key === 'years' ? 'Five-year holding period assumption.' : key === 'payout' ? '30% payout assumption; no reported payout connected.' : key === 'dividendYield' ? 'No reported yield. Enter your own assumption.' : 'No source valuation. Edit this illustrative assumption.';
     if (basis === 'custom') detail = 'Saved for this benchmark; protected from source updates.';
     if (basis === 'manual') detail = 'Source following is paused. Your current scenario is kept.';
@@ -271,7 +279,7 @@ function renderScenarioContext() {
     return;
   }
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
-  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : row.mean10YearForwardPE != null ? `${isDatedMean(row) ? 'dated 10-year reference' : 'reported 10-year mean'} as of ${dateLabel(row.meanAsOf)}` : 'flat-multiple assumption; 10-year mean unavailable';
+  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : eligibleExitMean(row) ? `illustrative mean-reversion to an assessed historical reference, reported ${dateLabel(row.meanAsOf)}` : +input.exitPE === +input.entryPE ? 'illustrative constant P/E; follows active entry' : 'illustrative exit assumption';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendMode && !locks.dividendYield ? ' anchored to the historical source yield' : ' (custom)'}` : `${short(input.payout)}% assumed payout; not a reported payout`;
   const growthBasis = input.growthMode === 'source' ? `yearly growth path [${input.annualGrowth.map((value, i) => `${input.growthStartYear + i}: ${rateLabel(value)}%${Object.hasOwn(growthOverrides,input.growthStartYear+i)?' custom':' linked'}`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
   $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. ${input.growthMode === 'source' ? 'Publisher years are applied in sequence as scenario inputs; they are not a date-matched rolling-NTM forecast.' : 'Custom growth rates are your assumptions.'}`;
@@ -284,26 +292,28 @@ function renderIndexDetail() {
   $('selected-index-region').textContent = row.region;
   $('selected-index-name').textContent = row.name;
   $('selected-index-description').textContent = row.description;
-  $('index-current-pe').textContent = peLabel(row.forwardPE);
-  $('index-current-date').textContent = row.asOf ? 'As of ' + dateLabel(row.asOf) : 'No connected forward valuation';
-  $('index-mean-pe').textContent = peLabel(row.mean10YearForwardPE);
+  $('index-current-pe').textContent = metricDisplay(row,'forwardPE');
+  $('index-current-date').textContent = row.asOf ? metricDateBasis(row,'forwardPE')+' '+dateLabel(row.asOf) : 'No connected forward valuation';
+  $('index-mean-pe').textContent = metricDisplay(row,'mean10YearForwardPE');
   $('index-mean-date').textContent = row.meanAsOf ? (isDatedMean(row) ? 'Dated reference · ' : 'Reported ') + dateLabel(row.meanAsOf) : 'Verified 10-year mean unavailable';
-  $('index-yield').textContent = row.dividendYield == null ? '—' : n(row.dividendYield) + '%';
+  $('index-yield').textContent = metricDisplay(row,'dividendYield');
   $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.yieldAsOf || row.asOf);
   const gap = premium(row);
   $('index-premium').textContent = gap == null ? '—' : `${gap >= 0 ? '+' : '−'}${Math.abs(gap * 100).toFixed(2)}%`;
   $('index-premium-label').textContent = gap == null ? 'Historical comparison' : isDatedMean(row) ? 'Relative to the dated 10-year reference' : 'Relative to the published 10-year mean';
-  $('index-premium-note').textContent = gap == null ? 'A verified 10-year forward-P/E mean is not available. A trailing multiple, CAPE or shorter history is not a substitute.' : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its published reference. ${isDatedMean(row) ? `Its 10-year window ends ${dateLabel(row.meanAsOf)}, not today. ` : ''}Different providers’ earnings estimates and aggregation methods can differ. This comparison does not determine fair value or establish an expected return.`;
+  const assessment = historicalAssessment(row);
+  $('index-premium-note').textContent = gap == null ? `${assessment.outcome === 'insufficient' ? 'Insufficient comparison evidence' : 'Qualified historical reference'}. ${assessment.reasons[0] || ''} No direct premium/discount or historical exit default is offered.` : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its assessed comparable reference. Its reference date is ${dateLabel(row.meanAsOf)}; undisclosed window endpoints and sampling remain unknown. This is not fair value or an expected return.`;
   const stale = isStale(row);
   $('selected-data-badge').textContent = row.forwardPE == null ? 'Valuation not connected' : stale ? 'Retained observation' : 'Sourced observation';
   $('selected-data-badge').classList.toggle('retained-badge', stale || row.forwardPE == null);
   const source = row.source, url = source?.url || row.profileUrl;
   const evidenceLink = (label, evidence, date) => `<span>${escape(label)} — ${escape(evidence?.publisher || 'Benchmark provider')}${date ? ' · ' + dateLabel(date) : ''}${evidence?.page ? ' · PDF page ' + evidence.page : ''} · <a href="${escape(evidence?.url || row.profileUrl)}" target="_blank" rel="noopener noreferrer">Open source ↗</a></span>`;
   $('index-source-line').innerHTML = evidenceLink('Forward P/E', source, row.asOf) + (row.mean10YearForwardPE != null ? evidenceLink('10-year reference', row.meanSource || source, row.meanAsOf) : '') + (row.dividendYield != null && row.yieldSource?.url !== source?.url ? evidenceLink('Dividend yield', row.yieldSource || source, row.yieldAsOf || row.asOf) : '');
-  const historicalNote = row.mean10YearForwardPE == null ? 'No verified 10-year mean is connected. The default exit equals the current multiple as an explicit flat-multiple scenario.' : `${isDatedMean(row) ? `Dated historical reference: its 10-year window ends ${dateLabel(row.meanAsOf)}. This is not the latest rolling 10-year average. ` : ''}${row.meanMethod.replace(/\.\s*$/, '')}. ${row.meanSync?.status === 'retained' || browserCheckOverdue(row.meanSource) ? 'The historical-source check failed or is overdue; the last verified mean and date are retained. ' : ''}`;
+  const historicalNote = row.mean10YearForwardPE == null ? 'No verified 10-year mean is connected. The illustrative exit follows the active entry P/E until edited.' : `${isDatedMean(row) ? `Dated historical reference, reported ${dateLabel(row.meanAsOf)}. This is not presented as the latest rolling 10-year average. ` : ''}${row.meanMethod.replace(/\.\s*$/, '')}. ${assessment.reasons.join(' ')} ${metricStatusText(row,'mean10YearForwardPE')}`;
   const browserEvidence = [source, row.meanSource].find(evidence => evidence?.transport === 'scheduled-browser');
   const browserNote = browserEvidence ? ` Daily browser source check: last verified ${dateLabel(browserEvidence.checkedAt)}. This check requires the owner’s Mac and Codex to be available; missed checks are flagged after 48 hours.` : '';
-  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated forward valuation is connected for this exact benchmark; no different index or ETF is substituted.' : `${row.earningsBasis || 'Forward earnings'}${row.forwardMethod ? ' · ' + row.forwardMethod : ''}. ${historicalNote}${browserNote}${stale ? ' The current multiple is a retained observation; its publisher date has not been advanced.' : ''}`;
+  const horizon=row.metricDefinitions?.forwardPE?.economic?.horizon;
+  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated forward valuation is connected for this exact benchmark; no different index or ETF is substituted.' : `${horizon==='rolling-12m'?'Rolling next-twelve-month earnings denominator':horizon==='forward-unspecified'?'Forward earnings horizon not disclosed':'Synthetic scenario use; exact earnings-period mapping is qualified'}. ${metricStatusText(row,'forwardPE')}. ${historicalNote}${browserNote}`;
   $('restore-source').disabled = row.forwardPE == null;
   indexValuationChart(row);
   renderScenarioContext();
@@ -348,7 +358,7 @@ async function loadIndexData({ manual = false } = {}) {
       if (!fallback.ok) throw new Error('Snapshot unavailable');
       feed = { ...validateFeed(await fallback.json()), transport: 'bundled-fallback' };
     }
-    if (indexFeed && feed.publishedAt < indexFeed.publishedAt) throw new Error('An older snapshot was returned');
+    assertSnapshotAdvance(indexFeed, feed);
     const firstLoad = !indexFeed;
     indexFeed = feed;
     if (firstLoad) {
@@ -357,11 +367,13 @@ async function loadIndexData({ manual = false } = {}) {
     }
     const observed = feed.indices.filter(row => row.forwardPE != null).length;
     $('coverage-count').textContent = `${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`;
-    $('data-check-date').textContent = 'Source checks (PT): ' + dateLabel(feed.sourceCheckAt);
+    $('data-check-date').textContent = 'Valuation checks: ' + checkTime(feed.sourceCheckAt);
     $('history-coverage').textContent = historyCoverage(feed);
     $('growth-coverage').textContent = growthCoverage(feed);
+    const health = updateHealth(feed);
+    $('source-snapshot-status').textContent = `${feed.snapshotId ? `Snapshot ${feed.snapshotVersion} · ${feed.snapshotId.slice(0,12)}` : 'Legacy snapshot'} · published ${checkTime(feed.publishedAt)}. EPS checks: ${checkTime(feed.growthCheckAt)}. ${health.message} Loading a snapshot does not contact publishers. Scheduled execution: ${checkTime(feed.lastScheduledCheckAt)}.`;
     applySourceValues(); renderIndexList(); renderIndexDetail();
-    $('index-update-status').textContent = feed.transport === 'bundled-fallback' ? 'Showing the bundled verified snapshot. The latest published feed could not be reached; source dates have not been advanced.' : feed.transport === 'bundled-newer' ? 'Showing the newer verified snapshot included with this report while the published feed cache catches up. Source dates and custom assumptions remain protected.' : `Latest published snapshot loaded. Sources checked ${dateLabel(feed.sourceCheckAt)}. Publisher observations update on their own schedules; edited assumptions remain protected.`;
+    $('index-update-status').textContent = feed.transport === 'bundled-fallback' ? 'Showing the validated bundled snapshot. The latest published feed could not be reached; source dates have not been advanced.' : feed.transport === 'bundled-newer' ? 'Showing the newer validated snapshot included with this report while the published feed cache catches up. Source dates and custom assumptions remain protected.' : 'Latest published snapshot loaded. Publisher checks occur separately; your edited assumptions remain protected.';
   } catch {
     $('index-update-status').textContent = indexFeed ? 'The update check failed. Previously loaded observations and your scenario are retained.' : 'Source data could not load. The manual scenario uses labelled model defaults; enter your own assumptions or check again.';
   } finally { updateInProgress = false; $('check-data').disabled = false; }
@@ -396,6 +408,7 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 
 function update({ announce = true, reanchor = false } = {}) {
   clearTimeout(announceTimer);
+  if (selectedIndex() && sourceFollowing && !indexOverrides.get(selectedIndexId)?.exitPE && !eligibleExitMean(selectedIndex())) $('exitPE').value = $('entryPE').value;
   renderGrowthEditor();
   const input = readInputs();
   $('payout-field').hidden = input.dividendMode === 'yield';
@@ -497,7 +510,13 @@ $('sensitivity-body').addEventListener('click', event => {
 });
 $('download-csv').addEventListener('click', () => {
   if (!activeModel) return;
-  const blob = new Blob([annualCSV(activeModel, sourceFollowing ? selectedIndex()?.growthForecast : undefined)], { type: 'text/csv;charset=utf-8' });
+  const row = selectedIndex();
+  const locks=indexOverrides.get(selectedIndexId) || {};
+  const context={benchmarkId:selectedIndexId,snapshotId:indexFeed?.snapshotId,snapshotVersion:indexFeed?.snapshotVersion,publishedAt:indexFeed?.publishedAt,sourceFollowing,
+    entryMetric:sourceFollowing && !locks.entryPE ? row?.metricDefinitions?.forwardPE : {classification:'user-assumption',value:activeModel.input.entryPE,units:'times'},
+    exitMetric:sourceFollowing && !locks.exitPE && eligibleExitMean(row) ? row?.metricDefinitions?.mean10YearForwardPE : {classification:sourceFollowing && !locks.exitPE?'illustrative-constant-multiple':'user-assumption',value:activeModel.input.exitPE,units:'times'},
+    yieldMetric:activeModel.input.dividendMode!=='yield'?null:sourceFollowing && !locks.dividendMode && !locks.dividendYield ? row?.metricDefinitions?.dividendYield : {classification:'user-assumption',value:activeModel.input.dividendYield,units:'percent'},fieldOverrides:locks};
+  const blob = new Blob([annualCSV(activeModel, sourceFollowing ? row?.growthForecast : undefined, context)], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob), anchor = document.createElement('a');
   anchor.href = url; anchor.download = `tickerlantern-${selectedIndexId}-scenario-cash-flows.csv`; anchor.hidden = true;
   document.body.append(anchor); anchor.click();

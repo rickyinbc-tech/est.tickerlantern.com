@@ -60,10 +60,10 @@ def parse_dashboard(text, today=None):
             raise ValueError('Expected exactly one dashboard row for ' + key)
         values = [float(re.sub(r'[\s,]', '', value)) for value in matches[0]]
         price, *_, dividend, forward, mean, premium = values
-        if price <= 0 or not 0 <= dividend <= 15 or not 1 <= forward <= 100 or not 1 <= mean <= 100:
+        if price <= 0 or not 0 <= dividend <= 1000 or not 0 <= forward <= 1_000_000 or not 0 <= mean <= 1_000_000:
             raise ValueError('Dashboard fundamentals outside accepted bounds')
         # The displayed premium is rounded to one decimal percent.
-        if abs((forward / mean - 1) * 100 - premium) > 0.2:
+        if mean != 0 and abs((forward / mean - 1) * 100 - premium) > 0.2:
             raise ValueError('Dashboard premium does not reconcile to the P/E columns')
         date = observed.isoformat()
         rows[key] = dict(forwardPE=forward, mean10YearForwardPE=mean,

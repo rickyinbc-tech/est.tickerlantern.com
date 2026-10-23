@@ -51,11 +51,11 @@ def discover_reports(feed_bytes, today=None):
 def parse_printed_number(text):
     text = re.sub(r'\s+', '', text).lower()
     # Do not correct or guess digits. The printed multiple must be unambiguous.
-    match = re.fullmatch(r'(\d{1,2}\.\d{1,2})[x×]', text)
+    match = re.fullmatch(r'(\d{1,6}\.\d{1,2})[x×]', text)
     if not match:
         raise ValueError('Unambiguous printed P/E label was not recognized')
     value = float(match[1])
-    if not 1 <= value <= 100:
+    if not 0 <= value <= 1_000_000:
         raise ValueError('Printed P/E label outside supported range')
     return value
 
@@ -166,15 +166,12 @@ def parse_report(body, published, ocr=ocr_label, read_text=ocr_text):
 
 
 def refresh_lseg_stoxx(fetch, today=None):
-    last_error = None
-    for date, url, article in discover_reports(fetch(FEED), today):
-        try:
-            body = fetch(url)
-            values = parse_report(body, date)
-            source = dict(publisher='LSEG Datastream', url=url, discoveryUrl=FEED,
-                          articleUrl=article, page=8, sha256=hashlib.sha256(body).hexdigest(),
-                          parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily')
-            return values, source
-        except (ValueError, subprocess.SubprocessError) as error:
-            last_error = error
-    raise ValueError('No complete LSEG STOXX 600 pair: ' + str(last_error))
+    reports = discover_reports(fetch(FEED), today)
+    if not reports: raise ValueError('No dated LSEG STOXX 600 report discovered')
+    date, url, article = reports[0]
+    body = fetch(url)
+    values = parse_report(body, date)
+    source = dict(publisher='LSEG Datastream', url=url, discoveryUrl=FEED,
+                  articleUrl=article, page=8, sha256=hashlib.sha256(body).hexdigest(),
+                  parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily')
+    return values, source

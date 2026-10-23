@@ -35,6 +35,19 @@ jobs:
         continue-on-error: true
         run: python scripts/refresh_growth.py
       - run: npm test
+      - name: Record accepted snapshot and source-check outcome
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          feed = json.loads(Path('data/indices.json').read_text())
+          summary = [f"Snapshot: `{feed.get('snapshotId', 'legacy')}` (version {feed.get('snapshotVersion', 'legacy')})", f"Published: {feed.get('publishedAt')}", f"Valuation checks: {feed.get('sourceCheckAt')}", f"Growth checks: {feed.get('growthCheckAt')}", f"Trigger: {os.environ.get('GITHUB_EVENT_NAME')} (a manual dispatch is not scheduled-run evidence)"]
+          summary += [f"- {job['id']}: {job['status']}" for job in feed.get('sourceJobs', [])]
+          summary += [f"- Growth {job['adapter']}: {job['error']}" for job in feed.get('growthRefresh', {}).get('failures', [])]
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+              stream.write('\n\n'.join(summary) + '\n')
+          PY
       - name: Publish changed observation snapshot
         run: |
           git config user.name 'github-actions[bot]'
@@ -42,6 +55,8 @@ jobs:
           git add data/indices.json
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh dated public index observations'
+            # Rebase once over concurrent owner edits; a conflict fails visibly.
+            git pull --rebase origin main
             git push
           fi
       - name: Report unavailable publisher jobs after retaining verified data

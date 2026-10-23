@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "auditDate": "2026-10-23",
+  "reviewerLane": "source-definition audit",
+  "scope": "Public source evidence only; source documents and images are not release assets.",
+  "baselineCommit": "6760c0f9c80494395b6b048ea52056dd6a25938a",
+  "reviewedImages": [
+    {
+      "id": "msci-acwi-fundamentals",
+      "originalUrl": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/acwi.jpg",
+      "imageSha256": "2d008a256f3b9ffc2dfdec8a316323ade15170d49786ad572bb20e657847806a",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-canada-fundamentals",
+      "originalUrl": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/msci-canada.jpg",
+      "imageSha256": "712eb513c9bce16c8cf3449cc2fa941623d6c0f93c556c2ef0d9965c0617fe78",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-uk-fundamentals",
+      "originalUrl": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/uk.jpg",
+      "imageSha256": "2e7318946584e2a399e51a076f4dfcd24fbe736f13998e7966b7319148af9c16",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-eafe-fundamentals",
+      "originalUrl": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/eafe.jpg",
+      "imageSha256": "831484e0b7e7ccb760256483a802016f9471575988c232bf5f1e16e395227161",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-europe-fundamentals",
+      "originalUrl": "https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/europe.jpg",
+      "imageSha256": "5979095b1d6b37f62012f9c7f3665d76ce5c7bee40a95a481cf99e09c363ad9c",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "nasdaq-dashboard",
+      "originalUrl": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/nasdaq-reviewed.png",
+      "imageSha256": "cc2579bedf1d74fb707e53a1ecec1720d7e13ea1f5a5a75d4201f7cac9c13780",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "jpm-global-valuations",
+      "originalUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "physicalPdfPage": 31,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/jpm-31.jpg",
+      "imageSha256": "d1ef6be780463377dba4ee7ef8fe0ff46b56c4a9592acc391dde7aba91c45a85",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "jpm-apac-table",
+      "originalUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "physicalPdfPage": 37,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/jpm-37.jpg",
+      "imageSha256": "3109be3f8b9edeaa9614d35ddd9d51b87fffb12e2c33b3f36cf54950ac99fd91",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "lseg-stoxx",
+      "originalUrl": "https://lipperalpha.refinitiv.com/wp-content/uploads/2026/10/TRPR_83201_669.pdf",
+      "physicalPdfPage": 8,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/lseg-stoxx600-20261022.png",
+      "imageSha256": "097392c9deb9ae88af72ff13681ad98e139515aaa0ed8a97f3b8cb1c94441d67",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "edelweiss-tempo",
+      "originalUrl": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
+      "physicalPdfPage": 4,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/edelweiss-ftse-4.png",
+      "imageSha256": "3db6cea5c18142f1254347341b88a92a276ceb267b320943076d9dbdab223207",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-mean-reference",
+      "originalUrl": "https://www.msci.com/downloads/web/msci-com/discover-msci/events/event-assets/2026/january/are-you-as-diversified-as-you-intend-in-2026-/Are%20you%20as%20diversified%20as%20you%20intend%20in%202026%20-%20Master%20deck.pdf",
+      "physicalPdfPage": 7,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/msci-reference-7.jpg",
+      "imageSha256": "7f072758cdd1f7534c93b717cc49b98e33699cf4931062c8d36168eb1fc7bdf5",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "segal-mean-reference",
+      "originalUrl": "https://cambridgeretirementma.gov/wp-content/uploads/2025-4Q-Segal.pdf",
+      "physicalPdfPage": 3,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/segal-reference-3.jpg",
+      "imageSha256": "56562f458de462376d7acb72dd69002a40493fd5bac1cab312438dba009ebad0",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "raymond-james-tsx",
+      "originalUrl": "https://www.goodridgegroup.ca/-/media/RJ/DotCom-Canada/Files/Commentary-and-Insights/Insights-and-strategies/Insights--Strategies-October-2026.pdf",
+      "physicalPdfPage": 20,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/tsx-current-20.jpg",
+      "imageSha256": "4f4b881457037922f40c4be276df4a7f50cdc748d0c3cc269c43d55f914f26ad",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "raymond-james-global",
+      "originalUrl": "https://www.goodridgegroup.ca/-/media/RJ/DotCom-Canada/Files/Commentary-and-Insights/Insights-and-strategies/Insights--Strategies-October-2026.pdf",
+      "physicalPdfPage": 21,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages-us-canada/raymondjames-2026-09-global-table.jpg",
+      "imageSha256": "cb61ee8aa86063a3f63b0bc8dc899a816cb0221c7ae4c42c72d13818d37bebaa",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "cumberland-tsx-mean",
+      "originalUrl": "https://cumberlandprivate.com/wp-content/uploads/2025/07/North-American-Strategy-Review-June-2025.pdf",
+      "physicalPdfPage": 7,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/tsx-reference-7.jpg",
+      "imageSha256": "2070f629e2ace2dd9a49befff5a492fc3f94ae2d77541b03632359fd39583a0c",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "scbam-csi300-mean",
+      "originalUrl": "https://www.scbam.com/medias/module-knowledge/document/290324-SCBAM_Korea_Mar_2024_1.pdf",
+      "physicalPdfPage": 4,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/scbam-4.jpg",
+      "imageSha256": "84f16062cca020982217b02b554ced12926b1c901b88ed38d8b040230674cb02",
+      "notes": "Physical PDF page; chart return variants are separate from fundamental ratio definitions."
+    },
+    {
+      "id": "msci-australia-document-context",
+      "originalUrl": "https://www.msci.com/documents/10199/255599/msci-australia-index-aud-net.pdf",
+      "physicalPdfPage": 1,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/source-pages/australia.jpg",
+      "imageSha256": "4310007014e6cc81c53271d80ff431391783c36f8e39746c6e7092ddbe974353",
+      "notes": "Superseded direct fundamentals; inspected only for AUD/net chart context, not selected newer JPM inputs."
+    },
+    {
+      "id": "factset-growth",
+      "originalUrl": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_101626.pdf",
+      "physicalPdfPage": 14,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/north-america-growth/factset-2026-10-16-p14.png",
+      "imageSha256": "5438a4f792a5cda75d3b10e638b39ad635a8dd59a1c6bdf0b308db52effe0094",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "ubs-growth",
+      "originalUrl": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html",
+      "physicalPdfPage": null,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/north-america-growth/ubs-nasdaq-2026-10-07.png",
+      "imageSha256": "338459059b9c2d7c75d1ef97e08551d0d19b366e00e16fa5dc5d531ba8d858e5",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "firsteagle-growth",
+      "originalUrl": "https://www.firsteagle.com/sites/default/files/2026-07/Small-Cap-Market-Overview-2026Q2_M-TL-SCT-MO26Q2-D-LT.pdf",
+      "physicalPdfPage": 2,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/north-america-growth/firsteagle-q2-2026-p2.png",
+      "imageSha256": "32405d98f9d55238df7ca229b70ca337d02ec3e6020501ced148b0718d434c4d",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "nbi-growth",
+      "originalUrl": "https://www.nbinvestments.ca/content/dam/bni/publication/cio-asset-sllocation-strategy-2026-10.pdf",
+      "physicalPdfPage": 6,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/north-america-growth/nb-oct26-p6.png",
+      "imageSha256": "7e449364e987a889cd7b09fb3db28ea28661a02a6c9675e980c88564937a7fe3",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "nbf-growth",
+      "originalUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
+      "physicalPdfPage": 3,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/international-growth/nbc-equity-monitor-page3.png",
+      "imageSha256": "4dbdcf6b7c26854e5c9aafb710048e97ebb7b3b575fd3f415686507ea1441f18",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "hartford-growth",
+      "originalUrl": "https://www.hartfordfunds.com/dam/en/docs/pub/funddocuments/flyers/estories/marketview/HF0044_Q426.pdf",
+      "physicalPdfPage": 19,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/international-growth/hartford-page19.png",
+      "imageSha256": "16b712ab4f997580d748787f678162c87a36eab51fcdc0241f4c0d495d214dc8",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "amova-nikkei-growth",
+      "originalUrl": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "physicalPdfPage": 14,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/international-growth/amova-page14.png",
+      "imageSha256": "5ed35da1de59bfbe1cf2262cd36f97eb8c0cc7500296cf78e326bcc7272565d3",
+      "notes": "Amova rows are dated EPS scenarios; no explicit Year-to wording. No source-currentness claim follows from re-viewing an old render."
+    },
+    {
+      "id": "amova-global-growth",
+      "originalUrl": "https://emea.amova-am.com/docs/default-source/default-document-library/pdf/insights/2026/2610-global-investment-strategy-committee-outlook-q4-2026.pdf?sfvrsn=169a9d76_3",
+      "physicalPdfPage": 15,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/international-growth/amova-page15.png",
+      "imageSha256": "3b86e6874fd9e43dded63309d8db15134ec14f1fec3bd135f43dcd0c22e3ffd2",
+      "notes": "Amova rows are dated EPS scenarios; no explicit Year-to wording. No source-currentness claim follows from re-viewing an old render."
+    },
+    {
+      "id": "fsm-growth",
+      "originalUrl": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
+      "physicalPdfPage": null,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "../sp500-growth-sync/qa/international-growth/fsm-csi300-may-table.png",
+      "imageSha256": "4c3a5dae76dac027afd3cf1a87e28507206be75de8611dcc2ebcab685dbf525e",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "jpm-japan-growth",
+      "originalUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "physicalPdfPage": 30,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/audit-source/jpm-physical30.png",
+      "imageSha256": "cdbfacb0710787bf56990c7927b63cc0831128cfcc112eb99be72257b6a320bf",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "jpm-apac-cy-method",
+      "originalUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
+      "physicalPdfPage": 34,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/audit-source/jpm-physical34.png",
+      "imageSha256": "f782867fe982c08c1724de86bdc66a709e93576c9aac5b114e68cf2cb5b0c875",
+      "notes": "Saved public source evidence; forecast date basis remains independently recorded."
+    },
+    {
+      "id": "msci-method-forward",
+      "originalUrl": "https://www.msci.com/indexes/documents/methodology/0_MSCI_Fundamental_Data_Methodology_20240625.pdf",
+      "physicalPdfPage": 16,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/audit-source/msci-method-p16.png",
+      "imageSha256": "faa644e8347fb2ed5d906be17a3986c61debbb2944700a34c82ef880a31d6f2d",
+      "notes": "Original public PDF freshly downloaded this audit, physical/printed p16; reviewed rolling FY blend and missing-EPS2 approximation."
+    },
+    {
+      "id": "msci-method-aggregation",
+      "originalUrl": "https://www.msci.com/indexes/documents/methodology/0_MSCI_Fundamental_Data_Methodology_20240625.pdf",
+      "physicalPdfPage": 48,
+      "reviewType": "fresh visual reinspection of a saved original public-source page render; not a new publisher transport check",
+      "localQAPath": "qa/audit-source/msci-method-p48.png",
+      "imageSha256": "89441bf8a15a19adb02e595ed90f72a3fd4d8445f2084c23f4daf65ad4121dc7",
+      "notes": "Same freshly downloaded original; ratio-of-aggregates and missing per-share data rule; no inferred negative-earner exclusion."
+    }
+  ],
+  "primaryTextReads": [
+    {
+      "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
+      "location": "valuation paragraph plus article publication label",
+      "verification": "fresh primary web text; publication date is not asserted as a separately disclosed price date"
+    },
+    {
+      "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+      "location": "physical p1 Global Equities, explicit10yrNTM header and footer daily-sampling/date",
+      "verification": "fresh primary PDF web text plus saved p1 visual render"
+    },
+    {
+      "url": "https://www.ig.com/sg/news-and-trade-ideas/Asia-stock-market-outlook-for-2026-251209",
+      "location": "Nikkei225 base-case section, publication metadata and December2 evidence footnote",
+      "verification": "fresh primary HTML text; Nikkei forward horizon remains unspecified"
+    },
+    {
+      "url": "https://www.msci.com/indexes/documents/methodology/0_MSCI_Fundamental_Data_Methodology_20240625.pdf",
+      "location": "sections1.2.4/1.3/3.1/3.2; printed14\u201317 and48\u201351",
+      "verification": "fresh primary web text; fresh PDF visual pp16and48; reviewed June2024 version, latest production applicability not certified"
+    },
+    {
+      "url": "https://www.msci.com/indexes/index-resources/index-methodology",
+      "location": "methodology directory and embedded current-search description",
+      "verification": "fresh primary HTML; does not by itself certify latest method version"
+    },
+    {
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-index-math.pdf",
+      "location": "September2026 version heading, total/net return and currency section headings/text",
+      "verification": "fresh primary PDF web text; no fresh visual page rendering performed by this lane"
+    },
+    {
+      "url": "https://stoxx.com/index/sxxp/?factsheet=true",
+      "location": "Fundamentals multi-level headers",
+      "verification": "fresh primary HTML; numeric extraction appears misaligned and is rejected, no source adapter changed to use it"
+    }
+  ],
+  "inheritedChecks": [
+    {
+      "scope": "Separate MSCI China, India, Japan and Asia-Pacific factsheet visual checks",
+      "status": "prior research documented; not re-viewed by this audit lane; not selected newer JPM valuations/yields"
+    },
+    {
+      "scope": "Publisher retrieval freshness and hosted workflow success",
+      "status": "not established by saved-image reinspection; root/pipeline must verify fresh transport independently"
+    },
+    {
+      "scope": "FirstEagle publisher access",
+      "status": "latest retained failure inherited from current feed/docs; saved July source visually rechecked, no new successful retrieval claimed"
+    }
+  ],
+  "limitations": [
+    "Saved renders can establish transcription/definition of those original observations; they do not establish unchanged publisher content today.",
+    "Only labelled numeric observations are accepted; no source chart geometry estimated.",
+    "Machine registry preserves undisclosed horizons, earnings accounting, loss treatment and historical windows as unknown.",
+    "No private client/account source, authentication material or complete proprietary document is included in this manifest."
+  ]
+}

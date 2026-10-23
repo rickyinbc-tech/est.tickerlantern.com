@@ -1,33 +1,50 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import worker from '../src/worker.js';
-const validRow={id:'sp500',name:'S&P 500',forwardPE:19,mean10YearForwardPE:19.1,dividendYield:null,asOf:'2026-10-16',meanAsOf:'2026-10-16',meanMethod:'Publisher-reported 10-year mean',source:{publisher:'FactSet',url:'https://insight.factset.com/example'}};
+const base=JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url),'utf8'));
+const snapshot=(date='2026-10-22T00:00:00Z',patch={})=>({...structuredClone(base),publishedAt:date,...patch});
+const request=()=>new Request('https://est.tickerlantern.com/api/indices');
 
-test('API uses the current published GitHub snapshot without application redeployment', async t => {
-  t.mock.method(globalThis,'fetch',async ()=>Response.json({schemaVersion:1,indices:[validRow],publishedAt:'2026-10-22T00:00:00Z'}));
-  const response=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices'),{});
-  assert.equal(response.status,200);
-  assert.equal((await response.json()).transport,'github');
+test('API uses the current published GitHub snapshot without application redeployment',async t=>{
+  t.mock.method(globalThis,'fetch',async()=>Response.json(snapshot()));
+  const response=await worker.fetch(request(),{});
+  assert.equal(response.status,200);assert.equal((await response.json()).transport,'github');
 });
-test('upstream failure retains the bundled snapshot and identifies fallback',async t=>{
+test('upstream failure retains a validated bundled snapshot and identifies fallback',async t=>{
   t.mock.method(globalThis,'fetch',async()=>{throw new Error('Unavailable');});
-  const env={ASSETS:{fetch:async()=>Response.json({schemaVersion:1,indices:[{id:'sp500'}],publishedAt:'2026-10-01T00:00:00Z'})}};
-  const response=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices'),env);
-  const body=await response.json();
-  assert.equal(body.transport,'bundled-fallback'); assert.equal(body.publishedAt,'2026-10-01T00:00:00Z');
+  const env={ASSETS:{fetch:async()=>Response.json(snapshot('2026-10-01T00:00:00Z'))}};
+  const response=await worker.fetch(request(),env); const body=await response.json();
+  assert.equal(body.transport,'bundled-fallback');assert.equal(body.publishedAt,'2026-10-01T00:00:00Z');
 });
-test('a stale GitHub cache cannot regress a newer bundled publication',async t=>{
-  const snapshot=date=>({schemaVersion:1,indices:[validRow],publishedAt:date});
+test('invalid remote and invalid bundled payload are both rejected',async t=>{
+  t.mock.method(globalThis,'fetch',async()=>Response.json({schemaVersion:1,indices:[{id:'sp500'}]}));
+  const env={ASSETS:{fetch:async()=>Response.json({schemaVersion:1,indices:[{id:'sp500'}]})}};
+  const response=await worker.fetch(request(),env);assert.equal(response.status,503);assert.equal(response.headers.get('Cache-Control'),'no-store');
+});
+test('invalid newer bundle cannot discard a valid remote snapshot',async t=>{
+  t.mock.method(globalThis,'fetch',async()=>Response.json(snapshot()));
+  const env={ASSETS:{fetch:async()=>Response.json({...snapshot('2026-10-23T00:00:00Z'),indices:[]})}};
+  const body=await(await worker.fetch(request(),env)).json();assert.equal(body.transport,'github');
+});
+test('a stale GitHub cache cannot regress a newer verified bundled publication',async t=>{
   t.mock.method(globalThis,'fetch',async()=>Response.json(snapshot('2026-10-01T00:00:00Z')));
-  const env={ASSETS:{fetch:async()=>Response.json(snapshot('2026-10-22T00:00:00Z'))}};
-  const response=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices'),env);
-  const body=await response.json();
-  assert.equal(body.transport,'bundled-newer');
-  assert.equal(body.publishedAt,'2026-10-22T00:00:00Z');
+  const env={ASSETS:{fetch:async()=>Response.json(snapshot())}};
+  const body=await(await worker.fetch(request(),env)).json();assert.equal(body.transport,'bundled-newer');
+});
+test('semantic version outranks timestamps and conflicting same versions cannot replace remote',async t=>{
+  const remote=snapshot('2026-10-01T00:00:00Z',{snapshotVersion:4,snapshotId:'a'.repeat(64)});
+  t.mock.method(globalThis,'fetch',async()=>Response.json(remote));
+  for(const patch of [{snapshotVersion:3,snapshotId:'b'.repeat(64)},{snapshotVersion:4,snapshotId:'b'.repeat(64)}]) {
+    const env={ASSETS:{fetch:async()=>Response.json(snapshot('2026-10-22T00:00:00Z',patch))}};
+    const body=await(await worker.fetch(request(),env)).json();assert.equal(body.snapshotId,remote.snapshotId);
+  }
+});
+test('API rejects wrong content types even if the body resembles JSON',async t=>{
+  t.mock.method(globalThis,'fetch',async()=>new Response(JSON.stringify(snapshot()),{headers:{'Content-Type':'text/html'}}));
+  const response=await worker.fetch(request(),{});assert.equal(response.status,503);
 });
 test('API rejects writes and leaves static routing to asset handling',async()=>{
-  const write=await worker.fetch(new Request('https://est.tickerlantern.com/api/indices',{method:'POST'}),{});
-  assert.equal(write.status,405);
-  const page=await worker.fetch(new Request('https://est.tickerlantern.com/'),{ASSETS:{fetch:async()=>new Response('Static page')}});
-  assert.equal(await page.text(),'Static page');
+  assert.equal((await worker.fetch(new Request(request(),{method:'POST'}),{})).status,405);
+  const page=await worker.fetch(new Request('https://est.tickerlantern.com/'),{ASSETS:{fetch:async()=>new Response('Static page')}});assert.equal(await page.text(),'Static page');
 });

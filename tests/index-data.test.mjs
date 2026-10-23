@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { sourceInputs, validateFeed, premium, isStale, isDatedMean, historyCoverage, browserCheckOverdue } from '../src/index-data.js';
 import { project, DEFAULTS, validate } from '../src/model.js';
-const row = { id:'sample', name:'Sample', forwardPE:18, mean10YearForwardPE:16, dividendYield:2, asOf:'2026-09-30', meanAsOf:'2026-09-30', meanMethod:'Publisher-reported 10-year mean', source:{ publisher:'MSCI', url:'https://www.msci.com/example' }, sync:{ status:'ok' } };
+const row = { id:'sp500', name:'S&P 500', forwardPE:18, mean10YearForwardPE:16, dividendYield:2, asOf:'2026-09-30', meanAsOf:'2026-09-30', meanMethod:'Publisher-reported 10-year mean', source:{ publisher:'MSCI', url:'https://www.msci.com/example' }, sync:{ status:'ok' }, historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:[]} };
+const base = JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url),'utf8'));
+const snapshot = value => ({...structuredClone(base), indices:base.indices.map(item=>item.id===row.id?structuredClone(value):structuredClone(item))});
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
 
 test('a missed browser source check becomes overdue without a new server snapshot', () => {
@@ -28,7 +30,7 @@ test('manual valuation and yield overrides survive a changed source', () => {
 test('missing 10-year history stays missing; flat current exit is only a scenario convention', () => {
   const missing={...row,mean10YearForwardPE:null,meanAsOf:null,meanMethod:null};
   assert.equal(sourceInputs(missing).exitPE,18); assert.equal(premium(missing),null);
-  assert.equal(validateFeed({schemaVersion:1,indices:[missing]}).indices[0].mean10YearForwardPE,null);
+  assert.equal(validateFeed(snapshot(missing)).indices[0].mean10YearForwardPE,null);
 });
 test('unconnected benchmark cannot manufacture a sourced valuation', () => {
   const values=sourceInputs({...row,forwardPE:null},DEFAULTS);
@@ -44,7 +46,7 @@ test('zero yield and invalid yield remain distinct', () => {
   for(const dividendYield of ['',null,NaN,-1,16]) assert.ok(validate({...DEFAULTS,dividendMode:'yield',dividendYield}).dividendYield);
 });
 test('date and history provenance are required for published numbers', () => {
-  for(const patch of [{asOf:null},{meanAsOf:null},{meanMethod:null},{forwardPE:Infinity},{forwardPE:0},{source:null}]) assert.throws(()=>validateFeed({schemaVersion:1,indices:[{...row,...patch}]}));
+  for(const patch of [{asOf:null},{meanAsOf:null},{meanMethod:null},{forwardPE:Infinity},{source:null}]) assert.throws(()=>validateFeed(snapshot({...row,...patch})));
 });
 test('old and failed observations visibly become retained; missing is not stale zero', () => {
   assert.equal(isStale(row,new Date('2026-10-22')),false);
@@ -67,5 +69,25 @@ test('historical means keep a separate date and source from the current multiple
   assert.equal(isDatedMean(row, new Date('2026-10-22')),false);
   assert.match(historyCoverage({indices:[historic,row]}), /1 older dated references/);
   assert.equal(sourceInputs(historic).exitPE,16);
-  assert.equal(validateFeed({schemaVersion:1,indices:[historic]}).indices[0].asOf,'2026-09-30');
+  assert.equal(validateFeed(snapshot(historic)).indices[0].asOf,'2026-09-30');
+});
+
+
+test('feed rejects invalid real dates, future observations, identities and incomplete catalogues',()=>{
+  for (const patch of [{asOf:'2026-02-30'},{asOf:'2099-01-01'},{name:'MSCI World'},{id:'spy-etf'}]) assert.throws(()=>validateFeed(snapshot({...row,...patch})));
+  assert.throws(()=>validateFeed({...snapshot(row),indices:[row]}));
+  const duplicate=snapshot(row); duplicate.indices[1]=row; assert.throws(()=>validateFeed(duplicate));
+  for (const patch of [{publishedAt:'2026-02-30T00:00:00Z'},{publishedAt:'2099-01-01T00:00:00Z'},{schemaVersion:2},{snapshotVersion:1,snapshotId:'wrong'}]) assert.throws(()=>validateFeed({...snapshot(row),...patch}));
+});
+test('source observations outside calculator bounds and zero retain their meaning',()=>{
+  for(const forwardPE of [0,-2,200]) assert.equal(validateFeed(snapshot({...row,forwardPE})).indices[0].forwardPE,forwardPE);
+  assert.equal(validateFeed(snapshot({...row,dividendYield:0})).indices[0].dividendYield,0);
+  assert.throws(()=>validateFeed(snapshot({...row,source:{...row.source,sha256:'invalid'}})));
+});
+test('unassessed or qualified historical references cannot imply a premium or default',()=>{
+  for(const historicalCompatibility of [undefined,{outcome:'qualified',allowComparison:false,allowExitDefault:false}]) {
+    const item={...row,historicalCompatibility};
+    assert.equal(premium(item),null);
+    assert.equal(sourceInputs(item,{...DEFAULTS,entryPE:20},{entryPE:true}).exitPE,20);
+  }
 });

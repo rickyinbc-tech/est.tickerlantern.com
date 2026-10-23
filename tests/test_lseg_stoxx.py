@@ -13,9 +13,10 @@ class LsegPrintedLabelTests(unittest.TestCase):
     def test_exact_numeric_label(self):
         self.assertEqual(source.parse_printed_number(' 13.9x\n'), 13.9)
         self.assertEqual(source.parse_printed_number('14.2 ×'), 14.2)
+        self.assertEqual(source.parse_printed_number('200.1x'),200.1)
 
     def test_ambiguous_ocr_is_rejected(self):
-        for value in ['I3.9x', '13.9', '13.9x 14.2x', 'about 13.9x', '0.1x']:
+        for value in ['I3.9x', '13.9', '13.9x 14.2x', 'about 13.9x']:
             with self.subTest(value=value), self.assertRaises(ValueError):
                 source.parse_printed_number(value)
 

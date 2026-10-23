@@ -1,0 +1,1046 @@
+{
+  "schemaVersion": 1,
+  "registryVersion": "source-definitions-2026-10-23.1",
+  "reviewedAt": "2026-10-23",
+  "scope": "21 exact benchmark universes; public documents only",
+  "definitionUnknownPolicy": "unknown is not evidence of equivalence; preserve published value and qualify model use; no ETF/related-index substitution",
+  "compatibilityPolicy": {
+    "version": "valuation-compatibility-1",
+    "required": [
+      "exact benchmark",
+      "same published forward series",
+      "explicit rolling12m horizon",
+      "same source document and observation date",
+      "no detected definition change"
+    ],
+    "sameSeriesCaveat": "shared publisher-paired series permits internal comparison even when underlying component calculation is not fully disclosed; does not permit splicing other providers",
+    "historyCaveat": "a historical mean is neither fair value nor a guaranteed terminal multiple; undocumented sample endpoints/frequency remain unknown",
+    "qualifiedMeans": "display with original evidence; no premium/discount or automatic exit default"
+  },
+  "methodologyReferences": [
+    {
+      "url": "https://www.msci.com/indexes/documents/methodology/0_MSCI_Fundamental_Data_Methodology_20240625.pdf",
+      "version": "June2024",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        48,
+        49,
+        50,
+        51
+      ],
+      "checkedAt": "2026-10-23",
+      "verification": "originalPDF pages16and48 rendered/visually rechecked; sections14–17 and48–51 text checked; latest applicability not established by current directory"
+    },
+    {
+      "url": "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-index-math.pdf",
+      "version": "September2026",
+      "pages": [
+        21,
+        22,
+        27
+      ],
+      "checkedAt": "2026-10-23",
+      "verification": "currentoriginalPDF header and total/net-return/currency sections read; annual illustration does not replicate daily official method"
+    },
+    {
+      "url": "https://stoxx.com/index/sxxp/?factsheet=true",
+      "checkedAt": "2026-10-23",
+      "verification": "explicit projected/trailing and including/excluding negative headers confirmed; not used to replace LSEG12m series"
+    }
+  ],
+  "families": {
+    "factset": {
+      "label": "Forward 12-month P/E ratio",
+      "economic": {
+        "earningsBasis": "analyst-consensus forecast earnings; adjusted/reported treatment not established by the cited paragraph",
+        "aggregation": "same published index forward-P/E series; constituent aggregation not disclosed in the article",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "FactSet",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "weekly research",
+        "observationMaxAgeDays": 21,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "FactSet"
+      ]
+    },
+    "msci-fundamentals": {
+      "label": "P/E Fwd",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "ratio of included market capitalisation to included earnings; exchange-rate and inclusion-factor adjusted",
+        "negativeEarners": "reviewed section 3.1 does not establish an explicit exclusion of negative earners; no exclusion assumed",
+        "missingEstimates": "securities lacking the required per-share input excluded from that ratio; EPS2 missing and >=8 months remaining permits EPS1 approximation",
+        "weighting": "current shares and index inclusion factors (FIF/DIF as applicable)",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "MSCI Fundamental Data Methodology June 2024, reviewed; latest applicability not independently certified",
+        "yieldConstruction": "annualised regular declared cash distributions, including qualifying capital repayments; US/Canada latest regular payment annualised; specials excluded unless paid three consecutive years",
+        "taxTreatment": "gross before withholding; applicable special tax credits included",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "MSCI; forecast vendor Thomson I/B/E/S, Toyo Keizai supplement for Japan per reviewed June 2024 methodology",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly fundamentals",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "MSCI"
+      ]
+    },
+    "nasdaq-dashboard": {
+      "label": "NTM P/E",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "biweekly dashboard",
+        "observationMaxAgeDays": 35,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "Nasdaq / Bloomberg / FactSet"
+      ]
+    },
+    "jpm-daily": {
+      "label": "Forward P/E ratio",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "same published market series; exact per-company aggregation not restated in this table",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "valuation currency not specified in APAC table; separate return columns are USD and do not define valuation tax or currency construction",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "forward-unspecified"
+      },
+      "underlyingProvider": "FactSet / MSCI (not individually apportioned in the APAC table)",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "daily rolling guide",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "J.P. Morgan / FactSet / MSCI"
+      ]
+    },
+    "jpm-msci-global": {
+      "label": "Forward P/E ratios",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "MSCI-derived ratio; reviewed MSCI method is ratio of inclusion-adjusted market capitalisation to earnings",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "local-currency P/E according to the table footnote",
+        "methodologyVersion": "JPM table plus MSCI Fundamental Data Methodology June 2024 reviewed; exact production version not stated",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "MSCI, as explicitly identified by the global table footnote",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "daily rolling guide",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "J.P. Morgan / FactSet / MSCI"
+      ]
+    },
+    "jpm-csi-global": {
+      "label": "Forward P/E ratios",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "local-currency P/E according to the table footnote",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "forward-unspecified"
+      },
+      "underlyingProvider": "China Securities Index / FactSet / J.P. Morgan; division of calculation roles not disclosed",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "daily rolling guide",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "J.P. Morgan / FactSet / MSCI"
+      ]
+    },
+    "msci-reference": {
+      "label": "10Yr Average P/Fwd Ear",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "forward-unspecified"
+      },
+      "underlyingProvider": "MSCI",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "dated presentation; revisions only",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "MSCI"
+      ]
+    },
+    "segal-reference": {
+      "label": "10Yr Avg; P/E ratios are forward 12 months",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "FactSet",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "quarterly report; latest report can omit ten-year mean",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "Segal Marco Advisors / FactSet"
+      ]
+    },
+    "raymond-james-tsx": {
+      "label": "P/E NTM",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "FactSet / Raymond James",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly report",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "Raymond James / FactSet"
+      ]
+    },
+    "cumberland-tsx": {
+      "label": "10yr Avg; blended forward 12-month P/E",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "Bloomberg / Cumberland",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "irregular historical reference; later quarterly reports omit this mean",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "Cumberland / Bloomberg"
+      ]
+    },
+    "lseg-stoxx": {
+      "label": "12 Month Forward P/E; 10-Year Average",
+      "economic": {
+        "earningsBasis": "12-month forward EPS; not the separately labelled I/B/E/S estimate-revisions exhibit",
+        "aggregation": "LSEG Datastream exact STOXX 600 series; excluding/including negative-earnings treatment not disclosed in this exhibit",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "LSEG Datastream",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "weekly research",
+        "observationMaxAgeDays": 21,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "LSEG Datastream"
+      ]
+    },
+    "edelweiss-reference": {
+      "label": "12-month-forward valuation; P/E; P/E 10yr Avg",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "Bloomberg",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly TEMPO report",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "Edelweiss Mutual Fund / Bloomberg"
+      ]
+    },
+    "ig-asia-reference": {
+      "label": "forward P/E; ten-year mean",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "forward-unspecified"
+      },
+      "underlyingProvider": "IG research; exact Nikkei valuation vendor not explicitly assigned in this section",
+      "precisionDecimals": 0,
+      "freshnessPolicy": {
+        "publicationCadence": "dated annual outlook; revisions only",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "IG research"
+      ]
+    },
+    "scbam-reference": {
+      "label": "forward 12-month P/E; 10Y Avg",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "rolling-12m"
+      },
+      "underlyingProvider": "Bloomberg / SCBAM Investment Strategy",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "dated research; revisions only",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "SCB Asset Management / Bloomberg"
+      ]
+    },
+    "unknown": {
+      "label": "unverified definition",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "unknown"
+      },
+      "underlyingProvider": "unknown",
+      "precisionDecimals": null,
+      "freshnessPolicy": {
+        "publicationCadence": "unknown",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": []
+    }
+  },
+  "benchmarks": [
+    {
+      "id": "sp500",
+      "exactName": "S&P 500",
+      "provider": "S&P Dow Jones Indices",
+      "identifier": "SPX",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+      "universe": "US large-cap benchmark",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "nasdaq100",
+      "exactName": "Nasdaq-100",
+      "provider": "Nasdaq",
+      "identifier": "NDX",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://indexes.nasdaq.com/Index/Overview/NDX",
+      "universe": "Large non-financial Nasdaq companies",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "russell2000",
+      "exactName": "Russell 2000",
+      "provider": "FTSE Russell",
+      "identifier": "RUT",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.lseg.com/en/ftse-russell/indices/russell-us",
+      "universe": "US small-cap benchmark",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "tsx",
+      "exactName": "S&P/TSX Composite",
+      "provider": "S&P Dow Jones Indices / TMX",
+      "identifier": "SPTSX",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-composite-index/",
+      "universe": "Canadian broad market",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "msci-canada",
+      "exactName": "MSCI Canada",
+      "provider": "MSCI",
+      "identifier": "912400",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/912400/msci-canada-index",
+      "universe": "Canadian large and mid caps; distinct from the TSX",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "acwi",
+      "exactName": "MSCI ACWI",
+      "provider": "MSCI",
+      "identifier": "892400",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/892400/msci-acwi-index",
+      "universe": "Developed and emerging markets",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "world",
+      "exactName": "MSCI World",
+      "provider": "MSCI",
+      "identifier": "990100",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/990100/msci-world-index",
+      "universe": "Developed-market large and mid caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "eafe",
+      "exactName": "MSCI EAFE",
+      "provider": "MSCI",
+      "identifier": "990300",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/990300/msci-eafe-index",
+      "universe": "Developed markets outside the US and Canada",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "em",
+      "exactName": "MSCI Emerging Markets",
+      "provider": "MSCI",
+      "identifier": "891800",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/891800/msci-em-emerging-markets-index-2",
+      "universe": "Emerging-market large and mid caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "europe",
+      "exactName": "MSCI Europe",
+      "provider": "MSCI",
+      "identifier": "990500",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/990500/msci-europe-index",
+      "universe": "Developed European large and mid caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "uk",
+      "exactName": "MSCI United Kingdom",
+      "provider": "MSCI",
+      "identifier": null,
+      "identifierBasis": "not independently verified; exact name and profile URL control",
+      "profileUrl": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
+      "universe": "UK large and mid caps; distinct from the FTSE 100",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "ftse100",
+      "exactName": "FTSE 100",
+      "provider": "FTSE Russell",
+      "identifier": "UKX",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.lseg.com/en/ftse-russell/indices/uk",
+      "universe": "UK large-cap benchmark",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "stoxx600",
+      "exactName": "STOXX Europe 600",
+      "provider": "STOXX",
+      "identifier": "SXXP",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.stoxx.com/index-details?symbol=SXXP",
+      "universe": "Pan-European broad market",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "japan",
+      "exactName": "MSCI Japan",
+      "provider": "MSCI",
+      "identifier": "939200",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/939200/msci-japan-index",
+      "universe": "Japanese large and mid caps; distinct from the Nikkei",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "nikkei225",
+      "exactName": "Nikkei 225",
+      "provider": "Nikkei Inc.",
+      "identifier": "N225",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://indexes.nikkei.co.jp/en/nkave",
+      "universe": "Japanese price-weighted large-cap benchmark",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "china",
+      "exactName": "MSCI China",
+      "provider": "MSCI",
+      "identifier": "302400",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/302400/msci-china-index",
+      "universe": "Chinese equities across eligible listing markets",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "hangseng",
+      "exactName": "Hang Seng",
+      "provider": "Hang Seng Indexes",
+      "identifier": "HSI",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.hsi.com.hk/eng/indexes/all-indexes/hsi",
+      "universe": "Hong Kong-listed large companies",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "csi300",
+      "exactName": "CSI 300",
+      "provider": "China Securities Index",
+      "identifier": "000300.SH",
+      "identifierBasis": "published common market ticker; not a currency/return variant identifier",
+      "profileUrl": "https://www.csindex.com.cn/#/about?section=about",
+      "universe": "Mainland China A-share large caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "india",
+      "exactName": "MSCI India",
+      "provider": "MSCI",
+      "identifier": "935600",
+      "identifierBasis": "official profile code",
+      "profileUrl": "https://www.msci.com/indexes/index/935600/msci-india-index",
+      "universe": "Indian large and mid caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "asia-ex-japan",
+      "exactName": "MSCI AC Asia Pacific ex Japan",
+      "provider": "MSCI",
+      "identifier": null,
+      "identifierBasis": "not independently verified; exact name and profile URL control",
+      "profileUrl": "https://www.msci.com/www/index-factsheets/msci-ac-asia-pacific-ex-japan/08499694",
+      "universe": "Developed and emerging Asia Pacific outside Japan",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    },
+    {
+      "id": "australia",
+      "exactName": "MSCI Australia",
+      "provider": "MSCI",
+      "identifier": null,
+      "identifierBasis": "not independently verified; exact name and profile URL control",
+      "profileUrl": "https://www.msci.com/documents/10199/255599/msci-australia-index-aud-net.pdf",
+      "universe": "Australian large and mid caps",
+      "returnVariant": "not an official return-series input; modeled ex-distribution price path plus separately modeled distributions",
+      "hedging": "not modeled",
+      "currency": "synthetic single-currency indexed wealth; source return-chart currency does not set investor currency",
+      "substitutionsAllowed": false
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "initial-wealth",
+      "value": 100,
+      "units": "indexed units",
+      "classification": "illustrative default",
+      "definition": "P0=100; no live index level or money amount",
+      "permittedUse": "all outputs",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "synthetic-eps-anchor",
+      "value": "100 / entryPE",
+      "units": "normalized earnings units",
+      "classification": "derived estimate",
+      "definition": "F0=P0/M0; synthetic anchor, not independently verified index EPS",
+      "permittedUse": "model; never official EPS series",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "forward-timeline",
+      "value": "F_t = F_0 product(1+g_i); P_t=M_t F_t",
+      "units": "years",
+      "classification": "model convention",
+      "definition": "Under a rolling-NTM scenario, F0 represents approximately holding year1 earnings; F_n represents year n+1 earnings. Growth applied exactly n times. Other source horizons do not become rolling NTM",
+      "permittedUse": "model; source CY/FY/horizon rates only approximate scenario path",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "illustrative-growth",
+      "value": 6,
+      "units": "% per year",
+      "classification": "illustrative default",
+      "definition": "constant scenario EPS growth; not a universal consensus or five-year forecast",
+      "permittedUse": "fixed teaching example; manual mode",
+      "implementation": "src/model.js::DEFAULTS",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "source-growth",
+      "value": "per benchmark/year; next future label only",
+      "units": "% per publisher period",
+      "classification": "estimate-based published statistic",
+      "definition": "CY/FY/publisher-year/house forecast-date labels preserved. A calendar-year percentage or dated EPS scenario is not a date-matched rolling forward-EPS growth rate; Amova precise growth interval is not disclosed.",
+      "permittedUse": "approximate scenario only; no interpolation, repetition or forced period conversion",
+      "implementation": "src/growth-data.js::sourceGrowthPath",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "source-growth-horizon",
+      "value": "consecutive future published periods",
+      "units": "years",
+      "classification": "illustrative policy",
+      "definition": "initial horizon matches coverage; current-year context excluded. Unpublished years blank until user entry or shorter horizon",
+      "permittedUse": "initial/reset; edited horizons protected",
+      "implementation": "src/scenario-state.js::scenarioInputs",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "manual-growth",
+      "value": "individual annual inputs or constant rate",
+      "units": "% per holding year",
+      "classification": "user assumption",
+      "definition": "each benchmark saved locally; edits in source years protected from source refresh",
+      "permittedUse": "all active outputs",
+      "implementation": "src/scenario-state.js; src/app.js",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "holding-period",
+      "value": 5,
+      "units": "whole years",
+      "classification": "illustrative default",
+      "definition": "fallback / fixed teaching example; user supports1–20; sourced horizon may differ",
+      "permittedUse": "fixed example; unsourced scenario only",
+      "implementation": "src/model.js::DEFAULTS",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "illustrative-entry",
+      "value": 25,
+      "units": "P/E multiple ×",
+      "classification": "illustrative default",
+      "definition": "fixed teaching example/fallback; eligible sourced observation replaces unlocked input",
+      "permittedUse": "synthetic scenario",
+      "implementation": "src/model.js::DEFAULTS",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "illustrative-exit",
+      "value": 20,
+      "units": "P/E multiple ×",
+      "classification": "illustrative default",
+      "definition": "fixed example/fallback; not a fair-value claim",
+      "permittedUse": "fixed teaching case",
+      "implementation": "src/model.js::DEFAULTS",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "history-exit-policy",
+      "value": "eligible reported mean; otherwise active entry",
+      "units": "P/E multiple ×",
+      "classification": "illustrative policy",
+      "definition": "only compatible history can seed mean-reversion exit. If no eligible history, unlocked exit follows active entry, including custom entry. Explicit exit edit wins",
+      "permittedUse": "source-linked initial/reset; no inevitable reversion",
+      "implementation": "src/valuation-policy.js",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "payout",
+      "value": 30,
+      "units": "% of prior earnings anchor",
+      "classification": "illustrative default",
+      "definition": "D_t=p F_(t-1), one payment at year end; not a reported payout",
+      "permittedUse": "payout mode; feasibility not enforced",
+      "implementation": "src/model.js::DEFAULTS; project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "initial-yield",
+      "value": 1.2,
+      "units": "% of initial wealth",
+      "classification": "illustrative default",
+      "definition": "fallback first annual distribution /100; source yield may replace; not inferred reported payout",
+      "permittedUse": "yield mode synthetic first payment only",
+      "implementation": "src/model.js::DEFAULTS; project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "yield-growth",
+      "value": "D_t=100 y0 F_(t-1)/F0",
+      "units": "indexed units per original unit",
+      "classification": "model convention",
+      "definition": "source/assumed yield anchors only first payment; later payments grow with assumed EPS path, not a full dividend forecast",
+      "permittedUse": "yield mode",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "dividend-timing",
+      "value": "prior-period anchor; year-end receipt",
+      "units": "annual",
+      "classification": "model convention",
+      "definition": "last distribution counted once plus terminal sale; all modeled prices interpreted ex-distribution; no extra price subtraction",
+      "permittedUse": "model/CSV",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "reinvestment",
+      "value": "q_t=q_(t-1)(1+D_t/P_t)",
+      "units": "units",
+      "classification": "model convention",
+      "definition": "annual at modeled end-year ex-distribution price; applies existing unit balance; differs from official daily total-return indexes",
+      "permittedUse": "reinvested wealth/CAGR",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "pe-path",
+      "value": "M_t=M0(Mn/M0)^(t/n)",
+      "units": "P/E multiple ×",
+      "classification": "user/model assumption",
+      "definition": "smooth geometric transition; intermediate prices affect reinvestment; no market forecast",
+      "permittedUse": "all years; sensitivity",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "cash-interest",
+      "value": 0,
+      "units": "%",
+      "classification": "model convention",
+      "definition": "held distributions earn zero; cash-held terminal wealth=P_n+sumD",
+      "permittedUse": "cash wealth; cash wealth CAGR distinct from IRR",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "price-return",
+      "value": "(P_n/100)^(1/n)-1",
+      "units": "annualized fraction",
+      "classification": "derived estimate",
+      "definition": "excludes separately modeled distributions",
+      "permittedUse": "price CAGR",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "cash-flow-return",
+      "value": "IRR([-100,D1,...,D_n+P_n])",
+      "units": "periodic annual IRR",
+      "classification": "derived estimate",
+      "definition": "cash distribution timing; final dividend and sale once; supported positive-price/nonnegative-distribution domain",
+      "permittedUse": "cash-flow IRR",
+      "implementation": "src/model.js::irr",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "cash-held-return",
+      "value": "((P_n+sumD)/100)^(1/n)-1",
+      "units": "annualized fraction",
+      "classification": "derived estimate",
+      "definition": "wealth-equivalent CAGR with zero cash interest; differs from cash-flow IRR",
+      "permittedUse": "cash-held wealth/exports",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "reinvested-return",
+      "value": "(q_n P_n/100)^(1/n)-1",
+      "units": "annualized fraction",
+      "classification": "derived estimate",
+      "definition": "may underperform holding cash in falling-price scenarios",
+      "permittedUse": "reinvested CAGR",
+      "implementation": "src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "wealth-attribution",
+      "value": "100; EPS-only change; valuation residual; cash dividends",
+      "units": "cumulative indexed units",
+      "classification": "derived estimate",
+      "definition": "sequential order; includes growth/valuation interaction in valuation residual; not an additive annualized-return decomposition",
+      "permittedUse": "waterfall, annual rows and print",
+      "implementation": "src/app.js::renderWaterfall; src/model.js::project",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "sensitivity",
+      "value": "growth anchor±8/4/0pp; exit=0.6/0.8/1/1.2/1.4×entry",
+      "units": "scenario inputs",
+      "classification": "illustrative policy",
+      "definition": "bounds may compress axis; annual path sensitivity uses its geometric EPS CAGR as constant sensitivity rate; active payout/yield/horizon preserved; scenarios not probabilities",
+      "permittedUse": "sensitivity only; cell explicitly changes growth/exit",
+      "implementation": "src/model.js::sensitivityAxes; sensitivity",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "zero-dividend-preset",
+      "value": 0,
+      "units": "% payout or yield",
+      "classification": "user scenario",
+      "definition": "preserves active dividend convention; no cash distributions",
+      "permittedUse": "preset",
+      "implementation": "src/scenario-state.js::presetScenario",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "constant-pe-preset",
+      "value": "exit = active entry",
+      "units": "P/E multiple ×",
+      "classification": "user scenario",
+      "definition": "prices reflect EPS path at unchanged multiple",
+      "permittedUse": "preset",
+      "implementation": "src/scenario-state.js::presetScenario",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "compression-preset",
+      "value": "exit = 0.8 × active entry",
+      "units": "P/E multiple ×",
+      "classification": "user scenario",
+      "definition": "20% cumulative multiple compression; rounded to2decimal and bounded",
+      "permittedUse": "preset",
+      "implementation": "src/scenario-state.js::presetScenario",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "one-year-dollar-example",
+      "value": "EPS5; price100→106; payout30%; dividend1.50; total107.50",
+      "units": "illustrative dollars",
+      "classification": "illustrative default",
+      "definition": "20×constantPE;6%growth; priorEPS payout; one-year investor return7.5%; not market data",
+      "permittedUse": "fixed educational paragraph only",
+      "implementation": "src/index.html#dividends",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "economic-feasibility",
+      "value": "not enforced",
+      "units": "constraint",
+      "classification": "unresolved model limitation",
+      "definition": "growth+payout must be economically feasible; no unsupported retention×ROE formula; buybacks already in per-share growth cannot be added again",
+      "permittedUse": "all scenario interpretation",
+      "implementation": "src/index.html#model-conventions",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "currency-tax-costs",
+      "value": "nominal; single synthetic currency; no tax/fees/FX",
+      "units": "return basis",
+      "classification": "model convention",
+      "definition": "gross modeled distributions; no withholding/account taxes/transaction/management costs; no inflation deflation or CAD conversion; source-yield gross status may be unknown",
+      "permittedUse": "all reported results",
+      "implementation": "src/index.html#model-conventions",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "static-preview",
+      "value": "fixed25→20,6%,30%,5y scenario",
+      "units": "same engine output",
+      "classification": "illustrative default",
+      "definition": "pre-JS hero illustration remains separate from dynamic selected benchmark; static controls disabled until hydrated",
+      "permittedUse": "HTML/build/print",
+      "implementation": "scripts/build.mjs; src/index.html",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "single-scenario-engine",
+      "value": "one accepted input/model instance",
+      "units": "output identity",
+      "classification": "model convention",
+      "definition": "tables, SVG, narrative, CSV, print must tie to same scenario and snapshot metadata; fixed opening example explicitly separate",
+      "permittedUse": "all active outputs",
+      "implementation": "src/app.js::render; src/model.js",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "restore-reset",
+      "value": "per benchmark; explicit source locks",
+      "units": "edit policy",
+      "classification": "user control",
+      "definition": "reset restores source-linked eligibility and forecast horizon; restore valuations preserves user growth/horizon/payout; source-growth restore only clears sourced-year overrides; scenarios stored in browser not account sync",
+      "permittedUse": "UI/localStorage",
+      "implementation": "src/scenario-state.js; src/app.js",
+      "status": "documented convention; subject to acceptance tests"
+    },
+    {
+      "id": "source-check-latency",
+      "value": "daily23:15UTC; browser13:00Vancouver; client5min",
+      "units": "schedule",
+      "classification": "operational policy",
+      "definition": "check button reads committed snapshot only; Worker/GitHub cache adds up to5min; schedule may be delayed/disabled; browser check needs ownerMac",
+      "permittedUse": "freshness disclosure",
+      "implementation": "workflow + Worker + client",
+      "status": "documented convention; subject to acceptance tests"
+    }
+  ]
+}

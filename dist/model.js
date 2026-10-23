@@ -1,4 +1,21 @@
-// All amounts are illustrative. EPS uses a consistent normalized basis.
+// Educational annual convention; the earnings anchor is synthetic, not official index EPS.
+export const MODEL_CONVENTION_VERSION = 'tickerlantern-annual-forward-anchor-v2';
+export const MODEL_CONVENTIONS = Object.freeze({
+  version: MODEL_CONVENTION_VERSION,
+  initialWealth: 100,
+  earningsAnchor: 'synthetic normalized forward earnings: initial wealth / entry PE',
+  earningsTimeline: 'F0 covers approximately holding year 1; Ft is the following-period anchor at valuation date t',
+  priceBasis: 'modeled ex-distribution price, excluding distributions',
+  valuationPath: 'geometric interpolation from entry PE to exit PE at annual valuation dates',
+  dividendTiming: 'prior valuation date earnings anchor; paid at holding year end',
+  yieldTiming: 'initial yield anchors first payment; subsequent payments follow prior-anchor earnings growth',
+  reinvestmentTiming: 'each year-end distribution reinvested at the modeled year-end ex-distribution price',
+  cashInterestPercent: 0,
+  returnBasis: 'nominal; before taxes, fees and trading costs',
+  currencyBasis: 'normalized currency-neutral illustration; no FX translation or hedging',
+  growthMapping: 'calendar, fiscal and publisher horizon rates are holding-year scenario proxies, not rolling NTM forecasts',
+  exclusions: 'no added buyback yield; no independently forecast EPS series; no official daily total-return replication'
+});
 export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
 export const BOUNDS = Object.freeze({ growth: [-99, 1000], entryPE: [1, 100], exitPE: [1, 100], payout: [0, 100], years: [1, 20] });
 
@@ -21,18 +38,38 @@ export function validate(input) {
   return errors;
 }
 
-// Unique IRR: one negative initial investment followed by non-negative proceeds.
-export function irr(cashflows) {
-  if (!(cashflows[0] < 0) || cashflows.slice(1).some(v => v < 0)) throw new Error('Unsupported cash flows.');
-  const npv = rate => cashflows.reduce((sum, amount, year) => sum + amount / (1 + rate) ** year, 0);
-  let lo = -0.999999, hi = 1;
-  while (npv(hi) > 0 && hi < 1e8) hi *= 2;
-  for (let i = 0; i < 180; i++) {
-    const mid = (lo + hi) / 2;
-    if (npv(mid) > 0) lo = mid; else hi = mid;
+// Unique periodic IRR: one negative initial payment and at least one positive receipt.
+// Solve log(1 + r), using log-sum-exp PVs to avoid arbitrary rate floors/caps and
+// overflow when evaluating large proceeds or rates near negative 100 percent.
+export function solveIRR(cashflows) {
+  if (!Array.isArray(cashflows) || cashflows.length < 2 || Array.from(cashflows).some(v => !Number.isFinite(v)) || !(cashflows[0] < 0) || cashflows.slice(1).some(v => v < 0) || !cashflows.slice(1).some(v => v > 0)) throw new Error('Unsupported cash flows: require one finite initial outflow and non-negative receipts including a positive receipt.');
+  const initialLog = Math.log(-cashflows[0]);
+  const receipts = cashflows.flatMap((amount, year) => year && amount > 0 ? [{ year, logAmount: Math.log(amount) - initialLog }] : []);
+  const logPV = logGross => {
+    const terms = receipts.map(({ year, logAmount }) => logAmount - year * logGross);
+    const max = Math.max(...terms);
+    return max + Math.log(terms.reduce((sum, term) => sum + Math.exp(term - max), 0));
+  };
+  let lo = -1, hi = 1;
+  while (logPV(lo) < 0) lo *= 2;
+  while (logPV(hi) > 0) hi *= 2;
+  let logGross = 0, iterations = 0;
+  for (; iterations < 256; iterations++) {
+    logGross = (lo + hi) / 2;
+    const value = logPV(logGross);
+    if (Math.abs(Math.expm1(value)) <= 2e-14 || logGross === lo || logGross === hi) break;
+    if (value > 0) lo = logGross; else hi = logGross;
   }
-  return (lo + hi) / 2;
+  const rate = Math.expm1(logGross);
+  if (!Number.isFinite(rate) || rate <= -1) throw new Error('IRR is outside the representable finite rate range.');
+  // Assess the rounded, returned rate rather than only its internal log value.
+  const relativeNPVResidual = Math.expm1(logPV(Math.log1p(rate)));
+  const converged = Math.abs(relativeNPVResidual) <= 1e-10;
+  if (!converged) throw new Error('IRR failed the scale-relative NPV residual check.');
+  return { rate, iterations: Math.min(iterations + 1, 256), relativeNPVResidual, npvResidual: relativeNPVResidual * -cashflows[0], converged, method: 'log-gross-bisection-v1' };
 }
+
+export function irr(cashflows) { return solveIRR(cashflows).rate; }
 
 export function project(input = DEFAULTS) {
   const errors = validate(input);
@@ -42,8 +79,8 @@ export function project(input = DEFAULTS) {
   const growthMode = input.growthMode || 'constant';
   const annualGrowth = Array.from({ length: years }, (_, i) => growthMode === 'constant' ? growth : +input.annualGrowth[i]);
   const growthStartYear = growthMode === 'source' ? +input.growthStartYear : null;
-  const initialPrice = 100, initialEPS = initialPrice / entryPE, p = payout / 100;
-  const points = [{ year: 0, eps: initialEPS, pe: entryPE, price: 100, dividend: 0, cumulativeDividend: 0, cashWealth: 100, reinvestedWealth: 100, shares: 1 }];
+  const initialPrice = MODEL_CONVENTIONS.initialWealth, initialEPS = initialPrice / entryPE, p = payout / 100;
+  const points = [{ year: 0, eps: initialEPS, pe: entryPE, price: initialPrice, dividend: 0, cumulativeDividend: 0, cashWealth: initialPrice, reinvestedWealth: initialPrice, shares: 1 }];
   const cashflows = [-initialPrice];
   let shares = 1, cumulativeDividend = 0;
   for (let year = 1; year <= years; year++) {
@@ -66,7 +103,8 @@ export function project(input = DEFAULTS) {
   const multipleEffect = (exitPE / entryPE) ** (1 / years) - 1;
   const epsOnlyPrice = initialPrice * last.eps / initialEPS;
   const epsCAGR = (last.eps / initialEPS) ** (1 / years) - 1;
-  return { input: { growth, growthMode, growthStartYear, growthOverrides:{...(input.growthOverrides || {})}, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
+  const irrDiagnostics = solveIRR(cashflows);
+  return { input: { growth, growthMode, growthStartYear, growthOverrides:{...(input.growthOverrides || {})}, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, conventions: MODEL_CONVENTIONS, irrDiagnostics, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irrDiagnostics.rate, multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - initialPrice, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
 function boundedAxis(values, min, max, anchor) {
@@ -96,13 +134,31 @@ export function sensitivity(input, axes = sensitivityAxes(input)) {
   return { growths, multiples, rows: growths.map(growth => multiples.map(exitPE => project({ ...input, growthMode: 'constant', growth, exitPE }).cashIRR)) };
 }
 
-export function annualCSV(model, forecast) {
-  const header = 'Year,Normalized EPS,Valuation PE,Price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,EPS growth percent';
-  const cell = v => typeof v === 'number' ? Number(v.toFixed(8)) : /[,"\n]/.test(String(v)) ? '"' + String(v).replaceAll('"', '""') + '"' : v;
+export function annualCSV(model, forecast, context = {}) {
+  const header = 'Year,Synthetic normalized forward earnings anchor,Valuation PE,Normalized price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,Model convention version,Benchmark ID,Snapshot ID,Snapshot version,Snapshot published at,Normalized starting wealth,Entry PE assumption,Exit PE assumption,Holding years,Growth mode,Dividend convention,Payout percent,Initial yield percent,Cash interest percent,Price basis,Return basis,Currency basis,Growth mapping,Entry metric provenance,Exit metric provenance,Yield metric provenance,Scenario protection metadata,Growth source provenance,EPS growth percent';
+  // Keep round-trip numeric precision, including small non-zero modeled earnings.
+  const cell = v => /[,"\n\r]/.test(String(v ?? '')) ? '"' + String(v).replaceAll('"', '""') + '"' : v ?? '';
+  const provenance = value => value == null ? '' : JSON.stringify(value);
+  const scenarioMetadata = [
+    MODEL_CONVENTION_VERSION, context.benchmarkId, context.snapshotId, context.snapshotVersion, context.publishedAt,
+    model.initialPrice, model.input.entryPE, model.input.exitPE, model.input.years, model.input.growthMode,
+    model.input.dividendMode, model.input.dividendMode === 'payout' ? model.input.payout : '',
+    model.input.dividendMode === 'yield' ? model.input.dividendYield : '', MODEL_CONVENTIONS.cashInterestPercent,
+    MODEL_CONVENTIONS.priceBasis, MODEL_CONVENTIONS.returnBasis, MODEL_CONVENTIONS.currencyBasis,
+    model.input.growthMode === 'source' ? MODEL_CONVENTIONS.growthMapping : 'user-selected holding-year earnings growth scenario',
+    provenance(context.entryMetric), provenance(context.exitMetric), provenance(context.yieldMetric),
+    provenance({ sourceFollowing: context.sourceFollowing ?? null, fieldProvenance: context.fieldProvenance ?? null, locks: context.locks ?? context.fieldOverrides ?? null, growthOverrides: model.input.growthOverrides })
+  ];
   return [header, ...model.points.map(p => {
     const year = model.input.growthStartYear + p.year - 1;
     const point = model.input.growthMode === 'source' && forecast?.estimates.find(x => x.year === year);
-    const sourced = !!p.year && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point;
-    return [p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth, p.year && model.input.growthMode === 'source' ? point?.periodLabel || year : '', p.year ? sourced ? forecast.forecastType : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '', p.growth ?? ''].map(cell).join(',');
+    const sourced = !!p.year && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point && +point.growth === p.growth;
+    const growthEvidence = sourced ? provenance({ publisher: forecast.source.publisher, url: forecast.source.url, sha256: forecast.source.sha256 ?? null, parserVersion: forecast.source.parserVersion ?? null, asOf: forecast.asOf, forecastType: forecast.forecastType, periodBasis: forecast.periodBasis ?? null, periodLabel: point.periodLabel ?? null, year: point.year, periodEnd: point.periodEnd ?? null }) : '';
+    return [
+      p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth,
+      p.year && model.input.growthMode === 'source' ? point?.periodLabel || year : '',
+      p.year ? sourced ? forecast.forecastType : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '',
+      ...scenarioMetadata, growthEvidence, p.growth ?? ''
+    ].map(cell).join(',');
   })].join('\n');
 }

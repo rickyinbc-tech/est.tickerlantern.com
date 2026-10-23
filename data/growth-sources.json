@@ -146,22 +146,22 @@
         "ftse100": {
           "forecastType": "house",
           "periodBasis": "forecast-horizon",
-          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+          "method": "Amova Global Investment Strategy Committee house EPS-growth scenario, exact benchmark, median column at the printed forecast date. The original rows print month/year dates, not an explicit year-to period; the precise growth measurement interval is not disclosed. The future dated scenario is used only as an approximate synthetic-EPS growth assumption, not date-matched rolling-NTM or calendar-year consensus. No interpolation or extension is applied. Currency basis is not explicitly defined."
         },
         "stoxx600": {
           "forecastType": "house",
           "periodBasis": "forecast-horizon",
-          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+          "method": "Amova Global Investment Strategy Committee house EPS-growth scenario, exact benchmark, median column at the printed forecast date. The original rows print month/year dates, not an explicit year-to period; the precise growth measurement interval is not disclosed. The future dated scenario is used only as an approximate synthetic-EPS growth assumption, not date-matched rolling-NTM or calendar-year consensus. No interpolation or extension is applied. Currency basis is not explicitly defined."
         },
         "nikkei225": {
           "forecastType": "house",
           "periodBasis": "forecast-horizon",
-          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+          "method": "Amova Global Investment Strategy Committee house EPS-growth scenario, exact benchmark, median column at the printed forecast date. The original rows print month/year dates, not an explicit year-to period; the precise growth measurement interval is not disclosed. The future dated scenario is used only as an approximate synthetic-EPS growth assumption, not date-matched rolling-NTM or calendar-year consensus. No interpolation or extension is applied. Currency basis is not explicitly defined."
         },
         "hangseng": {
           "forecastType": "house",
           "periodBasis": "forecast-horizon",
-          "method": "Amova Global Investment Strategy Committee house EPS-growth forecast, exact benchmark, median column. Printed year-to-endpoint labels are preserved: these are horizon forecasts, not calendar-year consensus. One future rate is used as an approximate scenario input; no interpolation or extension is applied. Currency basis is not explicitly defined."
+          "method": "Amova Global Investment Strategy Committee house EPS-growth scenario, exact benchmark, median column at the printed forecast date. The original rows print month/year dates, not an explicit year-to period; the precise growth measurement interval is not disclosed. The future dated scenario is used only as an approximate synthetic-EPS growth assumption, not date-matched rolling-NTM or calendar-year consensus. No interpolation or extension is applied. Currency basis is not explicitly defined."
         }
       }
     },

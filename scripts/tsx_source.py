@@ -28,7 +28,7 @@ def validate_date(value, today=None):
 
 
 def validate_pe(value):
-    if not 1 <= value <= 100:
+    if not 0 <= value <= 1_000_000:
         raise ValueError('Valuation outside accepted P/E bounds')
     return value
 

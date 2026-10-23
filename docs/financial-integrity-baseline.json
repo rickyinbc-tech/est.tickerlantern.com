@@ -1,0 +1,25 @@
+{
+  "audit": "financial-integrity-1",
+  "observedAtUTC": "2026-10-23T08:11:00+00:00",
+  "branch": "main",
+  "commit": "6760c0f9c80494395b6b048ea52056dd6a25938a",
+  "applicationDeployment": "89473eb7-b2fb-4b22-be58-259523013b92",
+  "schemaVersion": 1,
+  "snapshotId": null,
+  "publishedAt": "2026-10-23T07:30:39Z",
+  "transport": "github",
+  "sourceCheckAt": "2026-10-23T07:28:55Z",
+  "growthCheckAt": "2026-10-23T07:30:39Z",
+  "catalogueCount": 21,
+  "coverage": {
+    "forwardPE": 21,
+    "mean10YearForwardPE": 21,
+    "dividendYield": 14,
+    "growthForecast": 21
+  },
+  "retainedGrowth": [
+    "russell2000"
+  ],
+  "feedSHA256": "9b5948bb530e534f438bfcdd2a38fbb4b681381e0682e03c615f13b1a6497181",
+  "scheduleEvidence": "Only workflow_dispatch executions found in repository history at baseline; scheduled execution not yet evidenced."
+}

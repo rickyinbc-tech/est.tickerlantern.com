@@ -62,7 +62,7 @@ def unique_pair(pattern, section):
     if len(matches) != 1:
         raise ValueError('Expected exactly one index-specific forward-P/E and ten-year pair')
     current, mean = map(float, matches[0])
-    if not 1 <= current <= 100 or not 1 <= mean <= 100:
+    if not 0 <= current <= 1_000_000 or not 0 <= mean <= 1_000_000:
         raise ValueError('IG valuation outside supported range')
     return current, mean
 

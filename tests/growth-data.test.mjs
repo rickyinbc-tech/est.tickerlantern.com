@@ -4,7 +4,7 @@ import { sourceGrowthPath, validateGrowthForecast, growthIsStale, growthCoverage
 import { DEFAULTS, project, validate } from '../src/model.js';
 import { scenarioInputs, switchScenario } from '../src/scenario-state.js';
 const now = new Date('2026-10-22T20:00:00Z');
-const row = { forwardPE: 20, mean10YearForwardPE: 18, growthForecast: { asOf: '2026-10-15', forecastType: 'consensus', periodBasis: 'calendar-year', source: { url: 'https://example.com/forecasts', publisher: 'Test publisher' }, estimates: [{ year: 2026, growth: 32.8 }, { year: 2027, growth: 28 }, { year: 2028, growth: 12 }] } };
+const row = { historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE: 20, mean10YearForwardPE: 18, growthForecast: { asOf: '2026-10-15', forecastType: 'consensus', periodBasis: 'calendar-year', source: { url: 'https://example.com/forecasts', publisher: 'Test publisher' }, estimates: [{ year: 2026, growth: 32.8 }, { year: 2027, growth: 28 }, { year: 2028, growth: 12 }] } };
 
 test('published growth begins with the next year and never repeats missing estimates', () => {
   const path = sourceGrowthPath(row, 5, now);
@@ -50,10 +50,19 @@ test('annual consensus values above 20 percent are supported without clamping', 
   assert.ok(Number.isFinite(model.cashIRR));
 });
 
-test('growth evidence rejects duplicate years, missing provenance and unsupported rates', () => {
+test('growth evidence rejects duplicate years, missing provenance and implausible source rates', () => {
   assert.doesNotThrow(() => validateGrowthForecast(row.growthForecast));
-  for (const change of [{ source: null }, { asOf: null }, { asOf: '2026-99-99' }, { periodBasis: 'forecast-horizon' }, { periodBasis: 'quarterly' }, { estimates: [{ year: 2027, growth: -100 }] }, { estimates: [{ year: 2027, growth: 12 }, { year: 2027, growth: 13 }] }]) assert.throws(() => validateGrowthForecast({ ...row.growthForecast, ...change }));
+  for (const change of [{ source: null }, { asOf: null }, { asOf: '2026-99-99' }, { periodBasis: 'forecast-horizon' }, { periodBasis: 'quarterly' }, { estimates: [{ year: 2027, growth: -1000001 }] }, { estimates: [{ year: 2027, growth: 12 }, { year: 2027, growth: 13 }] }]) assert.throws(() => validateGrowthForecast({ ...row.growthForecast, ...change }));
   assert.equal(growthIsStale(row, now), false);
   assert.equal(growthIsStale({ ...row, growthForecast: { ...row.growthForecast, asOf: '2026-01-01' } }, now), true);
   assert.equal(growthCoverage({ indices: [row, {}] }, now), '1 of 2 benchmarks have published 2027 growth inputs');
+});
+
+test('explicit source growth outside calculator bounds remains visible and blocks model output',()=>{
+  for(const growth of [-100,1001]) {
+    const forecast={...row.growthForecast,estimates:[{year:2027,growth}]};
+    assert.doesNotThrow(()=>validateGrowthForecast(forecast));
+    assert.deepEqual(sourceGrowthPath({...row,growthForecast:forecast},1,now).rates,[growth]);
+    assert.ok(validate({...DEFAULTS,growthMode:'source',years:1,annualGrowth:[growth]}).annualGrowth);
+  }
 });

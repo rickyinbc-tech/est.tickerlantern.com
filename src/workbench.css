@@ -238,3 +238,18 @@ button,a,input,select{transition:border-color .15s,color .15s,background-color .
 @media print{.restore-growth-years{display:none}}
 
 .scenario-growth-source{grid-column:1/-1;margin-bottom:4px;padding:12px;background:#edf6f3;border:1px solid #b3cbc6;border-left:3px solid var(--teal);font-size:13px;line-height:1.6;overflow-wrap:anywhere}.scenario-growth-source strong,.scenario-growth-source span,.scenario-growth-source small{display:block}.scenario-growth-source small{font-size:12px;margin-top:7px;color:var(--muted)}
+@media print {
+ .scenario-context{break-after:avoid}
+ .assumption-panel{break-inside:auto}
+ .assumption-panel fieldset{gap:8pt}
+ .scenario-growth-source{padding:7pt;font-size:9pt;line-height:1.4;margin:0}
+ .scenario-growth-source small{font-size:8pt;margin-top:4pt}
+ .growth-mode-field{grid-column:1/-1;display:grid;grid-template-columns:1fr 2fr;gap:4pt 10pt;align-items:center}
+ .growth-mode-field select{min-height:25pt;padding:4pt;font-size:9pt}
+ .growth-mode-field small{grid-column:1/-1;margin:0}
+ .annual-growth-panel{margin:0;padding:8pt;break-inside:auto}
+ .annual-growth-panel p,.annual-growth-panel small{font-size:8pt;margin-top:5pt;line-height:1.4}
+ .annual-growth-inputs{margin-top:7pt;gap:7pt}
+ .annual-growth-field label{font-size:8pt;line-height:1.3}
+ .input-wrap input{min-height:24pt;padding:4pt 17pt 4pt 6pt}
+}

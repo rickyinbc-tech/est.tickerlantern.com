@@ -54,7 +54,7 @@ class JpmAndMergeTests(unittest.TestCase):
     def test_invalid_yield_cannot_partially_mutate_current(self):
         row = {'forwardPE':15, 'asOf':'2026-09-30'}
         with self.assertRaises(ValueError):
-            update_metrics(row, {'forwardPE':16, 'asOf':'2026-10-22', 'dividendYield':99}, {}, 'checked')
+            update_metrics(row, {'forwardPE':16, 'asOf':'2026-10-22', 'dividendYield':1001}, {}, 'checked')
         self.assertEqual(row['forwardPE'],15)
 
     def test_equal_date_prefers_explicit_forward_horizon_but_newer_date_wins(self):

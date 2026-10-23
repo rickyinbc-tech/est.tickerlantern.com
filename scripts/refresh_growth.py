@@ -24,14 +24,8 @@ class PublicSources:
         self.policies = {}; self.last = {}; self.cache = {}
 
     def raw(self, url, post=False):
-        if urlparse(url).hostname not in HOSTS or not url.startswith('https://'): raise ValueError('Unapproved public source host')
-        args = ['curl', '--proto', '=https', '--proto-redir', '=https', '-sSL', '--max-time', '45', '--retry', '1', '--max-filesize', '24000000', '-A', 'TickerLanternResearch/1.0 (+https://est.tickerlantern.com)', '-w', '\n%{http_code}']
-        if post: args += ['--data', '']
-        reply = subprocess.run(args + [url], capture_output=True)
-        if reply.returncode: raise ValueError('Public source request unavailable')
-        body, _, code = reply.stdout.rpartition(b'\n')
-        if len(body) > 24000000: raise ValueError('Oversized public source')
-        return body, int(code)
+        from public_http import request
+        return request(url, HOSTS, post=post, allow_status=True)
 
     def policy(self, url):
         host = urlparse(url).hostname
@@ -157,7 +151,7 @@ def update(row, values, job, url, body, checked):
 
 def refresh(path=None, jobs=None, client=None):
     path = Path(path or ROOT / 'data/indices.json')
-    feed = json.loads(path.read_text()); rows = {r['id']:r for r in feed['indices']}
+    feed = json.loads(path.read_text()); previous = json.loads(path.read_text()); rows = {r['id']:r for r in feed['indices']}
     jobs = jobs or json.loads((ROOT/'data/growth-sources.json').read_text())['jobs']
     checked = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
     client = client or PublicSources(); successes, failures = [], []
@@ -187,7 +181,9 @@ def refresh(path=None, jobs=None, client=None):
             failures.append(dict(adapter=job['adapter'], error=message))
             print(job['adapter'] + ': retained prior data — ' + message, flush=True)
     feed.update(publishedAt=checked, growthCheckAt=checked, growthRefresh=dict(parserVersion=VERSION, checkedAt=checked, successfulIndices=successes, failures=failures))
-    path.write_text(json.dumps(feed, indent=2, ensure_ascii=False)+'\n')
+    from snapshot import finalize, atomic_write
+    feed = finalize(feed, previous, 'growth-publisher-refresh')
+    atomic_write(path, feed)
     return not failures
 
 

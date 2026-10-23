@@ -1,5 +1,6 @@
 """Public-source adapters supplementing monthly index-provider fundamentals."""
 import hashlib
+import copy
 import html
 import io
 import os
@@ -60,8 +61,24 @@ def segal_reports(body):
     return sorted(reports, reverse=True)[:2]
 
 
+def merge_observations(by_id, ids, observations, update, checked, adapter):
+    """Stage a related publisher bundle before any accepted row changes."""
+    staged = {index: copy.deepcopy(by_id[index]) for index in ids}
+    accepted = []
+    for values, evidence in observations:
+        evidence = {**evidence, 'checkedAt':checked, 'adapterId':adapter}
+        if not values or any(index not in staged for index in values): raise ValueError('Unexpected benchmark in publisher bundle')
+        for index, metrics in values.items():
+            update(staged[index], metrics, evidence, checked)
+            accepted.append(index)
+    if not accepted: raise ValueError('No validated metrics for the selected benchmarks')
+    for index in set(accepted): by_id[index].update(staged[index])
+    return accepted
+
+
 def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
     jobs = []
+    issues = []
 
     def discovery(url, parser, get=None):
         body = (get or fetch)(url).decode('utf-8', 'replace')
@@ -72,37 +89,37 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         return links
 
     def run(id, ids, action):
+        issues.clear()
+        prior = {index:copy.deepcopy(by_id[index]) for index in ids}
         try:
             observations = action()
-            accepted = []
-            for values, evidence in observations:
-                evidence.update(checkedAt=checked, adapterId=id)
-                for index, metrics in values.items():
-                    if index not in by_id or index not in ids: continue
-                    update(by_id[index], metrics, evidence, checked)
-                    accepted.append(index)
-            if not accepted: raise ValueError('No validated metrics for the selected benchmarks')
-            jobs.append(dict(id=id, indices=sorted(set(accepted)), status='ok', checkedAt=checked, error=None))
+            accepted = merge_observations(by_id, ids, observations, update, checked, id)
+            status = 'partial' if issues else 'ok'
+            message = '; '.join(issues)[:800] if issues else None
+            if issues:
+                mark_retained(id, ids, message, prior)
+            jobs.append(dict(id=id, indices=sorted(set(accepted)), status=status, checkedAt=checked, error=message, discoveryIssues=list(issues)))
         except Exception as exc:
             if not isinstance(exc, ValueError): logging.exception('Unexpected publisher adapter failure: %s', id)
-            message = str(exc)[:200] if isinstance(exc, ValueError) else 'Source unavailable (' + type(exc).__name__ + ')'
+            message = str(exc)[:240] if isinstance(exc, ValueError) else 'Source unavailable (' + type(exc).__name__ + ')'
             if id in ('nasdaq-dashboard', 'edelweiss-reference'):
                 try:
                     from browser_snapshot import load
                     values, evidence, verified = load(id)
-                    for index, metrics in values.items():
-                        update(by_id[index], metrics, evidence, verified)
+                    merge_observations(by_id, ids, [(values,evidence)], update, verified, id)
                     jobs.append(dict(id=id, indices=sorted(values), status='browser-verified', checkedAt=checked, lastBrowserCheck=verified, hostedError=message, error=None))
                     return
-                except ValueError as fallback_error:
-                    message += '; ' + str(fallback_error)
-            for index in ids:
-                row = by_id[index]
-                for source_key, sync_key in [('source', 'sync'), ('meanSource', 'meanSync')]:
-                    if row.get(source_key, {}) and row[source_key].get('adapterId') == id:
-                        old = row.get(sync_key) or {}
-                        row[sync_key] = dict(status='retained', lastAttempt=checked, lastSuccess=old.get('lastSuccess'), error=message)
-            jobs.append(dict(id=id, indices=ids, status='retained', checkedAt=checked, error=message))
+                except ValueError as fallback_error: message += '; ' + str(fallback_error)
+            mark_retained(id, ids, message, prior)
+            jobs.append(dict(id=id, indices=ids, status='retained', checkedAt=checked, error=message, discoveryIssues=list(issues)))
+
+    def mark_retained(adapter, ids, message, previous=None):
+        for index in ids:
+            row = by_id[index]
+            for source_key, sync_key in [('source', 'sync'), ('meanSource', 'meanSync'), ('yieldSource','yieldSync')]:
+                if (row.get(source_key) or {}).get('adapterId') == adapter:
+                    old = ((previous or {}).get(index, row).get(sync_key) or {})
+                    row[sync_key] = dict(status='retained', lastAttempt=checked, lastSuccess=old.get('lastSuccess'), error=message)
 
     def jpm():
         body = fetch(jpm_source.URL)
@@ -113,7 +130,8 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
 
     def msci():
         body = fetch(MSCI_DECK)
-        values = parse_reference(body, parse_msci_deck_text)
+        parsed = parse_reference(body, parse_msci_deck_text)
+        values = {index:parsed[index] for index in ('acwi','world','em','europe')}
         if render_qa: render(body, [row['page'] for row in values.values()], 'msci-reference')
         return [(values, source('MSCI', MSCI_DECK, body, MSCI_DECK, 'dated-reference'))]
     run('msci-reference', ['acwi', 'world', 'em', 'europe'], msci)
@@ -125,15 +143,16 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
             for year, quarter in segal_reports(fetch(SEGAL_PORTAL)):
                 url = f'https://cambridgeretirementma.gov/wp-content/uploads/{year}-{quarter}Q-Segal.pdf'
                 if url not in urls: urls.append(url)
-        except ValueError: pass
+        except ValueError as error: issues.append('Discovery failed: '+str(error))
         observations = []
         for url in urls:
             try:
                 body = fetch(url)
-                values = parse_reference(body, parse_segal_text)
+                parsed = parse_reference(body, parse_segal_text)
+                values = {index:parsed[index] for index in ('eafe','uk','msci-canada','japan')}
                 if render_qa: render(body, [row['page'] for row in values.values()], 'segal-reference')
                 observations.append((values, source('Segal Marco Advisors / FactSet', url, body, SEGAL_PORTAL, 'dated-reference')))
-            except ValueError: continue
+            except ValueError as error: issues.append('Candidate '+url+' failed: '+str(error))
         return observations
     run('segal-reference', ['eafe', 'uk', 'msci-canada', 'japan'], segal)
 
@@ -158,7 +177,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 for url in discovery(article, dashboard_links, get):
                     if url not in urls: urls.append(url)
         except ValueError as exc:
-            errors.append('Discovery: ' + str(exc))
+            errors.append('Discovery: ' + str(exc)); issues.append('Discovery failed: '+str(exc))
             logging.warning('Nasdaq discovery: %s', exc)
         if NASDAQ_SEED not in urls: urls.append(NASDAQ_SEED)
         observations = []
@@ -171,7 +190,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 if render_qa: render(body, [1], 'nasdaq-dashboard')
                 observations.append((values, source('Nasdaq / Bloomberg / FactSet', url, body, NASDAQ_LIST)))
             except ValueError as exc:
-                errors.append('Dashboard: ' + str(exc))
+                errors.append('Dashboard: ' + str(exc)); issues.append('Candidate '+url+' failed: '+str(exc))
                 logging.warning('Nasdaq dashboard %s: %s', url, exc)
         if not observations: raise ValueError('; '.join(errors[-2:]) or 'No publisher dashboard links found')
         return observations
@@ -188,7 +207,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         try:
             for article in raymond_james_article_links(fetch(RJ_LIST).decode('utf-8', 'replace'))[:2]:
                 urls.extend(raymond_james_links(fetch(article).decode('utf-8', 'replace')))
-        except ValueError: pass
+        except ValueError as error: issues.append('Discovery failed: '+str(error))
         if RJ_SEED not in urls: urls.append(RJ_SEED)
         result = []
         for url in urls[:3]:
@@ -199,7 +218,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 for row in values.values(): row['page'] = row.pop('sourcePage')
                 if render_qa: render(body, [row['page'] for row in values.values()], 'raymond-james-current')
                 result.append((values, source('Raymond James / FactSet', url, body, RJ_LIST)))
-            except ValueError: continue
+            except ValueError as error: issues.append('Candidate '+url+' failed: '+str(error))
         return result
     run('raymond-james-tsx', ['tsx', 'ftse100', 'hangseng', 'nikkei225', 'csi300'], tsx_current)
 
@@ -207,7 +226,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         urls = [CP_SEED]
         try:
             urls.extend(url for url in cumberland_report_links(fetch(CP_LIST).decode('utf-8', 'replace'))[:2] if url != CP_SEED)
-        except ValueError: pass
+        except ValueError as error: issues.append('Discovery failed: '+str(error))
         result = []
         for url in urls:
             try:
@@ -216,7 +235,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 values['page'] = values.pop('sourcePage')
                 if render_qa: render(body, [values['page']], 'tsx-reference')
                 result.append(({'tsx': values}, source('Cumberland / Bloomberg', url, body, CP_LIST, 'dated-reference')))
-            except ValueError: continue
+            except ValueError as error: issues.append('Candidate '+url+' failed: '+str(error))
         return result
     run('cumberland-tsx', ['tsx'], tsx_mean)
 
@@ -242,7 +261,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         urls, errors = [], []
         try: urls.extend(discovery(TEMPO_DETAIL_URL, discover_tempo_links)[:2])
         except ValueError as exc:
-            errors.append('Discovery: ' + str(exc))
+            errors.append('Discovery: ' + str(exc)); issues.append('Discovery failed: '+str(exc))
             logging.warning('Edelweiss discovery: %s', exc)
         if TEMPO_SEED_URL not in urls: urls.append(TEMPO_SEED_URL)
         observations = []
@@ -253,7 +272,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 if render_qa: render(body, [row['page'] for row in values.values()], 'edelweiss-reference')
                 observations.append((values, source('Edelweiss Mutual Fund / Bloomberg', url, body, TEMPO_DETAIL_URL)))
             except ValueError as exc:
-                errors.append('Report: ' + str(exc))
+                errors.append('Report: ' + str(exc)); issues.append('Candidate '+url+' failed: '+str(exc))
                 logging.warning('Edelweiss report %s: %s', url, exc)
         if not observations: raise ValueError('; '.join(errors[-2:]) or 'No publisher TEMPO links found')
         return observations

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {metricHealth,metricStatusText,updateHealth,metricProvenance,metricDisclosure} from '../src/update-status.js';
 import {annualCSV,project,DEFAULTS} from '../src/model.js';
+import {scenarioInputs,fieldBasis} from '../src/scenario-state.js';
 const feed=JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url)));
 const now=new Date('2026-10-23T10:00:00Z');
 test('retained same-document yields inherit the existing proven primary failure',()=>{
@@ -66,6 +67,8 @@ test('retained evidence exposes check times and independently evaluated cadence'
 const readCSV=text=>text.split('\n').map(line=>{const cells=[];let cell='',quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"'){if(quoted&&line[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}else if(line[i]===','&&!quoted){cells.push(cell);cell='';}else cell+=line[i];}cells.push(cell);return cells;});
 test('CSV carries resolved metric checks and evaluation time without misattributing custom values',()=>{
  const row=feed.indices.find(r=>r.id==='eafe');
+ assert.equal(fieldBasis('dividendYield',row,{dividendMode:true}),'source');
+ assert.equal(scenarioInputs(row,{...DEFAULTS,dividendMode:'yield',dividendYield:1},{dividendMode:true}).dividendYield,row.dividendYield);
  const model=project({...DEFAULTS,dividendMode:'yield',dividendYield:2.5,growthMode:'source',growthStartYear:2027,annualGrowth:[12.3],growthOverrides:{2027:12.3},years:1});
  const context={healthEvaluatedAt:now.toISOString(),entryMetric:metricProvenance(row,'forwardPE',now),yieldMetric:{classification:'user-assumption',value:2.5,units:'percent'},growthMetric:metricProvenance(row,'growthForecast',now)};
  const rows=readCSV(annualCSV(model,row.growthForecast,context));const values=Object.fromEntries(rows[0].map((h,i)=>[h,rows[2][i]]));

@@ -27,7 +27,10 @@ export default {
     try {
       const response = await fetch(SNAPSHOT, { redirect: 'error', cf: { cacheTtl: 300, cacheEverything: true }, signal: AbortSignal.timeout(8000) });
       remote = await verified(response, { githubRaw: true });
-    } catch { /* The independent bundle below must pass the identical contract. */ }
+    } catch (error) {
+      console.warn('Published index snapshot unavailable:', error instanceof Error ? error.message : 'Unknown snapshot failure');
+      // The independent bundle below must pass the identical contract.
+    }
     if (env.ASSETS) {
       try {
         const local = await env.ASSETS.fetch(new Request(new URL('/data/indices.json', url)));

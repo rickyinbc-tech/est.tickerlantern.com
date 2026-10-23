@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "registryVersion": "source-definitions-2026-10-23.2",
+  "registryVersion": "source-definitions-2026-10-23.3",
   "reviewedAt": "2026-10-23",
   "scope": "21 exact benchmark universes; public documents only",
   "definitionUnknownPolicy": "unknown is not evidence of equivalence; preserve published value and qualify model use; no ETF/related-index substitution",
@@ -533,15 +533,15 @@
       "label": "Dividend Yield",
       "economic": {
         "earningsBasis": "not applicable to yield",
-        "aggregation": "Nikkei 225 index-weight-basis dividend yield; the simple-average column is excluded",
+        "aggregation": "price-adjustment-factor weighted Nikkei-estimated whole-financial-year dividends divided by the adjusted constituent price sum",
         "negativeEarners": "not disclosed",
         "missingEstimates": "not disclosed",
-        "weighting": "not disclosed for this statistic",
+        "weighting": "price-adjustment-factor weighted; index-weight basis, not simple average",
         "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
-        "methodologyVersion": "not disclosed",
-        "yieldConstruction": "Nikkei 225 index-weight-basis dividend yield; the simple-average column is excluded",
+        "methodologyVersion": "USG-E-20241105; User’s Guide to Nikkei Indexes pp6–7",
+        "yieldConstruction": "Nikkei-estimated whole-financial-year DPS, shifted after the constituent’s year-end earnings announcement; price-adjustment-factor weighted",
         "taxTreatment": "gross/net not separately disclosed",
-        "horizon": "published dividend anchor; construction as recorded"
+        "horizon": "Nikkei-estimated dividend per share for each constituent’s whole financial year; not rolling NTM"
       },
       "underlyingProvider": "Nikkei Indexes",
       "precisionDecimals": 2,
@@ -553,7 +553,8 @@
       },
       "allowedPublishers": [
         "Nikkei Indexes"
-      ]
+      ],
+      "methodologyURL": "https://indexes.nikkei.co.jp/nkave/archives/file/users_guide_en.pdf"
     },
     "hsi-index-yield": {
       "label": "Dividend Yield",
@@ -926,20 +927,20 @@
     },
     {
       "id": "source-growth",
-      "value": "per benchmark/year; next future label only",
+      "value": "published growth reference; qualified model bridge only",
       "units": "% per publisher period",
       "classification": "estimate-based published statistic",
       "definition": "CY/FY/publisher-year/house forecast-date labels preserved. A calendar-year percentage or dated EPS scenario is not a date-matched rolling forward-EPS growth rate; Amova precise growth interval is not disclosed.",
-      "permittedUse": "approximate scenario only; no interpolation, repetition or forced period conversion",
-      "implementation": "src/growth-data.js::sourceGrowthPath",
+      "permittedUse": "Keep source labels intact. Explicit CY/rolling12m pairs can inform derived model inputs; unknown periods are reference only.",
+      "implementation": "src/growth-data.js; src/five-year-growth.js",
       "status": "documented convention; subject to acceptance tests"
     },
     {
       "id": "source-growth-horizon",
-      "value": "five holding years",
+      "value": "five modeled holding-year rates",
       "units": "years",
-      "classification": "illustrative policy",
-      "definition": "Published future inputs retain original labels. Missing years use separately labelled model estimates under tickerlantern-five-year-fade-v1.",
+      "classification": "model estimate",
+      "definition": "Timing-v2: bridge explicit CY growth to rolling12m EPS using dated uniform-accrual assumptions; other periods use editorial normalized EPS rates. Original publisher figures remain reference. Five holding years, six underlying calendar rates only inside the bridge.",
       "permittedUse": "all benchmark initial/reset/source scenarios",
       "implementation": "src/five-year-growth.js",
       "status": "documented convention; subject to acceptance tests"
@@ -999,7 +1000,7 @@
       "value": "benchmark dividend-anchor percent × active entry PE; 30 only in teaching example",
       "units": "% of prior earnings anchor",
       "classification": "derived model input or user assumption",
-      "definition": "D_t=p F_(t-1). Benchmark defaults calibrate the first payment to their own accepted dividend anchor. Not a publisher-reported payout or matched-period D/E statistic; missing/ineligible anchors stay blank.",
+      "definition": "D_t=p F_(t-1). Benchmark defaults calibrate the first payment to their own accepted dividend anchor. Not a publisher-reported payout or matched-period D/E statistic; missing/ineligible anchors stay blank. A net-return spread is reference-only and cannot seed cash distributions.",
       "permittedUse": "payout mode; feasibility not enforced",
       "implementation": "src/dividend-policy.js; src/scenario-state.js; src/model.js",
       "status": "documented convention; subject to acceptance tests"
@@ -1209,7 +1210,7 @@
       "value": "per benchmark; explicit source locks",
       "units": "edit policy",
       "classification": "user control",
-      "definition": "Reset restores the selected benchmark source eligibility, full five-year forecast and calibrated dividend default. Restore valuations preserves custom growth/payout. Restore dividend defaults clears dividend overrides. Unedited legacy 30% payouts migrate; custom payouts remain protected. Scenarios are stored in this browser.",
+      "definition": "Reset restores the selected benchmark source eligibility, full five-year model scenario and calibrated dividend default. Restore valuations preserves custom growth/payout. Restore dividend defaults clears dividend overrides. Unedited legacy 30% payouts migrate; custom payouts remain protected. Scenarios are stored in this browser. Unmodified legacy timing paths migrate once; custom paths remain protected.",
       "permittedUse": "UI/localStorage",
       "implementation": "src/scenario-state.js; src/app.js",
       "status": "documented convention; subject to acceptance tests"

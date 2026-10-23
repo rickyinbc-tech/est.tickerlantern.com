@@ -1,6 +1,6 @@
 {
   "reviewedAt": "2026-10-23T12:59:59Z",
-  "scope": "Seven previously missing exact-benchmark dividend anchors. No ETF distribution-yield proxy and no reported payout ratio are imported.",
+  "scope": "Seven previously missing exact-benchmark dividend statistics: six eligible cash anchors and one STOXX net-return-spread reference. No ETF distribution-yield proxy and no reported payout ratio are imported.",
   "observations": [
     {
       "id": "sp500",
@@ -68,7 +68,12 @@
         "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
         "location": "Fundamentals table; exact STOXX Europe 600 row, Dividend yield (%) column and footnote 3"
       },
-      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed",
+      "modelUseReview": {
+        "reviewedAt": "2026-10-23",
+        "permittedUse": "Reference only; not a cash-dividend anchor or an inferred payout.",
+        "reason": "Net return index return minus price index return is a historical net performance contribution."
+      }
     },
     {
       "id": "nikkei225",

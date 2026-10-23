@@ -1,6 +1,5 @@
 import { DEFAULTS, BOUNDS } from './model.js';
-import { sourceGrowthPath } from './growth-data.js';
-import { fiveYearGrowthPath, HOLDING_YEARS } from './five-year-growth.js';
+import { fiveYearGrowthPath, HOLDING_YEARS, GROWTH_POLICY } from './five-year-growth.js';
 import { sourceExitPE, eligibleExitMean } from './valuation-policy.js';
 import { calibratedPayout, DIVIDEND_POLICY_VERSION } from './dividend-policy.js';
 
@@ -17,20 +16,27 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
       if (!locked.dividendMode) next.dividendMode='payout';
     }
     next.dividendPolicyVersion=DIVIDEND_POLICY_VERSION;
+    if(row?.id && calibratedPayout(row,next.entryPE)==='') {
+      if(!locked.payout)next.payout='';
+      if(!locked.dividendYield)next.dividendYield='';
+    }
     if (next.growthMode === 'source') {
       const path = fiveYearGrowthPath(row, now, next.growthOverrides);
-      next.annualGrowth = Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? path.rates[i]);
-      next.growthStartYear ??= path.startYear;
+      next.annualGrowth = current.growthPolicyVersion !== GROWTH_POLICY.version ? path.rates : Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? path.rates[i]);
+      if(current.growthPolicyVersion !== GROWTH_POLICY.version) next.growthStartYear=path.startYear;
+      else next.growthStartYear ??= path.startYear;
       next.growthPlan = [];
     }
+    next.growthPolicyVersion=GROWTH_POLICY.version;
     return next;
   }
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
   if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
   if (!locked.dividendMode) next.dividendMode = 'payout';
-  if (!locked.dividendYield) next.dividendYield = row?.dividendYield ?? DEFAULTS.dividendYield;
+  if (!locked.dividendYield) next.dividendYield = row?.id ? calibratedPayout(row,next.entryPE)!=='' ? row.dividendYield : '' : row?.dividendYield ?? DEFAULTS.dividendYield;
   if (!locked.payout) next.payout = row?.dividendYield != null ? calibratedPayout(row,next.entryPE) : row?.id ? '' : DEFAULTS.payout;
   next.dividendPolicyVersion=DIVIDEND_POLICY_VERSION;
+  next.growthPolicyVersion=GROWTH_POLICY.version;
   if (!locked.growthMode && !locked.growth && !locked.annualGrowth) next.growthMode = 'source';
   if (next.growthMode === 'source') {
     const selected = fiveYearGrowthPath(row, now, next.growthOverrides);
@@ -63,7 +69,7 @@ export function presetScenario(input, preset) {
 export function fieldBasis(key, row, locked = {}, following = true) {
   if (locked[key]) return 'custom';
   if (key === 'payout' && !following) return 'manual';
-  if (key === 'growth' && following && sourceGrowthPath(row, 1).coveredYears) return 'forecast';
+  if (key === 'growth' && following && fiveYearGrowthPath(row).anchor) return 'modeled';
   if (key === 'payout' && following && row?.dividendYield != null && calibratedPayout(row,row.forwardPE)!=='') return 'calibrated';
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
@@ -87,6 +93,7 @@ export function loadScenarios(storage) {
       if (Array.isArray(values.annualGrowth)) clean.annualGrowth = values.annualGrowth.slice(0, 20).map(value => typeof value === 'number' || typeof value === 'string' ? value : '');
       clean.growthOverrides = Object.fromEntries(Object.entries(values.growthOverrides || {}).filter(([year,value])=>/^20\d{2}$/.test(year) && ['number','string'].includes(typeof value)));
       clean.dividendPolicyVersion=typeof values.dividendPolicyVersion==='string'?values.dividendPolicyVersion:'';
+      clean.growthPolicyVersion=typeof values.growthPolicyVersion==='string'?values.growthPolicyVersion:'';
       empty.scenarios.set(id, clean);
     }
     for (const [id, locks] of data.overrides) if (typeof id === 'string' && locks && typeof locks === 'object') empty.overrides.set(id, Object.fromEntries(SCENARIO_KEYS.filter(key => locks[key] === true).map(key => [key, true])));

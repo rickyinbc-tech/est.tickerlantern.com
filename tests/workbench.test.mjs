@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DEFAULTS, BOUNDS, project, sensitivity, sensitivityAxes, validate, annualCSV } from '../src/model.js';
 import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis } from '../src/scenario-state.js';
+import { GROWTH_POLICY } from '../src/five-year-growth.js';
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
 const em = { id:'em', historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE:8.9, mean10YearForwardPE:12.25, dividendYield:2.02 };
 
@@ -39,7 +40,7 @@ test('source refresh updates unlocked inputs and protects edits', () => {
   const next=scenarioInputs(em,custom,{entryPE:true,dividendYield:true,growth:true,years:true});
   assert.equal(next.entryPE,17);assert.equal(next.exitPE,12.25);assert.equal(next.dividendYield,3);
   assert.equal(next.growth,9);assert.equal(next.years,5);
-  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5,payout:34.34,dividendPolicyVersion:'benchmark-dividend-anchor-v1'});
+  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5,payout:34.34,dividendPolicyVersion:'benchmark-dividend-anchor-v1',growthPolicyVersion:GROWTH_POLICY.version});
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
   const next=switchScenario({},undefined);
@@ -73,9 +74,11 @@ test('presets change only their declared active assumptions', () => {
 });
 test('provenance distinguishes source, historical, fallback, default and custom', () => {
   assert.equal(fieldBasis('entryPE',em),'source');assert.equal(fieldBasis('exitPE',em),'reference');
-  assert.equal(fieldBasis('exitPE',{forwardPE:8.9}),'fallback');assert.equal(fieldBasis('growth',em),'default');
+  assert.equal(fieldBasis('exitPE',{forwardPE:8.9}),'fallback');assert.equal(fieldBasis('growth',em),'modeled');
   assert.equal(fieldBasis('entryPE',em,{entryPE:true}),'custom');assert.equal(fieldBasis('growth',em,{growth:true}),'custom');
   assert.equal(fieldBasis('entryPE',em,{},false),'manual');
+  const withPublished={...em,growthForecast:{estimates:[{year:new Date().getFullYear()+1,growth:24}]}};
+  assert.equal(fieldBasis('growth',withPublished),'modeled');
 });
 test('compression reference, constant price CAGR and exported endpoints agree', () => {
   const m=project(DEFAULTS);close(m.priceCAGR,1.06*(20/25)**.2-1);

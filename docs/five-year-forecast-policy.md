@@ -1,26 +1,30 @@
-# Five-year forecast policy
+# Five-year scenario timing policy
 
-Reviewed: 2026-10-23. Policy: tickerlantern-five-year-fade-v1.
+Reviewed 23 October 2026 · `tickerlantern-forward-timing-v2`. Supersedes `tickerlantern-five-year-fade-v1`.
 
-The workbench and all-benchmark comparison use **five holding years**, including saved scenario migration, all custom modes, reset, source restore, presets, sensitivities and both CSV downloads. No source coverage rule can reduce this to one or two years.
+Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. They are not directly replayed after an already-forward EPS anchor.
 
-## Growth path
+## Eligible calendar-to-forward bridge
 
-Start with next-year-and-later exact-benchmark published rates. Current-year forecasts remain context. Preserve publisher period labels and house/consensus classifications; these rates are synthetic holding-year proxies alongside separately dated forward P/E, not precisely date-matched rolling-NTM forecasts. Stale observations and failed source checks keep their warnings. No new publisher validation is claimed by this policy review.
+Only an explicitly calendar-year growth source paired with an explicitly rolling-12-month entry P/E and a recorded valuation date may supply a modeled bridge. Current accepted sources meet these conditions for S&P 500 and MSCI Japan. Their date is a **timing proxy** where the original separately observed price/estimate vintage is undisclosed; this is not a claim of an exact contemporaneous consensus EPS series.
 
-Let k be contiguous published future coverage (at most five), a the terminal nominal EPS growth anchor, and g_k the final published growth rate. For missing holding year t (k < t <= 5):
+Set relative calendar EPS for the valuation year y to 1 and compound six calendar growth rates through y+6. With w equal to the elapsed fraction of the recorded valuation year, assume uniform earnings accrual and keep that within-year weight fixed:
 
-- s = max(-10, min(10, g_k - a)), in percentage points.
-- g_t = a + s × (5 - t) / (5 - k), rounded to four decimal percentage points.
-- If there is no published future coverage, every year uses a and is labelled model extension. Unknown benchmarks without an anchor remain unavailable.
+`F_t = (1-w) E_CY(y+t) + w E_CY(y+t+1)`
 
-Published rates are preserved without clamping. The cap applies only to the spread carried into missing years, limiting continuation of exceptional recovery growth. For S&P 500, 2027 published growth of 16% becomes 16%, 13.5%, 11%, 8.5%, 6% across 2027–2031. The high/low return sensitivity remains available. These inputs are not probabilities, a validated sustainable-growth model or guaranteed returns.
+`g_model,t = F_t / F_(t-1) - 1`, for t = 1…5.
 
-Custom edits override only their named year. Model extensions remain anchored to publisher inputs, so editing a near-term year does not silently change later assumptions. Source refresh replaces modeled years with newly published estimates and recomputes remaining extensions; custom years stay protected. Pausing source updates freezes the path and labels its rates saved assumptions. Short saved custom schedules keep existing rates and fill added years with the user's saved default.
+Normalize F0 to `100 / entry PE`. Six calendar growth inputs create six forward anchors F0…F5 and **five investment-year transitions**. They do not create a sixth holding year. No seasonality, quarterly estimate schedule or matched-provider bridge is verified.
 
-## Terminal EPS anchors
+Keep contiguous published CY rates through the sixth input where available. To extend uncovered calendar years, fade the last published rate’s spread toward the editorial anchor at calendar position five, with the carried spread limited to ±10 percentage points. Uncovered positions five and six use the anchor. Published values are never clipped. Every resulting holding-year rate is labeled **calendar-to-forward model**, including the first year, because the interpolation and later earnings assumptions are modeled.
 
-These rounded, nominal per-share earnings assumptions reflect market maturity, business mix and normalization of cyclicality. They are **TickerLantern editorial assumptions**, not figures attributed to any asset manager, exact-benchmark consensus or estimates derived from GDP alone. Growth and payout feasibility require separate diligence. No separate buyback yield is added.
+S&P 500 uses 16%,13.5%,11%,8.5%,6%,6% as underlying CY inputs and an October 16 timing proxy. Its five modeled forward growth rates are approximately 13.968279%,11.476627%,8.985278%,6.494249%,6%. The original published 16% remains visible as CY2027 evidence. It is not the modeled first holding-year growth rate.
+
+## Unbridgeable definitions
+
+Publisher-year, FY or forecast-endpoint labels are not silently converted into CY or rolling NTM. Where definitions cannot support the bridge, each of the five holding years uses the benchmark’s **editorial normalized EPS anchor**. Nineteen current benchmarks use this policy. This reduces unsupported period conversions; it does not establish the normalized rates as more accurate forecasts. Readers can edit any year or choose custom constant/annual growth.
+
+All 21 anchors are nominal per-share earnings assumptions. They are not provider consensus, asset-manager forecasts, GDP-derived estimates, or uniquely correct expected growth. Funding feasibility, retention/ROE, dilution and buybacks require additional evidence. No separate buyback yield is added.
 
 | Benchmark | Year-five EPS growth | Rationale |
 | --- | ---: | --- |
@@ -46,18 +50,15 @@ These rounded, nominal per-share earnings assumptions reflect market maturity, b
 | MSCI AC Asia Pacific ex Japan | 7% | Emerging Asia and technology mix; normalize the current semiconductor-led upswing. |
 | MSCI Australia | 5% | Mature banks and resources; normalize commodity-sensitive earnings. |
 
-The [Invesco capital-market methodology](https://www.invesco.com/apac/en/institutional/insights/multi-asset/long-term-capital-market-assumptions.html), checked 23 October 2026, supports separating nominal earnings growth, valuation change and income in a building-block framework. Its published methodology considers revenues, margins and inflation. It does **not** supply the anchors above, the five-year fade, or the ±10-point cap. Its own capital-market assumptions have a different horizon and methodology.
 
-## Returns and evidence
+## State, valuation and export
 
-All projections reuse the existing annual EPS × P/E and dividend cash-flow engine. No changes to source multiples, historical-compatibility decisions, dividend sources or publication dates are made. Each year compounds once; dividends use the prior-period earnings anchor. Year-five price plus uninvested cash is cumulative wealth, while cash-flow IRR is annualized and respects distribution timing. The all-benchmark table uses defaults and the currently loaded snapshot, independently of saved custom workbench edits.
+Scenarios are dated to the recorded entry valuation, not automatically shifted forward by the current calendar year while retaining an old P/E. A publication date is explicitly qualified as a date proxy. A fresh market observation can move the scenario date; stale observations retain their date warnings.
 
-CSV exports retain full precision, five holding years, snapshot identity, valuation/dividend conventions, publisher-year evidence and model-policy evidence. Model years have no publisher observation date or publisher URL; their provenance names the extension policy, review date, anchor and rationale.
+Unedited legacy source-mode paths migrate once to timing-v2, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
 
-## Verification — 23 October 2026
+Eligible historical means can still supply explicitly labeled illustrative mean-reversion exits. Fifteen qualified references cannot supply comparisons or defaults. Neither a compatible mean nor a constant P/E is a fair-value forecast. The sensitivity matrix tests alternative growth/exit assumptions without assigning probabilities.
 
-- 102 Node tests and 122 Python parser/pipeline tests pass. Five-year tests cover all 21 actual benchmark paths, independent terminal EPS/price compounding and IRR/NPV reconciliation, source/model provenance, new source coverage, custom overrides, year rollover and legacy saved horizons.
-- Chromium checks cover every benchmark, custom/constant/source modes, saved overrides and reloads, paused two-year settings migrating to five, invalid inputs, presets, source restore and sensitivity.
-- Actual downloaded CSV bytes contain 6 active-scenario records and 126 all-benchmark records, all declaring five years. Downloaded assumptions independently reproduce terminal prices and the displayed IRR.
-- Layout checks pass at 360, 390, 768 and 1440px without document overflow. Desktop comparison and mobile model captures were visually reviewed. No uncaught JavaScript errors were observed.
-- Build, JavaScript syntax and static IDs/anchors/assets/placeholder checks pass. Review captures and downloads remain in ignored local `qa/`; they are not deployment assets.
+All displays reuse one accepted engine output. CSV records preserve model/source provenance, timing dates, bridge calendar inputs, dividend evidence and snapshot identity. The universe export retains entry plus five rows for every benchmark. Unavailable cash models have status/reason and blank computed values rather than zero returns or silent omission. STOXX 600’s net-return spread cannot anchor automatic cash distributions.
+
+See [the complete audit](full-model-audit-2026-10-23.md) and [dividend policy](dividend-policy.md). The Invesco building-block methodology supports separating income, earnings and valuation, but does not substantiate these particular anchors or the uniform-accrual bridge.

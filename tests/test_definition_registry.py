@@ -103,7 +103,7 @@ class DefinitionRegistryTests(unittest.TestCase):
         self.assertEqual(d['evidence']['lastSuccess'],old_success)
         self.assertEqual(d['observationDate'],obs)
         self.assertEqual(d['classification'],'estimate-based-published-statistic')
-        self.assertEqual(d['periodMapping']['modelUse'],'approximate scenario growth of synthetic anchor; not independently matched rolling-NTM growth')
+        self.assertEqual(d['periodMapping']['modelUse'],'raw source reference; a modeled calendar-to-forward bridge requires explicit CY and rolling12m definitions; otherwise editorial normalized holding-year assumptions')
 
     def test_unknown_publisher_does_not_inherit_known_adapter_definition(self):
         r=self.rows['nasdaq100'];r['source']['publisher']='Unknown ETF vendor'

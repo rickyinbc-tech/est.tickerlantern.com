@@ -3,7 +3,7 @@
   "modelConventionVersion": "tickerlantern-annual-forward-anchor-v2",
   "reviewDate": "2026-10-23",
   "classification": "illustrative annual scenario model",
-  "definitionVersion": "2.1.0",
+  "definitionVersion": "2.2.0",
   "compatibilityIdentifier": "synthetic-forward-anchor-annual-prior-earnings-dividends-v2",
   "evidence": "src/model.js; independent algebra and tests/model-audit.test.mjs. Model constants and policies are application assumptions, not published market observations.",
   "constants": {
@@ -19,7 +19,7 @@
     "entry": "Valuation date t=0. F0=100/entryPE is a synthetic normalized forward earnings anchor. In the illustrative NTM convention it covers approximately holding year 1; it is not an independently verified official index EPS value.",
     "followingValuations": "At each valuation date t, Ft=F(t-1)*(1+g_t). Exactly t growth factors are applied after t elapsed holding years. Ft represents the following earnings period, approximately holding year t+1 under the illustrative NTM convention.",
     "terminal": "At exit n, Pn=exitPE*Fn. The forward anchor represents earnings following exit. Do not add another growth factor because F0 was already forward-looking.",
-    "publisherYearMapping": "An accepted calendar-year, fiscal-year or publisher-horizon growth observation may supply a labeled holding-year scenario rate. This is an explicit scenario proxy, not a verified transition between rolling NTM earnings anchors or a faithful FY1/FY2 valuation model. Published observations are not repeated or relabelled. The five-year workbench fills missing years with separately labelled model estimates under tickerlantern-five-year-fade-v1; see docs/five-year-forecast-policy.md.",
+    "publisherYearMapping": "No direct replay of CY/FY/publisher-year/horizon estimates after an already-forward initial earnings anchor. Explicit CY plus rolling12m definitions may supply a dated uniform-accrual calendar-to-forward model bridge. Otherwise all five holding-year rates are labeled editorial normalized assumptions. Six underlying calendar growth rates complete F0 to F5 without adding an investment year.",
     "valuationPath": "Mt=entryPE*(exitPE/entryPE)^(t/n), a positive geometric interpolation. Intermediate multiples are assumptions, not sourced forecasts.",
     "dividend": "At year end t, per-original-unit Dt=payout*F(t-1), or D1=100*initialYield with Dt=D1*F(t-1)/F0 in yield mode.",
     "cash": "Cash-held wealth Wcash(t)=Pt+sum(D1..Dt), no cash interest. Cash dividends are those on one original unit; investor cash flows are -100, D1, ..., Dn+Pn.",
@@ -87,11 +87,11 @@
     },
     {
       "id": "growth-source-year-proxy",
-      "value": "independently sourced yearly values",
+      "value": "raw reference; conditional calendar-to-forward bridge",
       "units": "percent over the publisher's labeled period",
-      "classification": "published estimate used as a qualified scenario proxy",
-      "definition": "Calendar, fiscal, publisher-year or forecast-horizon rates keep their original labels and dates. They do not exactly map to a present-date rolling NTM path.",
-      "permittedUse": "Labeled annual scenario input. No automatic repetition into uncovered years or claim of exact NTM mapping."
+      "classification": "source fact plus explicit modeling assumptions",
+      "definition": "No direct replay of CY/FY/publisher-year/horizon estimates after an already-forward initial earnings anchor. Explicit CY plus rolling12m definitions may supply a dated uniform-accrual calendar-to-forward model bridge. Otherwise all five holding-year rates are labeled editorial normalized assumptions. Six underlying calendar growth rates complete F0 to F5 without adding an investment year.",
+      "permittedUse": "Source reference always retained; derived timing inputs labeled model estimates. No implicit FY/CY/NTM conversion."
     },
     {
       "id": "entry-pe-default",
@@ -122,7 +122,7 @@
       "value": "benchmark-specific source dividend-anchor percent × active entry PE; 30 only in teaching example",
       "units": "percent of the prior valuation date earnings anchor",
       "classification": "derived model calibration or user assumption",
-      "definition": "D_t=p F_(t-1). For accepted benchmark defaults, p percent = source dividend-anchor percent × active entry PE, so D1 reproduces that benchmark anchor on initial wealth 100. This is not a publisher-reported payout ratio or matched-period D/E statistic. Missing or ineligible anchors leave the benchmark payout blank.",
+      "definition": "D_t=p F_(t-1). For accepted benchmark defaults, p percent = source dividend-anchor percent × active entry PE, so D1 reproduces that benchmark anchor on initial wealth 100. This is not a publisher-reported payout ratio or matched-period D/E statistic. Missing or ineligible anchors leave the benchmark payout blank. Net-return-spread references are ineligible cash anchors.",
       "permittedUse": "Synthetic annual scenario distributions; preserve source yield construction and separate dates. Economic feasibility is not established."
     },
     {
@@ -246,5 +246,6 @@
       "permittedUse": "Explain accounting EPS, dividend ownership and total-return arithmetic. Not observed securities, actual index levels or CAD forecasts."
     }
   ],
-  "dividendPolicyVersion": "benchmark-dividend-anchor-v1"
+  "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
+  "growthPolicyVersion": "tickerlantern-forward-timing-v2"
 }

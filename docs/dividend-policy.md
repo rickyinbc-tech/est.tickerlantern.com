@@ -2,15 +2,15 @@
 
 Reviewed 23 October 2026 · `benchmark-dividend-anchor-v1`
 
-Every benchmark has its own separately dated dividend anchor. The default workbench uses payout mode with:
+Twenty benchmarks have eligible separately dated cash-dividend anchors. STOXX 600 retains a net-return-spread reference which is ineligible for automatic cash calibration. The default workbench uses payout mode with:
 
 `model payout percent = source dividend-anchor percent × active entry PE`
 
 Starting wealth is 100 and synthetic initial earnings are `100 / entry PE`, so this reproduces the source anchor as the first annual cash distribution. Dividends in years two to five grow with the prior-year synthetic EPS path. The payout stays constant along that scenario path. This is a **model-implied ratio**, not an official reported payout, a matched-period dividend/earnings statistic, or a verified dividend-growth forecast. Entry valuations and dividend sources can have different dates and definitions. A change in active entry P/E recalibrates an unlocked payout; an explicit payout edit remains a reader assumption.
 
-Missing, invalid, withdrawn or ineligible dividend anchors leave a benchmark payout blank and block calculation until a reader supplies an assumption. Out-of-range derived payouts are not clipped. The 30% value is retained only for the separate teaching example. Legacy untouched defaults migrate to each benchmark calibration, including paused scenarios; explicitly protected payout edits survive. Source pausing after migration freezes the current scenario. Reset and the dividend-default button restore the benchmark calibration. Every workbench and all-index CSV records the policy and dividend evidence.
+Missing, invalid, withdrawn or ineligible dividend anchors leave a benchmark payout blank and block calculation until a reader supplies an assumption. Out-of-range derived payouts are not clipped. The 30% value is retained only for the separate teaching example. Legacy untouched defaults migrate to each benchmark calibration, including paused scenarios; explicitly protected payout edits survive. Source pausing after migration freezes the current scenario. Reset and the dividend-default button restore the benchmark calibration. Every workbench and all-index CSV records the policy and dividend evidence. Unavailable benchmarks retain six explicitly labeled rows and blank calculated cash fields.
 
-STOXX Europe 600 is a qualified exception: its official dividend-yield footnote uses net return index return minus price index return. The 2.8% figure is a **net income proxy**, not an indicated gross cash yield. The model preserves that definition in the comparison and provenance. Tax/source methods differ across indices; these scenarios are not a uniform after-tax investor comparison.
+STOXX Europe 600’s official 2.8% footnote uses net-return index return minus price-index return. This historical net performance contribution is **reference-only**, not an eligible cash-dividend anchor. Its default payout and cash returns are unavailable until the reader enters an explicit cash assumption. The source value remains visible; it is not replaced with zero or a guessed gross yield.
 
 ## Accepted anchors and default calibration
 
@@ -30,7 +30,7 @@ Payouts below use the current source entry P/E, rounded here to two decimal plac
 | MSCI Europe | 2.87% | 2026-09-30 | 40.18% | [MSCI](https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52) |
 | MSCI United Kingdom | 3.17% | 2026-09-30 | 38.42% | [MSCI](https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf) |
 | FTSE 100 | 3.04% | 2026-09-30 | 37.39% | [London Stock Exchange / FTSE Russell](https://www.londonstockexchange.com/en/indices/ftse-100) |
-| STOXX Europe 600 | 2.80% | 2026-09-30 | 38.92% | [STOXX](https://stoxx.com/index/sxxp/?factsheet=true) |
+| STOXX Europe 600 | 2.80% reference only | 2026-09-30 | Unavailable | [STOXX](https://stoxx.com/index/sxxp/?factsheet=true) |
 | MSCI Japan | 1.80% | 2026-10-13 | 27.00% | [Nasdaq / Bloomberg / FactSet](https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026) |
 | Nikkei 225 | 1.56% | 2026-10-23 | 30.73% | [Nikkei Indexes](https://indexes.nikkei.co.jp/en/nkave/archives/data?list=dividend) |
 | MSCI China | 1.60% | 2026-10-22 | 15.52% | [J.P. Morgan / FactSet / MSCI](https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf) |

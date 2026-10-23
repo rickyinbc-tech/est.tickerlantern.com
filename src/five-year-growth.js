@@ -1,12 +1,12 @@
-import { sourceGrowthPath } from './growth-data.js';
+import { nextForecastYear } from './growth-data.js';
 
 export const HOLDING_YEARS = 5;
 export const GROWTH_POLICY = Object.freeze({
-  version: 'tickerlantern-five-year-fade-v1',
+  version: 'tickerlantern-forward-timing-v2',
   reviewedAt: '2026-10-23',
   maxExtensionSpread: 10,
   methodologyUrl: 'https://www.invesco.com/apac/en/institutional/insights/multi-asset/long-term-capital-market-assumptions.html',
-  method: 'Keep published future rates. Fill unpublished years by linearly fading the last published rate toward a benchmark-specific nominal EPS anchor at year five. Cap the carried spread at +/-10 percentage points before fading. Anchors and the fade are TickerLantern assumptions, not publisher forecasts. No extra buyback yield is added.'
+  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. All resulting rates are model estimates, not publisher forecasts. No extra buyback yield is added.'
 });
 
 // Rounded editorial nominal EPS assumptions, not observed index statistics or
@@ -35,24 +35,52 @@ export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries([
   ['australia', 5, 'Mature banks and resources; normalize commodity-sensitive earnings.']
 ].map(([id, growth, rationale]) => [id, Object.freeze({ growth, rationale })])));
 
+// Six calendar growth rates create seven relative annual EPS levels and six
+// forward anchors: F0 through F5. Exactly five investment years elapse.
+export function calendarToForwardRates(calendarRates, elapsedFraction) {
+  if (calendarRates.length !== 6 || !Number.isFinite(elapsedFraction) || elapsedFraction<0 || elapsedFraction>1 || calendarRates.some(g=>!Number.isFinite(g)||g<=-100)) throw new Error('Invalid calendar earnings bridge.');
+  const levels=[1];
+  for (const g of calendarRates) levels.push(levels.at(-1)*(1+g/100));
+  const forward=Array.from({length:6},(_,i)=>(1-elapsedFraction)*levels[i]+elapsedFraction*levels[i+1]);
+  return {rates:forward.slice(1).map((f,i)=>(f/forward[i]-1)*100),levels,forward};
+}
+
 export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
-  const published = sourceGrowthPath(row, HOLDING_YEARS, now);
   const anchor = GROWTH_ANCHORS[row?.id];
-  const covered = Math.min(HOLDING_YEARS, published.coveredYears);
-  const last = covered ? published.rates[covered - 1] : anchor?.growth;
-  const spread = anchor ? Math.max(-GROWTH_POLICY.maxExtensionSpread, Math.min(GROWTH_POLICY.maxExtensionSpread, last - anchor.growth)) : 0;
-  const points = Array.from({ length: HOLDING_YEARS }, (_, i) => {
-    const year = published.startYear + i;
-    const sourcePoint = row?.growthForecast?.estimates.find(point => point.year === year);
-    let growth = published.rates[i], basis = sourcePoint ? row.growthForecast.forecastType : 'unavailable';
-    if (!sourcePoint && anchor) {
-      growth = Math.round((anchor.growth + spread * (HOLDING_YEARS - i - 1) / (HOLDING_YEARS - covered)) * 10000) / 10000;
-      basis = 'model extension';
-    }
-    if (Object.hasOwn(overrides, year)) { growth = overrides[year]; basis = 'custom assumption'; }
-    return { year, growth, basis, periodLabel: sourcePoint?.periodLabel || String(year),
-      ...(basis === 'model extension' ? { policyVersion: GROWTH_POLICY.version, reviewedAt: GROWTH_POLICY.reviewedAt, terminalGrowth: anchor.growth, rationale: anchor.rationale, method: GROWTH_POLICY.method, methodologyUrl: GROWTH_POLICY.methodologyUrl } : {}) };
+  const recorded = /^20\d{2}-\d{2}-\d{2}$/.test(row?.asOf || '') ? row.asOf : null;
+  const date = recorded ? new Date(recorded+'T00:00:00Z') : now;
+  const baseYear = recorded ? date.getUTCFullYear() : nextForecastYear(now)-1;
+  const startYear=baseYear+1, forecast=row?.growthForecast;
+  const eligible = row?.metricDefinitions?.forwardPE?.economic?.horizon === 'rolling-12m'
+    && forecast?.periodBasis === 'calendar-year'
+    && row?.metricDefinitions?.growthForecast?.permittedUse?.includes('approximate-scenario-growth');
+  const estimates = new Map((forecast?.estimates || []).map(p=>[p.year,p]));
+  let coveredYears=0;
+  while(coveredYears<6 && estimates.has(startYear+coveredYears)) coveredYears++;
+  const bridge=!!(eligible && recorded && anchor && coveredYears);
+  const yearStart=Date.UTC(baseYear,0,1), nextYear=Date.UTC(baseYear+1,0,1);
+  const weight=(+date-yearStart)/(nextYear-yearStart);
+  const last=coveredYears ? estimates.get(startYear+coveredYears-1).growth : anchor?.growth;
+  const spread=anchor ? Math.max(-GROWTH_POLICY.maxExtensionSpread,Math.min(GROWTH_POLICY.maxExtensionSpread,last-anchor.growth)) : 0;
+  const calendarInputs=bridge ? Array.from({length:6},(_,i)=>({year:startYear+i,
+    growth:i<coveredYears ? estimates.get(startYear+i).growth : i>=4 ? anchor.growth : anchor.growth+spread*(4-i)/(5-coveredYears),
+    basis:i<coveredYears ? forecast.forecastType : 'editorial extension',
+    ...(i<coveredYears ? {periodLabel:estimates.get(startYear+i).periodLabel,observationDate:forecast.asOf,sourceURL:forecast.source.url} : {})})) : [];
+  let calculated=null,bridgeError='';
+  if(bridge)try{calculated=calendarToForwardRates(calendarInputs.map(p=>p.growth),weight);}catch(error){bridgeError=error.message;}
+  const reason=bridgeError || (bridge ? 'Calendar inputs converted to a synthetic forward earnings path with uniform annual accrual; not a verified rolling consensus series.' : 'No verified calendar-to-forward period bridge. Published estimates remain reference only; each holding year uses the editorial normalized EPS assumption.');
+  const points=Array.from({length:5},(_,i)=>{
+    const year=startYear+i, custom=Object.hasOwn(overrides,year);
+    const growth=custom ? overrides[year] : bridgeError ? '' : calculated ? calculated.rates[i] : anchor?.growth ?? '';
+    return {year,growth,basis:custom?'custom assumption':bridgeError?'unavailable':bridge?'calendar-to-forward model':anchor?'normalized model':'unavailable',
+      periodLabel:`Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
+      scenarioDate:recorded,dateBasis:row?.metricDefinitions?.forwardPE?.evidence?.dateBasis || 'scenario date unavailable',
+      terminalGrowth:anchor?.growth,rationale:anchor?.rationale,method:GROWTH_POLICY.method,mappingReason:reason,
+      ...(bridge ? {elapsedFraction:weight,calendarInputs,forwardAnchorRatio:calculated ? calculated.forward[i+1]/calculated.forward[i] : null,
+        formula:'F_t=(1-w)*E_CY(y+t)+w*E_CY(y+t+1); modeled growth=F_t/F_(t-1)-1',
+        sourceEvidence:{publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis}}
+        : {})};
   });
-  return { ...published, rates: points.map(point => point.growth), points, anchor,
-    missingYears: points.filter(point => point.growth === '').map(point => point.year) };
+  return {startYear,coveredYears,rates:points.map(p=>p.growth),points,anchor,bridge,scenarioDate:recorded,mappingReason:reason,
+    missingYears:points.filter(p=>p.growth==='').map(p=>p.year)};
 }

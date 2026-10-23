@@ -1,5 +1,7 @@
 # Financial-integrity implementation audit — 23 October 2026
 
+**Historical audit snapshot. Growth timing and STOXX cash use were subsequently corrected; see the [current full audit](full-model-audit-2026-10-23.md).**
+
 **Verdict: suitable for educational annual scenarios, with source and period qualifications.** This is not an underwritten expected-return forecast or a basis for portfolio action. Source observations and model assumptions are separate.
 
 ## Baseline and scope

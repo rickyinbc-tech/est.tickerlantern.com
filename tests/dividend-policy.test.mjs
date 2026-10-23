@@ -4,16 +4,23 @@ import {readFileSync} from 'node:fs';
 import {DEFAULTS,project,annualCSV} from '../src/model.js';
 import {scenarioInputs,switchScenario,loadScenarios,saveScenarios} from '../src/scenario-state.js';
 import {calibratedPayout,payoutProvenance,DIVIDEND_POLICY_VERSION} from '../src/dividend-policy.js';
-import {baselineForecast,fiveYearCSV} from '../src/five-year-report.js';
+import {baselineAssessment,baselineForecast,fiveYearCSV} from '../src/five-year-report.js';
 const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
 const now=new Date('2026-10-23T14:00:00Z');
 const row=id=>feed.indices.find(r=>r.id===id);
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 function csv(text){return text.split('\n').map(line=>{const cells=[];let v='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){v+='"';i++;}else q=!q;}else if(c===','&&!q){cells.push(v);v='';}else v+=c;}return [...cells,v];});}
 
-test('all 21 default payouts reproduce their own accepted dividend anchor without a uniform fallback',()=>{
+test('20 accepted cash anchors have individual payouts; the STOXX reference does not fabricate cash',()=>{
  assert.equal(feed.indices.length,21);const payouts=[];
  for(const r of feed.indices){
+  if(r.id==='stoxx600'){
+   assert.ok(r.metricDefinitions.dividendYield.permittedUse.includes('display'));
+   assert.equal(r.metricDefinitions.dividendYield.permittedUse.includes('first-payment-anchor'),false);
+   assert.equal(calibratedPayout(r,r.forwardPE),'');
+   const assessment=baselineAssessment(r,now);assert.equal(assessment.model,null);assert.equal(assessment.input.payout,'');assert.equal(assessment.input.dividendYield,'');
+   assert.match(assessment.reason,/cash-dividend anchor/);continue;
+  }
   assert.ok(r.metricDefinitions.dividendYield.permittedUse.includes('first-payment-anchor'));
   const m=baselineForecast(r,now);assert.equal(m.input.dividendMode,'payout');assert.equal(m.input.years,5);
   payouts.push(m.input.payout);close(m.points[1].dividend,r.dividendYield);
@@ -22,7 +29,7 @@ test('all 21 default payouts reproduce their own accepted dividend anchor withou
   const alternative=project({...m.input,dividendMode:'yield',dividendYield:r.dividendYield});
   close(m.cashIRR,alternative.cashIRR);close(m.last.cashWealth,alternative.last.cashWealth);close(m.reinvestedCAGR,alternative.reinvestedCAGR);
  }
- assert.ok(payouts.every(p=>p!==30));assert.ok(new Set(payouts).size>15);
+ assert.equal(payouts.length,20);assert.ok(payouts.every(p=>p!==30));assert.ok(new Set(payouts).size>15);
  assert.equal(calibratedPayout(row('sp500'),19),20.71);assert.equal(calibratedPayout(row('nasdaq100'),21.36),10.68);assert.equal(calibratedPayout(row('australia'),18.3),60.39);
 });
 
@@ -47,12 +54,29 @@ test('unmodified legacy 30 percent settings migrate, including paused scenarios;
  assert.equal(loadScenarios(storage).scenarios.get('sp500').dividendPolicyVersion,DIVIDEND_POLICY_VERSION);
 });
 
-test('missing, invalid or withdrawn dividend inputs never silently become a 30 percent benchmark payout',()=>{
- for(const dividendYield of [null,undefined,NaN,-1])assert.equal(calibratedPayout({dividendYield},19),'');
+test('missing, invalid or withdrawn dividend inputs remain blank, distinguishable from a verified zero',()=>{
+ for(const dividendYield of [null,undefined,'',NaN,-1])assert.equal(calibratedPayout({dividendYield},19),'');
  assert.equal(calibratedPayout({...row('sp500'),metricDefinitions:{dividendYield:{permittedUse:['display']}}},19),'');
  const missing=scenarioInputs({...row('sp500'),dividendYield:null},undefined,{},true,now);assert.equal(missing.payout,'');assert.throws(()=>project(missing));
  assert.equal(switchScenario({...row('sp500'),dividendYield:null},{...DEFAULTS,payout:30},{},false,now).payout,'');
  const excessive=scenarioInputs({...row('sp500'),dividendYield:10},undefined,{},true,now);assert.equal(excessive.payout,190);assert.throws(()=>project(excessive));
+ const zero=scenarioInputs({...row('sp500'),dividendYield:0},undefined,{},true,now);
+ assert.equal(zero.payout,0);assert.equal(project(zero).last.cumulativeDividend,0);
+ const blank={...feed,indices:[{...row('sp500'),dividendYield:null}]},records=csv(fiveYearCSV(blank,now));
+ const status=records[0].indexOf('Model status');assert.equal(records.length,7);
+ for(const record of records.slice(1)){
+  assert.equal(record[status],'unavailable');
+  assert.equal(record[records[0].indexOf('Payout percent')],'');
+  assert.equal(record[records[0].indexOf('Dividend per original unit')],'');
+  assert.equal(record[records[0].indexOf('Price plus cash wealth')],'');
+ }
+});
+
+test('a reader can explicitly supply a cash payout for a reference-only benchmark',()=>{
+ const r=row('stoxx600'),custom=scenarioInputs(r,{...DEFAULTS,payout:30},{payout:true},true,now);
+ assert.equal(custom.payout,30);assert.equal(custom.years,5);
+ const model=project(custom);assert.ok(model.last.cumulativeDividend>0);
+ assert.equal(payoutProvenance(r,custom,{payout:true},true,now).classification,'user-assumption');
 });
 
 test('CSV labels calibrated payouts as model inputs with separate yield and earnings evidence',()=>{
@@ -62,7 +86,14 @@ test('CSV labels calibrated payouts as model inputs with separate yield and earn
  const records=csv(annualCSV(m,r.growthForecast,{payoutMetric:evidence}));const at=records[0].indexOf('Payout metric provenance');
  assert.equal(JSON.parse(records[1][at]).value,20.71);
  const all=csv(fiveYearCSV(feed,now)),payout=all[0].indexOf('Payout percent'),id=all[0].indexOf('Benchmark ID');
- for(const r of feed.indices){const records=all.slice(1).filter(v=>v[id]===r.id);assert.equal(records.length,6);close(+records[0][payout],calibratedPayout(r,r.forwardPE));assert.equal(JSON.parse(records[0][at]).classification,'model-implied-payout');}
+ assert.equal(all.length,127);
+ for(const r of feed.indices){
+  const records=all.slice(1).filter(v=>v[id]===r.id);assert.equal(records.length,6);
+  if(r.id==='stoxx600'){
+   const status=all[0].indexOf('Model status');
+   assert.ok(records.every(record=>record[status]==='unavailable' && record[payout]==='' && record[at]===''));
+  }else{close(+records[0][payout],calibratedPayout(r,r.forwardPE));assert.equal(JSON.parse(records[0][at]).classification,'model-implied-payout');}
+ }
  assert.equal(row('stoxx600').metricDefinitions.dividendYield.classification,'published-net-return-spread-proxy');
  assert.match(row('stoxx600').metricDefinitions.dividendYield.economic.yieldConstruction,/net return index return minus price index return/);
 });

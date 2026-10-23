@@ -4,7 +4,7 @@ import { validateFeed, isStale, premium, isDatedMean, historyCoverage, browserCh
 import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis, loadScenarios, saveScenarios } from './scenario-state.js';
 import { sourceGrowthPath, growthCoverage, growthIsStale, nextForecastYear } from './growth-data.js';
 import { fiveYearGrowthPath, HOLDING_YEARS } from './five-year-growth.js';
-import { baselineForecast, fiveYearCSV } from './five-year-report.js';
+import { baselineForecast, baselineAssessment, fiveYearCSV } from './five-year-report.js';
 import { calibratedPayout, payoutProvenance } from './dividend-policy.js';
 import { historicalAssessment, canCompareHistory, eligibleExitMean, metricDisplay, metricDateBasis } from './valuation-policy.js';
 import { assertSnapshotAdvance } from './snapshot-client.js';
@@ -29,14 +29,15 @@ try { browserStorage = window.localStorage; } catch { /* Session-only editing re
 const stored = loadScenarios(browserStorage);
 let indexFeed = null, selectedIndexId = new URL(location.href).searchParams.get('index') || stored.selectedIndexId, sourceFollowing = stored.following, updateInProgress = false;
 const indexOverrides = stored.overrides, savedScenarios = stored.scenarios;
-let annualGrowth = [], growthStartYear = null, growthOverrides = {}, growthPlan = [], dividendPolicyVersion = "";
+let annualGrowth = [], growthStartYear = null, growthOverrides = {}, growthPlan = [], dividendPolicyVersion = "", growthPolicyVersion = "";
 const selectedIndex = () => indexFeed?.indices.find(row => row.id === selectedIndexId);
-const readInputs = () => ({ ...Object.fromEntries(editableKeys.map(key => [key, $(key).value])), growthStartYear, growthOverrides:{...growthOverrides}, growthPlan, annualGrowth: [...annualGrowth], years:HOLDING_YEARS, dividendPolicyVersion });
+const readInputs = () => ({ ...Object.fromEntries(editableKeys.map(key => [key, $(key).value])), growthStartYear, growthOverrides:{...growthOverrides}, growthPlan, annualGrowth: [...annualGrowth], years:HOLDING_YEARS, dividendPolicyVersion, growthPolicyVersion });
 function writeInputs(values) {
   for (const key of editableKeys) if (values[key] != null) $(key).value = values[key];
   $('years').value = HOLDING_YEARS;
   growthPlan = values.growthPlan || [];
   dividendPolicyVersion=values.dividendPolicyVersion || '';
+  growthPolicyVersion=values.growthPolicyVersion || '';
   annualGrowth = [...(values.annualGrowth || [])];
   growthStartYear = values.growthStartYear ?? null;
   growthOverrides = {...(values.growthOverrides || {})};
@@ -54,12 +55,12 @@ function renderGrowthEditor() {
   const path = fiveYearGrowthPath(selectedIndex(), new Date(), growthOverrides);
   $('annual-growth-panel').hidden = !annual;
   const forecast = selectedIndex()?.growthForecast;
-  $('scenario-growth-source').innerHTML = forecast ? `<strong>${sourced?'Five-year forecast · published inputs + model extension':(forecast.forecastType==='house'?'Available house forecast':'Available consensus estimates')}</strong><span>${escape(forecast.source.publisher)} · ${metricDateBasis(selectedIndex(),'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small class="metric-check-disclosure">${escape(metricDisclosure(selectedIndex(),'growthForecast'))}</small><small>${sourced?'Published periods retain their original labels. Unpublished years use explicit TickerLantern estimates.':'Manual growth mode is active. The published estimates are reference only.'}</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
+  $('scenario-growth-source').innerHTML = forecast ? `<strong>${sourced?(path.bridge?'Calendar-to-forward model · source-informed':'Normalized EPS scenario · editorial assumption'):(forecast.forecastType==='house'?'Available house forecast':'Available consensus estimates')}</strong><span>${escape(forecast.source.publisher)} · ${metricDateBasis(selectedIndex(),'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small class="metric-check-disclosure">${escape(metricDisclosure(selectedIndex(),'growthForecast'))}</small><small>${sourced?'Published figures remain reference observations. Every holding-year rate below is a model assumption or calculation.':'Manual growth mode is active. The published estimates are reference only.'}</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
   $('growth').closest('.field').hidden = sourced;
   $('fill-annual-growth').hidden = sourced;
   $('annual-growth-heading-text').textContent = sourced ? 'Five-year EPS growth path' : 'Your yearly EPS path';
-  $('annual-growth-explanation').textContent = sourced ? `Published years follow source revisions. Model years fade toward ${path.anchor?.growth ?? 'the benchmark'}% nominal EPS growth by year five, with the carried spread capped at ±10 percentage points. Edit a year to protect your assumption.` : 'Set a separate EPS growth rate for each of the five holding years.';
-  if (sourced && !sourceFollowing) $('annual-growth-explanation').textContent = 'Source following is paused. The five saved annual assumptions are kept. Restore the five-year forecast to resume updates.';
+  $('annual-growth-explanation').textContent = sourced ? `${path.mappingReason} Scenario valuation recorded ${dateLabel(path.scenarioDate)}. ${path.bridge ? 'Uniform annual earnings accrual is assumed; the recorded date is a timing proxy where the exact observation date is undisclosed.' : `Normalized EPS growth is ${path.anchor?.growth ?? 'unavailable'}% each year, an editorial assumption.`} Edit any year to protect your assumption.` : 'Set a separate EPS growth rate for each of the five holding years.';
+  if (sourced && !sourceFollowing) $('annual-growth-explanation').textContent = 'Source following is paused. The five saved annual assumptions are kept. Restore the five-year model to resume updates.';
   $('restore-growth-years').hidden = !sourced;
   $('growth-label').textContent = annual ? 'Rate to apply to all five years' : 'Annual EPS growth';
   $('growth-help').textContent = annual ? 'Edit each year below, or apply this rate to all five years.' : 'One rate for every year of this benchmark’s scenario.';
@@ -75,9 +76,9 @@ function renderGrowthEditor() {
     const i = +input.dataset.growthYear;
     input.readOnly = false;
     input.placeholder = sourced ? 'Enter assumption' : '';
-    const point = selectedIndex()?.growthForecast?.estimates.find(point => point.year === growthStartYear + i);
+    const point = path.points[i];
     const custom = sourced && Object.hasOwn(growthOverrides,growthStartYear+i);
-    input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? `Year ${i+1} · ${point?.periodLabel || growthStartYear+i}${!sourceFollowing ? ' · saved assumption' : custom ? ' · your assumption' : point ? ' · published' : ' · model estimate'}` : `Year ${i + 1} EPS growth`;
+    input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? `Year ${i+1}${!sourceFollowing ? ' · saved assumption' : custom ? ' · your assumption' : path.bridge ? ' · timing model' : ' · normalized assumption'}` : `Year ${i + 1} EPS growth`;
     if (input !== document.activeElement || sourced && !custom) input.value = annualGrowth[i];
   }
 }
@@ -197,7 +198,7 @@ function sensitivityTable(model) {
   const heat = value => value < -.02 ? 0 : value < 0 ? 1 : value < .03 ? 2 : value < .06 ? 3 : value < .09 ? 4 : 5;
   $('sensitivity-body').innerHTML = grid.rows.map((row, i) => `<tr><th scope="row">${n(grid.growths[i])}%</th>${row.map((value, j) => `<td class="heat-${heat(value)}"><button type="button" data-growth="${grid.growths[i]}" data-pe="${grid.multiples[j]}" aria-pressed="${model.input.growthMode === 'constant' && model.input.growth === grid.growths[i] && model.input.exitPE === grid.multiples[j]}" aria-label="Constant EPS growth ${n(grid.growths[i])} percent, exit P/E ${n(grid.multiples[j])} times: cash-flow IRR ${pct(value)}">${pct(value)}</button></td>`).join('')}</tr>`).join('');
   const onGrid = model.input.growthMode === 'constant' && grid.growths.includes(model.input.growth) && grid.multiples.includes(model.input.exitPE);
-  $('sensitivity-active').textContent = model.input.growthMode !== 'constant' ? `${model.input.growthMode === 'source' ? 'Five-year forecast path' : 'Yearly EPS path'} active: equivalent EPS CAGR ${pct(model.epsCAGR)}. This path is off the constant-rate grid; no cell is selected.` : onGrid ? `✓ Active case: ${n(model.input.growth)}% growth, ${peLabel(model.input.exitPE)} exit. The outlined cell matches the model.` : `Active case is off this grid: ${n(model.input.growth)}% growth, ${peLabel(model.input.exitPE)} exit. No cell is selected.`;
+  $('sensitivity-active').textContent = model.input.growthMode !== 'constant' ? `${model.input.growthMode === 'source' ? 'Five-year model path' : 'Yearly EPS path'} active: equivalent EPS CAGR ${pct(model.epsCAGR)}. This path is off the constant-rate grid; no cell is selected.` : onGrid ? `✓ Active case: ${n(model.input.growth)}% growth, ${peLabel(model.input.exitPE)} exit. The outlined cell matches the model.` : `Active case is off this grid: ${n(model.input.growth)}% growth, ${peLabel(model.input.exitPE)} exit. No cell is selected.`;
   $('sensitivity-badge').textContent = `${model.input.years}-year holding period`;
   const dividendBasis = model.input.dividendMode === 'yield' ? `initial yield ${n(model.input.dividendYield)}%` : `payout ${n(model.input.payout)}%`;
   $('sensitivity-note').textContent = `Entry P/E ${n(model.input.entryPE)}×, ${dividendBasis}, holding period ${model.input.years} years. Cells use one EPS growth rate in every year and vary exit P/E. Selecting a cell loads that constant-rate case; your yearly path is kept for switching back. The grid stays fixed during cell selection; editing entry P/E or growth creates a new range. These are scenarios, not probabilities.`;
@@ -221,9 +222,11 @@ function renderIndexList() {
   $('index-empty').hidden = rows.length > 0;
   $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${metricDisplay(row,'forwardPE')}</td><td>${metricDisplay(row,'mean10YearForwardPE')}${row.meanAsOf ? `<small>${dateLabel(row.meanAsOf)}${isDatedMean(row) ? ' · dated reference' : ''}</small>` : ''}</td><td>${metricDisplay(row,'dividendYield')}</td><td>${row.growthForecast?.estimates.map(p => `${escape(p.periodLabel || p.year)}: ${rateLabel(p.growth)}%`).join('<br>') || '—'}${row.growthForecast ? `<small>${row.growthForecast.forecastType === 'house' ? 'House forecast' : 'Consensus'} · ${dateLabel(row.growthForecast.asOf)}${metricStatusText(row,'growthForecast') ? ' · '+escape(metricStatusText(row,'growthForecast')) : ''}</small>` : ''}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
   $('five-year-comparison-body').innerHTML = indexFeed.indices.map(row => {
-    const model = baselineForecast(row), path = fiveYearGrowthPath(row);
-    return `<tr><th scope="row"><button type="button" data-index="${row.id}">${escape(row.name)}</button><small>EPS inputs · ${dateLabel(row.growthForecast?.asOf)}${growthIsStale(row) ? ' · source warning' : ''}</small></th>${path.points.map(p=>`<td>${rateLabel(p.growth)}%<small>${p.year} · ${escape(p.basis==='model extension'?'model estimate':p.basis)}</small></td>`).join('')}<td>${rateLabel(row.dividendYield)}%<small>${dateLabel(row.yieldAsOf)}${row.id==='stoxx600'?' · net proxy':''}</small></td><td>${model ? rateLabel(model.input.payout)+'%' : '—'}</td><td>${model ? pct(model.epsCAGR) : '—'}</td><td>${model ? pct(model.cashIRR) : '—'}</td><td>${model ? n(model.last.cashWealth) : '—'}</td></tr>`;
+    const assessment=baselineAssessment(row), model=assessment.model, path=fiveYearGrowthPath(row);
+    return `<tr><th scope="row"><button type="button" data-index="${row.id}">${escape(row.name)}</button><small>Valuation · ${dateLabel(row.asOf)}</small><small>${escape(path.bridge?'Modeled timing bridge':'Editorial EPS scenario')}${growthIsStale(row) ? ' · reference warning' : ''}${!model?' · cash return unavailable':''}</small></th>${path.points.map(p=>`<td>${p.growth===''||p.growth==null?'—':rateLabel(p.growth)+'%'}<small>${p.year} · ${escape(p.basis)}</small></td>`).join('')}<td>${metricDisplay(row,'dividendYield')}<small>${dateLabel(row.yieldAsOf)}${row.id==='stoxx600'?' · net spread, reference only':''}</small></td><td>${model ? rateLabel(model.input.payout)+'%' : '—'}</td><td>${model ? pct(model.epsCAGR) : '—'}</td><td>${model ? pct(model.cashIRR) : '—'}</td><td>${model ? n(model.last.cashWealth) : '—'}</td></tr>`;
   }).join('');
+  const unavailable=indexFeed.indices.filter(row=>!baselineForecast(row));
+  $('five-year-comparison-status').textContent=`${indexFeed.indices.length-unavailable.length} of ${indexFeed.indices.length} cash-return scenarios calculated. ${unavailable.length ? unavailable.map(row=>row.name+': '+baselineAssessment(row).reason).join(' ') : ''} CSV retains every benchmark and labels unavailable rows.`;
   if (focusedContainer && focusedId) $(focusedContainer).querySelector(`button[data-index="${focusedId}"]`)?.focus({preventScroll:true});
 }
 
@@ -263,20 +266,22 @@ function renderScenarioContext() {
   $('compact-benchmark').textContent = name;
   $('compact-irr').textContent = activeModel ? pct(activeModel.cashIRR) : 'Fix inputs';
   const protectedCount = Object.keys(locks).length + Object.keys(growthOverrides).length;
-  $('scenario-mode-label').textContent = `${row?.forwardPE == null ? 'Manual assumptions · source valuation unavailable' : sourceFollowing ? 'Available source fields follow updates' : 'Source following paused'} · ${protectedCount ? `${protectedCount} edited inputs protected` : $('growthMode').value === 'source' ? 'five-year forecast follows updates' : 'custom growth assumption'}`;
+  $('scenario-mode-label').textContent = `${row?.forwardPE == null ? 'Manual assumptions · source valuation unavailable' : sourceFollowing ? 'Available source fields follow updates' : 'Source following paused'} · ${protectedCount ? `${protectedCount} edited inputs protected` : $('growthMode').value === 'source' ? 'five-year scenario follows model policy' : 'custom growth assumption'}`;
   const provenance = (key, evidence, date) => `${escape(evidence?.publisher || 'Publisher')} · ${dateLabel(date)}${evidence?.url ? ` · <a href="${escape(evidence.url)}" target="_blank" rel="noopener noreferrer">Source</a>` : ''}`;
   for (const key of ['growth','entryPE','exitPE','payout','dividendYield','years']) {
     let basis = fieldBasis(key, row, locks, sourceFollowing);
     if (key==='growth' && $('growthMode').value!=='source' && !locks.growth) basis='default';
+    if(key==='growth' && $('growthMode').value==='source' && sourceFollowing)basis='modeled';
     const forecastHorizon = key==='years';
-    const label = forecastHorizon ? 'Fixed five-year holding period' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',calibrated:'Model-implied payout',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
+    const label = forecastHorizon ? 'Fixed five-year holding period' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',calibrated:'Model-implied payout',modeled:'Model growth assumption',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
     let detail = '';
     if (basis === 'source') detail = key === 'dividendYield' ? provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf) : provenance(key,row.source,row.asOf);
+    if (basis === 'modeled') detail=fiveYearGrowthPath(row).mappingReason;
     if (basis === 'forecast') detail = provenance(key,row.growthForecast.source,row.growthForecast.asOf);
     if (basis === 'reference') detail = provenance(key,row.meanSource || row.source,row.meanAsOf);
     if (basis === 'fallback') detail = 'No eligible historical default. Exit follows your active entry P/E until you edit the exit; this is an illustrative constant-multiple assumption.';
     if (basis === 'calibrated') detail = `${rateLabel(row.dividendYield)}% dividend anchor × active entry P/E. Ratio of the modeled first dividend to synthetic forward EPS; not a reported payout ratio. ${provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf)}<span class="metric-check-disclosure">${escape(row.metricDefinitions?.dividendYield?.economic?.yieldConstruction || 'Yield construction not disclosed')}. ${escape(row.yieldSource?.frequency || '')}</span>`;
-    if (basis === 'default') detail = key === 'growth' ? '6% EPS growth assumption; no forecast connected.' : key === 'years' ? 'Five-year holding period assumption.' : key === 'payout' ? row.id ? 'No dividend anchor is available. Enter an explicit payout or initial-yield assumption.' : '30% teaching-example assumption; no benchmark selected.' : key === 'dividendYield' ? 'No reported yield. Enter your own assumption.' : 'No source valuation. Edit this illustrative assumption.';
+    if (basis === 'default') detail = key === 'growth' ? '6% EPS growth assumption; no forecast connected.' : key === 'years' ? 'Five-year holding period assumption.' : key === 'payout' ? row.id ? 'No eligible cash-dividend anchor is available. A net-return spread cannot substitute for cash yield. Enter an explicit payout or initial-yield assumption.' : '30% teaching-example assumption; no benchmark selected.' : key === 'dividendYield' ? 'No reported yield. Enter your own assumption.' : 'No source valuation. Edit this illustrative assumption.';
     if (basis === 'custom') detail = 'Saved for this benchmark; protected from source updates.';
     if (basis === 'manual') detail = 'Source following is paused. Your current scenario is kept.';
     if (forecastHorizon) detail = 'All benchmarks, charts, sensitivity cases and exports use five years.';
@@ -299,8 +304,8 @@ function renderScenarioContext() {
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
   const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : eligibleExitMean(row) ? `illustrative mean-reversion to an assessed historical reference, reported ${dateLabel(row.meanAsOf)}` : +input.exitPE === +input.entryPE ? 'illustrative constant P/E; follows active entry' : 'illustrative exit assumption';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendYield && row.dividendYield != null ? ' anchored to the historical source yield' : ' (custom)'}` : `${rateLabel(input.payout)}% ${sourceFollowing && !locks.payout ? 'model-implied payout calibrated to the benchmark dividend anchor' : 'custom payout'}; not a reported payout`;
-  const growthBasis = input.growthMode === 'source' ? `yearly growth path [${input.annualGrowth.map((value, i) => `${input.growthStartYear + i}: ${rateLabel(value)}%${Object.hasOwn(growthOverrides,input.growthStartYear+i)?' custom':!sourceFollowing?' saved assumption':growthPlan[i]?.basis==='model extension'?' model estimate':' published'}`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
-  $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. ${input.growthMode === 'source' ? 'Publisher years are applied in sequence as scenario inputs; they are not a date-matched rolling-NTM forecast.' : 'Custom growth rates are your assumptions.'}`;
+  const growthBasis = input.growthMode === 'source' ? `yearly growth path [${input.annualGrowth.map((value, i) => `Year ${i+1}: ${rateLabel(value)}%${Object.hasOwn(growthOverrides,input.growthStartYear+i)?' custom':!sourceFollowing?' saved assumption':' '+(growthPlan[i]?.basis || 'model assumption')}`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
+  $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. ${input.growthMode === 'source' ? 'Holding-year rates are model calculations or assumptions; original publisher-period estimates remain separately visible. No claim of matched rolling consensus.' : 'Custom growth rates are your assumptions.'}`;
 }
 
 function renderIndexDetail() {
@@ -315,7 +320,8 @@ function renderIndexDetail() {
   $('index-mean-pe').textContent = metricDisplay(row,'mean10YearForwardPE');
   $('index-mean-date').textContent = row.meanAsOf ? (isDatedMean(row) ? 'Dated reference · ' : 'Reported ') + dateLabel(row.meanAsOf)+'. '+metricDisclosure(row,'mean10YearForwardPE') : 'Verified 10-year mean unavailable';
   $('index-yield').textContent = metricDisplay(row,'dividendYield');
-  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.yieldAsOf || row.asOf)+'. '+metricDisclosure(row,'dividendYield');
+  $('index-yield-label').textContent=row.id==='stoxx600'?'Net return-spread reference':'Dividend yield';
+  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : (row.id==='stoxx600'?'Reference only; not a cash dividend anchor · ':'Historical yield · ') + dateLabel(row.yieldAsOf || row.asOf)+'. '+metricDisclosure(row,'dividendYield');
   const gap = premium(row);
   $('index-premium').textContent = gap == null ? '—' : `${gap >= 0 ? '+' : '−'}${Math.abs(gap * 100).toFixed(2)}%`;
   $('index-premium-label').textContent = gap == null ? 'Historical comparison' : isDatedMean(row) ? 'Relative to the dated 10-year reference' : 'Relative to the published 10-year mean';
@@ -421,7 +427,7 @@ $('use-source-growth').addEventListener('click', () => {
   growthOverrides = {};
   sourceFollowing = true; $('follow-source').checked = true;
   applySourceValues(); renderIndexDetail();
-  $('index-update-status').textContent = 'Five-year forecast loaded. Published inputs are preserved; unpublished years use labelled model estimates.';
+  $('index-update-status').textContent = 'Five-year model loaded. Period definitions govern any timing bridge; other paths use explicit normalized assumptions.';
 });
 $('restore-growth-years').addEventListener('click', () => {
   growthOverrides = {};
@@ -516,7 +522,7 @@ $('reset-model').addEventListener('click', () => {
   indexOverrides.delete(selectedIndexId);
   sourceFollowing = true; $('follow-source').checked = true;
   writeInputs(scenarioInputs(selectedIndex(), DEFAULTS)); update({reanchor:true});
-  $('selection-context').textContent = 'Current scenario reset to source valuations, available yield and a complete five-year forecast. Other saved benchmarks are kept.';
+  $('selection-context').textContent = 'Current scenario reset to source valuations, available yield and a complete five-year scenario. Other saved benchmarks are kept.';
 });
 for (const button of document.querySelectorAll('[data-preset]')) button.addEventListener('click', () => {
   if (!activeModel) { $('model-status').textContent = 'Correct the invalid assumptions before applying a preset.'; return; }

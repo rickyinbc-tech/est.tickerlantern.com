@@ -1,5 +1,7 @@
 # Source and assumption audit — 23 October 2026
 
+**Historical audit snapshot. Growth timing and STOXX cash use were subsequently corrected; see the [current full audit](full-model-audit-2026-10-23.md).**
+
 Registry `source-definitions-2026-10-23.1`; model convention `tickerlantern-annual-forward-anchor-v2`. Audited baseline `6760c0f9c80494395b6b048ea52056dd6a25938a`. Observations below are a dated review of snapshot published `2026-10-23T07:30:39Z`; the live feed can subsequently update. The versioned registry and each snapshot’s metric definitions control machine decisions.
 
 The catalogue contains 21 exact benchmark universes. Its 21 current multiples, 21 reported ten-year references, 14 dividend yields and 21 growth series are distinct observations. Seven dividend yields are unavailable. Published forecasts are uncertain estimates even when transcription is verified. Six internally paired forward-12-month historical comparisons are eligible; 15 references are qualified and blocked from automatic premium/discount comparisons and exit defaults. These counts are derived from this reviewed snapshot, not a permanent coverage promise.

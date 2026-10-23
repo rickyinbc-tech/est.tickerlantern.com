@@ -1,108 +1,52 @@
-# Global Index Valuations & Return Anatomy
+# TickerLantern global index scenario workbench
 
-An independent TickerLantern research website for **https://est.tickerlantern.com**.
+Audited 23 October 2026 · `tickerlantern-forward-timing-v2`.
 
-The report explains EPS growth, terminal P/E, dividend cash flows and reinvestment, with a clickable 21-benchmark index desk. All 21 exact benchmarks have sourced forward P/E observations and ten-year forward-P/E references. Older dated references retain their original window-end dates and are not presented as current rolling averages. Unavailable observations remain null. Each benchmark has a separately sourced annual earnings-growth path, with consensus and house forecasts distinguished. Custom inputs remain scenario assumptions. In source mode, individual years can be edited and protected while the remaining years continue following revisions. The original ChatGPT estimate is not reproduced or validated.
+[Full audit](docs/full-model-audit-2026-10-23.md) · [Five-year timing and all anchors](docs/five-year-forecast-policy.md) · [Dividend policy](docs/dividend-policy.md).
 
-## Run locally
+The website compares 21 exact benchmarks and always models five holding years. It supports conditional scenario exploration, not an underwritten point forecast or a uniform return ranking. Source observations retain their dates, definitions and freshness warnings.
 
-Requires Node.js 20+ and Python 3 for the optional local server. No package installation is needed.
+## Run and verify
+
+Node.js 20+ and Python 3 are sufficient for the static report:
 
 ```sh
 npm test
+python3 -m unittest discover -s tests -p 'test_*.py'
 npm run build
 npm run preview
 ```
 
-`src/model.js` contains the financial calculations. The build creates the complete static publication in `dist/`. `src/app.js` renders accessible SVG charts, scenario sensitivities, annual data, input validation and CSV export. Reading the article requires no JavaScript; model editing does.
+The preview serves `dist/` on port 8764. Browser verification additionally requires `agent-browser`:
 
-## Scenario workbench
+```sh
+python3 tests/browser_five_year.py http://127.0.0.1:8764/
+```
 
-The explorer leads directly into assumptions, return metrics, wealth attribution and sensitivity. The navy/teal editorial style is retained in `src/workbench.css`, with a keyboard-operated section menu, larger labels, responsive SVGs, a mobile result summary, reduced-motion support and print-specific layouts.
+Tests cover all benchmark defaults, protected custom inputs, source changes, legacy settings, model/source provenance, missing inputs and actual CSV downloads. Source-parser dependencies are pypdf 6.14.2, Pillow 12.3.0, curl, Poppler and Tesseract; optional hosted anonymous browser transport uses Playwright 1.64.1. Review captures, downloaded publisher documents and local QA remain ignored under `qa/`.
 
-`src/scenario-state.js` defines the state policy. Every benchmark uses a fixed five-year holding period and retains its own growth schedule, valuation, payout, dividend convention and yield edits. New benchmarks resolve their own source values or explicitly labelled defaults; another benchmark's valuation is never inherited. Source checks preserve edited fields. Pausing source following keeps the manual scenario. **Restore source values** resumes following and restores valuations, convention and available yield while preserving growth and payout at the fixed five-year horizon. **Reset scenario** resets the current benchmark to source/default valuation inputs, a complete five-year forecast, and its benchmark-specific calibrated payout; other saved benchmarks are kept. **Use benchmark dividend defaults** restores the selected benchmark’s own dividend anchor and model payout. Unedited legacy 30% values migrate, while explicit custom payouts remain protected. Saved scenarios persist in this browser; other browsers and devices have separate settings.
+## Model and assumptions
 
-Compression changes only exit P/E to 80% of active entry (minimum 1×); Constant P/E sets exit equal to entry. No dividends zeros the active payout or initial yield. The fixed 25× → 20× teaching example is separate from the active wealth bridge.
+`src/model.js` owns the synthetic annual price, distribution, cash-flow IRR and reinvestment arithmetic. Starting wealth is 100; synthetic initial forward earnings are `100 / entry PE`. Exactly five annual factors reach terminal earnings. Dividends use the prior earnings anchor, with annual year-end reinvestment and zero interest on uninvested cash. The fixed 25× to 20×, 6% growth, 30% payout teaching example is separate from the active benchmark. No official index level, EPS series, daily total return, investor FX, taxes, fees or drawdown distribution is replicated.
 
-Sensitivity starts with 60%, 80%, 100%, 120% and 140% of entry P/E and growth offsets of −8, −4, 0, +4 and +8 percentage points. Axes stay within supported bounds, retain the exact anchor and fill clamped duplicates with intermediate cases. Editing entry or growth establishes a new range; selecting a cell holds the range fixed. An off-grid case is explicitly identified. Every cell calls the same `project` engine as the metrics, charts, annual table and export. This changes scenario exploration, not the documented financial calculations.
+`src/five-year-growth.js` permits a uniform-accrual calendar-to-forward bridge only where CY growth, rolling-12-month valuation and a recorded valuation date are explicit. This currently applies to S&P 500 and MSCI Japan. The recorded date is a timing proxy where separately observed market/estimate dates are undisclosed. Six underlying CY rates create five forward-earnings transitions, never six holding years. All derived rates are labeled model estimates. The other 19 benchmarks use their own editorial normalized EPS assumptions; published estimates remain separately visible as context. No generic CY/FY/publisher-horizon conversion is presumed.
 
-Verification includes the financial examples, low-P/E and boundary grids, stable selection, provenance, benchmark isolation, protected edits, presets, restore/reset rules and CSV endpoints. Run `npm test` and the Python source-parser tests below. Local browser QA covers source failure fixtures, 360/390/768/1440px layouts, 200% browser zoom, keyboard/focus, text contrast, actual CSV download and A4 print rendering. Review captures remain ignored in `qa/`.
+`src/dividend-policy.js` calibrates an eligible cash-dividend anchor to the synthetic earnings denominator: payout percent equals source dividend-anchor percent times active entry P/E. This is not a publisher-reported payout or a matched-period D/E statistic. Twenty defaults have eligible anchors. STOXX 600’s 2.8% net-return-spread reference cannot seed cash dividends; its default cash model is unavailable until the reader supplies an explicit assumption. The universe CSV retains all 126 entry/year rows, including six explicitly unavailable STOXX rows with blank computed results.
 
-## Publication
+Historical means retain their own dates. Six compatible pairs allow an explicitly illustrative mean-reversion exit; 15 qualified references cannot seed a direct comparison or historical exit. Where history is ineligible, unlocked exit P/E follows the active entry. Neither policy establishes fair value. Growth/distribution funding feasibility and share-count effects require separate evidence; no additional buyback yield is added.
 
-Source is maintained in GitHub. Cloudflare Workers serves `dist/` and a narrow read-only `/api/indices` endpoint at the explicit custom domain in `wrangler.jsonc`. The endpoint reads the current public GitHub observation snapshot, cached for up to five minutes, with the bundled snapshot as a labelled fallback. It does not upload neighbouring workspace directories. Authenticate through Wrangler's normal credential store, then run `wrangler deploy`. No credentials belong in this repository.
+## State and controls
 
-## Model
+`src/scenario-state.js` saves independent benchmark settings in browser local storage. Every mode, preset, sensitivity and export keeps five years. Edits remain protected. Source mode follows the current modeling policy; custom constant/annual paths remain reader assumptions. Legacy untouched source paths migrate once to timing-v2, including paused paths; modern paused scenarios freeze their saved rates. Custom payout edits survive migration. An ineligible cash source cannot retain an unlocked automatic cash calibration.
 
-Price begins at 100, EPS at `100 / entryPE`. EPS grows annually; P/E moves geometrically from entry to exit. Each year's dividend is the payout ratio times the prior valuation date's EPS anchor, received at year-end. Terminal prices reflect distributions. Investor IRR includes annual dividends plus final sale proceeds; reinvested CAGR purchases additional units at each modeled year-end price. These are different return conventions. The model assumes growth is feasible with the selected payout; it does not enforce that feasibility.
+Restore valuations preserves custom growth/payout. The dividend-default button clears dividend overrides. Reset affects only the selected benchmark. Compression sets exit P/E to 80% of active entry, minimum 1×; constant P/E uses active entry; no-dividends zeros the active dividend input. Sensitivity cells change only growth/exit assumptions and do not assign probabilities.
 
-Public references and exact formulas are included in the page. No raw conversation transcript, personal holdings, private archives, authentication material, or private source attachments are included.
+## Sources and publication
 
-## Independent yearly growth scenarios
+The audit checked 63 market observations and 49 published growth points. All growth values agree with their original public sources. Of the market observations, 58 were freshly re-read; five retain dated source evidence where live access returned 403/429. No numeric transcription correction was justified. Economic input use, timing, source permissions and completeness defects were corrected instead. See the full audit for evidence and remaining limitations.
 
-In the scenario lab, choose **Different rate each year** to enter a separate EPS growth rate for every holding-period year. Each benchmark retains its own rates, dividend convention and protected valuation inputs at a fixed five-year horizon. Charts, summary returns, annual calculations and CSV downloads use that same compounded EPS path. The annual table and CSV identify the rate used in each year. Dividends continue to use the prior-year EPS convention.
+`.github/workflows/index-data.yml` runs configured valuation and growth adapters daily at 23:15 UTC. Seven dividend references require separate manual review and are not covered by that scheduled job. Observation dates, retrieval checks and semantic snapshot versions are independent. Failed checks retain prior verified values with visible warnings. Fresh retrieval never turns dated evidence into current market data.
 
-Settings persist in this browser’s local storage under `tickerlantern.est.scenarios.v1`; they are not synchronized across devices or browsers. Source refreshes and Restore source values preserve custom growth paths. Reset affects only the selected benchmark. Old saved horizons migrate to five years. Short custom schedules retain their existing rates and fill added years with that benchmark’s saved custom default. Unpublished source years use labelled benchmark-specific model extensions. The 6% starting rate remains an illustrative assumption, not a sourced earnings forecast. Sensitivity cells explicitly use constant annual growth and selecting one switches to constant mode while retaining the saved yearly path for switching back.
+Public adapters include FactSet, MSCI, JPM, Nasdaq, LSEG, Raymond James, Edelweiss and named public research references. Exact benchmark/column/period checks are mandatory. No trailing P/E, CAPE, median, related-index or ETF distribution yield substitutes for a requested metric. Hosted Nasdaq/Edelweiss failures also use the existing 13:00 Vancouver browser check, dependent on the owner’s Mac and Codex. See [browser source runbook](docs/browser-source-runbook.md). No access challenge is bypassed.
 
-Optional browser regression checks require `agent-browser` and a running preview: `python3 tests/browser_growth_sync.py http://127.0.0.1:8764/`. They use a separate browser session, verify immediate mode switching, independent schedules, reload persistence, source protection and matching CSV output, and close the session afterward.
-
-## Daily index source checks
-
-`.github/workflows/index-data.yml` checks the configured public sources daily at 23:15 UTC and supports manual dispatch. The workflow uses the repository-scoped GitHub Actions token to commit only `data/indices.json`; it requires no external API secret. Source observation dates and check dates are separate.
-
-`scripts/refresh_indices.py` parses the latest complete FactSet S&P 500 forward-P/E / ten-year-mean paragraph from its official RSS-linked research. MSCI fundamentals come from the exact index's official public factsheet, with strict identity, date, table-header and row-count checks. Legacy factsheet pages discover the current same-host public document URL. One ACWI document supplies the three explicitly identified ACWI/World/EM rows. No authentication, access challenge bypass or paid dataset is used.
-
-Failed sources retain the last verified observation and an explicit error/retained status. Missing means remain null; trailing P/E, CAPE, shorter samples and ETF proxies are never substituted. Public source files are read in memory; only selected observations, hashes and provenance are published. Local review images are ignored under `qa/`.
-
-The browser checks for new snapshots every five visible minutes and on visibility restoration. Source following updates unlocked valuation and yield fields; per-benchmark custom overrides survive refreshes. Published growth follows exact-benchmark research. Custom rates stay protected; holding periods remain five years. Historical comparisons/defaults require the per-metric compatibility assessment. Otherwise exit P/E follows the active entry assumption until explicitly overridden; an eligible historical default is labelled illustrative mean reversion.
-
-Python source-parser tests: `python3 -m unittest discover -s tests -p 'test_*.py'`. Source refresh requires `pypdf==6.14.2`, `Pillow==12.3.0`, curl, Poppler and Tesseract (macOS local QA can use Vision): `python3 scripts/refresh_indices.py`. The optional `--render-qa` renders the actual selected source pages for local visual review. Source images remain ignored and are not website assets.
-
-
-Additional adapters read J.P. Morgan’s daily Asia guide, Nasdaq’s linked biweekly dashboards, LSEG’s RSS-linked STOXX 600 earnings reports, Raymond James’ monthly index tables, Edelweiss TEMPO’s monthly tables, and independently dated MSCI, Segal, Cumberland, IG and SCBAM research references. Native PDF columns and numerical labels are validated; LSEG’s raster chart uses OCR of its explicitly printed labels plus its ten-year legend, with no estimate from plotted line positions. Source job failures are recorded in `sourceJobs`; per-metric source failures preserve the corresponding value and date. Any unavailable source job makes the scheduled job report failure after publishing the retained snapshot.
-
-Nasdaq and Edelweiss public pages have an optional, anonymous Chromium transport in GitHub Actions when ordinary HTTP fails or returns an empty discovery shell. It uses a fresh context, default browser identity, normal TLS, and no login or challenge handling. CI installs `playwright==1.64.1` and its official Chromium build. The fallback is disabled outside an explicitly enabled GitHub Actions run. Actual hosted tests found Nasdaq network failures and Edelweiss HTTP 403. Those publishers also use the daily **Refresh TickerLantern publisher valuations** Codex heartbeat at 1 p.m. Vancouver time. It opens their ordinary official browser links, reviews the original tables and imports observations with the same parsers. This needs the owner's Mac and Codex to be available. A browser check is accepted for 48 hours; a missed check is visibly retained and makes CI report failure. See `docs/browser-source-runbook.md` and `docs/public-browser-source.md`.
-
-Current P/E, historical mean and dividend yield are updated independently. New monthly fundamentals never erase an independently sourced mean; a fresh P/E never advances an older dividend date. Mean sources and dates are visible in both the selected-index detail and comparison table. Fixed dated research is checked for revisions, while rolling documents and public report listings discover new observations. A dated source whose newer editions omit the mean remains visibly dated; its median or a shorter average is not substituted.
-
-
-## Published annual earnings growth
-
-`data/growth-sources.json` configures nine independent public-source adapters in `scripts/growth_sources.py`. `scripts/refresh_growth.py` runs after valuations in the daily 23:15 UTC workflow. It discovers current public FactSet, UBS, First Eagle, NBI, JPM, Hartford and Amova research where supported; NBF/JPM rolling PDFs update in place. FSM's dated CSI 300 article is checked for revisions only. Anonymous access honors publisher robots rules and per-host delays. No paid data, credentials or complete source documents are published.
-
-The snapshot contains 21 exact-benchmark paths: 16 published consensus series and five house forecasts. Each keeps its own observation date, original URL, PDF page where relevant, content hash, period basis, method and refresh status. Sources and observation dates differ. First Eagle currently blocks automated access; Russell 2000 retains the visually verified July 9 LSEG snapshot, with a dated/retained flag. CSI 300 is a dated May house model. A daily check never advances these observation dates. Source failures preserve prior values and fail the refresh job visibly after saving successful sources.
-
-New or reset scenarios follow published growth. Only next-year-and-later estimates enter the future path; current-year forecasts remain visible as context. The horizon is fixed at five years. Missing years use explicit model extensions described below; they are never relabelled as publisher estimates. **Use published growth** explicitly switches an edited benchmark back to its source path; custom annual and constant modes remain independent per benchmark and keep the fixed five-year horizon. Two legitimate published rates can be equal.
-
-Calendar estimates, publisher-year figures and house forecast endpoints are not equivalent to a precisely date-matched rolling-NTM EPS forecast. These are explicitly labelled scenario inputs alongside separate forward-P/E observations. Amova median EPS scenarios preserve the printed forecast-date labels. The precise growth measurement interval is not stated; they are qualified approximate scenario inputs and are not relabelled calendar-year consensus or spliced with older estimates. Any later holding years are separately labelled model extensions, not additional Amova estimates. Aggregation/currency limitations remain visible. Original research notes and rejected-proxy reasoning are in `docs/index-growth-research-*.md`.
-
-Parser checks: `python3 -m unittest discover -s tests -p 'test_*.py'`. Browser checks: `python3 tests/browser_published_growth.py http://127.0.0.1:8864/`. The latter checks all 21 default paths, house/stale labels, five-year extensions and migration, matching CSV provenance, custom-rate protection and mobile width. Browser checks use isolated sessions and close them at exit.
-
-Source-linked yearly rates are editable independently: an edit becomes an override keyed to that publisher year and benchmark. Other years keep syncing. **Restore published years** clears only overrides for years with a published estimate; assumptions for uncovered years remain protected. **Use published growth** clears all yearly overrides and restores the published horizon. Manual schedules remain separate and per-benchmark. CSV provenance labels overridden or unpublished years as custom assumptions, without attributing them to the publisher.
-
-## Financial-integrity audit (23 October 2026)
-
-The current definition registry is `data/source-definitions.json`; each snapshot carries 84 independently dated metric definitions and an explicit historical-compatibility assessment. Six currently paired series qualify for comparisons and illustrative mean-reversion defaults; 15 authentic references remain visible but cannot supply direct comparisons/defaults. Unassessed legacy data defaults to a constant multiple relative to the active entry assumption. No source observation is clamped to fit the calculator.
-
-`data/model-conventions.json` versions the synthetic forward-anchor timing, annual dividends/reinvestment, nominal currency-neutral exclusions and solver. `docs/source-assumption-audit.md` covers all benchmarks and assumptions; `docs/source-evidence-manifest.json` separates original saved-page inspection, fresh public text retrieval and inherited verification. `docs/financial-integrity-audit.md` records the implementation and publication evidence. Existing tabs require one reload to obtain changed application code; afterwards accepted data snapshots update through the existing polling path.
-
-Snapshots have monotonic semantic versions and content identifiers, plus bounded financial/definition-change history. Successful checks or irrelevant source-byte changes do not create financial revisions. Remote and bundled transports share the same complete-catalogue contract. Failed validation preserves an already accepted newer client snapshot and all edited fields, including temporarily invalid entries and individually edited growth years.
-
-Publisher checks remain daily at 23:15 UTC; the existing Nasdaq/Edelweiss browser heartbeat remains at 13:00 Vancouver time. Publication follows validation and can fail or retain individual metrics. GitHub raw delivery caching, the Worker's five-minute source cache, the API's five-minute edge cache and five-minute visible client polling are separate layers. These delays can compound; the update button loads the latest available published snapshot and does not force a publisher check. A browser no-store request does not prove a fresh publisher retrieval. Scheduled executions can be delayed/dropped or disabled after inactivity; a manual dispatch is not scheduled-run proof. Checks overdue by 36 hours are identified without changing source observation dates.
-
-
-## Fixed five-year forecasts — 23 October 2026
-
-All 21 benchmarks, custom modes, reset/restore actions, presets, charts, sensitivity and exports use five holding years. Existing one/two-year browser settings migrate while preserving editable assumptions. The generic financial engine still supports other horizons for mathematical verification; the published workbench enforces five.
-
-`src/five-year-growth.js` preserves exact-benchmark published future rates and fills missing years by a bounded linear fade to a benchmark-specific nominal EPS anchor at year five. Anchors are 4.5–9% editorial assumptions, with individual rationales. The carried spread is capped at ±10 percentage points before fading. These are conditional model estimates, not a five-year consensus series. Missing sources for an unknown benchmark still block calculation. See [the complete policy](docs/five-year-forecast-policy.md).
-
-The all-benchmark comparison shows each annual input and its basis, equivalent EPS CAGR, annual cash-flow IRR and year-five price plus cash, starting from 100. Its download uses the currently loaded snapshot and contains entry plus five annual records for every benchmark, including per-year source/model provenance. It is a default comparison; saved custom scenarios remain in the workbench and its separate download.
-
-Verification: `npm test`, `python3 -m unittest discover -s tests -p 'test_*.py'`, `npm run build`, and `python3 tests/browser_five_year.py http://127.0.0.1:8865/`.
-
-## Benchmark dividend defaults — 23 October 2026
-
-All 21 benchmarks now have separately dated dividend anchors. Default payout mode uses `source dividend-anchor percent × active entry PE` to reproduce the benchmark’s first annual payment in the synthetic model. These are model-implied payouts, not official reported payout ratios. An unlocked payout follows source/entry changes; custom edits remain protected. Missing or ineligible anchors block the default calculation instead of reverting to 30%. The fixed 30% teaching example remains separate.
-
-The comparison and both CSV downloads include the individual dividends and payout provenance. STOXX 600 uses a disclosed net-return-spread proxy. Seven newly reviewed yield sources require manual review and are not silently covered by existing scheduled adapters; their freshness checks and observation dates remain visible. See [source details and all 21 calibrations](docs/dividend-policy.md).
+Cloudflare Workers serves `dist/` at the custom domain in `wrangler.jsonc`. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.

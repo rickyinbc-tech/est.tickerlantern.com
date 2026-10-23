@@ -30,7 +30,13 @@ export function sourceInputs(row, current = DEFAULTS, locked = {}) {
 export function isStale(row, now = new Date()) {
   if (!row?.asOf) return false;
   const age = (now - new Date(row.asOf + 'T00:00:00Z')) / 86400000;
-  return age > (row.source?.publisher === 'FactSet' ? 21 : 65) || ['retained', 'unavailable'].includes(row.sync?.status);
+  return age > (row.source?.publisher === 'FactSet' ? 21 : 65) || browserCheckOverdue(row.source, now) || ['retained', 'unavailable'].includes(row.sync?.status);
+}
+
+export function browserCheckOverdue(source, now = new Date()) {
+  if (source?.transport !== 'scheduled-browser') return false;
+  const age = now - new Date(source.checkedAt || '');
+  return !Number.isFinite(age) || age > 48 * 3600000 || age < -5 * 60000;
 }
 
 export function premium(row) {

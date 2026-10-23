@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "nasdaq-dashboard": {
+      "adapterId": "nasdaq-dashboard",
+      "verifiedAt": "2026-10-23T05:33:50Z",
+      "source": {
+        "publisher": "Nasdaq / Bloomberg / FactSet",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
+        "syncMode": "rolling-report",
+        "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser"
+      },
+      "values": {
+        "nasdaq100": {
+          "forwardPE": 21.36,
+          "mean10YearForwardPE": 23.09,
+          "dividendYield": 0.5,
+          "asOf": "2026-10-13",
+          "meanAsOf": "2026-10-13",
+          "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+          "page": 1
+        },
+        "russell2000": {
+          "forwardPE": 23.87,
+          "mean10YearForwardPE": 23.34,
+          "dividendYield": 1.5,
+          "asOf": "2026-10-13",
+          "meanAsOf": "2026-10-13",
+          "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+          "page": 1
+        },
+        "japan": {
+          "forwardPE": 15.9,
+          "mean10YearForwardPE": 15.15,
+          "dividendYield": 1.8,
+          "asOf": "2026-10-13",
+          "meanAsOf": "2026-10-13",
+          "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+          "page": 1
+        }
+      }
+    },
+    "edelweiss-reference": {
+      "adapterId": "edelweiss-reference",
+      "verifiedAt": "2026-10-23T05:28:11Z",
+      "source": {
+        "publisher": "Edelweiss Mutual Fund / Bloomberg",
+        "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
+        "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
+        "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
+        "parserVersion": "supplemental-sources-1",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
+        "syncMode": "rolling-report",
+        "adapterId": "edelweiss-reference",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser"
+      },
+      "values": {
+        "ftse100": {
+          "forwardPE": 12.3,
+          "asOf": "2026-09-30",
+          "mean10YearForwardPE": 12.6,
+          "meanAsOf": "2026-09-30",
+          "meanMethod": "Edelweiss Mutual Fund TEMPO / Bloomberg reported 10-year average of 12-month-forward P/E; historical sampling frequency not specified in the report",
+          "page": 4
+        },
+        "hangseng": {
+          "forwardPE": 10.3,
+          "asOf": "2026-09-30",
+          "mean10YearForwardPE": 10.4,
+          "meanAsOf": "2026-09-30",
+          "meanMethod": "Edelweiss Mutual Fund TEMPO / Bloomberg reported 10-year average of 12-month-forward P/E; historical sampling frequency not specified in the report",
+          "page": 4
+        }
+      }
+    }
+  }
+}

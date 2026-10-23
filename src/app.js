@@ -1,5 +1,5 @@
 import { DEFAULTS, BOUNDS, project, sensitivity, validate, annualCSV } from './model.js';
-import { validateFeed, sourceInputs, isStale, premium, isDatedMean, historyCoverage } from './index-data.js';
+import { validateFeed, sourceInputs, isStale, premium, isDatedMean, historyCoverage, browserCheckOverdue } from './index-data.js';
 
 const $ = id => document.getElementById(id);
 const pct = v => `${(v * 100).toFixed(2)}%`;
@@ -186,8 +186,10 @@ function renderIndexDetail() {
   const source = row.source, url = source?.url || row.profileUrl;
   const evidenceLink = (label, evidence, date) => `<span>${escape(label)} — ${escape(evidence?.publisher || 'Benchmark provider')}${date ? ' · ' + dateLabel(date) : ''}${evidence?.page ? ' · PDF page ' + evidence.page : ''} · <a href="${escape(evidence?.url || row.profileUrl)}" target="_blank" rel="noopener noreferrer">Open source ↗</a></span>`;
   $('index-source-line').innerHTML = evidenceLink('Forward P/E', source, row.asOf) + (row.mean10YearForwardPE != null ? evidenceLink('10-year reference', row.meanSource || source, row.meanAsOf) : '') + (row.dividendYield != null && row.yieldSource?.url !== source?.url ? evidenceLink('Dividend yield', row.yieldSource || source, row.yieldAsOf || row.asOf) : '');
-  const historicalNote = row.mean10YearForwardPE == null ? 'No verified 10-year mean is connected. The default exit equals the current multiple as an explicit flat-multiple scenario.' : `${isDatedMean(row) ? `Dated historical reference: its 10-year window ends ${dateLabel(row.meanAsOf)}. This is not the latest rolling 10-year average. ` : ''}${row.meanMethod.replace(/\.\s*$/, '')}. ${row.meanSync?.status === 'retained' ? 'The latest historical-source check failed; the last verified mean and date are retained. ' : ''}`;
-  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated forward valuation is connected for this exact benchmark; no different index or ETF is substituted.' : `${row.earningsBasis || 'Forward earnings'}${row.forwardMethod ? ' · ' + row.forwardMethod : ''}. ${historicalNote}${stale ? ' The current multiple is a retained observation; its publisher date has not been advanced.' : ''}`;
+  const historicalNote = row.mean10YearForwardPE == null ? 'No verified 10-year mean is connected. The default exit equals the current multiple as an explicit flat-multiple scenario.' : `${isDatedMean(row) ? `Dated historical reference: its 10-year window ends ${dateLabel(row.meanAsOf)}. This is not the latest rolling 10-year average. ` : ''}${row.meanMethod.replace(/\.\s*$/, '')}. ${row.meanSync?.status === 'retained' || browserCheckOverdue(row.meanSource) ? 'The historical-source check failed or is overdue; the last verified mean and date are retained. ' : ''}`;
+  const browserEvidence = [source, row.meanSource].find(evidence => evidence?.transport === 'scheduled-browser');
+  const browserNote = browserEvidence ? ` Daily browser source check: last verified ${dateLabel(browserEvidence.checkedAt)}. This check requires the owner’s Mac and Codex to be available; missed checks are flagged after 48 hours.` : '';
+  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated forward valuation is connected for this exact benchmark; no different index or ETF is substituted.' : `${row.earningsBasis || 'Forward earnings'}${row.forwardMethod ? ' · ' + row.forwardMethod : ''}. ${historicalNote}${browserNote}${stale ? ' The current multiple is a retained observation; its publisher date has not been advanced.' : ''}`;
   $('restore-source').disabled = row.forwardPE == null;
   indexValuationChart(row);
   renderScenarioContext();

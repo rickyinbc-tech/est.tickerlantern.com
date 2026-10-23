@@ -86,6 +86,16 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         except Exception as exc:
             if not isinstance(exc, ValueError): logging.exception('Unexpected publisher adapter failure: %s', id)
             message = str(exc)[:200] if isinstance(exc, ValueError) else 'Source unavailable (' + type(exc).__name__ + ')'
+            if id in ('nasdaq-dashboard', 'edelweiss-reference'):
+                try:
+                    from browser_snapshot import load
+                    values, evidence, verified = load(id)
+                    for index, metrics in values.items():
+                        update(by_id[index], metrics, evidence, verified)
+                    jobs.append(dict(id=id, indices=sorted(values), status='browser-verified', checkedAt=checked, lastBrowserCheck=verified, hostedError=message, error=None))
+                    return
+                except ValueError as fallback_error:
+                    message += '; ' + str(fallback_error)
             for index in ids:
                 row = by_id[index]
                 for source_key, sync_key in [('source', 'sync'), ('meanSource', 'meanSync')]:

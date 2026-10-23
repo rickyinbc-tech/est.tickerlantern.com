@@ -110,6 +110,43 @@ class BrowserSourceTests(unittest.TestCase):
         context.close.assert_called_once_with()
         session.browser.new_context.assert_called_once_with(accept_downloads=True, service_workers='block')
 
+    def test_goto_main_resource_response_used_without_event_capture(self):
+        response = Mock(url=NASDAQ, status=200, headers={'content-type': 'application/pdf'})
+        response.body.return_value = b'%PDF-goto-main-response'
+        session, context, page, _ = self.make_session(response)
+        page.goto.side_effect = None
+        page.goto.return_value = response
+        self.assertEqual(session.fetch(NASDAQ), b'%PDF-goto-main-response')
+        context.close.assert_called_once_with()
+
+    def test_network_failure_diagnostic_retains_chromium_cause(self):
+        response = Mock(url=NASDAQ, status=200, headers={'content-type': 'application/pdf'})
+        session, context, page, callbacks = self.make_session(response)
+        request = Mock(failure='net::ERR_HTTP2_PROTOCOL_ERROR')
+        request.is_navigation_request.return_value = True
+        request.frame = page.main_frame
+
+        def goto(*args, **kwargs):
+            callbacks['requestfailed'](request)
+            raise RuntimeError('Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at public source')
+        page.goto.side_effect = goto
+        with self.assertRaisesRegex(ValueError, 'no public document response: net::ERR_HTTP2_PROTOCOL_ERROR'):
+            session.fetch(NASDAQ)
+        context.close.assert_called_once_with()
+
+    def test_iframe_response_cannot_substitute_for_missing_main_resource(self):
+        response = Mock(url=NASDAQ, status=200, headers={'content-type': 'application/pdf'})
+        session, _, page, callbacks = self.make_session(response)
+        response.request.frame = object()
+
+        def goto(*args, **kwargs):
+            callbacks['response'](response)
+            raise RuntimeError('Page.goto: Timeout 30000ms exceeded.')
+        page.goto.side_effect = goto
+        with self.assertRaisesRegex(ValueError, 'no public document response: RuntimeError: Page.goto: Timeout'):
+            session.fetch(NASDAQ)
+        response.body.assert_not_called()
+
     def test_rendered_html_and_denial_cleanup(self):
         response = Mock(url=LISTING, status=200, headers={'content-type': 'text/html'})
         session, context, page, _ = self.make_session(response)

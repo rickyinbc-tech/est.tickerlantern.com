@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-23T05:36:34Z",
-  "sourceCheckAt": "2026-10-23T05:36:34Z",
+  "publishedAt": "2026-10-23T05:50:09Z",
+  "sourceCheckAt": "2026-10-23T05:42:10Z",
   "refreshCadence": "Daily at 23:15 UTC, plus manual publisher runs",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
-    "successful": 19,
-    "failed": 2,
+    "successful": 21,
+    "failed": 0,
     "notConnected": 0
   },
   "sourceJobs": [
@@ -24,7 +24,7 @@
         "japan"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -36,7 +36,7 @@
         "world"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -48,19 +48,8 @@
         "uk"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
-    },
-    {
-      "id": "nasdaq-dashboard",
-      "indices": [
-        "nasdaq100",
-        "russell2000",
-        "japan"
-      ],
-      "status": "retained",
-      "checkedAt": "2026-10-23T05:36:34Z",
-      "error": "Source unavailable (AttributeError)"
     },
     {
       "id": "lseg-stoxx",
@@ -68,7 +57,7 @@
         "stoxx600"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -81,7 +70,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -90,7 +79,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -100,7 +89,7 @@
         "nikkei225"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
     },
     {
@@ -109,7 +98,19 @@
         "csi300"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:36:34Z",
+      "checkedAt": "2026-10-23T05:42:10Z",
+      "error": null
+    },
+    {
+      "id": "nasdaq-dashboard",
+      "indices": [
+        "japan",
+        "nasdaq100",
+        "russell2000"
+      ],
+      "status": "browser-verified",
+      "checkedAt": "2026-10-23T05:33:50Z",
+      "lastBrowserCheck": "2026-10-23T05:33:50Z",
       "error": null
     },
     {
@@ -118,9 +119,10 @@
         "ftse100",
         "hangseng"
       ],
-      "status": "retained",
-      "checkedAt": "2026-10-23T05:36:34Z",
-      "error": "Source unavailable (AttributeError)"
+      "status": "browser-verified",
+      "checkedAt": "2026-10-23T05:28:11Z",
+      "lastBrowserCheck": "2026-10-23T05:28:11Z",
+      "error": null
     }
   ],
   "indices": [
@@ -144,15 +146,15 @@
         "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2846695f55884287ef12e6a50eef99c41200ecf3c5e666ab6f4898dac76fdb46",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "meanSource": {
@@ -160,15 +162,15 @@
         "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2846695f55884287ef12e6a50eef99c41200ecf3c5e666ab6f4898dac76fdb46",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -195,17 +197,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -216,10 +219,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
@@ -228,17 +232,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -262,17 +267,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -283,10 +289,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
@@ -295,17 +302,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -331,14 +339,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "raymond-james-tsx",
         "page": 20
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -351,14 +359,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "cumberland-tsx",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -382,15 +390,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -399,7 +407,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -414,14 +422,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -448,14 +456,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -464,7 +472,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -479,14 +487,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -510,15 +518,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -527,7 +535,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -542,14 +550,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -573,15 +581,15 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -590,7 +598,7 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -605,14 +613,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -639,14 +647,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -655,7 +663,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -670,14 +678,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -704,14 +712,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -720,7 +728,7 @@
         "url": "https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-europe-index/06272422",
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "9ac90a1c99cad6f0f941bda76e52d7dfb34d3268ee6fe8661818b28a76cd2fbf",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -735,14 +743,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -766,15 +774,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -783,7 +791,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -798,14 +806,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -830,16 +838,17 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:38:29Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -850,16 +859,17 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:38:29Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
         "error": null
       }
     },
@@ -887,13 +897,13 @@
         "sha256": "55ae16d6a56b3cd7521fa75e3092c6904fa249ea6db8eaef616ba0d51b3e23da",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "lseg-stoxx"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -907,13 +917,13 @@
         "sha256": "55ae16d6a56b3cd7521fa75e3092c6904fa249ea6db8eaef616ba0d51b3e23da",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "lseg-stoxx"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -940,14 +950,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-10-13",
@@ -957,10 +967,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -971,17 +982,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -1007,14 +1019,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "raymond-james-tsx",
         "page": 21
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1025,17 +1037,17 @@
         "discoveryUrl": "https://www.ig.com/sg/news-and-trade-ideas/Asia-stock-market-outlook-for-2026-251209",
         "page": null,
         "publishedAt": "2025-12-22",
-        "sha256": "f0cb1dbb99481a5a01e374c6a3ca4a883791275150ece5b4b6f112c38f14c78a",
+        "sha256": "48e11beb967ebe50257746e2825410f9bf886029705afb390e3df83ce4417dc9",
         "parserVersion": "ig-asia-outlook-1",
         "frequency": "Dated research outlook; article revisions checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "ig-asia-reference"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -1062,14 +1074,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1081,7 +1093,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1095,14 +1107,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -1127,16 +1139,17 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:38:29Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1147,16 +1160,17 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:38:29Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
         "error": null
       }
     },
@@ -1183,14 +1197,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1203,14 +1217,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "scbam-reference",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -1237,14 +1251,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1256,7 +1270,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1270,14 +1284,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -1304,14 +1318,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1323,7 +1337,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1337,14 +1351,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     },
@@ -1371,14 +1385,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1390,7 +1404,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1404,16 +1418,17 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:36:34Z",
+        "checkedAt": "2026-10-23T05:42:10Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:36:34Z",
-        "lastSuccess": "2026-10-23T05:36:34Z",
+        "lastAttempt": "2026-10-23T05:42:10Z",
+        "lastSuccess": "2026-10-23T05:42:10Z",
         "error": null
       }
     }
-  ]
+  ],
+  "browserSourceCheckAt": "2026-10-23T05:28:11Z"
 }

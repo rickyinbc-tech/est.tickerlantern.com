@@ -232,7 +232,8 @@ def refresh(render_qa=False):
 
     from source_jobs import refresh_supplemental
     source_jobs = refresh_supplemental(by_id, fetch, update_metrics, checked, render_qa)
-    result = dict(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC, plus manual publisher runs', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] == 'ok' for id in job['indices']}), failed=len(failures) + sum(j['status'] != 'ok' for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
+    healthy = ('ok', 'browser-verified')
+    result = dict(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC plus daily scheduled browser source checks', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] in healthy for id in job['indices']}), failed=len(failures) + sum(j['status'] not in healthy for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
     for job in source_jobs:
         print(f"Source {job['id']}: {job['status']}; {job['error'] or 'validated'}")

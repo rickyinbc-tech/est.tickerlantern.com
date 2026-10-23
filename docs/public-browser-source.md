@@ -2,8 +2,11 @@
 
 Implemented in `scripts/public_browser_source.py`. This is a GitHub Actions
 application feature, not a local agent browser controller. It has not been run
-with a browser on Ricky's computer. Mock tests verify the transport boundaries;
-an actual GitHub Actions run is still needed to confirm publisher delivery.
+with a browser on Ricky's computer. Mock tests verify the transport boundaries.
+Actual GitHub Actions tests found Nasdaq main-document network failures and
+Edelweiss HTTP 403. These remain explicit. The independent normal-browser
+schedule is described in `browser-source-runbook.md`; CI never calls a retained
+browser verification a successful hosted fetch.
 
 Ordinary HTTP remains the first transport. The fallback requires both
 `PUBLIC_BROWSER_FETCH=1` and `GITHUB_ACTIONS=true`. It only navigates reviewed

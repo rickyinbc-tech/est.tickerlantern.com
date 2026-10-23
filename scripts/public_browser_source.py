@@ -149,7 +149,7 @@ class _Session:
         context = self.browser.new_context(accept_downloads=True, service_workers='block')
         try:
             page = context.new_page()
-            downloads, responses, blocked = [], [], []
+            downloads, responses, blocked, failures = [], [], [], []
 
             def route_request(route):
                 request = route.request
@@ -175,12 +175,22 @@ class _Session:
                 # built-in bound method such as list.append cannot hold them.
                 downloads.append(download)
 
+            def record_failure(request):
+                if request.is_navigation_request() and request.frame == page.main_frame:
+                    failures.append(str(request.failure or 'unknown network failure'))
+
             context.route('**/*', route_request)
             page.on('download', record_download)
             page.on('response', record_response)
+            page.on('requestfailed', record_failure)
             navigation_error = None
             try:
-                page.goto(url, wait_until='domcontentloaded', timeout=NAVIGATION_TIMEOUT_MS)
+                response = page.goto(url, wait_until='domcontentloaded', timeout=NAVIGATION_TIMEOUT_MS)
+                # goto() explicitly returns the final main-resource response.
+                # Keep this documented path even if no response event was
+                # delivered, rather than silently discarding usable evidence.
+                if response is not None and response not in responses:
+                    responses.append(response)
             except self.error as exc:
                 # Chromium represents a normal attachment download as an aborted
                 # document navigation. Accept it only with an actual PDF below.
@@ -207,7 +217,11 @@ class _Session:
                     download.delete()
 
             if not responses:
-                raise ValueError('Publisher navigation produced no public document response')
+                detail = ('; '.join(failures) if failures else
+                          (type(navigation_error).__name__ + ': ' + str(navigation_error).splitlines()[0]
+                           if navigation_error is not None else 'no navigation exception or response event'))
+                detail = re.sub(r'\s+', ' ', detail)[:220]
+                raise ValueError('Publisher navigation produced no public document response: ' + detail)
             response = responses[-1]
             _check_response(response)
             content_type = response.headers.get('content-type', '').lower()

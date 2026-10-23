@@ -1,10 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { sourceInputs, validateFeed, premium, isStale, isDatedMean, historyCoverage } from '../src/index-data.js';
+import { sourceInputs, validateFeed, premium, isStale, isDatedMean, historyCoverage, browserCheckOverdue } from '../src/index-data.js';
 import { project, DEFAULTS, validate } from '../src/model.js';
 const row = { id:'sample', name:'Sample', forwardPE:18, mean10YearForwardPE:16, dividendYield:2, asOf:'2026-09-30', meanAsOf:'2026-09-30', meanMethod:'Publisher-reported 10-year mean', source:{ publisher:'MSCI', url:'https://www.msci.com/example' }, sync:{ status:'ok' } };
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
+
+test('a missed browser source check becomes overdue without a new server snapshot', () => {
+  const source = {transport:'scheduled-browser',checkedAt:'2026-10-22T12:00:00Z'};
+  assert.equal(browserCheckOverdue(source,new Date('2026-10-24T11:59:59Z')),false);
+  assert.equal(browserCheckOverdue(source,new Date('2026-10-24T12:00:01Z')),true);
+  assert.equal(isStale({...row,source,asOf:'2026-10-22'},new Date('2026-10-24T12:00:01Z')),true);
+  assert.equal(browserCheckOverdue({transport:'scheduled-browser'}),true);
+});
 
 test('only source-backed fields sync; growth and horizon remain reader assumptions', () => {
   const values = sourceInputs(row, { ...DEFAULTS, growth:4, years:10 });

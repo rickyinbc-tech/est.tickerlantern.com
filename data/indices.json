@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-23T05:42:10Z",
+  "publishedAt": "2026-10-23T05:50:09Z",
   "sourceCheckAt": "2026-10-23T05:42:10Z",
   "refreshCadence": "Daily at 23:15 UTC, plus manual publisher runs",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
-    "successful": 19,
-    "failed": 2,
+    "successful": 21,
+    "failed": 0,
     "notConnected": 0
   },
   "sourceJobs": [
@@ -50,17 +50,6 @@
       "status": "ok",
       "checkedAt": "2026-10-23T05:42:10Z",
       "error": null
-    },
-    {
-      "id": "nasdaq-dashboard",
-      "indices": [
-        "nasdaq100",
-        "russell2000",
-        "japan"
-      ],
-      "status": "retained",
-      "checkedAt": "2026-10-23T05:42:10Z",
-      "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
     },
     {
       "id": "lseg-stoxx",
@@ -113,14 +102,27 @@
       "error": null
     },
     {
+      "id": "nasdaq-dashboard",
+      "indices": [
+        "japan",
+        "nasdaq100",
+        "russell2000"
+      ],
+      "status": "browser-verified",
+      "checkedAt": "2026-10-23T05:33:50Z",
+      "lastBrowserCheck": "2026-10-23T05:33:50Z",
+      "error": null
+    },
+    {
       "id": "edelweiss-reference",
       "indices": [
         "ftse100",
         "hangseng"
       ],
-      "status": "retained",
-      "checkedAt": "2026-10-23T05:42:10Z",
-      "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
+      "status": "browser-verified",
+      "checkedAt": "2026-10-23T05:28:11Z",
+      "lastBrowserCheck": "2026-10-23T05:28:11Z",
+      "error": null
     }
   ],
   "indices": [
@@ -195,17 +197,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -216,10 +219,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
@@ -228,17 +232,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -262,17 +267,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -283,10 +289,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
@@ -295,17 +302,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -830,17 +838,18 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
-        "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -850,17 +859,18 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
-        "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
+        "error": null
       }
     },
     {
@@ -957,10 +967,11 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -971,17 +982,18 @@
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
         "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
         "parserVersion": "nasdaq-global-dashboard-2",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
+        "checkedAt": "2026-10-23T05:33:50Z",
+        "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:35:28Z",
-        "error": "Discovery: Publisher navigation produced no public document response; Dashboard: Publisher navigation produced no public document response"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:33:50Z",
+        "lastSuccess": "2026-10-23T05:33:50Z",
+        "error": null
       }
     },
     {
@@ -1127,17 +1139,18 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
-        "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -1147,17 +1160,18 @@
         "discoveryUrl": "https://www.edelweissmf.com/investor-insights/fund-market/tempo",
         "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
         "parserVersion": "supplemental-sources-1",
-        "frequency": "Publisher research; checked daily",
+        "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:38:29Z",
+        "checkedAt": "2026-10-23T05:28:11Z",
+        "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:42:10Z",
-        "lastSuccess": "2026-10-23T05:38:29Z",
-        "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:28:11Z",
+        "lastSuccess": "2026-10-23T05:28:11Z",
+        "error": null
       }
     },
     {
@@ -1415,5 +1429,6 @@
         "error": null
       }
     }
-  ]
+  ],
+  "browserSourceCheckAt": "2026-10-23T05:28:11Z"
 }

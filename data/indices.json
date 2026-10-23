@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-23T04:27:10Z",
-  "sourceCheckAt": "2026-10-23T04:27:10Z",
+  "publishedAt": "2026-10-23T04:40:03Z",
+  "sourceCheckAt": "2026-10-23T04:40:03Z",
   "refreshCadence": "Daily at 23:15 UTC, plus manual publisher runs",
   "historyPolicy": "Only an explicit publisher-reported 10-year forward-P/E mean is accepted. Missing means stay null.",
   "refresh": {
@@ -30,15 +30,15 @@
         "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "2846695f55884287ef12e6a50eef99c41200ecf3c5e666ab6f4898dac76fdb46",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Weekly research; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -131,15 +131,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -163,15 +163,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -195,15 +195,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -227,15 +227,15 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -259,15 +259,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -291,15 +291,15 @@
         "url": "https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-europe-index/06272422",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "9ac90a1c99cad6f0f941bda76e52d7dfb34d3268ee6fe8661818b28a76cd2fbf",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -323,15 +323,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -401,15 +401,15 @@
         "url": "https://www.msci.com/documents/10199/604603c8-eedb-4bc2-88b8-da951184c31c",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-japan-index/08199682",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "880d7d89627769facb24a291f85d5e3a5d3ef3f95f6504fb1a7ef0368197b6b6",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -456,15 +456,15 @@
         "url": "https://www.msci.com/documents/10199/aa99c3a4-d48b-44ac-8caa-49522caa9021",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-china-index/05788560",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "a9e5517d8b0107607b032a89e1a697baaf60433d2ab307df58d8acfcb1d3c0c4",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -534,15 +534,15 @@
         "url": "https://www.msci.com/documents/10199/5b1c718d-3b17-495c-98e4-a05260070960",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-india-index/06650865",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "4683a9641af44fcb40b299bf1bfbc4b4f2f685561b95b00df5b19fcd27cc7da3",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -566,15 +566,15 @@
         "url": "https://www.msci.com/documents/10199/e657e019-af26-4881-bf0d-0dffdd6e7f9a",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-ac-asia-pacific-ex-japan/08499694",
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "f5d5f4d4165b62fea71ac8327cc4f1070728b8908e15582c2c0fdf1b590ae234",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     },
@@ -598,15 +598,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-australia-index-aud-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T04:27:10Z",
+        "checkedAt": "2026-10-23T04:40:03Z",
         "sha256": "e62b0b96d16c2d68b1003987abb9331bcbcc11977f7a08c23ce4f7c94948c705",
         "parserVersion": "index-fundamentals-1",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T04:27:10Z",
-        "lastSuccess": "2026-10-23T04:27:10Z",
+        "lastAttempt": "2026-10-23T04:40:03Z",
+        "lastSuccess": "2026-10-23T04:40:03Z",
         "error": null
       }
     }

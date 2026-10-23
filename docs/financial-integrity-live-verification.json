@@ -1,0 +1,62 @@
+{
+  "verifiedAt": "2026-10-23T09:23:30Z",
+  "site": "https://est.tickerlantern.com",
+  "endpoint": "https://est.tickerlantern.com/api/indices",
+  "implementationCommit": "e3f928d14e13e556e0f8273a4441ffb943e70f0b",
+  "dataCommit": "f5146fd",
+  "workerVersion": "8ff98a59-0110-49c3-b319-cb7a5a927026",
+  "dataOnlyDeliveryVerified": true,
+  "snapshotVersion": 3,
+  "snapshotId": "fd0be6a4b83c2ba70170b99095b5d25bf8a1bb35b731afda1b947036e8e33b75",
+  "publishedAt": "2026-10-23T09:18:44Z",
+  "sourceCheckAt": "2026-10-23T09:17:16Z",
+  "growthCheckAt": "2026-10-23T09:18:44Z",
+  "transport": "github",
+  "lastScheduledCheckAt": null,
+  "pipelineRun": {
+    "event": "workflow_dispatch",
+    "runId": "39928971626",
+    "url": "https://github.com/rickyinbc-tech/est.tickerlantern.com/actions/runs/39928971626",
+    "checkedAt": "2026-10-23T09:18:44Z"
+  },
+  "workflowConclusion": "failure in final source-status reporting step after successful validated partial publication",
+  "coverage": {
+    "forwardPE": 21,
+    "mean10YearForwardPE": 21,
+    "dividendYield": 14,
+    "growthForecast": 21
+  },
+  "historicalAssessment": {
+    "compatible": 6,
+    "qualified": 15
+  },
+  "growthSuccessfulIndices": [
+    "sp500",
+    "nasdaq100",
+    "tsx",
+    "eafe",
+    "acwi",
+    "world",
+    "msci-canada",
+    "europe",
+    "uk",
+    "em",
+    "nikkei225",
+    "stoxx600",
+    "ftse100",
+    "hangseng",
+    "csi300"
+  ],
+  "growthFailures": [
+    {
+      "adapter": "firsteagle",
+      "error": "Publisher robots policy unavailable"
+    },
+    {
+      "adapter": "jpm",
+      "error": "Public source request unavailable"
+    }
+  ],
+  "financialValueOrObservationDateChanges": [],
+  "evidenceQualification": "This was a manual dispatch and check-only publication; no scheduled-run execution or publisher numerical revision is claimed."
+}

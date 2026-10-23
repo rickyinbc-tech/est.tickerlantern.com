@@ -4,9 +4,12 @@ export function validateGrowthForecast(forecast) {
   if (forecast == null) return;
   if (!['calendar-year', 'fiscal-year', 'publisher-year', 'forecast-horizon'].includes(forecast.periodBasis) || !Array.isArray(forecast.estimates) || forecast.estimates.length > 12 || !['consensus', 'house'].includes(forecast.forecastType)) throw new Error('Invalid EPS forecast periods.');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(forecast.asOf || '') || !forecast.source?.url?.startsWith('https://') || !forecast.source.publisher) throw new Error('Missing EPS forecast provenance.');
+  const date = new Date(forecast.asOf + 'T00:00:00Z');
+  if (!Number.isFinite(+date) || date.toISOString().slice(0, 10) !== forecast.asOf) throw new Error('Invalid growth observation date.');
   const years = new Set();
   for (const point of forecast.estimates) {
     if (!Number.isInteger(point.year) || point.year < 2020 || point.year > 2100 || years.has(point.year) || !Number.isFinite(point.growth) || point.growth <= -100 || point.growth > 1000) throw new Error('Invalid annual EPS growth estimate.');
+    if (forecast.periodBasis === 'forecast-horizon' && !point.periodLabel) throw new Error('Missing forecast endpoint label.');
     years.add(point.year);
   }
 }

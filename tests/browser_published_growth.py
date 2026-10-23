@@ -10,6 +10,13 @@ URL = sys.argv[1] if len(sys.argv)>1 else 'http://127.0.0.1:8864/'
 SESSION = f'est-published-growth-{os.getpid()}'
 def browser(*args): return subprocess.check_output(['agent-browser','--session',SESSION,*args],text=True).strip()
 def value(script): return json.loads(browser('eval',script))
+def index(id):
+    selector='#index-list button[data-index="'+id+'"]'
+    browser('eval', '(async()=>{const el=document.querySelector('+json.dumps(selector)+');el.scrollIntoView({block:"center",behavior:"instant"});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));})()')
+    browser('click',selector)
+    if not value('document.querySelector('+json.dumps(selector)+').getAttribute("aria-pressed")=="true"'):
+        browser('click',selector)
+    browser('wait',selector+'[aria-pressed="true"]')
 atexit.register(lambda: subprocess.run(['agent-browser','--session',SESSION,'close'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL))
 def check(name, passed):
     print(('PASS: ' if passed else 'FAIL: ')+name,flush=True)
@@ -24,7 +31,7 @@ browser('eval','document.documentElement.style.scrollBehavior="auto"')
 feed=value('fetch("/data/indices.json").then(r=>r.json())')
 year=value('Number(new Intl.DateTimeFormat("en",{year:"numeric",timeZone:"America/Vancouver"}).format(new Date()))+1')
 for row in feed['indices']:
-    browser('click','#index-list button[data-index="'+row['id']+'"]')
+    index(row['id'])
     actual=value('({mode:document.querySelector("#growthMode").value,years:Number(document.querySelector("#years").value),rates:Array.from(document.querySelectorAll("[data-growth-year]"),e=>Number(e.value)),readonly:Array.from(document.querySelectorAll("[data-growth-year]")).every(e=>e.readOnly),status:document.querySelector("#growth-forecast-status").textContent,valid:!document.querySelector("#valid-output").hidden})')
     points={p['year']:p['growth'] for p in row['growthForecast']['estimates']}
     expected=[]
@@ -33,7 +40,7 @@ for row in feed['indices']:
     check(row['name']+' uses its own published future path',actual['mode']=='source' and actual['rates']==expected and actual['years']==len(expected) and actual['readonly'] and actual['valid'])
     if row['growthForecast']['forecastType']=='house': check(row['name']+' labels house forecasts', 'house forecast' in actual['status'])
     if row['id']=='russell2000': check('blocked Russell source remains dated and retained','dated or retained' in actual['status'])
-browser('click','#index-list button[data-index="sp500"]')
+index('sp500')
 browser('fill','#years','3')
 check('unpublished years block calculation instead of repeating a rate',value('document.querySelector("#valid-output").hidden && document.querySelector("#growth-year-2").value==="" && document.querySelector("#download-csv").disabled'))
 browser('click','#use-source-growth')

@@ -52,7 +52,7 @@ test('annual consensus values above 20 percent are supported without clamping', 
 
 test('growth evidence rejects duplicate years, missing provenance and unsupported rates', () => {
   assert.doesNotThrow(() => validateGrowthForecast(row.growthForecast));
-  for (const change of [{ source: null }, { asOf: null }, { periodBasis: 'quarterly' }, { estimates: [{ year: 2027, growth: -100 }] }, { estimates: [{ year: 2027, growth: 12 }, { year: 2027, growth: 13 }] }]) assert.throws(() => validateGrowthForecast({ ...row.growthForecast, ...change }));
+  for (const change of [{ source: null }, { asOf: null }, { asOf: '2026-99-99' }, { periodBasis: 'forecast-horizon' }, { periodBasis: 'quarterly' }, { estimates: [{ year: 2027, growth: -100 }] }, { estimates: [{ year: 2027, growth: 12 }, { year: 2027, growth: 13 }] }]) assert.throws(() => validateGrowthForecast({ ...row.growthForecast, ...change }));
   assert.equal(growthIsStale(row, now), false);
   assert.equal(growthIsStale({ ...row, growthForecast: { ...row.growthForecast, asOf: '2026-01-01' } }, now), true);
   assert.equal(growthCoverage({ indices: [row, {}] }, now), '1 of 2 benchmarks have published 2027 growth inputs');

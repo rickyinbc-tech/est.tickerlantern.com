@@ -3,7 +3,7 @@
   "sources": {
     "nasdaq-dashboard": {
       "adapterId": "nasdaq-dashboard",
-      "verifiedAt": "2026-10-23T05:33:50Z",
+      "verifiedAt": "2026-10-23T20:07:43Z",
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
@@ -13,7 +13,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser"
       },
       "values": {
@@ -48,7 +48,7 @@
     },
     "edelweiss-reference": {
       "adapterId": "edelweiss-reference",
-      "verifiedAt": "2026-10-23T05:28:11Z",
+      "verifiedAt": "2026-10-23T20:07:43Z",
       "source": {
         "publisher": "Edelweiss Mutual Fund / Bloomberg",
         "url": "https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf",
@@ -58,7 +58,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:28:11Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser"
       },
       "values": {

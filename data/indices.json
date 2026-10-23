@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-23T16:10:12Z",
+  "publishedAt": "2026-10-23T20:07:58Z",
   "sourceCheckAt": "2026-10-23T09:17:16Z",
   "refreshCadence": "Daily at 23:15 UTC plus daily scheduled browser source checks",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
@@ -56,19 +56,6 @@
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table",
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique explicitly labelled historical-mean table"
       ]
-    },
-    {
-      "id": "nasdaq-dashboard",
-      "indices": [
-        "japan",
-        "nasdaq100",
-        "russell2000"
-      ],
-      "status": "browser-verified",
-      "checkedAt": "2026-10-23T09:17:16Z",
-      "lastBrowserCheck": "2026-10-23T05:33:50Z",
-      "hostedError": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR",
-      "error": null
     },
     {
       "id": "lseg-stoxx",
@@ -129,16 +116,29 @@
       "discoveryIssues": []
     },
     {
+      "id": "nasdaq-dashboard",
+      "indices": [
+        "japan",
+        "nasdaq100",
+        "russell2000"
+      ],
+      "status": "browser-verified",
+      "checkedAt": "2026-10-23T20:07:43Z",
+      "lastBrowserCheck": "2026-10-23T20:07:43Z",
+      "error": null,
+      "hostedError": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR"
+    },
+    {
       "id": "edelweiss-reference",
       "indices": [
         "ftse100",
         "hangseng"
       ],
       "status": "browser-verified",
-      "checkedAt": "2026-10-23T09:17:16Z",
-      "lastBrowserCheck": "2026-10-23T05:28:11Z",
-      "hostedError": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped",
-      "error": null
+      "checkedAt": "2026-10-23T20:07:43Z",
+      "lastBrowserCheck": "2026-10-23T20:07:43Z",
+      "error": null,
+      "hostedError": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped"
     }
   ],
   "indices": [
@@ -585,7 +585,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
@@ -593,9 +593,15 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
@@ -609,7 +615,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -622,15 +628,21 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "growthForecast": {
         "forecastType": "consensus",
@@ -705,9 +717,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -766,9 +778,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -839,9 +851,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -975,9 +987,15 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       }
     },
     {
@@ -1004,7 +1022,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
@@ -1012,9 +1030,15 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
@@ -1028,7 +1052,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -1041,15 +1065,21 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "growthSync": {
         "status": "retained",
@@ -1130,9 +1160,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1191,9 +1221,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1264,9 +1294,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1400,9 +1430,15 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       }
     },
     {
@@ -4785,7 +4821,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:28:11Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 4,
         "dateBasis": "explicit-observation-date",
@@ -4793,9 +4829,14 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:28:11Z",
-        "lastSuccess": "2026-10-23T05:28:11Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "edelweiss-reference"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
@@ -4808,15 +4849,20 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:28:11Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:28:11Z",
-        "lastSuccess": "2026-10-23T05:28:11Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "edelweiss-reference"
       },
       "growthForecast": {
         "forecastType": "house",
@@ -4891,9 +4937,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:28:11Z",
-            "lastSuccess": "2026-10-23T05:28:11Z",
-            "checkedAt": "2026-10-23T05:28:11Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
@@ -4952,9 +4998,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:28:11Z",
-            "lastSuccess": "2026-10-23T05:28:11Z",
-            "checkedAt": "2026-10-23T05:28:11Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
@@ -5650,7 +5696,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -5665,15 +5711,20 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T05:33:50Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "growthForecast": {
         "forecastType": "consensus",
@@ -5809,9 +5860,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -5882,9 +5933,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:33:50Z",
-            "lastSuccess": "2026-10-23T05:33:50Z",
-            "checkedAt": "2026-10-23T05:33:50Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -6018,9 +6069,14 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:33:50Z",
-        "lastSuccess": "2026-10-23T05:33:50Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "dividendYield",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "nasdaq-dashboard"
       },
       "growthSync": {
         "status": "retained",
@@ -6894,7 +6950,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:28:11Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 4,
         "dateBasis": "explicit-observation-date",
@@ -6902,9 +6958,14 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:28:11Z",
-        "lastSuccess": "2026-10-23T05:28:11Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "edelweiss-reference"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
@@ -6917,15 +6978,20 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "edelweiss-reference",
-        "checkedAt": "2026-10-23T05:28:11Z",
+        "checkedAt": "2026-10-23T20:07:43Z",
         "transport": "scheduled-browser",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:28:11Z",
-        "lastSuccess": "2026-10-23T05:28:11Z",
-        "error": null
+        "lastAttempt": "2026-10-23T20:07:43Z",
+        "lastSuccess": "2026-10-23T20:07:43Z",
+        "error": null,
+        "metrics": [
+          "forwardPE",
+          "mean10YearForwardPE"
+        ],
+        "ownerId": "edelweiss-reference"
       },
       "growthForecast": {
         "forecastType": "house",
@@ -7000,9 +7066,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:28:11Z",
-            "lastSuccess": "2026-10-23T05:28:11Z",
-            "checkedAt": "2026-10-23T05:28:11Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
@@ -7061,9 +7127,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-23T05:28:11Z",
-            "lastSuccess": "2026-10-23T05:28:11Z",
-            "checkedAt": "2026-10-23T05:28:11Z",
+            "lastAttempt": "2026-10-23T20:07:43Z",
+            "lastSuccess": "2026-10-23T20:07:43Z",
+            "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "319a71474731b822b045c285699adf6fa1be9092a79bcb7ae2a9f55fe6d2aeae",
@@ -27502,7 +27568,7 @@
     "event": "local",
     "runId": null,
     "url": null,
-    "checkedAt": "2026-10-23T16:10:12Z"
+    "checkedAt": "2026-10-23T20:07:58Z"
   },
   "statusMetadataRepair": {
     "appliedAt": "2026-10-23T10:22:07Z",
@@ -27521,5 +27587,6 @@
         "metric": "dividendYield"
       }
     ]
-  }
+  },
+  "browserSourceCheckAt": "2026-10-23T20:07:43Z"
 }

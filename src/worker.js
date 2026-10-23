@@ -1,8 +1,12 @@
 import { validateFeed } from './index-data.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
 const MAX_BYTES = 2_000_000;
-async function verified(response) {
-  if (!response.ok || !/^application\/json(?:;|$)/i.test(response.headers.get('Content-Type') || '')) throw new Error('Snapshot unavailable or wrong content type.');
+async function verified(response, { githubRaw = false } = {}) {
+  // The fixed raw.githubusercontent.com JSON URL is served as text/plain.
+  // That transport still passes JSON parsing and the complete feed contract.
+  const contentType = response.headers.get('Content-Type') || '';
+  const validType = /^application\/json(?:;|$)/i.test(contentType) || githubRaw && /^text\/plain(?:;|$)/i.test(contentType);
+  if (!response.ok || !validType) throw new Error('Snapshot unavailable or wrong content type.');
   const text = await response.text();
   if (!text || text.length > MAX_BYTES) throw new Error('Invalid snapshot size.');
   return validateFeed(JSON.parse(text));
@@ -22,7 +26,7 @@ export default {
     let remote, bundled;
     try {
       const response = await fetch(SNAPSHOT, { redirect: 'error', cf: { cacheTtl: 300, cacheEverything: true }, signal: AbortSignal.timeout(8000) });
-      remote = await verified(response);
+      remote = await verified(response, { githubRaw: true });
     } catch { /* The independent bundle below must pass the identical contract. */ }
     if (env.ASSETS) {
       try {

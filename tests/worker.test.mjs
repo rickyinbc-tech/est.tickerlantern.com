@@ -7,7 +7,7 @@ const snapshot=(date='2026-10-22T00:00:00Z',patch={})=>({...structuredClone(base
 const request=()=>new Request('https://est.tickerlantern.com/api/indices');
 
 test('API uses the current published GitHub snapshot without application redeployment',async t=>{
-  t.mock.method(globalThis,'fetch',async()=>Response.json(snapshot()));
+  t.mock.method(globalThis,'fetch',async()=>new Response(JSON.stringify(snapshot()),{headers:{'Content-Type':'text/plain; charset=utf-8'}}));
   const response=await worker.fetch(request(),{});
   assert.equal(response.status,200);assert.equal((await response.json()).transport,'github');
 });

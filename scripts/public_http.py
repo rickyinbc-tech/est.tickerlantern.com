@@ -43,7 +43,7 @@ def request(url, hosts, post=False, allow_status=False):
     for _ in range(6):
         with tempfile.TemporaryDirectory(prefix='tickerlantern-http-') as folder:
             headers_path = Path(folder) / 'headers'
-            args = ['curl', '--proto', '=https', '-sS', '--max-time', '45', '--retry', '1', '--max-filesize', str(MAX_BYTES), '-A', 'TickerLanternResearch/1.0 (+https://est.tickerlantern.com)', '--dump-header', str(headers_path), '-w', '\n%{http_code}\n%{content_type}']
+            args = ['curl', '--proto', '=https', '-sS', '--max-time', '45', '--retry', '1', '--max-filesize', str(MAX_BYTES), '-A', 'TickerLanternResearch/1.0 (+https://tickerlantern.com)', '--dump-header', str(headers_path), '-w', '\n%{http_code}\n%{content_type}']
             if post: args += ['--data', '']
             result = subprocess.run(args + [current], capture_output=True)
             if result.returncode: raise ValueError('Public source request unavailable')

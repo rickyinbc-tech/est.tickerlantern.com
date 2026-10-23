@@ -4,7 +4,20 @@ import {readFile} from 'node:fs/promises';
 import worker from '../src/worker.js';
 const base=JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url),'utf8'));
 const snapshot=(date='2026-10-22T00:00:00Z',patch={})=>({...structuredClone(base),publishedAt:date,...patch});
-const request=()=>new Request('https://est.tickerlantern.com/api/indices');
+const request=()=>new Request('https://tickerlantern.com/api/indices');
+
+test('legacy and www domains permanently redirect pages, assets and API requests to HTTPS apex',async()=>{
+  for(const host of ['est.tickerlantern.com','www.tickerlantern.com']) {
+    for(const path of ['/','/app.js','/api/indices?source=check']) {
+      const response=await worker.fetch(new Request('https://'+host+path),{});
+      assert.equal(response.status,308);
+      assert.equal(response.headers.get('Location'),'https://tickerlantern.com'+path);
+    }
+  }
+  const response=await worker.fetch(new Request('http://tickerlantern.com/?index=sp500'),{});
+  assert.equal(response.status,308);
+  assert.equal(response.headers.get('Location'),'https://tickerlantern.com/?index=sp500');
+});
 
 test('API uses the current published GitHub snapshot without application redeployment',async t=>{
   t.mock.method(globalThis,'fetch',async(url, options)=>{
@@ -50,5 +63,5 @@ test('API rejects wrong content types even if the body resembles JSON',async t=>
 });
 test('API rejects writes and leaves static routing to asset handling',async()=>{
   assert.equal((await worker.fetch(new Request(request(),{method:'POST'}),{})).status,405);
-  const page=await worker.fetch(new Request('https://est.tickerlantern.com/'),{ASSETS:{fetch:async()=>new Response('Static page')}});assert.equal(await page.text(),'Static page');
+  const page=await worker.fetch(new Request('https://tickerlantern.com/'),{ASSETS:{fetch:async()=>new Response('Static page')}});assert.equal(await page.text(),'Static page');
 });

@@ -21,6 +21,11 @@ function isNewer(candidate, accepted) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (['est.tickerlantern.com', 'www.tickerlantern.com'].includes(url.hostname) || url.hostname === 'tickerlantern.com' && url.protocol !== 'https:') {
+      url.hostname = 'tickerlantern.com';
+      url.protocol = 'https:';
+      return Response.redirect(url.href, 308);
+    }
     if (url.pathname !== '/api/indices') return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     let remote, bundled;

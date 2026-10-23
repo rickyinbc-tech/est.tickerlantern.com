@@ -19,7 +19,7 @@ test('a manually edited exit and temporarily invalid edits survive any source re
  const invalid={...DEFAULTS,entryPE:'',exitPE:'',growthMode:'annual',years:'',annualGrowth:['',-4],payout:''};
  const locks={entryPE:true,exitPE:true,growthMode:true,annualGrowth:true,years:true,payout:true};
  const next=scenarioInputs({...accepted,forwardPE:30,mean10YearForwardPE:18},invalid,locks);
- for(const key of ['entryPE','exitPE','years','payout'])assert.equal(next[key],'');assert.deepEqual(next.annualGrowth,['',-4]);
+ for(const key of ['entryPE','exitPE','payout'])assert.equal(next[key],'');assert.deepEqual(next.annualGrowth,['',-4,6,6,6]);assert.equal(next.years,5);
  assert.equal(scenarioInputs(row,{...DEFAULTS,entryPE:20,exitPE:13},{entryPE:true,exitPE:true}).exitPE,13);
 });
 test('source values remain visible at reported precision; N/M,zero and missing are distinct',()=>{

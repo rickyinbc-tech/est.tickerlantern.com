@@ -5,12 +5,12 @@ import {sourceGrowthPath} from '../src/growth-data.js';
 import {scenarioInputs,loadScenarios,saveScenarios} from '../src/scenario-state.js';
 const now=new Date('2026-10-23T12:00:00Z');
 const forecast={asOf:'2026-10-01',forecastType:'consensus',periodBasis:'calendar-year',source:{publisher:'Test',url:'https://example.com/source'},estimates:[{year:2027,growth:15,periodLabel:'Calendar year 2027'},{year:2028,growth:12,periodLabel:'Calendar year 2028'}]};
-const row={forwardPE:19,mean10YearForwardPE:18,growthForecast:forecast};
+const row={id:'sp500',forwardPE:19,mean10YearForwardPE:18,growthForecast:forecast};
 test('source revision protects only the year edited by the reader',()=>{
  const input=scenarioInputs(row,{...DEFAULTS,growthOverrides:{2027:8}}, {},true,now);
  const changed={...row,growthForecast:{...forecast,estimates:[{year:2027,growth:17},{year:2028,growth:10}]}};
  const next=scenarioInputs(changed,input,{},true,now);
- assert.deepEqual(next.annualGrowth,[8,10]);assert.deepEqual(next.growthOverrides,{2027:8});
+ assert.deepEqual(next.annualGrowth,[8,10,8.6667,7.3333,6]);assert.deepEqual(next.growthOverrides,{2027:8});
  assert.deepEqual(sourceGrowthPath(changed,2,now).rates,[17,10]);
 });
 test('source-linked overrides survive browser storage and stay with their own benchmark',()=>{
@@ -28,5 +28,5 @@ test('CSV attributes linked and custom years correctly and matches their actual 
  const model=project(input),rows=annualCSV(model,forecast).split('\n').map(r=>r.split(','));
  assert.equal(rows[1][9],'');assert.equal(rows[2][9],'custom assumption');assert.equal(rows[2][10],'');assert.equal(rows[2][11],'');assert.equal(+rows[2].at(-1),8);
  assert.equal(rows[3][9],'consensus');assert.equal(rows[3][10],'2026-10-01');assert.equal(rows[3][11],forecast.source.url);assert.equal(+rows[3].at(-1),12);
- assert.ok(Math.abs(model.last.eps-model.initialEPS*1.08*1.12)<1e-10);
+ assert.ok(Math.abs(model.last.eps-model.initialEPS*1.08*1.12*(1+10/100)*(1+8/100)*(1+6/100))<1e-10);
 });

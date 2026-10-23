@@ -38,8 +38,8 @@ test('source refresh updates unlocked inputs and protects edits', () => {
   const custom={...DEFAULTS,entryPE:17,exitPE:19,growth:9,years:8,dividendYield:3};
   const next=scenarioInputs(em,custom,{entryPE:true,dividendYield:true,growth:true,years:true});
   assert.equal(next.entryPE,17);assert.equal(next.exitPE,12.25);assert.equal(next.dividendYield,3);
-  assert.equal(next.growth,9);assert.equal(next.years,8);
-  assert.deepEqual(scenarioInputs(em,custom,{},false),custom);
+  assert.equal(next.growth,9);assert.equal(next.years,5);
+  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5});
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
   const next=switchScenario({},undefined);
@@ -50,14 +50,14 @@ test('a new missing benchmark gets labelled defaults, never prior valuations', (
 });
 test('saved benchmark edits restore with its own growth and horizon', () => {
   const next=switchScenario(em,{...DEFAULTS,entryPE:17,exitPE:19,growth:2,years:4},{entryPE:true,exitPE:true,growth:true,years:true});
-  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,2);assert.equal(next.years,4);
+  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,2);assert.equal(next.years,5);
 });
 test('restore source clears only source fields and keeps payout edits', () => {
   const locks=restoreSourceLocks({entryPE:true,exitPE:true,dividendMode:true,dividendYield:true,payout:true});
   assert.deepEqual(locks,{payout:true});
   const next=scenarioInputs(em,{...DEFAULTS,payout:44,growth:9,years:8},{...locks,growth:true,years:true});
   assert.equal(next.entryPE,8.9);assert.equal(next.exitPE,12.25);assert.equal(next.payout,44);
-  assert.equal(next.growth,9);assert.equal(next.years,8);
+  assert.equal(next.growth,9);assert.equal(next.years,5);
 });
 test('presets change only their declared active assumptions', () => {
   const input=scenarioInputs(em,{...DEFAULTS,growth:9,years:8},{growth:true,years:true});

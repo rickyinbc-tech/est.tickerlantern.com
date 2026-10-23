@@ -13,16 +13,16 @@ test('a different benchmark starts with its own defaults rather than the previou
 test('revisiting a benchmark restores its own complete annual schedule and horizon', () => {
   const saved = { ...DEFAULTS, growth: 9, years: 3, growthMode: 'annual', annualGrowth: [10, -5, 20] };
   const next = switchScenario(row, saved, { growthMode: true, annualGrowth: true, years: true });
-  assert.deepEqual(next.annualGrowth, [10, -5, 20]);
+  assert.deepEqual(next.annualGrowth, [10, -5, 20, 9, 9]);
   assert.equal(next.growthMode, 'annual');
-  assert.equal(next.years, 3);
+  assert.equal(next.years, 5);
 });
 test('source refresh and source restore protect the annual schedule and custom payout', () => {
   const saved = { ...DEFAULTS, growthMode: 'annual', annualGrowth: [10, -5, 20], payout: 40 };
   const locks = restoreSourceLocks({ entryPE: true, growth: true, annualGrowth: true, payout: true });
   assert.deepEqual(locks, { growth: true, annualGrowth: true, payout: true });
   const next = scenarioInputs(row, saved, locks);
-  assert.deepEqual(next.annualGrowth, [10, -5, 20]);
+  assert.deepEqual(next.annualGrowth, [10, -5, 20, 6, 6]);
   assert.equal(next.payout, 40);
   assert.equal(next.entryPE, 18);
 });

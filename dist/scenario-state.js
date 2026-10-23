@@ -1,24 +1,34 @@
 import { DEFAULTS, BOUNDS } from './model.js';
 import { sourceGrowthPath } from './growth-data.js';
+import { fiveYearGrowthPath, HOLDING_YEARS } from './five-year-growth.js';
 import { sourceExitPE, eligibleExitMean } from './valuation-policy.js';
 
 export const SOURCE_FIELDS = ['entryPE', 'exitPE', 'dividendMode', 'dividendYield'];
 
 // Resolve every benchmark independently, including when a source disappears.
 export function scenarioInputs(row, current = DEFAULTS, locked = {}, following = true, now = new Date()) {
-  const next = { ...DEFAULTS, ...current };
-  if (!following) return next;
+  const next = { ...DEFAULTS, ...current, years: HOLDING_YEARS };
+  // Migrate old one/two-year saved scenarios without discarding custom inputs.
+  if (next.growthMode === 'annual') next.annualGrowth = Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? next.growth);
+  if (!following) {
+    if (next.growthMode === 'source') {
+      const path = fiveYearGrowthPath(row, now, next.growthOverrides);
+      next.annualGrowth = Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? path.rates[i]);
+      next.growthStartYear ??= path.startYear;
+      next.growthPlan = [];
+    }
+    return next;
+  }
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
   if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
   if (!locked.dividendMode) next.dividendMode = row?.dividendYield == null ? 'payout' : 'yield';
   if (!locked.dividendYield) next.dividendYield = row?.dividendYield ?? DEFAULTS.dividendYield;
   if (!locked.growthMode && !locked.growth && !locked.annualGrowth) next.growthMode = 'source';
   if (next.growthMode === 'source') {
-    const path = sourceGrowthPath(row, next.years, now);
-    if (!locked.years) next.years = path.coveredYears || DEFAULTS.years;
-    const selected = sourceGrowthPath(row, next.years, now, next.growthOverrides);
+    const selected = fiveYearGrowthPath(row, now, next.growthOverrides);
     next.annualGrowth = selected.rates;
     next.growthStartYear = selected.startYear;
+    next.growthPlan = selected.points;
   }
   return next;
 }

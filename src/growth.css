@@ -29,3 +29,12 @@
 .annual-growth-field input:read-only { background: #e6f0ee; color: #15594f; }
 .annual-growth-field input:read-only:placeholder-shown { font-size: 11px; }
 @media(max-width:600px) { .growth-forecast-card { padding: 16px; } .growth-forecast-head h4 { font-size: 16px; } .growth-forecast-table { font-size: 14px; } }
+
+#download-five-year { margin: 14px 0; padding: 10px 14px; min-height: 44px; border: 1px solid #9dc3bb; border-radius: 3px; background: #fff; color: #075f58; font: inherit; font-size: 14px; cursor: pointer; }
+#five-year-comparison .index-comparison { min-width: 1100px; }
+#five-year-comparison .figure-note { margin-top: 8px; max-width: 100ch; }
+.annual-table th small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
+#years:read-only { background: #e6f0ee; color: #15594f; }
+@media print { #download-five-year { display: none; } #five-year-comparison .index-comparison { min-width: 0; font-size: 8px; } #five-year-comparison .index-comparison th, #five-year-comparison .index-comparison td { padding: 5px; white-space: normal; } }
+
+.footer-bottom span { min-width: 0; overflow-wrap: anywhere; white-space: normal; }

@@ -105,7 +105,7 @@ export function project(input = DEFAULTS) {
   const epsOnlyPrice = initialPrice * last.eps / initialEPS;
   const epsCAGR = (last.eps / initialEPS) ** (1 / years) - 1;
   const irrDiagnostics = solveIRR(cashflows);
-  return { input: { growth, growthMode, growthStartYear, growthOverrides:{...(input.growthOverrides || {})}, annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, conventions: MODEL_CONVENTIONS, irrDiagnostics, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irrDiagnostics.rate, multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - initialPrice, multipleImpact: last.price - epsOnlyPrice, last };
+  return { input: { growth, growthMode, growthStartYear, growthOverrides:{...(input.growthOverrides || {})}, growthPlan:input.growthPlan || [], annualGrowth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, conventions: MODEL_CONVENTIONS, irrDiagnostics, initialPrice, initialEPS, epsCAGR, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irrDiagnostics.rate, multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - initialPrice, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
 function boundedAxis(values, min, max, anchor) {
@@ -155,13 +155,15 @@ export function annualCSV(model, forecast, context = {}) {
   return [header, ...model.points.map(p => {
     const year = model.input.growthStartYear + p.year - 1;
     const point = model.input.growthMode === 'source' && forecast?.estimates.find(x => x.year === year);
+    const plan = model.input.growthMode === 'source' && model.input.growthPlan?.find(x => x.year === year && +x.growth === p.growth);
+    const extension = !!p.year && !point && plan?.basis === 'model extension' && !Object.hasOwn(model.input.growthOverrides || {}, year);
     const sourced = !!p.year && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point && +point.growth === p.growth;
     const growthEvidence = sourced ? provenance({ publisher: forecast.source.publisher, url: forecast.source.url, sha256: forecast.source.sha256 ?? null, parserVersion: forecast.source.parserVersion ?? null, asOf: forecast.asOf, forecastType: forecast.forecastType, periodBasis: forecast.periodBasis ?? null, periodLabel: point.periodLabel ?? null, year: point.year, periodEnd: point.periodEnd ?? null,synchronization:growthStatus.synchronization,health:growthStatus.health }) : '';
     return [
       p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth,
-      p.year && model.input.growthMode === 'source' ? point?.periodLabel || year : '',
-      p.year ? sourced ? forecast.forecastType : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '',
-      ...scenarioMetadata, growthEvidence, p.growth ?? ''
+      p.year && model.input.growthMode === 'source' ? point?.periodLabel || `${year}${extension ? ' model extension' : ''}` : '',
+      p.year ? sourced ? forecast.forecastType : extension ? 'model extension' : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '',
+      ...scenarioMetadata, extension ? provenance(plan) : growthEvidence, p.growth ?? ''
     ].map(cell).join(',');
   })].join('\n');
 }

@@ -135,7 +135,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
             if delay > 0: time.sleep(delay)
             last_fetch[0] = time.monotonic()
             return fetch(url)
-        urls = []
+        urls, errors = [], []
         try:
             listing = get(NASDAQ_LIST).decode('utf-8', 'replace')
             urls.extend(dashboard_links(listing))
@@ -147,7 +147,9 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
             for article in (articles[:2] + ([NASDAQ_ARTICLE] if NASDAQ_ARTICLE not in articles[:2] else [])):
                 for url in discovery(article, dashboard_links, get):
                     if url not in urls: urls.append(url)
-        except ValueError: pass
+        except ValueError as exc:
+            errors.append('Discovery: ' + str(exc))
+            logging.warning('Nasdaq discovery: %s', exc)
         if NASDAQ_SEED not in urls: urls.append(NASDAQ_SEED)
         observations = []
         for url in urls[:3]:
@@ -158,7 +160,10 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 for row in values.values(): row['page'] = 1
                 if render_qa: render(body, [1], 'nasdaq-dashboard')
                 observations.append((values, source('Nasdaq / Bloomberg / FactSet', url, body, NASDAQ_LIST)))
-            except ValueError: continue
+            except ValueError as exc:
+                errors.append('Dashboard: ' + str(exc))
+                logging.warning('Nasdaq dashboard %s: %s', url, exc)
+        if not observations: raise ValueError('; '.join(errors[-2:]) or 'No publisher dashboard links found')
         return observations
     run('nasdaq-dashboard', ['nasdaq100', 'russell2000', 'japan'], nasdaq)
 
@@ -224,9 +229,11 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
 
     def edelweiss():
         from edelweiss_source import TEMPO_DETAIL_URL, TEMPO_SEED_URL, discover_tempo_links, parse_edelweiss_text
-        urls = []
+        urls, errors = [], []
         try: urls.extend(discovery(TEMPO_DETAIL_URL, discover_tempo_links)[:2])
-        except ValueError: pass
+        except ValueError as exc:
+            errors.append('Discovery: ' + str(exc))
+            logging.warning('Edelweiss discovery: %s', exc)
         if TEMPO_SEED_URL not in urls: urls.append(TEMPO_SEED_URL)
         observations = []
         for url in urls[:4]:
@@ -235,7 +242,10 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
                 values = parse_reference(body, parse_edelweiss_text)
                 if render_qa: render(body, [row['page'] for row in values.values()], 'edelweiss-reference')
                 observations.append((values, source('Edelweiss Mutual Fund / Bloomberg', url, body, TEMPO_DETAIL_URL)))
-            except ValueError: continue
+            except ValueError as exc:
+                errors.append('Report: ' + str(exc))
+                logging.warning('Edelweiss report %s: %s', url, exc)
+        if not observations: raise ValueError('; '.join(errors[-2:]) or 'No publisher TEMPO links found')
         return observations
     run('edelweiss-reference', ['ftse100', 'hangseng'], edelweiss)
     return jobs

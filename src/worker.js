@@ -25,7 +25,8 @@ export default {
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     let remote, bundled;
     try {
-      const response = await fetch(SNAPSHOT, { redirect: 'error', cf: { cacheTtl: 300, cacheEverything: true }, signal: AbortSignal.timeout(8000) });
+      // Workers supports manual redirect handling; a 3xx is rejected by verified().
+      const response = await fetch(SNAPSHOT, { redirect: 'manual', cf: { cacheTtl: 300, cacheEverything: true }, signal: AbortSignal.timeout(8000) });
       remote = await verified(response, { githubRaw: true });
     } catch (error) {
       console.warn('Published index snapshot unavailable:', error instanceof Error ? error.message : 'Unknown snapshot failure');

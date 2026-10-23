@@ -31,4 +31,14 @@ Screenshots of the homepage, stock article, notes overview/detail and both GIC
 languages were visually inspected. Tables and charts were checked after responsive
 layout settled. No browser errors were reported.
 
-Deployment and live verification are recorded after publication.
+Published source: index/stock `2797081`, notes/GIC `b5e5d09`. Cloudflare versions:
+`d55be543-fc7b-4581-ae97-3ff75f3082fd` for `tickerlantern-est` and
+`ef8f4204-637b-4fc5-a69d-9a00b84a6782` for `tickerlantern-notes`.
+
+The production domain passed all 28 desktop/mobile route checks and the interaction
+checks, including mobile menus, stock calculator navigation and print actions.
+All 27 checked live application/theme/research/download files match the reviewed
+build hashes. The existing www, est and notes host redirects remain correct, and
+the themed not-found page retains HTTP 404. Live desktop and phone screenshots
+were inspected. No browser errors were reported. These documentation updates do
+not require another deployment.

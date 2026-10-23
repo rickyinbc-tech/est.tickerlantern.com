@@ -70,3 +70,13 @@ The original PDF import is exercised already. Continued operation depends on
 the local scheduled task. Fully server-independent delivery for blocked
 publishers would require a permitted endpoint or licensed dataset; a green
 hosted job does not imply that dependency has disappeared.
+
+## Verified publication
+
+[GitHub Actions run 39908254557](https://github.com/rickyinbc-tech/est.tickerlantern.com/actions/runs/39908254557)
+passed on 23 October 2026 UTC: all eight directly reachable supplemental source
+jobs validated, and the Nasdaq/Edelweiss jobs accepted the independently
+browser-verified observations with their original check times. Coverage was
+21 forward P/Es and 21 separately dated ten-year references. Python parser and
+freshness tests (81) and JavaScript/model/API tests (26) passed. The daily Codex
+heartbeat is active; its first unattended scheduled run has not yet occurred.

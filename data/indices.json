@@ -192,20 +192,20 @@
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:33:04Z",
-        "lastSuccess": "2026-10-23T05:12:27Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:35:28Z",
+        "lastSuccess": "2026-10-23T05:35:28Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -213,32 +213,32 @@
       "yieldSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:33:04Z",
-        "lastSuccess": "2026-10-23T05:12:27Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:35:28Z",
+        "lastSuccess": "2026-10-23T05:35:28Z",
+        "error": null
       }
     },
     {
@@ -259,20 +259,20 @@
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:33:04Z",
-        "lastSuccess": "2026-10-23T05:12:27Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:35:28Z",
+        "lastSuccess": "2026-10-23T05:35:28Z",
+        "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
@@ -280,32 +280,32 @@
       "yieldSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:33:04Z",
-        "lastSuccess": "2026-10-23T05:12:27Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:35:28Z",
+        "lastSuccess": "2026-10-23T05:35:28Z",
+        "error": null
       }
     },
     {
@@ -954,34 +954,34 @@
       "yieldSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "earningsBasis": "Forward 12-month earnings",
       "forwardMethod": null,
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
-        "page": 1,
-        "checkedAt": "2026-10-23T05:12:27Z",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "parserVersion": "nasdaq-dashboard-reviewed-prefill-1",
+        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+        "parserVersion": "nasdaq-global-dashboard-2",
+        "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
+        "checkedAt": "2026-10-23T05:35:28Z",
         "adapterId": "nasdaq-dashboard",
-        "frequency": "Biweekly research; daily fetch checks",
-        "verification": "Original numeric table visually reviewed in browser; exact table text and premium arithmetic checked"
+        "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-23T05:33:04Z",
-        "lastSuccess": "2026-10-23T05:12:27Z",
-        "error": "Source unavailable (AttributeError)"
+        "status": "ok",
+        "lastAttempt": "2026-10-23T05:35:28Z",
+        "lastSuccess": "2026-10-23T05:35:28Z",
+        "error": null
       }
     },
     {

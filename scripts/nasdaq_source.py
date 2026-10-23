@@ -10,13 +10,16 @@ import unicodedata
 from urllib.parse import urljoin, urlparse
 
 
-PARSER_VERSION = 'nasdaq-global-dashboard-1'
+PARSER_VERSION = 'nasdaq-global-dashboard-2'
 TARGETS = {
     'nasdaq100': r'Nasdaq\s*[-\u2010-\u2014]?\s*100\s*(?:\u00ae)?',
     'russell2000': r'Russell\s+2000',
     'japan': r'MSCI\s+Japan',
 }
-NUMBER = r'([+-]?\d[\d,]*(?:\.\d+)?)'
+# Native PDF text splits punctuation from adjacent digits (``- 7. 5`` and
+# ``7 ,805``). Permit that extraction whitespace inside an otherwise strict
+# number, but never merge separate digit groups/cells such as ``21 36``.
+NUMBER = r'([+-]?\s*\d+(?:\s*,\s*\d{3})*(?:\s*\.\s*\d+)?)'
 PERCENT = NUMBER + r'\s*%'
 
 
@@ -55,7 +58,7 @@ def parse_dashboard(text, today=None):
         matches = re.findall(r'(?<![\w-])' + name + suffix + r'(?![\d.])', section)
         if len(matches) != 1:
             raise ValueError('Expected exactly one dashboard row for ' + key)
-        values = [float(value.replace(',', '')) for value in matches[0]]
+        values = [float(re.sub(r'[\s,]', '', value)) for value in matches[0]]
         price, *_, dividend, forward, mean, premium = values
         if price <= 0 or not 0 <= dividend <= 15 or not 1 <= forward <= 100 or not 1 <= mean <= 100:
             raise ValueError('Dashboard fundamentals outside accepted bounds')

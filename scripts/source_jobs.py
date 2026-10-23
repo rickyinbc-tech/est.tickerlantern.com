@@ -5,6 +5,7 @@ import io
 import os
 import re
 import subprocess
+import logging
 import time
 from pathlib import Path
 from pypdf import PdfReader
@@ -83,6 +84,7 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
             if not accepted: raise ValueError('No validated metrics for the selected benchmarks')
             jobs.append(dict(id=id, indices=sorted(set(accepted)), status='ok', checkedAt=checked, error=None))
         except Exception as exc:
+            if not isinstance(exc, ValueError): logging.exception('Unexpected publisher adapter failure: %s', id)
             message = str(exc)[:200] if isinstance(exc, ValueError) else 'Source unavailable (' + type(exc).__name__ + ')'
             for index in ids:
                 row = by_id[index]

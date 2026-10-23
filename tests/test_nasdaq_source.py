@@ -16,8 +16,65 @@ All figures are shown in spot price terms in USD, unless otherwise noted.
 Averages utilize daily data (NTM P/E, volatility indexes).
 Source: Nasdaq Global Indexes, Bloomberg, FactSet. Data as of 10/13/2026.'''
 
+# Verbatim relevant native text from the original October-16-2026 publisher
+# PDF, extracted by pypdf. In particular, the minus/decimal/percent spacing is
+# real source behavior rather than normalized web-tool transcription.
+NATIVE_FIXTURE = '''Nasdaq Global Indexes
+Investment Insights
+Global Index Snapshot
+All figures are shown in spot price terms in USD, unless otherwise noted. Averages utilize daily data (NTM P/E, volatility indexes).
+Source: Nasdaq Global Indexes, Bloomberg, FactSet.
+Data as of 10/13/2026.
+Global Equities Last MTD %
+Change
+QTD %
+Change
+YTD %
+Change
+L TM %
+Change
+Dividend
+Yield NTM P/E NTM P/E
+10yr Avg.
+Last vs. 10yr
+Avg.
+Nasdaq-100® 30,569 0.5% 0.5% 21.1% 23.5% 0.5% 21.36 23.09 - 7. 5 %
+S&P 500 7 ,805 2.0% 2.0% 14.0% 17 .3% 1.1% 19.12 19.23 -0.5%
+Russell 2000 2,783 -0.5% -0.5% 12.1% 13.1% 1.5% 23.87 23.34 +2.3%
+MSCI ACWI ex-USA 466 -1.3% -1.3% 10.6% 16.0% 2.5% 12.47 13.85 -10.0%
+MSCI Europe ex-UK 3,312 -1.8% -1.8% 1.5% 7. 5 % 2.9% 15.05 15.04 +0.1%
+MSCI Japan 5,735 -1.0% -1.0% 19.5% 23.6% 1.8% 15.90 15.15 +5.0%
+MSCI Emerging Markets IMI 1,668 -2.3% -2.3% 17 .3% 21.3% 2.1% 9.56 12.25 -22.0%
+Thematic Equity Last MTD %
+Change
+QTD %
+Change
+YTD %
+Change
+L TM %
+Change
+Dividend
+Yield NTM P/E NTM P/E 5yr
+Avg.
+Last vs. 5yr
+Avg.'''
+
 
 class NasdaqSourceTests(unittest.TestCase):
+    def test_actual_native_pdf_whitespace(self):
+        rows = parse_dashboard(NATIVE_FIXTURE, dt.date(2026, 10, 22))
+        self.assertEqual(rows['nasdaq100']['forwardPE'], 21.36)
+        self.assertEqual(rows['nasdaq100']['mean10YearForwardPE'], 23.09)
+        self.assertEqual(rows['russell2000']['forwardPE'], 23.87)
+        self.assertEqual(rows['japan']['mean10YearForwardPE'], 15.15)
+
+    def test_native_punctuation_whitespace_does_not_merge_cells(self):
+        for bad in (NATIVE_FIXTURE.replace('21.36 23.09', '21 36 23.09'),
+                    NATIVE_FIXTURE.replace('21.36 23.09', '21.36 23 09'),
+                    NATIVE_FIXTURE.replace('- 7. 5 %', '- 75 %')):
+            with self.subTest(text=bad), self.assertRaises(ValueError):
+                parse_dashboard(bad)
+
     def test_exact_daily_means_and_observation_date(self):
         rows = parse_dashboard(FIXTURE, dt.date(2026, 10, 22))
         self.assertEqual(rows['nasdaq100']['forwardPE'], 21.36)

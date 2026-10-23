@@ -16,6 +16,18 @@ npm run preview
 
 `src/model.js` contains the financial calculations. The build creates the complete static publication in `dist/`. `src/app.js` renders accessible SVG charts, scenario sensitivities, annual data, input validation and CSV export. Reading the article requires no JavaScript; model editing does.
 
+## Scenario workbench
+
+The explorer leads directly into assumptions, return metrics, wealth attribution and sensitivity. The navy/teal editorial style is retained in `src/workbench.css`, with a keyboard-operated section menu, larger labels, responsive SVGs, a mobile result summary, reduced-motion support and print-specific layouts.
+
+`src/scenario-state.js` defines the state policy. Growth and holding period carry across benchmark selections. Valuation, payout, dividend convention and yield edits are saved separately for each benchmark for the current page session. New benchmarks resolve their own source values or explicitly labelled defaults; another benchmark's valuation is never inherited. Source checks preserve edited fields. Pausing source following keeps the manual scenario. **Restore source values** resumes following and restores valuations, convention and available yield while preserving growth, payout and horizon. **Reset scenario** resets the current benchmark to source/default inputs, 6% growth, five years and 30% assumed payout; other saved benchmarks are kept. Saved scenarios are not persisted after page reload.
+
+Compression changes only exit P/E to 80% of active entry (minimum 1×); Constant P/E sets exit equal to entry. No dividends zeros the active payout or initial yield. The fixed 25× → 20× teaching example is separate from the active wealth bridge.
+
+Sensitivity starts with 60%, 80%, 100%, 120% and 140% of entry P/E and growth offsets of −8, −4, 0, +4 and +8 percentage points. Axes stay within supported bounds, retain the exact anchor and fill clamped duplicates with intermediate cases. Editing entry or growth establishes a new range; selecting a cell holds the range fixed. An off-grid case is explicitly identified. Every cell calls the same `project` engine as the metrics, charts, annual table and export. This changes scenario exploration, not the documented financial calculations.
+
+Verification includes the financial examples, low-P/E and boundary grids, stable selection, provenance, benchmark isolation, protected edits, presets, restore/reset rules and CSV endpoints. Run `npm test` and the Python source-parser tests below. Local browser QA covers source failure fixtures, 360/390/768/1440px layouts, 200% browser zoom, keyboard/focus, text contrast, actual CSV download and A4 print rendering. Review captures remain ignored in `qa/`.
+
 ## Publication
 
 Source is maintained in GitHub. Cloudflare Workers serves `dist/` and a narrow read-only `/api/indices` endpoint at the explicit custom domain in `wrangler.jsonc`. The endpoint reads the current public GitHub observation snapshot, cached for up to five minutes, with the bundled snapshot as a labelled fallback. It does not upload neighbouring workspace directories. Authenticate through Wrangler's normal credential store, then run `wrangler deploy`. No credentials belong in this repository.

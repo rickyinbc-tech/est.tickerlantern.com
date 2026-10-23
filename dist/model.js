@@ -58,8 +58,30 @@ export function project(input = DEFAULTS) {
   return { input: { growth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
-export function sensitivity(input) {
-  const growths = [2, 4, 6, 8, 10], multiples = [16, 18, 20, 22, 25];
+function boundedAxis(values, min, max, anchor) {
+  const round = value => Math.round(value * 10000) / 10000;
+  const axis = [...new Set(values.map(value => round(Math.max(min, Math.min(max, value)))))].sort((a, b) => a - b);
+  // Fill clamped duplicates near supported bounds without removing the anchor.
+  while (axis.length < 5) {
+    let gap = 0;
+    for (let i = 1; i < axis.length - 1; i++) if (axis[i + 1] - axis[i] > axis[gap + 1] - axis[gap]) gap = i;
+    axis.splice(gap + 1, 0, round((axis[gap] + axis[gap + 1]) / 2));
+  }
+  return axis.map(value => Math.abs(value - anchor) < .00005 ? +anchor : value);
+}
+
+export function sensitivityAxes(input) {
+  const entry = +input.entryPE, growth = +input.growth;
+  if (!Number.isFinite(entry) || entry < 1 || entry > 100 || !Number.isFinite(growth) || growth < -15 || growth > 20) throw new Error('Invalid sensitivity anchors');
+  return {
+    entryAnchor: entry,
+    growths: boundedAxis([-8, -4, 0, 4, 8].map(delta => growth + delta), -15, 20, growth),
+    multiples: boundedAxis([.6, .8, 1, 1.2, 1.4].map(factor => entry * factor), 1, 100, entry)
+  };
+}
+
+export function sensitivity(input, axes = sensitivityAxes(input)) {
+  const { growths, multiples } = axes;
   return { growths, multiples, rows: growths.map(growth => multiples.map(exitPE => project({ ...input, growth, exitPE }).cashIRR)) };
 }
 

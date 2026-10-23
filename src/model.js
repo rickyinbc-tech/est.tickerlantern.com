@@ -1,3 +1,4 @@
+import {metricProvenance} from './update-status.js';
 // Educational annual convention; the earnings anchor is synthetic, not official index EPS.
 export const MODEL_CONVENTION_VERSION = 'tickerlantern-annual-forward-anchor-v2';
 export const MODEL_CONVENTIONS = Object.freeze({
@@ -135,7 +136,9 @@ export function sensitivity(input, axes = sensitivityAxes(input)) {
 }
 
 export function annualCSV(model, forecast, context = {}) {
-  const header = 'Year,Synthetic normalized forward earnings anchor,Valuation PE,Normalized price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,Model convention version,Benchmark ID,Snapshot ID,Snapshot version,Snapshot published at,Normalized starting wealth,Entry PE assumption,Exit PE assumption,Holding years,Growth mode,Dividend convention,Payout percent,Initial yield percent,Cash interest percent,Price basis,Return basis,Currency basis,Growth mapping,Entry metric provenance,Exit metric provenance,Yield metric provenance,Scenario protection metadata,Growth source provenance,EPS growth percent';
+  const header = 'Year,Synthetic normalized forward earnings anchor,Valuation PE,Normalized price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,Model convention version,Benchmark ID,Snapshot ID,Snapshot version,Snapshot published at,Normalized starting wealth,Entry PE assumption,Exit PE assumption,Holding years,Growth mode,Dividend convention,Payout percent,Initial yield percent,Cash interest percent,Price basis,Return basis,Currency basis,Growth mapping,Entry metric provenance,Exit metric provenance,Yield metric provenance,Scenario protection metadata,Health evaluated at,Growth source provenance,EPS growth percent';
+  const evaluatedAt=new Date(context.healthEvaluatedAt || Date.now());
+  const growthStatus=context.growthMetric || metricProvenance({growthForecast:forecast},'growthForecast',evaluatedAt);
   // Keep round-trip numeric precision, including small non-zero modeled earnings.
   const cell = v => /[,"\n\r]/.test(String(v ?? '')) ? '"' + String(v).replaceAll('"', '""') + '"' : v ?? '';
   const provenance = value => value == null ? '' : JSON.stringify(value);
@@ -147,13 +150,13 @@ export function annualCSV(model, forecast, context = {}) {
     MODEL_CONVENTIONS.priceBasis, MODEL_CONVENTIONS.returnBasis, MODEL_CONVENTIONS.currencyBasis,
     model.input.growthMode === 'source' ? MODEL_CONVENTIONS.growthMapping : 'user-selected holding-year earnings growth scenario',
     provenance(context.entryMetric), provenance(context.exitMetric), provenance(context.yieldMetric),
-    provenance({ sourceFollowing: context.sourceFollowing ?? null, fieldProvenance: context.fieldProvenance ?? null, locks: context.locks ?? context.fieldOverrides ?? null, growthOverrides: model.input.growthOverrides })
+    provenance({ sourceFollowing: context.sourceFollowing ?? null, fieldProvenance: context.fieldProvenance ?? null, locks: context.locks ?? context.fieldOverrides ?? null, growthOverrides: model.input.growthOverrides }),evaluatedAt.toISOString()
   ];
   return [header, ...model.points.map(p => {
     const year = model.input.growthStartYear + p.year - 1;
     const point = model.input.growthMode === 'source' && forecast?.estimates.find(x => x.year === year);
     const sourced = !!p.year && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point && +point.growth === p.growth;
-    const growthEvidence = sourced ? provenance({ publisher: forecast.source.publisher, url: forecast.source.url, sha256: forecast.source.sha256 ?? null, parserVersion: forecast.source.parserVersion ?? null, asOf: forecast.asOf, forecastType: forecast.forecastType, periodBasis: forecast.periodBasis ?? null, periodLabel: point.periodLabel ?? null, year: point.year, periodEnd: point.periodEnd ?? null }) : '';
+    const growthEvidence = sourced ? provenance({ publisher: forecast.source.publisher, url: forecast.source.url, sha256: forecast.source.sha256 ?? null, parserVersion: forecast.source.parserVersion ?? null, asOf: forecast.asOf, forecastType: forecast.forecastType, periodBasis: forecast.periodBasis ?? null, periodLabel: point.periodLabel ?? null, year: point.year, periodEnd: point.periodEnd ?? null,synchronization:growthStatus.synchronization,health:growthStatus.health }) : '';
     return [
       p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth,
       p.year && model.input.growthMode === 'source' ? point?.periodLabel || year : '',

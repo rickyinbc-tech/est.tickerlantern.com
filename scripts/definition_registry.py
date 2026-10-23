@@ -8,6 +8,7 @@ import copy
 import datetime as dt
 import json
 from pathlib import Path
+from metric_sync import metric_source, resolved_sync
 
 ROOT = Path(__file__).resolve().parents[1]
 METRICS = ('forwardPE', 'mean10YearForwardPE', 'dividendYield', 'growthForecast')
@@ -30,15 +31,11 @@ def _family(row, source, key):
 
 
 def _source(row, key):
-    if key == 'mean10YearForwardPE': return row.get('meanSource') or row.get('source') or {}, row.get('meanSync') or {}, row.get('meanAsOf')
-    if key == 'dividendYield':
-        source=row.get('yieldSource') or row.get('source') or {}
-        sync=row.get('yieldSync') or (row.get('sync') if source.get('url')==(row.get('source') or {}).get('url') else {}) or {}
-        return source,sync,row.get('yieldAsOf') or row.get('asOf')
-    if key == 'growthForecast':
-        forecast = row.get(key) or {}
-        return forecast.get('source') or {}, forecast.get('sync') or {}, forecast.get('asOf')
-    return row.get('source') or {}, row.get('sync') or {}, row.get('asOf')
+    if key=='growthForecast': date=(row.get(key) or {}).get('asOf')
+    elif key=='mean10YearForwardPE': date=row.get('meanAsOf')
+    elif key=='dividendYield': date=row.get('yieldAsOf') or row.get('asOf')
+    else: date=row.get('asOf')
+    return metric_source(row,key),resolved_sync(row,key),date
 
 
 def _growth_family(forecast, registry):
@@ -113,7 +110,7 @@ def _evidence(row, key, source, sync, asof, family, previous, feed):
     return dict(publisher=source.get('publisher'), publicationHost=source.get('url','').split('/')[2] if source.get('url','').startswith('https://') else None,
                 url=source.get('url'),discoveryUrl=source.get('discoveryUrl'),page=source.get('page'),location=_location(row,key,family,source),
                 observationDate=asof,dateBasis=date_basis,publicationDate=publication,priceDate=source.get('priceDate'),estimateVintage=source.get('estimateVintage'),
-                lastAttempt=sync.get('lastAttempt'),lastSuccess=sync.get('lastSuccess'),checkedAt=source.get('checkedAt'),latestAcceptedChange=latest_change,
+                checkStatus=sync.get('status'),failureSummary=sync.get('error'),lastAttempt=sync.get('lastAttempt'),lastSuccess=sync.get('lastSuccess'),checkedAt=source.get('checkedAt'),latestAcceptedChange=latest_change,
                 parserVersion=source.get('parserVersion'),sha256=source.get('sha256'),transport=source.get('transport','publisher-http'),
                 evidenceNote='Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.')
 

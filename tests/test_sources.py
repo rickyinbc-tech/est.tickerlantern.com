@@ -79,6 +79,6 @@ class NamedRows(unittest.TestCase):
         row={'forwardPE':19,'asOf':'2026-09-30'}
         from refresh_indices import update_metrics
         update_metrics(row,{'forwardPE':None,'asOf':'2026-10-16','metricStates':{'forwardPE':'not-meaningful'},'rawForwardPE':'N/M'},{'publisher':'MSCI'},'checked')
-        self.assertIsNone(row['forwardPE']);self.assertEqual(row['sync']['status'],'not-meaningful');self.assertEqual(row['metricRawValues']['forwardPE'],'N/M')
+        self.assertIsNone(row['forwardPE']);self.assertEqual(row['sync']['status'],'ok');self.assertEqual(row['metricStates']['forwardPE'],'not-meaningful');self.assertEqual(row['metricRawValues']['forwardPE'],'N/M')
         update_metrics(row,{'forwardPE':0,'asOf':'2026-10-20'},{'publisher':'MSCI'},'checked')
         self.assertEqual(row['forwardPE'],0);self.assertEqual(row['metricStates']['forwardPE'],'numeric')

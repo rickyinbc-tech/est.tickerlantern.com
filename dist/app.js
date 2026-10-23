@@ -5,7 +5,7 @@ import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fie
 import { sourceGrowthPath, growthCoverage, growthIsStale, nextForecastYear } from './growth-data.js';
 import { historicalAssessment, canCompareHistory, eligibleExitMean, metricDisplay, metricDateBasis } from './valuation-policy.js';
 import { assertSnapshotAdvance } from './snapshot-client.js';
-import { updateHealth, checkTime, metricStatusText } from './update-status.js';
+import { updateHealth, checkTime, metricStatusText, metricDisclosure, metricProvenance } from './update-status.js';
 
 document.documentElement.classList.add('js-enabled');
 const $ = id => document.getElementById(id);
@@ -46,7 +46,7 @@ function renderGrowthEditor() {
   const sourced = $('growthMode').value === 'source', annual = $('growthMode').value !== 'constant', years = +$('years').value;
   $('annual-growth-panel').hidden = !annual;
   const forecast = selectedIndex()?.growthForecast;
-  $('scenario-growth-source').innerHTML = forecast ? `<strong>${sourced?(forecast.forecastType==='house'?'Publisher house forecast':'Published consensus estimates'):(forecast.forecastType==='house'?'Available house forecast':'Available consensus estimates')}${metricStatusText(selectedIndex(),'growthForecast')?' · '+escape(metricStatusText(selectedIndex(),'growthForecast')):''}</strong><span>${escape(forecast.source.publisher)} · ${metricDateBasis(selectedIndex(),'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small>${sourced?'Publisher periods are scenario inputs, not a date-matched rolling-NTM EPS forecast.':'Manual growth mode is active. The published estimates are reference only.'}</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
+  $('scenario-growth-source').innerHTML = forecast ? `<strong>${sourced?(forecast.forecastType==='house'?'Publisher house forecast':'Published consensus estimates'):(forecast.forecastType==='house'?'Available house forecast':'Available consensus estimates')}</strong><span>${escape(forecast.source.publisher)} · ${metricDateBasis(selectedIndex(),'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)} · <a href="${escape(forecast.source.url)}" target="_blank" rel="noopener noreferrer">Source ↗</a></span><small class="metric-check-disclosure">${escape(metricDisclosure(selectedIndex(),'growthForecast'))}</small><small>${sourced?'Publisher periods are scenario inputs, not a date-matched rolling-NTM EPS forecast.':'Manual growth mode is active. The published estimates are reference only.'}</small>` : 'No verified yearly EPS forecast connected. Enter your own assumptions.';
   $('growth').closest('.field').hidden = sourced;
   $('fill-annual-growth').hidden = sourced;
   $('annual-growth-heading-text').textContent = sourced ? 'Source-linked and custom yearly rates' : 'Your yearly EPS path';
@@ -83,7 +83,7 @@ function renderGrowthForecast(row) {
   const link = $('growth-forecast-source');
   link.hidden = !forecast?.source?.url;
   if (forecast?.source?.url) { link.href = forecast.source.url; link.textContent = `${forecast.source.publisher}${forecast.source.page ? ` · PDF page ${forecast.source.page}` : ''} ↗`; }
-  $('growth-check-date').textContent = forecast?.source?.checkedAt ? `Source checked ${dateLabel(forecast.source.checkedAt)}` : 'Source coverage is checked daily.';
+  $('growth-check-date').textContent = metricDisclosure(row,'growthForecast') || (forecast?.source?.checkedAt ? `Last successful validation ${checkTime(forecast.source.checkedAt)}` : 'Source coverage is checked daily.');
 }
 
 
@@ -267,6 +267,11 @@ function renderScenarioContext() {
     if (basis === 'custom') detail = 'Saved for this benchmark; protected from source updates.';
     if (basis === 'manual') detail = 'Source following is paused. Your current scenario is kept.';
     if (forecastHorizon) detail = 'Consecutive published future years. Extend the horizon by supplying your own rates.';
+    const metricKey={entryPE:'forwardPE',exitPE:'mean10YearForwardPE',dividendYield:'dividendYield',growth:'growthForecast'}[key];
+    if (metricKey && ['source','reference','forecast'].includes(basis)) {
+      const disclosure=metricDisclosure(row,metricKey);
+      if(disclosure) detail+=`<span class="metric-check-disclosure">${escape(disclosure)}</span>`;
+    }
     $(key + '-basis').innerHTML = `<strong class="basis-${basis}">${label}</strong><br>${detail}`;
   }
   if (!activeModel) {
@@ -293,11 +298,11 @@ function renderIndexDetail() {
   $('selected-index-name').textContent = row.name;
   $('selected-index-description').textContent = row.description;
   $('index-current-pe').textContent = metricDisplay(row,'forwardPE');
-  $('index-current-date').textContent = row.asOf ? metricDateBasis(row,'forwardPE')+' '+dateLabel(row.asOf) : 'No connected forward valuation';
+  $('index-current-date').textContent = row.asOf ? metricDateBasis(row,'forwardPE')+' '+dateLabel(row.asOf)+'. '+metricDisclosure(row,'forwardPE') : 'No connected forward valuation';
   $('index-mean-pe').textContent = metricDisplay(row,'mean10YearForwardPE');
-  $('index-mean-date').textContent = row.meanAsOf ? (isDatedMean(row) ? 'Dated reference · ' : 'Reported ') + dateLabel(row.meanAsOf) : 'Verified 10-year mean unavailable';
+  $('index-mean-date').textContent = row.meanAsOf ? (isDatedMean(row) ? 'Dated reference · ' : 'Reported ') + dateLabel(row.meanAsOf)+'. '+metricDisclosure(row,'mean10YearForwardPE') : 'Verified 10-year mean unavailable';
   $('index-yield').textContent = metricDisplay(row,'dividendYield');
-  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.yieldAsOf || row.asOf);
+  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.yieldAsOf || row.asOf)+'. '+metricDisclosure(row,'dividendYield');
   const gap = premium(row);
   $('index-premium').textContent = gap == null ? '—' : `${gap >= 0 ? '+' : '−'}${Math.abs(gap * 100).toFixed(2)}%`;
   $('index-premium-label').textContent = gap == null ? 'Historical comparison' : isDatedMean(row) ? 'Relative to the dated 10-year reference' : 'Relative to the published 10-year mean';
@@ -512,10 +517,12 @@ $('download-csv').addEventListener('click', () => {
   if (!activeModel) return;
   const row = selectedIndex();
   const locks=indexOverrides.get(selectedIndexId) || {};
-  const context={benchmarkId:selectedIndexId,snapshotId:indexFeed?.snapshotId,snapshotVersion:indexFeed?.snapshotVersion,publishedAt:indexFeed?.publishedAt,sourceFollowing,
-    entryMetric:sourceFollowing && !locks.entryPE ? row?.metricDefinitions?.forwardPE : {classification:'user-assumption',value:activeModel.input.entryPE,units:'times'},
-    exitMetric:sourceFollowing && !locks.exitPE && eligibleExitMean(row) ? row?.metricDefinitions?.mean10YearForwardPE : {classification:sourceFollowing && !locks.exitPE?'illustrative-constant-multiple':'user-assumption',value:activeModel.input.exitPE,units:'times'},
-    yieldMetric:activeModel.input.dividendMode!=='yield'?null:sourceFollowing && !locks.dividendMode && !locks.dividendYield ? row?.metricDefinitions?.dividendYield : {classification:'user-assumption',value:activeModel.input.dividendYield,units:'percent'},fieldOverrides:locks};
+  const evaluatedAt=new Date();
+  const context={benchmarkId:selectedIndexId,snapshotId:indexFeed?.snapshotId,snapshotVersion:indexFeed?.snapshotVersion,publishedAt:indexFeed?.publishedAt,sourceFollowing,healthEvaluatedAt:evaluatedAt.toISOString(),
+    entryMetric:sourceFollowing && !locks.entryPE ? metricProvenance(row,'forwardPE',evaluatedAt) : {classification:'user-assumption',value:activeModel.input.entryPE,units:'times'},
+    exitMetric:sourceFollowing && !locks.exitPE && eligibleExitMean(row) ? metricProvenance(row,'mean10YearForwardPE',evaluatedAt) : {classification:sourceFollowing && !locks.exitPE?'illustrative-constant-multiple':'user-assumption',value:activeModel.input.exitPE,units:'times'},
+    yieldMetric:activeModel.input.dividendMode!=='yield'?null:sourceFollowing && !locks.dividendMode && !locks.dividendYield ? metricProvenance(row,'dividendYield',evaluatedAt) : {classification:'user-assumption',value:activeModel.input.dividendYield,units:'percent'},
+    growthMetric:sourceFollowing?metricProvenance(row,'growthForecast',evaluatedAt):null,fieldOverrides:locks};
   const blob = new Blob([annualCSV(activeModel, sourceFollowing ? row?.growthForecast : undefined, context)], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob), anchor = document.createElement('a');
   anchor.href = url; anchor.download = `tickerlantern-${selectedIndexId}-scenario-cash-flows.csv`; anchor.hidden = true;

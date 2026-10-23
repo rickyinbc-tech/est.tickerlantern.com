@@ -114,12 +114,14 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
             jobs.append(dict(id=id, indices=ids, status='retained', checkedAt=checked, error=message, discoveryIssues=list(issues)))
 
     def mark_retained(adapter, ids, message, previous=None):
+        from metric_sync import mark_failure, own_sync, METRICS
         for index in ids:
             row = by_id[index]
-            for source_key, sync_key in [('source', 'sync'), ('meanSource', 'meanSync'), ('yieldSource','yieldSync')]:
-                if (row.get(source_key) or {}).get('adapterId') == adapter:
-                    old = ((previous or {}).get(index, row).get(sync_key) or {})
-                    row[sync_key] = dict(status='retained', lastAttempt=checked, lastSuccess=old.get('lastSuccess'), error=message)
+            affected=mark_failure(row,checked,message,lambda evidence:evidence.get('adapterId')==adapter,owner_id=adapter)
+            if previous:
+                for key in affected:
+                    old=own_sync(previous.get(index,{}),key)
+                    if old.get('lastSuccess'): row[METRICS[key][1]]['lastSuccess']=old['lastSuccess']
 
     def jpm():
         body = fetch(jpm_source.URL)

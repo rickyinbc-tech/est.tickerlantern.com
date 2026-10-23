@@ -24,6 +24,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import urlparse
 from pypdf import PdfReader
+from metric_sync import mark_failure, primary_owns
 
 ROOT = Path(__file__).resolve().parents[1]
 RSS = 'https://insight.factset.com/topic/earnings/rss.xml'
@@ -154,23 +155,28 @@ def update_metrics(record, values, source, checked):
         # secondary tables whose forward horizon is less precisely described.
         rank = lambda evidence: 70 if (evidence or {}).get('adapterId') in ('edelweiss-reference', 'nasdaq-dashboard') else 50
         return not retained or incoming > retained or (incoming == retained and rank(source) >= rank(record.get(source_key)))
-    status = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)
+    accepted_metrics = []
+    status = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None, metrics=accepted_metrics, ownerId=source.get('checkOwner') or source.get('adapterId'))
     for metric, state in values.get('metricStates', {}).items():
         if state not in ('not-meaningful', 'withdrawn', 'unavailable'): continue
         date_key, source_key, sync_key = ('asOf', 'source', 'sync') if metric == 'forwardPE' else ('yieldAsOf', 'yieldSource', 'yieldSync')
         if date and accepted(date, record.get(date_key), source_key):
-            record.update({metric: None, date_key: date, source_key: source, sync_key: {**status, 'status': state}})
+            accepted_metrics.append(metric)
+            record.update({metric: None, date_key: date, source_key: source, sync_key: status})
             record.setdefault('metricStates', {})[metric] = state
             record.setdefault('metricRawValues', {})[metric] = values.get('rawForwardPE' if metric == 'forwardPE' else 'rawDividendYield')
     if values.get('forwardPE') is not None and accepted(date, record.get('asOf'), 'source'):
+        accepted_metrics.append('forwardPE')
         record.setdefault('metricStates', {})['forwardPE'] = 'numeric'
         record.setdefault('metricRawValues', {})['forwardPE'] = values.get('rawForwardPE', values['forwardPE'])
         record.update(forwardPE=values['forwardPE'], asOf=date, source={**source, 'dateBasis': values.get('dateBasis', source.get('dateBasis', 'explicit-observation-date')), 'publicationDate': values.get('publicationDate', source.get('publicationDate'))}, sync=status, earningsBasis=values.get('earningsBasis', 'not disclosed'), forwardMethod=values.get('forwardMethod'))
     if values.get('dividendYield') is not None and accepted(date, record.get('yieldAsOf'), 'yieldSource'):
+        accepted_metrics.append('dividendYield')
         record.setdefault('metricStates', {})['dividendYield'] = 'numeric'
         record.setdefault('metricRawValues', {})['dividendYield'] = values.get('rawDividendYield', values['dividendYield'])
         record.update(dividendYield=values['dividendYield'], yieldAsOf=date, yieldSource=source, yieldSync=status)
     if values.get('mean10YearForwardPE') is not None and accepted(mean_date, record.get('meanAsOf'), 'meanSource'):
+        accepted_metrics.append('mean10YearForwardPE')
         if not values.get('meanMethod') or not mean_date: raise ValueError('Missing mean provenance')
         record.update(mean10YearForwardPE=values['mean10YearForwardPE'], meanAsOf=mean_date, meanMethod=values['meanMethod'], meanSource=source, meanSync=status)
 
@@ -192,20 +198,20 @@ def refresh(render_qa=False):
             row.setdefault('yieldSource', row.get('source'))
         if row.get('mean10YearForwardPE') is not None:
             row.setdefault('meanSource', row.get('source'))
-            row.setdefault('meanSync', row.get('sync'))
         row.setdefault('sync', dict(status='not-connected', lastAttempt=None, lastSuccess=None, error='No validated public valuation adapter is connected for this exact benchmark.'))
         rows.append(row)
     by_id = {r['id']: r for r in rows}
     checked = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')
-    successes, failures = [], []
+    successes, failures, primary_jobs = [], [], []
 
-    def failed(ids, error):
+    def failed(ids, error, owner, metrics):
+        message = str(error)[:240] if isinstance(error, ValueError) else 'Source request or parsing unavailable (' + type(error).__name__ + ')'
         for id in ids:
-            old = by_id[id].get('sync') or {}
-            message = str(error)[:240] if isinstance(error, ValueError) else 'Source request or parsing unavailable (' + type(error).__name__ + ')'
-            by_id[id]['sync'] = dict(status='retained' if by_id[id].get('forwardPE') is not None else 'unavailable', lastAttempt=checked, lastSuccess=old.get('lastSuccess'), error=message)
+            mark_failure(by_id[id],checked,message,lambda source:primary_owns(source,owner),metrics,owner['id'])
             failures.append(id)
+        primary_jobs.append(dict(id=owner['id'],indices=ids,status='retained',checkedAt=checked,error=message))
 
+    factset_owner=dict(id='primary:factset',provider='FactSet',url=(by_id['sp500'].get('source') or {}).get('url'),discoveryUrl=RSS)
     try:
         feed = ET.fromstring(fetch(RSS))
         articles = []
@@ -219,21 +225,24 @@ def refresh(render_qa=False):
         date, url = max(candidates)
         body = fetch(url)
         values = parse_factset(body.decode('utf-8', 'replace'), date)
-        update_metrics(by_id['sp500'], values, dict(publisher='FactSet', url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily', publicationDate=date, dateBasis=values['dateBasis']), checked)
+        update_metrics(by_id['sp500'], values, dict(publisher='FactSet',checkOwner=factset_owner['id'], url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily', publicationDate=date, dateBasis=values['dateBasis']), checked)
         successes.append('sp500')
+        primary_jobs.append(dict(id=factset_owner['id'],indices=['sp500'],status='ok',checkedAt=checked,error=None))
     except Exception as exc:
-        failed(['sp500'], exc)
+        failed(['sp500'], exc,factset_owner,['forwardPE','mean10YearForwardPE'])
 
     msci_jobs = [('acwi', ['acwi', 'world', 'em'])] + [(r['id'], [r['id']]) for r in rows if r.get('adapter') == 'msci-pdf' and r['id'] not in ['acwi', 'world', 'em']]
     for id, target_ids in msci_jobs:
         row = by_id[id]
+        owner=dict(id='primary:msci:'+id,provider='MSCI',url=row.get('pdfUrl'),discoveryUrl=row.get('landingUrl'))
         try:
             time.sleep(.35)
             url = discover_msci_pdf(fetch(row['landingUrl'])) if row.get('landingUrl') else row['pdfUrl']
+            owner['url']=url
             body = fetch(url)
             expected = 'MSCI ACWI' if id == 'acwi' else row['name']
             values = parse_msci_pdf(body, expected)
-            source = dict(publisher='MSCI', url=url, discoveryUrl=row.get('landingUrl'), page=1, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Monthly factsheet; checked daily')
+            source = dict(publisher='MSCI',checkOwner=owner['id'], url=url, discoveryUrl=row.get('landingUrl'), page=1, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Monthly factsheet; checked daily')
             if render_qa:
                 qa = ROOT / 'qa/source-pages'
                 qa.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -248,8 +257,9 @@ def refresh(render_qa=False):
             for target_id, candidate in candidates.items():
                 by_id[target_id].update(candidate)
                 successes.append(target_id)
+            primary_jobs.append(dict(id=owner['id'],indices=target_ids,status='ok',checkedAt=checked,error=None))
         except Exception as exc:
-            failed(target_ids, exc)
+            failed(target_ids, exc,owner,['forwardPE','dividendYield'])
 
     from source_jobs import refresh_supplemental
     source_jobs = refresh_supplemental(by_id, fetch, update_metrics, checked, render_qa)
@@ -257,6 +267,7 @@ def refresh(render_qa=False):
     result = dict(previous)
     result.update(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC plus daily scheduled browser source checks', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] in healthy for id in job['indices']}), failed=len(failures) + sum(j['status'] not in healthy for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
     from snapshot import finalize, atomic_write
+    result['primarySourceJobs']=primary_jobs
     result = finalize(result, previous, 'valuation-publisher-refresh')
     atomic_write(path, result)
     for job in source_jobs:

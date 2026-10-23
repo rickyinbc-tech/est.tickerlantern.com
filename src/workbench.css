@@ -95,6 +95,8 @@ summary,.annual-data summary{font-size:15px;min-height:44px;padding-block:13px}
 .field small{font-size:13px;line-height:1.6}
 .field .field-basis{font-size:12px;line-height:1.55}
 .field-basis strong{font-weight:650}
+.metric-check-disclosure{display:block;margin-top:6px;overflow-wrap:anywhere;line-height:1.5}
+@media print{.metric-check-disclosure{font-size:9pt!important;color:#233d4a!important;break-inside:avoid}}
 .basis-source{color:#08635d}.basis-reference{color:#31516f}.basis-custom{color:#644a13}
 .field-error{font-size:13px;font-weight:600}
 .growth-mode-field{margin-bottom:0}.growth-mode-field select{font-size:15px;min-height:46px;border-color:#8b9faf}

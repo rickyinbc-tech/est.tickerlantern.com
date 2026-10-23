@@ -144,7 +144,7 @@ def update(row, values, job, url, body, checked):
     if date > dt.datetime.now(dt.timezone.utc).date() or date.year < 2020: raise ValueError('Invalid growth observation date')
     old = row.get('growthForecast') or {}
     if old.get('asOf') and values['asOf'] < old['asOf']: raise ValueError('Publisher observation is older than retained growth data')
-    source = dict(publisher=job['publisher'], url=url, discoveryUrl=job['discoveryUrl'], page=values['page'], sha256=hashlib.sha256(body).hexdigest(), checkedAt=checked, parserVersion=VERSION, frequency='Dated article revision check daily' if job['adapter']=='fsm' else 'Latest public publication checked daily')
+    source = dict(publisher=job['publisher'],checkOwner='growth:'+job['adapter'], url=url, discoveryUrl=job['discoveryUrl'], page=values['page'], sha256=hashlib.sha256(body).hexdigest(), checkedAt=checked, parserVersion=VERSION, frequency='Dated article revision check daily' if job['adapter']=='fsm' else 'Latest public publication checked daily')
     if job.get('contentUrl'): source.update(contentUrl=job['contentUrl'], contentMethod='POST')
     row['growthForecast'] = {**job['indices'][row['id']], 'asOf': values['asOf'], 'estimates': values['estimates'], 'source': source, 'sync': dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)}
 
@@ -175,7 +175,7 @@ def refresh(path=None, jobs=None, client=None):
             message = str(error)[:200] if isinstance(error, ValueError) else type(error).__name__
             for id in job['indices']:
                 old = rows[id].get('growthForecast')
-                status = dict(status='retained' if old else 'unavailable', lastAttempt=checked, lastSuccess=(old or {}).get('sync',{}).get('lastSuccess'), error=message)
+                status = dict(status='retained' if old else 'unavailable', lastAttempt=checked, lastSuccess=(old or {}).get('sync',{}).get('lastSuccess'), error=message,ownerId='growth:'+job['adapter'],metrics=['growthForecast'])
                 if old: old['sync'] = status
                 rows[id]['growthSync'] = status
             failures.append(dict(adapter=job['adapter'], error=message))

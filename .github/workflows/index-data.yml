@@ -43,7 +43,7 @@ jobs:
           from pathlib import Path
           feed = json.loads(Path('data/indices.json').read_text())
           summary = [f"Snapshot: `{feed.get('snapshotId', 'legacy')}` (version {feed.get('snapshotVersion', 'legacy')})", f"Published: {feed.get('publishedAt')}", f"Valuation checks: {feed.get('sourceCheckAt')}", f"Growth checks: {feed.get('growthCheckAt')}", f"Trigger: {os.environ.get('GITHUB_EVENT_NAME')} (a manual dispatch is not scheduled-run evidence)"]
-          summary += [f"- {job['id']}: {job['status']}" for job in feed.get('sourceJobs', [])]
+          summary += [f"- {job['id']}: {job['status']}" for job in [*feed.get('primarySourceJobs', []), *feed.get('sourceJobs', [])]]
           summary += [f"- Growth {job['adapter']}: {job['error']}" for job in feed.get('growthRefresh', {}).get('failures', [])]
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
               stream.write('\n\n'.join(summary) + '\n')

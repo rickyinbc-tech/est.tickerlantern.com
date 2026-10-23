@@ -2,6 +2,7 @@ import { DEFAULTS, BOUNDS } from './model.js';
 import { sourceGrowthPath } from './growth-data.js';
 import { fiveYearGrowthPath, HOLDING_YEARS } from './five-year-growth.js';
 import { sourceExitPE, eligibleExitMean } from './valuation-policy.js';
+import { calibratedPayout, DIVIDEND_POLICY_VERSION } from './dividend-policy.js';
 
 export const SOURCE_FIELDS = ['entryPE', 'exitPE', 'dividendMode', 'dividendYield'];
 
@@ -11,6 +12,11 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
   // Migrate old one/two-year saved scenarios without discarding custom inputs.
   if (next.growthMode === 'annual') next.annualGrowth = Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? next.growth);
   if (!following) {
+    if (current.dividendPolicyVersion !== DIVIDEND_POLICY_VERSION && !locked.payout && row?.id) {
+      next.payout=calibratedPayout(row,next.entryPE);
+      if (!locked.dividendMode) next.dividendMode='payout';
+    }
+    next.dividendPolicyVersion=DIVIDEND_POLICY_VERSION;
     if (next.growthMode === 'source') {
       const path = fiveYearGrowthPath(row, now, next.growthOverrides);
       next.annualGrowth = Array.from({length:HOLDING_YEARS}, (_,i) => next.annualGrowth?.[i] ?? path.rates[i]);
@@ -21,8 +27,10 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
   }
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
   if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
-  if (!locked.dividendMode) next.dividendMode = row?.dividendYield == null ? 'payout' : 'yield';
+  if (!locked.dividendMode) next.dividendMode = 'payout';
   if (!locked.dividendYield) next.dividendYield = row?.dividendYield ?? DEFAULTS.dividendYield;
+  if (!locked.payout) next.payout = row?.dividendYield != null ? calibratedPayout(row,next.entryPE) : row?.id ? '' : DEFAULTS.payout;
+  next.dividendPolicyVersion=DIVIDEND_POLICY_VERSION;
   if (!locked.growthMode && !locked.growth && !locked.annualGrowth) next.growthMode = 'source';
   if (next.growthMode === 'source') {
     const selected = fiveYearGrowthPath(row, now, next.growthOverrides);
@@ -54,7 +62,9 @@ export function presetScenario(input, preset) {
 
 export function fieldBasis(key, row, locked = {}, following = true) {
   if (locked[key]) return 'custom';
+  if (key === 'payout' && !following) return 'manual';
   if (key === 'growth' && following && sourceGrowthPath(row, 1).coveredYears) return 'forecast';
+  if (key === 'payout' && following && row?.dividendYield != null && calibratedPayout(row,row.forwardPE)!=='') return 'calibrated';
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
   if (key === 'entryPE') return row?.forwardPE != null ? 'source' : 'default';
@@ -76,6 +86,7 @@ export function loadScenarios(storage) {
       const clean = Object.fromEntries(SCENARIO_KEYS.filter(key => typeof values[key] === 'number' || typeof values[key] === 'string').map(key => [key, values[key]]));
       if (Array.isArray(values.annualGrowth)) clean.annualGrowth = values.annualGrowth.slice(0, 20).map(value => typeof value === 'number' || typeof value === 'string' ? value : '');
       clean.growthOverrides = Object.fromEntries(Object.entries(values.growthOverrides || {}).filter(([year,value])=>/^20\d{2}$/.test(year) && ['number','string'].includes(typeof value)));
+      clean.dividendPolicyVersion=typeof values.dividendPolicyVersion==='string'?values.dividendPolicyVersion:'';
       empty.scenarios.set(id, clean);
     }
     for (const [id, locks] of data.overrides) if (typeof id === 'string' && locks && typeof locks === 'object') empty.overrides.set(id, Object.fromEntries(SCENARIO_KEYS.filter(key => locks[key] === true).map(key => [key, true])));

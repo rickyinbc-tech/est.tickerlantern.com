@@ -4,7 +4,7 @@ import { sourceGrowthPath, validateGrowthForecast, growthIsStale, growthCoverage
 import { DEFAULTS, project, validate } from '../src/model.js';
 import { scenarioInputs, switchScenario } from '../src/scenario-state.js';
 const now = new Date('2026-10-22T20:00:00Z');
-const row = { id:'sp500', historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE: 20, mean10YearForwardPE: 18, growthForecast: { asOf: '2026-10-15', forecastType: 'consensus', periodBasis: 'calendar-year', source: { url: 'https://example.com/forecasts', publisher: 'Test publisher' }, estimates: [{ year: 2026, growth: 32.8 }, { year: 2027, growth: 28 }, { year: 2028, growth: 12 }] } };
+const row = { id:'sp500',dividendYield:1.2, historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE: 20, mean10YearForwardPE: 18, growthForecast: { asOf: '2026-10-15', forecastType: 'consensus', periodBasis: 'calendar-year', source: { url: 'https://example.com/forecasts', publisher: 'Test publisher' }, estimates: [{ year: 2026, growth: 32.8 }, { year: 2027, growth: 28 }, { year: 2028, growth: 12 }] } };
 
 test('published growth begins with the next year and never repeats missing estimates', () => {
   const path = sourceGrowthPath(row, 5, now);

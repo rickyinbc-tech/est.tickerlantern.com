@@ -136,7 +136,7 @@ export function sensitivity(input, axes = sensitivityAxes(input)) {
 }
 
 export function annualCSV(model, forecast, context = {}) {
-  const header = 'Year,Synthetic normalized forward earnings anchor,Valuation PE,Normalized price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,Model convention version,Benchmark ID,Snapshot ID,Snapshot version,Snapshot published at,Normalized starting wealth,Entry PE assumption,Exit PE assumption,Holding years,Growth mode,Dividend convention,Payout percent,Initial yield percent,Cash interest percent,Price basis,Return basis,Currency basis,Growth mapping,Entry metric provenance,Exit metric provenance,Yield metric provenance,Scenario protection metadata,Health evaluated at,Growth source provenance,EPS growth percent';
+  const header = 'Year,Synthetic normalized forward earnings anchor,Valuation PE,Normalized price index,Dividend per original unit,Cumulative cash dividends,Price plus cash wealth,Reinvested wealth index,Published period,Growth basis,Observation date,Source URL,Model convention version,Benchmark ID,Snapshot ID,Snapshot version,Snapshot published at,Normalized starting wealth,Entry PE assumption,Exit PE assumption,Holding years,Growth mode,Dividend convention,Payout percent,Initial yield percent,Cash interest percent,Price basis,Return basis,Currency basis,Growth mapping,Entry metric provenance,Exit metric provenance,Yield metric provenance,Scenario protection metadata,Health evaluated at,Payout metric provenance,Growth source provenance,EPS growth percent';
   const evaluatedAt=new Date(context.healthEvaluatedAt || Date.now());
   const growthStatus=context.growthMetric || metricProvenance({growthForecast:forecast},'growthForecast',evaluatedAt);
   // Keep round-trip numeric precision, including small non-zero modeled earnings.
@@ -163,7 +163,7 @@ export function annualCSV(model, forecast, context = {}) {
       p.year, p.eps, p.pe, p.price, p.dividend, p.cumulativeDividend, p.cashWealth, p.reinvestedWealth,
       p.year && model.input.growthMode === 'source' ? point?.periodLabel || `${year}${extension ? ' model extension' : ''}` : '',
       p.year ? sourced ? forecast.forecastType : extension ? 'model extension' : 'custom assumption' : '', sourced ? forecast.asOf : '', sourced ? forecast.source.url : '',
-      ...scenarioMetadata, extension ? provenance(plan) : growthEvidence, p.growth ?? ''
+      ...scenarioMetadata, provenance(context.payoutMetric), extension ? provenance(plan) : growthEvidence, p.growth ?? ''
     ].map(cell).join(',');
   })].join('\n');
 }

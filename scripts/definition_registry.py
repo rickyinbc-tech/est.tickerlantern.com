@@ -51,6 +51,8 @@ def _growth_family(forecast, registry):
 
 
 def _location(row, key, family, source):
+    if key == 'dividendYield' and family in {'ssga-index-yield','tsx-reported-yield','ftse-index-yield','stoxx-net-yield','nikkei-index-yield','hsi-index-yield','csi-index-yield'}:
+        return source.get('location', 'reviewed exact-benchmark dividend table')
     if key == 'growthForecast':
         f = row.get(key) or {}
         locations = {
@@ -156,7 +158,7 @@ def _metric(row, key, registry, previous, feed):
     url=source.get('url','')
     if family=='msci-fundamentals':
         evidence['documentReturnContext']='CAD net-return chart' if 'canada-index-cad-net' in url else 'AUD net-return chart' if 'australia-index-aud-net' in url else 'USD gross-return chart' if url.endswith('msci-acwi.pdf') else 'factsheet return variant not independently recorded; fundamentals kept separate'
-    if key=='dividendYield' and family!='msci-fundamentals':
+    if key=='dividendYield' and family not in {'msci-fundamentals','ssga-index-yield','tsx-reported-yield','ftse-index-yield','stoxx-net-yield','nikkei-index-yield','hsi-index-yield','csi-index-yield'}:
         economic['horizon']='dividend-yield construction not disclosed'
         economic['earningsBasis']='not applicable to yield'
     raw_value = (row.get('metricRawValues') or {}).get(key)
@@ -175,6 +177,8 @@ def _metric(row, key, registry, previous, feed):
         record['periodMapping']=dict(sourceBasis=(value or {}).get('periodBasis'),modelUse='approximate scenario growth of synthetic anchor; not independently matched rolling-NTM growth',currentYear='context only; never replayed as a full future holding year',uncoveredYears='blank; no repetition or interpolation',forecastType=(value or {}).get('forecastType'))
     if family=='unknown' and available:
         record['permittedUse']=['display']
+    if family=='stoxx-net-yield' and available:
+        record['classification']='published-net-return-spread-proxy'
     # Newly surfaced explicit definitions override the reviewed family only by
     # requiring review, never by silently certifying a new basis.
     declared = source.get('definitionVersion')

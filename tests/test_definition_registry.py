@@ -20,11 +20,16 @@ class DefinitionRegistryTests(unittest.TestCase):
         apply_registry(self.feed,previous)
         return self.rows
 
-    def test_complete_catalogue_has_four_metrics_including_unavailable_yields(self):
+    def test_complete_catalogue_has_four_metrics_and_each_benchmark_has_a_dividend_anchor(self):
         self.enrich()
         self.assertEqual(len(self.rows),21)
         self.assertEqual(sum(len(r['metricDefinitions']) for r in self.rows.values()),84)
-        self.assertEqual(sum(r['metricDefinitions']['dividendYield']['state']=='unavailable' for r in self.rows.values()),7)
+        self.assertEqual(sum(r['metricDefinitions']['dividendYield']['state']=='numeric' for r in self.rows.values()),21)
+        observed=self.rows['sp500']['metricDefinitions']['dividendYield']
+        self.assertEqual(observed['evidence']['observationDate'],'2026-10-21')
+        self.assertIn('first-payment-anchor',observed['permittedUse'])
+        self.rows['sp500']['dividendYield']=None
+        self.enrich()
         missing=self.rows['sp500']['metricDefinitions']['dividendYield']
         self.assertIsNone(missing['evidence']['observationDate'])
         self.assertIsNone(missing['evidence']['url'])

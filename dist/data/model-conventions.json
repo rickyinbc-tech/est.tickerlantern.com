@@ -3,7 +3,7 @@
   "modelConventionVersion": "tickerlantern-annual-forward-anchor-v2",
   "reviewDate": "2026-10-23",
   "classification": "illustrative annual scenario model",
-  "definitionVersion": "2.0.0",
+  "definitionVersion": "2.1.0",
   "compatibilityIdentifier": "synthetic-forward-anchor-annual-prior-earnings-dividends-v2",
   "evidence": "src/model.js; independent algebra and tests/model-audit.test.mjs. Model constants and policies are application assumptions, not published market observations.",
   "constants": {
@@ -42,36 +42,209 @@
     "failurePolicy": "Reject invalid cash flows, undefined all-zero future proceeds, unrepresentable finite rates, or a failed residual check. No hardcoded negative-rate floor or positive-rate cap."
   },
   "supportedScenarioDomain": {
-    "epsGrowthPercent": [-99, 1000],
-    "entryPE": [1, 100],
-    "exitPE": [1, 100],
-    "payoutPercent": [0, 100],
-    "initialYieldPercent": [0, 15],
-    "holdingYears": [1, 20],
+    "epsGrowthPercent": [
+      -99,
+      1000
+    ],
+    "entryPE": [
+      1,
+      100
+    ],
+    "exitPE": [
+      1,
+      100
+    ],
+    "payoutPercent": [
+      0,
+      100
+    ],
+    "initialYieldPercent": [
+      0,
+      15
+    ],
+    "holdingYears": [
+      1,
+      20
+    ],
     "note": "These are calculator input limits, not source-observation plausibility limits. Unsupported observations remain visible in the data layer and must not be clamped to fit the calculator. Holding years must be integers."
   },
   "assumptions": [
-    { "id": "growth-default", "value": 6, "units": "percent per holding year", "classification": "illustrative default", "definition": "Fixed opening teaching example and explicitly chosen constant-rate manual scenarios. Not consensus and not a default extrapolation of a sourced one-year estimate.", "permittedUse": "Educational illustration only; source-linked scenarios use separately dated labeled yearly observations or reader assumptions." },
-    { "id": "growth-annual", "value": "per-year reader rates", "units": "percent per holding year", "classification": "user assumption", "definition": "Each chosen rate compounds the prior synthetic earnings anchor once. Per-year overrides remain reader assumptions even where a source observation exists.", "permittedUse": "Annual scenario analysis; not a verified official EPS path." },
-    { "id": "growth-source-year-proxy", "value": "independently sourced yearly values", "units": "percent over the publisher's labeled period", "classification": "published estimate used as a qualified scenario proxy", "definition": "Calendar, fiscal, publisher-year or forecast-horizon rates keep their original labels and dates. They do not exactly map to a present-date rolling NTM path.", "permittedUse": "Labeled annual scenario input. No automatic repetition into uncovered years or claim of exact NTM mapping." },
-    { "id": "entry-pe-default", "value": 25, "units": "times", "classification": "illustrative default", "definition": "Opening teaching-example entry multiple; source-linked entry use is governed by the metric-definition registry and eligibility policy.", "permittedUse": "Illustrative example or explicit manual assumption. Not a current market quotation." },
-    { "id": "exit-pe-default", "value": 20, "units": "times", "classification": "illustrative default", "definition": "Opening five-year teaching-example terminal multiple. Source-linked historical defaults require a separate compatibility assessment.", "permittedUse": "Illustrative compression example. No claim of fair value or inevitable mean reversion." },
-    { "id": "entry-earnings-anchor", "value": "100 / entryPE", "units": "normalized earnings per original unit", "classification": "derived synthetic anchor", "definition": "A mathematical earnings anchor on the normalized starting wealth basis, not an independently verified official index EPS observation.", "permittedUse": "Internally consistent scenario arithmetic; no assertion of matched publisher earnings definitions without additional evidence." },
-    { "id": "payout", "value": 30, "units": "percent of the prior valuation date earnings anchor", "classification": "illustrative default or user assumption", "definition": "Dividend payment at year end is payout times the start-of-year synthetic earnings anchor. No payout ratio is inferred from a source yield and an incompatible P/E.", "permittedUse": "Scenario cash distributions only. Economic feasibility with growth is not established by this model." },
-    { "id": "initial-dividend-yield", "value": 1.2, "units": "percent of normalized starting wealth", "classification": "illustrative default or separately sourced initial anchor", "definition": "Yield mode sets the first annual payment only. Subsequent payments scale with the prior-anchor earnings path, an application assumption; gross/net, trailing/indicated and special-distribution definitions remain in metric provenance.", "permittedUse": "Labeled first-payment scenario anchor; not a forecast dividend stream, matched payout estimate or daily total-return replication." },
-    { "id": "holding-period", "value": 5, "units": "integer years", "classification": "illustrative default or user assumption", "definition": "Five-year opening illustration; a source-linked scenario may choose the available consecutive labeled future periods. Holding periods remain elapsed scenario years rather than exact calendar or fiscal endpoints.", "permittedUse": "Annual scenario horizon, editable by the reader." },
-    { "id": "normalized-starting-wealth", "value": 100, "units": "normalized wealth units", "classification": "illustrative model convention", "definition": "One original unit worth 100; not an actual index level, actual cash balance or currency amount.", "permittedUse": "Comparable normalized scenario paths. A monetary example may scale values but cannot add currency-specific investor-return claims." },
-    { "id": "dividend-timing", "value": "annual year-end payment from prior anchor", "units": "one payment per year", "classification": "illustrative model convention", "definition": "Distributions use the start-of-year earnings anchor, paid once at year end. Intermediate modeled prices are already treated as ex-distribution.", "permittedUse": "Annual educational illustration; not an official index's daily ex-date calculation." },
-    { "id": "reinvestment-timing", "value": "year-end ex-distribution price", "units": "normalized units", "classification": "illustrative model convention", "definition": "All current units receive the annual dividend and buy additional units at the modeled year-end price, without fees or fractional-unit restrictions.", "permittedUse": "Scenario reinvested wealth; can underperform holding cash when prices decline." },
-    { "id": "intermediate-pe-path", "value": "geometric interpolation", "units": "times at annual dates", "classification": "illustrative model convention", "definition": "Entry-to-exit multiple changes at a constant proportional pace; affects interim prices and reinvestment, not terminal price given the same exit assumption.", "permittedUse": "Annual path illustration and sensitivity scenarios; not a forecast valuation trajectory." },
-    { "id": "cash-interest", "value": 0, "units": "percent per year", "classification": "illustrative model convention", "definition": "Cash distributions on one original unit accumulate without interest.", "permittedUse": "Cash-held wealth only. Cash-flow IRR separately accounts for payment timing." },
-    { "id": "return-and-currency", "value": "nominal, before taxes and fees; normalized currency-neutral", "units": "decimal returns or displayed percent", "classification": "model convention and explicit exclusions", "definition": "No inflation adjustment, income/withholding/capital-gains taxes, fees, trading costs, FX translation or currency hedging. A source factsheet currency does not create a CAD-investor return.", "permittedUse": "Illustrative valuation/dividend decomposition, not a realized investor return or after-tax projection." },
-    { "id": "buybacks", "value": "no separate buyback yield", "units": "not applicable", "classification": "double-counting guardrail", "definition": "Chosen per-share earnings growth may already reflect changes in shares. Buyback yield is not added on top.", "permittedUse": "No separate return contribution without a different, explicitly supported model." },
-    { "id": "sensitivity", "value": "five growth rates and five exit multiples", "units": "percent and times", "classification": "illustrative scenarios", "definition": "Growth centers on the active constant rate or equivalent CAGR; exit multiples include lower, unchanged and higher entry-relative cases where bounds allow. Axes are stable while a cell is selected. Grid alternatives use constant rates and preserve other active assumptions.", "permittedUse": "Scenarios, not probabilities or confidence intervals. Bounds constrain scenarios, never source observations." },
-    { "id": "wealth-attribution", "value": "sequential cumulative amounts", "units": "normalized wealth units", "classification": "derived illustration", "definition": "EPS-only gain is calculated first, valuation impact second, and cash dividends last. The order assigns the interaction to valuation and is not a unique economic attribution.", "permittedUse": "Reconcile cumulative terminal cash-held wealth. Never add these amounts as annualized returns." },
-    { "id": "export", "value": "accepted model and snapshot context", "units": "full round-trip numeric precision", "classification": "reproducibility metadata", "definition": "Annual CSV comes from the same accepted engine output as the table/chart. It records model version, assumptions, yearly rates, source/custom labels, snapshot context and available metric provenance. Missing context remains blank rather than invented.", "permittedUse": "Rebuild the accepted scenario within the documented convention; not an official index data export." },
-    { "id": "presets", "value": "compression: 80% of entry PE, minimum 1x; constant: active entry PE; zero dividends: 0% in the active dividend mode", "units": "times or percent", "classification": "explicitly selected illustrative scenario", "definition": "Each preset changes only its declared input. Compression rounds the exit multiple to two decimal places; constant P/E uses the active entry assumption. Other assumptions remain active and edited preset fields are protected.", "permittedUse": "Sensitivity illustration. No claim these cases are forecasts or probabilities." },
-    { "id": "source-follow-reset", "value": "eligible sourced fields or labeled fallback policy", "units": "per active field", "classification": "application policy", "definition": "Source following updates eligible untouched fields only. A historical exit requires compatibility approval; otherwise the unedited exit follows the active entry. A selected-benchmark reset clears its reader overrides, restores eligible source fields and the available consecutive forecast horizon, with missing growth left uncovered. Other saved benchmarks remain separate.", "permittedUse": "Source-linked educational scenario; protected reader inputs remain assumptions and are not evidence of a source update." },
-    { "id": "fixed-dollar-examples", "value": "earnings $10, payout $3, retained $7; EPS $10 to $10.60; share $200 to $212 plus $3; isolated ex-dividend share $200 to approximately $197 plus $3", "units": "illustrative dollars per share, no specified currency", "classification": "fixed educational examples", "definition": "The earnings allocation is accounting profit, not proof of free cash flow or a sustainable-growth model. The one-year price case is the normalized 20x, 6%, 30% prior-anchor payout case scaled by two. The isolated ex-dividend case holds all else equal; it is not an additional deduction from the modeled terminal price.", "permittedUse": "Explain accounting EPS, dividend ownership and total-return arithmetic. Not observed securities, actual index levels or CAD forecasts." }
-  ]
+    {
+      "id": "growth-default",
+      "value": 6,
+      "units": "percent per holding year",
+      "classification": "illustrative default",
+      "definition": "Fixed opening teaching example and explicitly chosen constant-rate manual scenarios. Not consensus and not a default extrapolation of a sourced one-year estimate.",
+      "permittedUse": "Educational illustration only; source-linked scenarios use separately dated labeled yearly observations or reader assumptions."
+    },
+    {
+      "id": "growth-annual",
+      "value": "per-year reader rates",
+      "units": "percent per holding year",
+      "classification": "user assumption",
+      "definition": "Each chosen rate compounds the prior synthetic earnings anchor once. Per-year overrides remain reader assumptions even where a source observation exists.",
+      "permittedUse": "Annual scenario analysis; not a verified official EPS path."
+    },
+    {
+      "id": "growth-source-year-proxy",
+      "value": "independently sourced yearly values",
+      "units": "percent over the publisher's labeled period",
+      "classification": "published estimate used as a qualified scenario proxy",
+      "definition": "Calendar, fiscal, publisher-year or forecast-horizon rates keep their original labels and dates. They do not exactly map to a present-date rolling NTM path.",
+      "permittedUse": "Labeled annual scenario input. No automatic repetition into uncovered years or claim of exact NTM mapping."
+    },
+    {
+      "id": "entry-pe-default",
+      "value": 25,
+      "units": "times",
+      "classification": "illustrative default",
+      "definition": "Opening teaching-example entry multiple; source-linked entry use is governed by the metric-definition registry and eligibility policy.",
+      "permittedUse": "Illustrative example or explicit manual assumption. Not a current market quotation."
+    },
+    {
+      "id": "exit-pe-default",
+      "value": 20,
+      "units": "times",
+      "classification": "illustrative default",
+      "definition": "Opening five-year teaching-example terminal multiple. Source-linked historical defaults require a separate compatibility assessment.",
+      "permittedUse": "Illustrative compression example. No claim of fair value or inevitable mean reversion."
+    },
+    {
+      "id": "entry-earnings-anchor",
+      "value": "100 / entryPE",
+      "units": "normalized earnings per original unit",
+      "classification": "derived synthetic anchor",
+      "definition": "A mathematical earnings anchor on the normalized starting wealth basis, not an independently verified official index EPS observation.",
+      "permittedUse": "Internally consistent scenario arithmetic; no assertion of matched publisher earnings definitions without additional evidence."
+    },
+    {
+      "id": "payout",
+      "value": "benchmark-specific source dividend-anchor percent × active entry PE; 30 only in teaching example",
+      "units": "percent of the prior valuation date earnings anchor",
+      "classification": "derived model calibration or user assumption",
+      "definition": "D_t=p F_(t-1). For accepted benchmark defaults, p percent = source dividend-anchor percent × active entry PE, so D1 reproduces that benchmark anchor on initial wealth 100. This is not a publisher-reported payout ratio or matched-period D/E statistic. Missing or ineligible anchors leave the benchmark payout blank.",
+      "permittedUse": "Synthetic annual scenario distributions; preserve source yield construction and separate dates. Economic feasibility is not established."
+    },
+    {
+      "id": "initial-dividend-yield",
+      "value": 1.2,
+      "units": "percent of normalized starting wealth",
+      "classification": "illustrative default or separately sourced initial anchor",
+      "definition": "Yield mode sets the first annual payment only. Subsequent payments scale with the prior-anchor earnings path, an application assumption; gross/net, trailing/indicated and special-distribution definitions remain in metric provenance.",
+      "permittedUse": "Labeled first-payment scenario anchor; not a forecast dividend stream, matched payout estimate or daily total-return replication."
+    },
+    {
+      "id": "holding-period",
+      "value": 5,
+      "units": "integer years",
+      "classification": "fixed workbench policy",
+      "definition": "All benchmark and manual workbench scenarios use five elapsed holding years. The generic engine supports other whole-year horizons for verification.",
+      "permittedUse": "Fixed five-year workbench and exports."
+    },
+    {
+      "id": "normalized-starting-wealth",
+      "value": 100,
+      "units": "normalized wealth units",
+      "classification": "illustrative model convention",
+      "definition": "One original unit worth 100; not an actual index level, actual cash balance or currency amount.",
+      "permittedUse": "Comparable normalized scenario paths. A monetary example may scale values but cannot add currency-specific investor-return claims."
+    },
+    {
+      "id": "dividend-timing",
+      "value": "annual year-end payment from prior anchor",
+      "units": "one payment per year",
+      "classification": "illustrative model convention",
+      "definition": "Distributions use the start-of-year earnings anchor, paid once at year end. Intermediate modeled prices are already treated as ex-distribution.",
+      "permittedUse": "Annual educational illustration; not an official index's daily ex-date calculation."
+    },
+    {
+      "id": "reinvestment-timing",
+      "value": "year-end ex-distribution price",
+      "units": "normalized units",
+      "classification": "illustrative model convention",
+      "definition": "All current units receive the annual dividend and buy additional units at the modeled year-end price, without fees or fractional-unit restrictions.",
+      "permittedUse": "Scenario reinvested wealth; can underperform holding cash when prices decline."
+    },
+    {
+      "id": "intermediate-pe-path",
+      "value": "geometric interpolation",
+      "units": "times at annual dates",
+      "classification": "illustrative model convention",
+      "definition": "Entry-to-exit multiple changes at a constant proportional pace; affects interim prices and reinvestment, not terminal price given the same exit assumption.",
+      "permittedUse": "Annual path illustration and sensitivity scenarios; not a forecast valuation trajectory."
+    },
+    {
+      "id": "cash-interest",
+      "value": 0,
+      "units": "percent per year",
+      "classification": "illustrative model convention",
+      "definition": "Cash distributions on one original unit accumulate without interest.",
+      "permittedUse": "Cash-held wealth only. Cash-flow IRR separately accounts for payment timing."
+    },
+    {
+      "id": "return-and-currency",
+      "value": "nominal, before taxes and fees; normalized currency-neutral",
+      "units": "decimal returns or displayed percent",
+      "classification": "model convention and explicit exclusions",
+      "definition": "No inflation adjustment, income/withholding/capital-gains taxes, fees, trading costs, FX translation or currency hedging. A source factsheet currency does not create a CAD-investor return.",
+      "permittedUse": "Illustrative valuation/dividend decomposition, not a realized investor return or after-tax projection."
+    },
+    {
+      "id": "buybacks",
+      "value": "no separate buyback yield",
+      "units": "not applicable",
+      "classification": "double-counting guardrail",
+      "definition": "Chosen per-share earnings growth may already reflect changes in shares. Buyback yield is not added on top.",
+      "permittedUse": "No separate return contribution without a different, explicitly supported model."
+    },
+    {
+      "id": "sensitivity",
+      "value": "five growth rates and five exit multiples",
+      "units": "percent and times",
+      "classification": "illustrative scenarios",
+      "definition": "Growth centers on the active constant rate or equivalent CAGR; exit multiples include lower, unchanged and higher entry-relative cases where bounds allow. Axes are stable while a cell is selected. Grid alternatives use constant rates and preserve other active assumptions.",
+      "permittedUse": "Scenarios, not probabilities or confidence intervals. Bounds constrain scenarios, never source observations."
+    },
+    {
+      "id": "wealth-attribution",
+      "value": "sequential cumulative amounts",
+      "units": "normalized wealth units",
+      "classification": "derived illustration",
+      "definition": "EPS-only gain is calculated first, valuation impact second, and cash dividends last. The order assigns the interaction to valuation and is not a unique economic attribution.",
+      "permittedUse": "Reconcile cumulative terminal cash-held wealth. Never add these amounts as annualized returns."
+    },
+    {
+      "id": "export",
+      "value": "accepted model and snapshot context",
+      "units": "full round-trip numeric precision",
+      "classification": "reproducibility metadata",
+      "definition": "Annual CSV comes from the same accepted engine output as the table/chart. It records model version, assumptions, yearly rates, source/custom labels, snapshot context and available metric provenance. Missing context remains blank rather than invented.",
+      "permittedUse": "Rebuild the accepted scenario within the documented convention; not an official index data export."
+    },
+    {
+      "id": "presets",
+      "value": "compression: 80% of entry PE, minimum 1x; constant: active entry PE; zero dividends: 0% in the active dividend mode",
+      "units": "times or percent",
+      "classification": "explicitly selected illustrative scenario",
+      "definition": "Each preset changes only its declared input. Compression rounds the exit multiple to two decimal places; constant P/E uses the active entry assumption. Other assumptions remain active and edited preset fields are protected.",
+      "permittedUse": "Sensitivity illustration. No claim these cases are forecasts or probabilities."
+    },
+    {
+      "id": "source-follow-reset",
+      "value": "eligible sourced fields or labeled fallback policy",
+      "units": "per active field",
+      "classification": "application policy",
+      "definition": "Source following updates eligible untouched fields only. An unlocked model payout recalibrates to the source dividend anchor and active entry PE. Historical exit requires compatibility approval; otherwise the unedited exit follows active entry. Reset clears only the selected benchmark overrides and restores its five-year forecast and dividend defaults. Restore dividend defaults clears dividend overrides. Protected reader inputs remain separate. Unedited legacy 30% payouts migrate; explicit custom payouts survive.",
+      "permittedUse": "Source-linked educational scenario; protected reader inputs remain assumptions and are not evidence of a source update."
+    },
+    {
+      "id": "fixed-dollar-examples",
+      "value": "earnings $10, payout $3, retained $7; EPS $10 to $10.60; share $200 to $212 plus $3; isolated ex-dividend share $200 to approximately $197 plus $3",
+      "units": "illustrative dollars per share, no specified currency",
+      "classification": "fixed educational examples",
+      "definition": "The earnings allocation is accounting profit, not proof of free cash flow or a sustainable-growth model. The one-year price case is the normalized 20x, 6%, 30% prior-anchor payout case scaled by two. The isolated ex-dividend case holds all else equal; it is not an additional deduction from the modeled terminal price.",
+      "permittedUse": "Explain accounting EPS, dividend ownership and total-return arithmetic. Not observed securities, actual index levels or CAD forecasts."
+    }
+  ],
+  "dividendPolicyVersion": "benchmark-dividend-anchor-v1"
 }

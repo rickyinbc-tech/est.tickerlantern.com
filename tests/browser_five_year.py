@@ -52,12 +52,26 @@ def load():
 atexit.register(lambda:subprocess.run(['agent-browser','--session',SESSION,'close'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL))
 load();browser('eval','localStorage.removeItem("tickerlantern.est.scenarios.v1")');load()
 ids=value('Array.from(document.querySelectorAll("#index-list button"),e=>e.dataset.index)')
+feed=json.loads((ROOT/'data/indices.json').read_text())
+benchmarks={r['id']:r for r in feed['indices']}
 check('21 default comparisons render',len(ids)==21 and value('document.querySelectorAll("#five-year-comparison-body tr").length')==21)
 for id in ids:
     index(id);s=state()
     check(id+' uses five valid annual inputs',s['years']==5 and s['fixed'] and s['mode']=='source' and len(s['rates'])==5 and s['valid'])
     check(id+' charts and sensitivity use five years',value('document.querySelector("#wealth-subtitle").textContent.startsWith("5-year") && document.querySelector("#sensitivity-badge").textContent.startsWith("5-year") && document.querySelectorAll("#annual-data-body tr").length===6'))
+    inputs=value('({mode:document.querySelector("#dividendMode").value,payout:+document.querySelector("#payout").value,entry:+document.querySelector("#entryPE").value,basis:document.querySelector("#payout-basis").textContent})')
+    check(id+' uses its own dividend anchor and discloses model payout',inputs['mode']=='payout' and abs(inputs['payout']-benchmarks[id]['dividendYield']*inputs['entry'])<1e-8 and 'Model-implied payout' in inputs['basis'])
 index('sp500');check('S&P path normalizes its sourced 16% rate',state()['rates']==[16,13.5,11,8.5,6])
+browser('fill','#entryPE','22')
+check('entry edit recalibrates only the implied payout',abs(value('+document.querySelector("#payout").value')-23.98)<1e-8)
+browser('fill','#payout','42')
+browser('click','#check-data');browser('wait','#check-data:enabled')
+index('nasdaq100');index('sp500');load()
+check('custom payout survives source refresh, benchmark switching and reload',value('+document.querySelector("#payout").value')==42)
+browser('click','#restore-dividends')
+check('dividend restore uses active custom entry and keeps five years',abs(value('+document.querySelector("#payout").value')-23.98)<1e-8 and state()['years']==5 and value('+document.querySelector("#entryPE").value')==22)
+browser('click','#reset-model')
+check('reset restores benchmark payout instead of 30 percent',value('+document.querySelector("#payout").value')==20.71)
 check('source and estimated years have separate labels',value('document.querySelector("label[for=growth-year-1]").textContent.includes("published") && document.querySelector("label[for=growth-year-2]").textContent.includes("model estimate")'))
 browser('fill','#growth-year-3','4')
 browser('click','#check-data');browser('wait','#check-data:enabled')
@@ -71,11 +85,12 @@ download('#download-csv',QA/'five-year-active.csv')
 records=list(csv.DictReader(io.StringIO((QA/'five-year-active.csv').read_text())))
 check('active download contains entry plus five years',len(records)==6 and all(r['Holding years']=='5' for r in records))
 check('active download distinguishes published and model evidence',records[1]['Growth basis']=='consensus' and all(r['Growth basis']=='model extension' and r['Observation date']=='' and r['Source URL']=='' for r in records[2:]))
+check('active CSV preserves benchmark payout and its dividend evidence',all(float(r['Payout percent'])==20.71 and json.loads(r['Payout metric provenance'])['yieldEvidence']['observationDate']=='2026-10-21' for r in records))
 # Independently compound prices and value annual cash flows from downloaded inputs.
 last=records[-1];entry=float(last['Entry PE assumption']);exit=float(last['Exit PE assumption'])
 eps=100/entry;dividends=[]
 for r in records[1:]:
-    dividends.append(eps*.30);eps*=1+float(r['EPS growth percent'])/100
+    dividends.append(eps*float(r['Payout percent'])/100);eps*=1+float(r['EPS growth percent'])/100
 terminal=eps*exit
 check('CSV terminal value reconciles to independent compounding',abs(float(last['Normalized price index'])-terminal)<1e-9)
 lo,hi=-.99,2
@@ -88,6 +103,10 @@ check('displayed five-year IRR reconciles to independent cash flows',state()['ir
 download('#download-five-year',QA/'five-year-universe.csv')
 universe=list(csv.DictReader(io.StringIO((QA/'five-year-universe.csv').read_text())))
 check('all-index download has 126 records for 21 complete five-year paths',len(universe)==126 and len({r['Benchmark ID'] for r in universe})==21 and all(r['Holding years']=='5' for r in universe))
+for id in ids:
+    rows=[r for r in universe if r['Benchmark ID']==id]
+    expected=benchmarks[id]['dividendYield']*float(rows[0]['Entry PE assumption'])
+    check(id+' exported payout and first dividend reconcile to its own source',all(abs(float(r['Payout percent'])-expected)<1e-8 and json.loads(r['Payout metric provenance'])['classification']=='model-implied-payout' for r in rows) and abs(float(rows[1]['Dividend per original unit'])-benchmarks[id]['dividendYield'])<1e-8)
 
 browser('select','#growthMode','annual')
 for i,g in enumerate([10,-5,20,3,4],1):browser('fill',f'#growth-year-{i}',g)
@@ -104,9 +123,13 @@ browser('select','#growthMode','annual');check('switching back retains all custo
 browser('click','#reset-model');check('reset uses five years, including extrapolation',state()['mode']=='source' and state()['rates']==[16,13.5,11,8.5,6])
 
 # Seed a real v1 browser record, including the previously allowed locked horizon.
-legacy={'version':1,'selectedIndexId':'sp500','following':False,'scenarios':[['sp500',{'years':2,'growthMode':'annual','annualGrowth':[7,8],'growth':4,'entryPE':17,'exitPE':18}]],'overrides':[['sp500',{'years':True,'growthMode':True,'annualGrowth':True,'entryPE':True,'exitPE':True}]]}
+legacy={'version':1,'selectedIndexId':'sp500','following':False,'scenarios':[['sp500',{'years':2,'growthMode':'annual','annualGrowth':[7,8],'growth':4,'entryPE':17,'exitPE':18,'payout':30}]],'overrides':[['sp500',{'years':True,'growthMode':True,'annualGrowth':True,'entryPE':True,'exitPE':True}]]}
 browser('eval','localStorage.setItem("tickerlantern.est.scenarios.v1",'+json.dumps(json.dumps(legacy))+')');load()
 check('paused old two-year settings migrate to five without losing edits',state()['rates']==[7,8,4,4,4] and state()['years']==5 and value('document.querySelector("#entryPE").value')=='17')
+check('legacy untouched 30 percent migrates to this benchmark payout',abs(value('+document.querySelector("#payout").value')-18.53)<1e-8)
+legacy['overrides'][0][1]['payout']=True
+browser('eval','localStorage.setItem("tickerlantern.est.scenarios.v1",'+json.dumps(json.dumps(legacy))+')');load()
+check('explicit reader payout remains protected during migration',value('+document.querySelector("#payout").value')==30)
 browser('click','#reset-model')
 for width,height in [(360,800),(390,844),(768,1024),(1440,1000)]:
     browser('set','viewport',width,height)

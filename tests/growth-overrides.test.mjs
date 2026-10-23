@@ -5,7 +5,7 @@ import {sourceGrowthPath} from '../src/growth-data.js';
 import {scenarioInputs,loadScenarios,saveScenarios} from '../src/scenario-state.js';
 const now=new Date('2026-10-23T12:00:00Z');
 const forecast={asOf:'2026-10-01',forecastType:'consensus',periodBasis:'calendar-year',source:{publisher:'Test',url:'https://example.com/source'},estimates:[{year:2027,growth:15,periodLabel:'Calendar year 2027'},{year:2028,growth:12,periodLabel:'Calendar year 2028'}]};
-const row={id:'sp500',forwardPE:19,mean10YearForwardPE:18,growthForecast:forecast};
+const row={id:'sp500',dividendYield:1.2,forwardPE:19,mean10YearForwardPE:18,growthForecast:forecast};
 test('source revision protects only the year edited by the reader',()=>{
  const input=scenarioInputs(row,{...DEFAULTS,growthOverrides:{2027:8}}, {},true,now);
  const changed={...row,growthForecast:{...forecast,estimates:[{year:2027,growth:17},{year:2028,growth:10}]}};

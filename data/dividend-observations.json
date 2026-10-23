@@ -1,0 +1,126 @@
+{
+  "reviewedAt": "2026-10-23T12:59:59Z",
+  "scope": "Seven previously missing exact-benchmark dividend anchors. No ETF distribution-yield proxy and no reported payout ratio are imported.",
+  "observations": [
+    {
+      "id": "sp500",
+      "dividendYield": 1.09,
+      "yieldAsOf": "2026-10-21",
+      "yieldSource": {
+        "publisher": "State Street Investment Management",
+        "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "2ff53332e9e7cc7116903b47e488b23a6c4422858fab54f8c270c6abc2f92866",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "ssga-index-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "Yields section; Index Dividend Yield, not fund distribution yield or SEC yield"
+      },
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+    },
+    {
+      "id": "tsx",
+      "dividendYield": 2.1,
+      "yieldAsOf": "2026-10-22",
+      "yieldSource": {
+        "publisher": "Carolann Steinhoff / Bloomberg Automation",
+        "url": "https://carolannsteinhoff.com/october-22nd-2026-newsletter/",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "9e17794eb1876f66c02c9892bcbf18681933bca093a12fd24713e1c5a6d6b44d",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "tsx-reported-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "Canada / Bloomberg Automation market-close section; exact S&P/TSX Composite trailing-12-month dividend yield"
+      },
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+    },
+    {
+      "id": "ftse100",
+      "dividendYield": 3.04,
+      "yieldAsOf": "2026-09-30",
+      "yieldSource": {
+        "publisher": "London Stock Exchange / FTSE Russell",
+        "url": "https://www.londonstockexchange.com/en/indices/ftse-100",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "9b83bada6c968aa9ed2e7a78a5a6198f26b93dbbf2177d7fba5672be661bf667",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "ftse-index-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "Index characteristics; Dividend yield (%); Source FTSE Russell as at 30 September 2026"
+      },
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+    },
+    {
+      "id": "stoxx600",
+      "dividendYield": 2.8,
+      "yieldAsOf": "2026-09-30",
+      "yieldSource": {
+        "publisher": "STOXX",
+        "url": "https://stoxx.com/index/sxxp/?factsheet=true",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "a5dbf00894927e16ef49c1938317b4ba329738b6e2ea518c4d5f9f487a13c3b8",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "stoxx-net-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "Fundamentals table; exact STOXX Europe 600 row, Dividend yield (%) column and footnote 3"
+      },
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+    },
+    {
+      "id": "nikkei225",
+      "dividendYield": 1.56,
+      "yieldAsOf": "2026-10-23",
+      "yieldSource": {
+        "publisher": "Nikkei Indexes",
+        "url": "https://indexes.nikkei.co.jp/en/nkave/archives/data?list=dividend",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "parserVersion": "reviewed-official-table-1",
+        "adapterId": "nikkei-index-yield",
+        "transport": "public-web-read",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "Daily Valuation Measures / Dividend Yield; Oct/23/2026, Index Weight Basis (%) column, not Simple Average"
+      },
+      "verification": "Official public table read through web retrieval; direct browser returned a challenge. No hash of that challenge is used as observation evidence."
+    },
+    {
+      "id": "hangseng",
+      "dividendYield": 2.97,
+      "yieldAsOf": "2026-09-30",
+      "yieldSource": {
+        "publisher": "Hang Seng Indexes",
+        "url": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/content/gcs/download?resource=%2Fpublic-website%2Fwebapp%2Ffactsheets%2Fen-hk%2Fhsi.pdf",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "873c6c57819ab01378babb44651a8743f22e4bd427dce2049a55b9bb72e2133b",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "hsi-index-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "September 2026 factsheet, Index Fundamentals / HSI row / Dividend Yield (%); all data as at 30 Sep 2026",
+        "page": 1
+      },
+      "verification": "Original PDF page rendered and visually inspected"
+    },
+    {
+      "id": "csi300",
+      "dividendYield": 2.49,
+      "yieldAsOf": "2026-09-30",
+      "yieldSource": {
+        "publisher": "China Securities Index Co., Ltd.",
+        "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/en/000300factsheeten.pdf",
+        "checkedAt": "2026-10-23T12:59:59Z",
+        "sha256": "352b19f410b28004ee61b39e51b13d4ba28861849d52b15abce5a19154adf75e",
+        "parserVersion": "visually-reviewed-index-dividend-1",
+        "adapterId": "csi-index-yield",
+        "transport": "manual-review",
+        "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
+        "location": "30-September-2026 factsheet, Fundamental table, Yield row; exact CSI 300 / 000300",
+        "page": 1
+      },
+      "verification": "Original PDF page rendered and visually inspected"
+    }
+  ]
+}

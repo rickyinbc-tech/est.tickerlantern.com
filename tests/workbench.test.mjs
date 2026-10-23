@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DEFAULTS, BOUNDS, project, sensitivity, sensitivityAxes, validate, annualCSV } from '../src/model.js';
 import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis } from '../src/scenario-state.js';
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
-const em = { historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE:8.9, mean10YearForwardPE:12.25, dividendYield:2.02 };
+const em = { id:'em', historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE:8.9, mean10YearForwardPE:12.25, dividendYield:2.02 };
 
 test('low-multiple benchmarks get lower, unchanged and higher exit valuations', () => {
   const axes = sensitivityAxes({...DEFAULTS, entryPE:8.9});
@@ -39,7 +39,7 @@ test('source refresh updates unlocked inputs and protects edits', () => {
   const next=scenarioInputs(em,custom,{entryPE:true,dividendYield:true,growth:true,years:true});
   assert.equal(next.entryPE,17);assert.equal(next.exitPE,12.25);assert.equal(next.dividendYield,3);
   assert.equal(next.growth,9);assert.equal(next.years,5);
-  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5});
+  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5,payout:34.34,dividendPolicyVersion:'benchmark-dividend-anchor-v1'});
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
   const next=switchScenario({},undefined);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "registryVersion": "source-definitions-2026-10-23.1",
+  "registryVersion": "source-definitions-2026-10-23.2",
   "reviewedAt": "2026-10-23",
   "scope": "21 exact benchmark universes; public documents only",
   "definitionUnknownPolicy": "unknown is not evidence of equivalence; preserve published value and qualify model use; no ETF/related-index substitution",
@@ -424,6 +424,188 @@
         "checkMaxAgeHours": 48
       },
       "allowedPublishers": []
+    },
+    "ssga-index-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+        "taxTreatment": "indicated annual yield; gross/net withholding not separately specified",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "State Street Investment Management",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "daily market observation; manually reviewed",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "State Street Investment Management"
+      ]
+    },
+    "tsx-reported-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+        "taxTreatment": "gross/net not separately disclosed",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "Carolann Steinhoff / Bloomberg Automation",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "daily market observation; manually reviewed",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "Carolann Steinhoff / Bloomberg Automation"
+      ]
+    },
+    "ftse-index-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "FTSE 100 index characteristic; yield construction not further restated in the page",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "FTSE 100 index characteristic; yield construction not further restated in the page",
+        "taxTreatment": "gross/net not separately disclosed",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "London Stock Exchange / FTSE Russell",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly; manually reviewed",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "London Stock Exchange / FTSE Russell"
+      ]
+    },
+    "stoxx-net-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "net return index return minus price index return, per footnote 3; historical net income proxy, not an indicated gross cash yield",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "net return index return minus price index return, per footnote 3; historical net income proxy, not an indicated gross cash yield",
+        "taxTreatment": "net index convention; no further investor tax modeled",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "STOXX",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly; manually reviewed",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "STOXX"
+      ]
+    },
+    "nikkei-index-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "Nikkei 225 index-weight-basis dividend yield; the simple-average column is excluded",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "Nikkei 225 index-weight-basis dividend yield; the simple-average column is excluded",
+        "taxTreatment": "gross/net not separately disclosed",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "Nikkei Indexes",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "daily market observation; manually reviewed",
+        "observationMaxAgeDays": 7,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "Nikkei Indexes"
+      ]
+    },
+    "hsi-index-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "Hang Seng Index factsheet dividend yield; trailing/indicated and gross/net details not restated on the selected page",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "Hang Seng Index factsheet dividend yield; trailing/indicated and gross/net details not restated on the selected page",
+        "taxTreatment": "gross/net not separately disclosed",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "Hang Seng Indexes",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly; manually reviewed",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "Hang Seng Indexes"
+      ]
+    },
+    "csi-index-yield": {
+      "label": "Dividend Yield",
+      "economic": {
+        "earningsBasis": "not applicable to yield",
+        "aggregation": "CSI 300 official factsheet yield; measurement period and distribution construction not further disclosed on the page",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "CSI 300 official factsheet yield; measurement period and distribution construction not further disclosed on the page",
+        "taxTreatment": "gross/net not separately disclosed",
+        "horizon": "published dividend anchor; construction as recorded"
+      },
+      "underlyingProvider": "China Securities Index Co., Ltd.",
+      "precisionDecimals": 2,
+      "freshnessPolicy": {
+        "publicationCadence": "monthly; manually reviewed",
+        "observationMaxAgeDays": 65,
+        "checkMaxAgeHours": 48,
+        "referenceOnly": false
+      },
+      "allowedPublishers": [
+        "China Securities Index Co., Ltd."
+      ]
     }
   },
   "benchmarks": [
@@ -754,12 +936,12 @@
     },
     {
       "id": "source-growth-horizon",
-      "value": "consecutive future published periods",
+      "value": "five holding years",
       "units": "years",
       "classification": "illustrative policy",
-      "definition": "initial horizon matches coverage; current-year context excluded. Unpublished years blank until user entry or shorter horizon",
-      "permittedUse": "initial/reset; edited horizons protected",
-      "implementation": "src/scenario-state.js::scenarioInputs",
+      "definition": "Published future inputs retain original labels. Missing years use separately labelled model estimates under tickerlantern-five-year-fade-v1.",
+      "permittedUse": "all benchmark initial/reset/source scenarios",
+      "implementation": "src/five-year-growth.js",
       "status": "documented convention; subject to acceptance tests"
     },
     {
@@ -776,10 +958,10 @@
       "id": "holding-period",
       "value": 5,
       "units": "whole years",
-      "classification": "illustrative default",
-      "definition": "fallback / fixed teaching example; user supports1–20; sourced horizon may differ",
-      "permittedUse": "fixed example; unsourced scenario only",
-      "implementation": "src/model.js::DEFAULTS",
+      "classification": "fixed workbench policy",
+      "definition": "All published workbench scenarios, presets and exports use five years. Generic engine supports other horizons for verification.",
+      "permittedUse": "all workbench scenarios",
+      "implementation": "src/scenario-state.js; src/five-year-growth.js",
       "status": "documented convention; subject to acceptance tests"
     },
     {
@@ -814,12 +996,12 @@
     },
     {
       "id": "payout",
-      "value": 30,
+      "value": "benchmark dividend-anchor percent × active entry PE; 30 only in teaching example",
       "units": "% of prior earnings anchor",
-      "classification": "illustrative default",
-      "definition": "D_t=p F_(t-1), one payment at year end; not a reported payout",
+      "classification": "derived model input or user assumption",
+      "definition": "D_t=p F_(t-1). Benchmark defaults calibrate the first payment to their own accepted dividend anchor. Not a publisher-reported payout or matched-period D/E statistic; missing/ineligible anchors stay blank.",
       "permittedUse": "payout mode; feasibility not enforced",
-      "implementation": "src/model.js::DEFAULTS; project",
+      "implementation": "src/dividend-policy.js; src/scenario-state.js; src/model.js",
       "status": "documented convention; subject to acceptance tests"
     },
     {
@@ -1027,7 +1209,7 @@
       "value": "per benchmark; explicit source locks",
       "units": "edit policy",
       "classification": "user control",
-      "definition": "reset restores source-linked eligibility and forecast horizon; restore valuations preserves user growth/horizon/payout; source-growth restore only clears sourced-year overrides; scenarios stored in browser not account sync",
+      "definition": "Reset restores the selected benchmark source eligibility, full five-year forecast and calibrated dividend default. Restore valuations preserves custom growth/payout. Restore dividend defaults clears dividend overrides. Unedited legacy 30% payouts migrate; custom payouts remain protected. Scenarios are stored in this browser.",
       "permittedUse": "UI/localStorage",
       "implementation": "src/scenario-state.js; src/app.js",
       "status": "documented convention; subject to acceptance tests"

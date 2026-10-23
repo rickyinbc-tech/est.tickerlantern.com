@@ -2,6 +2,7 @@ import { project, annualCSV } from './model.js';
 import { scenarioInputs } from './scenario-state.js';
 import { eligibleExitMean } from './valuation-policy.js';
 import { metricProvenance } from './update-status.js';
+import { payoutProvenance } from './dividend-policy.js';
 
 export function baselineForecast(row, now = new Date()) {
   if (row.forwardPE == null) return null;
@@ -22,7 +23,7 @@ export function fiveYearCSV(feed, now = new Date()) {
       entryMetric:metricProvenance(row,'forwardPE',now),
       exitMetric:eligibleExitMean(row) ? metricProvenance(row,'mean10YearForwardPE',now) : {classification:'illustrative-constant-multiple',value:model.input.exitPE},
       yieldMetric:model.input.dividendMode === 'yield' ? metricProvenance(row,'dividendYield',now) : null,
-      growthMetric:metricProvenance(row,'growthForecast',now), fieldOverrides:{}
+      growthMetric:metricProvenance(row,'growthForecast',now), payoutMetric:payoutProvenance(row,model.input,{},true,now),fieldOverrides:{}
     }).split('\n');
     output.push(...(output.length ? csv.slice(1) : csv));
   }

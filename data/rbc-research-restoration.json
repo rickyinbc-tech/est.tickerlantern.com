@@ -7,7 +7,7 @@
     {
       "file": "royal-bank-valuation.html",
       "originalSha256": "bf07e38a3916752e2936a83160ccbd3e69b6cc472d683043071069109fecf413",
-      "sha256": "2095c7eb7f6b4d797c4212eb3d21e709134089a4d01eeff780ba752b19062b1f"
+      "sha256": "7204c3c003367c909d26285d573005a21f33d3146774c4c8927579c1c306366d"
     },
     {
       "file": "rbc-model.js",
@@ -17,12 +17,12 @@
     {
       "file": "rbc-research.css",
       "originalSha256": "0c33a849483351678fc95c6847664cb3bc4c59059716a36ed04419f2d2f3ee98",
-      "sha256": "75a2eb4711f76c500d6bbd16d4a92c384d8e8055c2fb837d51e8af32ffbe2f81"
+      "sha256": "49dc9726b6c0288e53fc8c78b8d8868c0790af880523a3241e78d6c002d89270"
     },
     {
       "file": "rbc-research.js",
       "originalSha256": "2b89848731801940ec282bcf36e0bced3c96de5bd36eadf53256eac2c6d92d49",
-      "sha256": "2b89848731801940ec282bcf36e0bced3c96de5bd36eadf53256eac2c6d92d49"
+      "sha256": "628946ac597f4afef83ef75876759026b21e06b3bc49c7a41b09992a973a5edc"
     },
     {
       "file": "rbc-return-data.js",
@@ -69,5 +69,7 @@
       "originalSha256": "e3a085d6acaf33e628502e9946179357b800189c1117d0bdeb6a0daaa6ef13b6",
       "sha256": "e3a085d6acaf33e628502e9946179357b800189c1117d0bdeb6a0daaa6ef13b6"
     }
-  ]
+  ],
+  "presentationUpdatedAt": "2026-10-23",
+  "presentationNote": "Site-wide light theme, shared header and chart colours; financial inputs and calculations unchanged."
 }

@@ -576,15 +576,6 @@ update({ announce: false, reanchor: true });
 for (const key of ['growth','entryPE','exitPE']) { $(key).min = BOUNDS[key][0]; $(key).max = BOUNDS[key][1]; }
 loadIndexData();
 
-const navToggle = $('nav-toggle'), sectionNav = $('section-nav');
-function closeNavigation(focus = false) { sectionNav.classList.remove('is-open'); navToggle.setAttribute('aria-expanded','false'); if (focus) navToggle.focus(); }
-navToggle.addEventListener('click', () => { const open = navToggle.getAttribute('aria-expanded') !== 'true'; navToggle.setAttribute('aria-expanded', String(open)); sectionNav.classList.toggle('is-open',open); });
-sectionNav.addEventListener('click', event => { const link = event.target.closest('a[href^="#"]'); if (!link) return; closeNavigation(); const target = document.getElementById(link.hash.slice(1)); if(target) { target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); } });
-document.addEventListener('keydown', event => { if(event.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') closeNavigation(true); });
-sectionNav.addEventListener('focusout', event => { if (!sectionNav.contains(event.relatedTarget) && event.relatedTarget !== navToggle) closeNavigation(); });
-const sectionObserver = new IntersectionObserver(entries => { for(const entry of entries) if(entry.isIntersecting) for(const link of sectionNav.querySelectorAll('a')) { if(link.hash === '#' + entry.target.id) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current'); } }, {rootMargin:'-15% 0px -65% 0px'});
-for(const id of ['indices','model','thesis','methodology']) sectionObserver.observe($(id));
-
 let lastChartSizes = '', chartFrame;
 const chartObserver = new ResizeObserver(() => {
   const sizes = ['wealth-chart','waterfall-chart','index-valuation-chart'].map(id=>$(id).clientWidth).join(',');

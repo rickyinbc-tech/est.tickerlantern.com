@@ -32,7 +32,7 @@ $('#download-model').addEventListener('click',()=>{
   const data={title:'TickerLantern RBC valuation scenario',researchDate:seniorDate,originalValuationDate:evidence.researchDate,priceDate:evidence.priceDate,currency:'CAD',assumptionBasis,horizon:'Illustrative one-year exit around October 2027',...lastCalculation,sourceDefaults:defaults,sourceDefaultsDescription:'Original provider-estimate reset assumptions; actual calculation uses inputs and assumptionBasis',sources,limitations:['Provider estimates or original analyst assumptions as labelled; not company guidance','No probabilities assigned','No reinvestment, taxes or trading costs','Future dividends are assumptions']};
   const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='tickerlantern-rbc-valuation-scenario.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
-$('#print-note').addEventListener('click',()=>window.print());
+document.querySelectorAll('#print-note, [data-print]').forEach(button=>button.addEventListener('click',()=>window.print()));
 let printDetails=[];
 window.addEventListener('beforeprint',()=>{printDetails=[...document.querySelectorAll('details')].map(el=>({el,open:el.open}));printDetails.forEach(({el})=>el.open=true);});
 window.addEventListener('afterprint',()=>printDetails.forEach(({el,open})=>el.open=open));
@@ -44,11 +44,11 @@ function renderHistory(metric='pe'){
   const max=Math.ceil(Math.max(...values)*1.15*2)/2,W=900,H=260,L=48,R=55,T=24,B=36;
   const x=i=>L+i*(W-L-R)/(values.length-1),y=v=>T+(max-v)/max*(H-T-B);
   let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}, 2016 through 2025 fiscal year-ends plus current observation"><title>${label}: current ${f(now)} times; historical median ${f(sampleMedian)} times</title>`;
-  for(let i=0;i<=4;i++){const v=max*i/4;svg+=`<path d="M${L} ${y(v)}H${W-R}" stroke="#29333d"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" fill="#a5adb7" font-size="10">${f(v,1)}×</text>`;}
-  svg+=`<path d="M${L} ${y(sampleMedian)}H${W-R}" stroke="#78caff" stroke-dasharray="5 5"/><text x="${L+6}" y="${y(sampleMedian)-6}" fill="#78caff" font-size="10">10-observation median ${f(sampleMedian)}×</text>`;
-  svg+=`<path d="${values.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v)).join(' ')}" stroke="#ff8a00" stroke-width="2" fill="none"/>`;
-  values.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===10?5:3}" fill="${i===10?'#ffb000':'#ff8a00'}"><title>${i===10?'Current':history[i].year}: ${f(v)}×</title></circle><text x="${x(i)}" y="${H-12}" text-anchor="middle" fill="${i===10?'#ffb000':'#a5adb7'}" font-size="10">${i===10?'Now':history[i].year}</text>`;});
-  svg+=`<text x="${x(10)}" y="${y(now)-11}" text-anchor="middle" fill="#ffb000" font-size="12">${f(now)}×</text></svg><p class="chart-caption">${label} · fiscal year-end sample, not point-in-time trading signals. Current observation: October 16 price / latest reported financials.</p>`;
+  for(let i=0;i<=4;i++){const v=max*i/4;svg+=`<path d="M${L} ${y(v)}H${W-R}" stroke="#d7e0e8"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" fill="#556779" font-size="10">${f(v,1)}×</text>`;}
+  svg+=`<path d="M${L} ${y(sampleMedian)}H${W-R}" stroke="#396f9e" stroke-dasharray="5 5"/><text x="${L+6}" y="${y(sampleMedian)-6}" fill="#396f9e" font-size="10">10-observation median ${f(sampleMedian)}×</text>`;
+  svg+=`<path d="${values.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v)).join(' ')}" stroke="#087f76" stroke-width="2" fill="none"/>`;
+  values.forEach((v,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===10?5:3}" fill="${i===10?'#087f76':'#087f76'}"><title>${i===10?'Current':history[i].year}: ${f(v)}×</title></circle><text x="${x(i)}" y="${H-12}" text-anchor="middle" fill="${i===10?'#087f76':'#556779'}" font-size="10">${i===10?'Now':history[i].year}</text>`;});
+  svg+=`<text x="${x(10)}" y="${y(now)-11}" text-anchor="middle" fill="#087f76" font-size="12">${f(now)}×</text></svg><p class="chart-caption">${label} · fiscal year-end sample, not point-in-time trading signals. Current observation: October 16 price / latest reported financials.</p>`;
   $('#history-chart').innerHTML=svg;
   document.querySelectorAll('[data-chart]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.chart===metric)));
 }

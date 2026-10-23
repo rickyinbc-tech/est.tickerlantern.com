@@ -11,6 +11,7 @@ import html
 import io
 import json
 import logging
+import os
 import re
 import subprocess
 import sys
@@ -24,7 +25,7 @@ from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
 RSS = 'https://insight.factset.com/topic/earnings/rss.xml'
-PARSER_VERSION = 'index-fundamentals-1'
+PARSER_VERSION = 'index-fundamentals-2'
 logging.getLogger('pypdf').setLevel(logging.ERROR)
 
 
@@ -34,12 +35,15 @@ def plain(text):
 
 
 def fetch(url):
-    if urlparse(url).hostname not in ('www.msci.com', 'insight.factset.com'):
+    if urlparse(url).hostname not in ('www.msci.com', 'insight.factset.com', 'am.jpmorgan.com', 'www.nasdaq.com', 'lipperalpha.refinitiv.com', 'cambridgeretirementma.gov', 'www.ig.com', 'www.raymondjames.ca', 'www.manulife.com', 'cumberlandprivate.com', 'www.aranca.com', 'www.krungsri.com', 'www.ajbell.co.uk', 'www.goodridgegroup.ca', 'www.edelweissmf.com', 'www.scbam.com', 'meetings.sypensions.org.uk'):
         raise ValueError('Unapproved source host')
-    result = subprocess.run(['curl', '--proto', '=https', '--proto-redir', '=https', '-fsSL', '--max-time', '25', '--retry', '1', '--max-filesize', '3000000', url], capture_output=True)
+    result = subprocess.run(['curl', '--proto', '=https', '--proto-redir', '=https', '-fsSL', '--max-time', '40', '--retry', '1', '--max-filesize', '24000000', url], capture_output=True)
     if result.returncode:
+        if os.environ.get('PUBLIC_BROWSER_FETCH') == '1' and os.environ.get('GITHUB_ACTIONS') == 'true' and urlparse(url).hostname in ('www.nasdaq.com', 'www.edelweissmf.com'):
+            from public_browser_source import fetch_public
+            return fetch_public(url)
         raise ValueError('Public source request failed: ' + result.stderr.decode('utf-8', 'replace')[:160])
-    if not result.stdout or len(result.stdout) > 3000000:
+    if not result.stdout or len(result.stdout) > 24000000:
         raise ValueError('Empty or oversized source')
     return result.stdout
 
@@ -117,9 +121,32 @@ def discover_msci_pdf(body):
 def update_record(record, values, source, checked):
     if record.get('asOf') and values['asOf'] < record['asOf']:
         raise ValueError('Source is older than the retained observation')
-    record.update(values)
-    record['source'] = source
-    record['sync'] = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)
+    update_metrics(record, values, source, checked)
+
+
+def update_metrics(record, values, source, checked):
+    """Choose the newest observation independently for price, mean and yield.
+
+    A monthly fundamentals refresh cannot erase an independently sourced mean,
+    nor turn the date of an older dividend observation into today's date.
+    """
+    values = dict(values)
+    source = {**source, 'page': values.pop('page', source.get('page'))}
+    for key in ('forwardPE', 'mean10YearForwardPE'):
+        if values.get(key) is not None: valid_pe(values[key])
+    date = valid_date(values['asOf']) if values.get('asOf') else None
+    mean_date = valid_date(values['meanAsOf']) if values.get('meanAsOf') else None
+    if values.get('forwardPE') is not None and not date: raise ValueError('Missing forward observation date')
+    if values.get('mean10YearForwardPE') is not None and (not mean_date or not values.get('meanMethod')): raise ValueError('Missing mean provenance')
+    if values.get('dividendYield') is not None and (not date or not isinstance(values['dividendYield'], (int, float)) or not 0 <= values['dividendYield'] <= 15): raise ValueError('Invalid or undated source dividend yield')
+    status = dict(status='ok', lastAttempt=checked, lastSuccess=checked, error=None)
+    if values.get('forwardPE') is not None and (not record.get('asOf') or date >= record['asOf']):
+        record.update(forwardPE=values['forwardPE'], asOf=date, source=source, sync=status, earningsBasis=values.get('earningsBasis', 'Forward 12-month earnings'), forwardMethod=values.get('forwardMethod'))
+    if values.get('dividendYield') is not None and (not record.get('yieldAsOf') or date >= record['yieldAsOf']):
+        record.update(dividendYield=values['dividendYield'], yieldAsOf=date, yieldSource=source)
+    if values.get('mean10YearForwardPE') is not None and (not record.get('meanAsOf') or mean_date >= record['meanAsOf']):
+        if not values.get('meanMethod') or not mean_date: raise ValueError('Missing mean provenance')
+        record.update(mean10YearForwardPE=values['mean10YearForwardPE'], meanAsOf=mean_date, meanMethod=values['meanMethod'], meanSource=source, meanSync=status)
 
 
 def refresh(render_qa=False):
@@ -134,6 +161,12 @@ def refresh(render_qa=False):
         for key in ['forwardPE', 'mean10YearForwardPE', 'dividendYield', 'asOf', 'meanAsOf', 'meanMethod']:
             row.setdefault(key, None)
         row.setdefault('source', None)
+        if row.get('dividendYield') is not None:
+            row.setdefault('yieldAsOf', row.get('asOf'))
+            row.setdefault('yieldSource', row.get('source'))
+        if row.get('mean10YearForwardPE') is not None:
+            row.setdefault('meanSource', row.get('source'))
+            row.setdefault('meanSync', row.get('sync'))
         row.setdefault('sync', dict(status='not-connected', lastAttempt=None, lastSuccess=None, error='No validated public valuation adapter is connected for this exact benchmark.'))
         rows.append(row)
     by_id = {r['id']: r for r in rows}
@@ -160,7 +193,7 @@ def refresh(render_qa=False):
             try:
                 body = fetch(url)
                 values = parse_factset(body.decode('utf-8', 'replace'), date)
-                update_record(by_id['sp500'], values, dict(publisher='FactSet', url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily'), checked)
+                update_metrics(by_id['sp500'], values, dict(publisher='FactSet', url=url, discoveryUrl=RSS, page=None, checkedAt=checked, sha256=hashlib.sha256(body).hexdigest(), parserVersion=PARSER_VERSION, frequency='Weekly research; checked daily'), checked)
                 successes.append('sp500')
                 break
             except (ValueError, TypeError) as exc:
@@ -187,16 +220,20 @@ def refresh(render_qa=False):
             for i, target_id in enumerate(target_ids):
                 if id == 'acwi' and not all(label in PdfReader(io.BytesIO(body)).pages[0].extract_text() for label in ['MSCI ACWI', 'MSCI World', 'MSCI Emerging Markets']):
                     raise ValueError('ACWI comparison row identities changed')
-                update_record(by_id[target_id], values[i], source, checked)
+                update_metrics(by_id[target_id], values[i], source, checked)
                 successes.append(target_id)
         except Exception as exc:
             failed(target_ids, exc)
 
-    result = dict(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC, plus manual publisher runs', historyPolicy='Only an explicit publisher-reported 10-year forward-P/E mean is accepted. Missing means stay null.', refresh=dict(successful=len(successes), failed=len(failures), notConnected=sum(r.get('adapter') is None for r in rows)), indices=rows)
+    from source_jobs import refresh_supplemental
+    source_jobs = refresh_supplemental(by_id, fetch, update_metrics, checked, render_qa)
+    result = dict(schemaVersion=1, publishedAt=checked, sourceCheckAt=checked, refreshCadence='Daily at 23:15 UTC, plus manual publisher runs', historyPolicy='Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.', refresh=dict(successful=len(set(successes) | {id for job in source_jobs if job['status'] == 'ok' for id in job['indices']}), failed=len(failures) + sum(j['status'] != 'ok' for j in source_jobs), notConnected=sum(r.get('forwardPE') is None for r in rows)), sourceJobs=source_jobs, indices=rows)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
+    for job in source_jobs:
+        print(f"Source {job['id']}: {job['status']}; {job['error'] or 'validated'}")
     for row in rows:
         print(f"{row['id']}: {row['sync']['status']}; forward={row['forwardPE']}; mean10y={row['mean10YearForwardPE']}; asOf={row['asOf']}")
-    print(f'Refresh finished: {len(successes)} index observations checked; {len(failures)} failed/retained; {result["refresh"]["notConnected"]} without connected valuation sources.')
+    print(f'Refresh finished: {result["refresh"]["successful"]} benchmark observations checked; {result["refresh"]["failed"]} source jobs failed/retained; {result["refresh"]["notConnected"]} without connected valuation sources.')
     return result
 
 
@@ -204,5 +241,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--render-qa', action='store_true', help='Render original source page 1 into ignored local QA images for review')
     args = parser.parse_args()
-    out = refresh(args.render_qa)
-    sys.exit(0 if out['refresh']['successful'] else 1)
+    try:
+        out = refresh(args.render_qa)
+    finally:
+        from public_browser_source import close
+        close()
+    sys.exit(0 if out['refresh']['successful'] and not out['refresh']['failed'] else 1)

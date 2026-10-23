@@ -2,7 +2,7 @@
 
 An independent TickerLantern research website for **https://est.tickerlantern.com**.
 
-The report explains EPS growth, terminal P/E, dividend cash flows and reinvestment, with a clickable 21-benchmark index desk. Thirteen exact benchmarks currently have sourced forward P/E observations; only the S&P 500 has a verified publisher-reported ten-year forward-P/E mean. Unavailable observations remain null. Growth, horizon and custom inputs are scenario assumptions, not consensus forecasts. The original ChatGPT estimate is not reproduced or validated.
+The report explains EPS growth, terminal P/E, dividend cash flows and reinvestment, with a clickable 21-benchmark index desk. All 21 exact benchmarks have sourced forward P/E observations and ten-year forward-P/E references. Older dated references retain their original window-end dates and are not presented as current rolling averages. Unavailable observations remain null. Growth, horizon and custom inputs are scenario assumptions, not consensus forecasts. The original ChatGPT estimate is not reproduced or validated.
 
 ## Run locally
 
@@ -36,4 +36,11 @@ Failed sources retain the last verified observation and an explicit error/retain
 
 The browser checks for new snapshots every five visible minutes and on visibility restoration. Source following updates unlocked valuation and yield fields; per-benchmark custom overrides survive refreshes. Growth and horizon remain reader assumptions. When the ten-year mean is missing, exit P/E defaults to current P/E as an explicitly flat-multiple scenario.
 
-Python source-parser tests: `python3 -m unittest discover -s tests -p 'test_*.py'`. Source refresh requires `pypdf==6.14.2` and curl: `python3 scripts/refresh_indices.py`. The optional `--render-qa` uses Poppler to render source page 1 for local visual review.
+Python source-parser tests: `python3 -m unittest discover -s tests -p 'test_*.py'`. Source refresh requires `pypdf==6.14.2`, `Pillow==12.3.0`, curl, Poppler and Tesseract (macOS local QA can use Vision): `python3 scripts/refresh_indices.py`. The optional `--render-qa` renders the actual selected source pages for local visual review. Source images remain ignored and are not website assets.
+
+
+Additional adapters read J.P. Morgan’s daily Asia guide, Nasdaq’s linked biweekly dashboards, LSEG’s RSS-linked STOXX 600 earnings reports, Raymond James’ monthly index tables, Edelweiss TEMPO’s monthly tables, and independently dated MSCI, Segal, Cumberland, IG and SCBAM research references. Native PDF columns and numerical labels are validated; LSEG’s raster chart uses OCR of its explicitly printed labels plus its ten-year legend, with no estimate from plotted line positions. Source job failures are recorded in `sourceJobs`; per-metric source failures preserve the corresponding value and date. Any unavailable source job makes the scheduled job report failure after publishing the retained snapshot.
+
+Nasdaq and Edelweiss public pages have an optional, anonymous Chromium transport in GitHub Actions when ordinary HTTP fails or returns an empty discovery shell. It uses a fresh context, default browser identity, normal TLS, and no login or challenge handling. CI installs `playwright==1.64.1` and its official Chromium build. The fallback is disabled outside an explicitly enabled GitHub Actions run. See `docs/public-browser-source.md`.
+
+Current P/E, historical mean and dividend yield are updated independently. New monthly fundamentals never erase an independently sourced mean; a fresh P/E never advances an older dividend date. Mean sources and dates are visible in both the selected-index detail and comparison table. Fixed dated research is checked for revisions, while rolling documents and public report listings discover new observations. A dated source whose newer editions omit the mean remains visibly dated; its median or a shorter average is not substituted.

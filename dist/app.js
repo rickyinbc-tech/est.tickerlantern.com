@@ -1,5 +1,5 @@
 import { DEFAULTS, BOUNDS, project, sensitivity, validate, annualCSV } from './model.js';
-import { validateFeed, sourceInputs, isStale, premium } from './index-data.js';
+import { validateFeed, sourceInputs, isStale, premium, isDatedMean, historyCoverage } from './index-data.js';
 
 const $ = id => document.getElementById(id);
 const pct = v => `${(v * 100).toFixed(2)}%`;
@@ -116,7 +116,7 @@ function renderIndexList() {
   const rows = indexFeed.indices.filter(row => (region === 'all' || row.region === region) && `${row.name} ${row.region} ${row.description}`.toLowerCase().includes(query));
   $('index-list').innerHTML = rows.map(row => `<button type="button" class="index-choice" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}"><span>${escape(row.name)}<small>${escape(row.region)}${isStale(row) ? ' · retained' : ''}</small></span><strong>${peLabel(row.forwardPE)}</strong></button>`).join('');
   $('index-empty').hidden = rows.length > 0;
-  $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${peLabel(row.forwardPE)}</td><td>${peLabel(row.mean10YearForwardPE)}</td><td>${row.dividendYield == null ? '—' : n(row.dividendYield) + '%'}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
+  $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${peLabel(row.forwardPE)}</td><td>${peLabel(row.mean10YearForwardPE)}${row.meanAsOf ? `<small>${dateLabel(row.meanAsOf)}${isDatedMean(row) ? ' · dated reference' : ''}</small>` : ''}</td><td>${row.dividendYield == null ? '—' : n(row.dividendYield) + '%'}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
 }
 
 function indexValuationChart(row) {
@@ -159,7 +159,7 @@ function renderScenarioContext() {
     return;
   }
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
-  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : row.mean10YearForwardPE != null ? 'reported 10-year mean' : 'flat-multiple assumption; 10-year mean unavailable';
+  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : row.mean10YearForwardPE != null ? `${isDatedMean(row) ? 'dated 10-year reference' : 'reported 10-year mean'} as of ${dateLabel(row.meanAsOf)}` : 'flat-multiple assumption; 10-year mean unavailable';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendMode && !locks.dividendYield ? ' anchored to the historical source yield' : ' (custom)'}` : `${short(input.payout)}% assumed payout; not a reported payout`;
   $('index-model-note').textContent = `Scenario: ${short(input.growth)}% EPS growth, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. Source values are observations, not forecasts.`;
 }
@@ -173,19 +173,21 @@ function renderIndexDetail() {
   $('index-current-pe').textContent = peLabel(row.forwardPE);
   $('index-current-date').textContent = row.asOf ? 'As of ' + dateLabel(row.asOf) : 'No connected forward valuation';
   $('index-mean-pe').textContent = peLabel(row.mean10YearForwardPE);
-  $('index-mean-date').textContent = row.meanAsOf ? 'Reported ' + dateLabel(row.meanAsOf) : 'Verified 10-year mean unavailable';
+  $('index-mean-date').textContent = row.meanAsOf ? (isDatedMean(row) ? 'Dated reference · ' : 'Reported ') + dateLabel(row.meanAsOf) : 'Verified 10-year mean unavailable';
   $('index-yield').textContent = row.dividendYield == null ? '—' : n(row.dividendYield) + '%';
-  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.asOf);
+  $('index-yield-note').textContent = row.dividendYield == null ? 'Not connected for this benchmark' : 'Historical yield · ' + dateLabel(row.yieldAsOf || row.asOf);
   const gap = premium(row);
   $('index-premium').textContent = gap == null ? '—' : `${gap >= 0 ? '+' : '−'}${Math.abs(gap * 100).toFixed(2)}%`;
-  $('index-premium-label').textContent = gap == null ? 'Historical comparison' : 'Relative to the published 10-year mean';
-  $('index-premium-note').textContent = gap == null ? 'A verified 10-year forward-P/E mean is not available. A trailing multiple, CAPE or shorter history is not a substitute.' : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its published reference. This comparison does not determine fair value or establish an expected return.`;
+  $('index-premium-label').textContent = gap == null ? 'Historical comparison' : isDatedMean(row) ? 'Relative to the dated 10-year reference' : 'Relative to the published 10-year mean';
+  $('index-premium-note').textContent = gap == null ? 'A verified 10-year forward-P/E mean is not available. A trailing multiple, CAPE or shorter history is not a substitute.' : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its published reference. ${isDatedMean(row) ? `Its 10-year window ends ${dateLabel(row.meanAsOf)}, not today. ` : ''}Different providers’ earnings estimates and aggregation methods can differ. This comparison does not determine fair value or establish an expected return.`;
   const stale = isStale(row);
   $('selected-data-badge').textContent = row.forwardPE == null ? 'Valuation not connected' : stale ? 'Retained observation' : 'Sourced observation';
   $('selected-data-badge').classList.toggle('retained-badge', stale || row.forwardPE == null);
   const source = row.source, url = source?.url || row.profileUrl;
-  $('index-source-line').innerHTML = `${escape(source?.publisher || 'Benchmark provider')}${row.asOf ? ' · observation ' + dateLabel(row.asOf) : ''}${source?.page ? ' · page ' + source.page : ''} · <a href="${escape(url)}" target="_blank" rel="noopener noreferrer">Open original source ↗</a>`;
-  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated valuation adapter is connected for this exact benchmark. Its name remains in the comparison universe without substituting a different index or an ETF valuation.' : `${row.mean10YearForwardPE != null ? row.meanMethod + '. No median or reconstructed history is claimed.' : 'The source publishes a current forward multiple, but no 10-year mean. The default exit is the same current multiple, explicitly a flat-multiple assumption.'}${stale ? ' The last verified observation has been retained; the latest source check failed or the observation is older than the freshness threshold.' : ''}`;
+  const evidenceLink = (label, evidence, date) => `<span>${escape(label)} — ${escape(evidence?.publisher || 'Benchmark provider')}${date ? ' · ' + dateLabel(date) : ''}${evidence?.page ? ' · PDF page ' + evidence.page : ''} · <a href="${escape(evidence?.url || row.profileUrl)}" target="_blank" rel="noopener noreferrer">Open source ↗</a></span>`;
+  $('index-source-line').innerHTML = evidenceLink('Forward P/E', source, row.asOf) + (row.mean10YearForwardPE != null ? evidenceLink('10-year reference', row.meanSource || source, row.meanAsOf) : '') + (row.dividendYield != null && row.yieldSource?.url !== source?.url ? evidenceLink('Dividend yield', row.yieldSource || source, row.yieldAsOf || row.asOf) : '');
+  const historicalNote = row.mean10YearForwardPE == null ? 'No verified 10-year mean is connected. The default exit equals the current multiple as an explicit flat-multiple scenario.' : `${isDatedMean(row) ? `Dated historical reference: its 10-year window ends ${dateLabel(row.meanAsOf)}. This is not the latest rolling 10-year average. ` : ''}${row.meanMethod.replace(/\.\s*$/, '')}. ${row.meanSync?.status === 'retained' ? 'The latest historical-source check failed; the last verified mean and date are retained. ' : ''}`;
+  $('index-evidence-note').textContent = row.forwardPE == null ? 'No validated forward valuation is connected for this exact benchmark; no different index or ETF is substituted.' : `${row.earningsBasis || 'Forward earnings'}${row.forwardMethod ? ' · ' + row.forwardMethod : ''}. ${historicalNote}${stale ? ' The current multiple is a retained observation; its publisher date has not been advanced.' : ''}`;
   $('restore-source').disabled = row.forwardPE == null;
   indexValuationChart(row);
   renderScenarioContext();
@@ -230,10 +232,10 @@ async function loadIndexData({ manual = false } = {}) {
     const firstLoad = !indexFeed;
     indexFeed = feed;
     if (firstLoad) { const requested = new URL(location.href).searchParams.get('index'); if (feed.indices.some(row => row.id === requested)) selectedIndexId = requested; }
-    const observed = feed.indices.filter(row => row.forwardPE != null).length, withMean = feed.indices.filter(row => row.mean10YearForwardPE != null).length;
+    const observed = feed.indices.filter(row => row.forwardPE != null).length;
     $('coverage-count').textContent = `${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`;
     $('data-check-date').textContent = 'Source checks (PT): ' + dateLabel(feed.sourceCheckAt);
-    $('history-coverage').textContent = `${withMean} of ${feed.indices.length} benchmarks ${withMean === 1 ? 'has' : 'have'} a verified publisher-reported 10-year forward-P/E mean in this release. Other means are unavailable, not estimated. Complete historical coverage requires additional validated sources.`;
+    $('history-coverage').textContent = historyCoverage(feed);
     applySourceValues(); renderIndexList(); renderIndexDetail();
     $('index-update-status').textContent = feed.transport === 'bundled-fallback' ? 'Showing the bundled verified snapshot. The latest published feed could not be reached; source dates have not been advanced.' : `Latest published snapshot loaded. Sources checked ${dateLabel(feed.sourceCheckAt)}. Publisher observations update on their own schedules; edited assumptions remain protected.`;
   } catch {

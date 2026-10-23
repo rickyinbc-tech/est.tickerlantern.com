@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { sourceInputs, validateFeed, premium, isStale } from '../src/index-data.js';
+import { sourceInputs, validateFeed, premium, isStale, isDatedMean, historyCoverage } from '../src/index-data.js';
 import { project, DEFAULTS, validate } from '../src/model.js';
 const row = { id:'sample', name:'Sample', forwardPE:18, mean10YearForwardPE:16, dividendYield:2, asOf:'2026-09-30', meanAsOf:'2026-09-30', meanMethod:'Publisher-reported 10-year mean', source:{ publisher:'MSCI', url:'https://www.msci.com/example' }, sync:{ status:'ok' } };
 const close = (a,b) => assert.ok(Math.abs(a-b)<1e-10, `${a} != ${b}`);
@@ -48,6 +48,16 @@ test('published snapshot passes the same client contract', async () => {
   const feed=validateFeed(JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url),'utf8')));
   assert.equal(feed.indices.length,21);
   assert.equal(feed.indices.find(r=>r.id==='sp500').source.publisher,'FactSet');
-  assert.equal(feed.indices.find(r=>r.id==='tsx').forwardPE,null);
+  for (const item of feed.indices) if (item.mean10YearForwardPE != null) assert.ok((item.meanSource || item.source)?.url);
   assert.notEqual(feed.indices.find(r=>r.id==='msci-canada').forwardPE,null);
+});
+
+
+test('historical means keep a separate date and source from the current multiple', () => {
+  const historic = { ...row, meanAsOf:'2025-12-31', meanSource:{publisher:'History publisher',url:'https://example.com/history',syncMode:'dated-reference'} };
+  assert.equal(isDatedMean(historic, new Date('2026-10-22')),true);
+  assert.equal(isDatedMean(row, new Date('2026-10-22')),false);
+  assert.match(historyCoverage({indices:[historic,row]}), /1 older dated references/);
+  assert.equal(sourceInputs(historic).exitPE,16);
+  assert.equal(validateFeed({schemaVersion:1,indices:[historic]}).indices[0].asOf,'2026-09-30');
 });

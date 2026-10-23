@@ -2,6 +2,8 @@
 
 Research date: October 22, 2026 (America/Vancouver). Public sources only. This note does not authorize redistribution of publisher datasets or charts.
 
+**Superseded initial audit:** the follow-up research in `research-us-canada-missing.md`, `research-europe-asia-missing.md` and `research-global-historical-means.md` verified additional primary-publisher tables. All 21 benchmarks now have a forward P/E and a separately dated ten-year reference. The original findings below are retained as an audit of rejected sources, not the current coverage policy.
+
 ## Practical recommendation
 
 Use FactSet's public S&P 500 earnings article for a synchronized current forward P/E and publisher-reported 10-year average. Use monthly MSCI index fundamentals for international comparisons, with a missing (`null`) 10-year average. Do not substitute trailing P/E, CAPE, an ETF's P/E, annualized 10-year returns, or a short available history for a 10-year forward-P/E mean.

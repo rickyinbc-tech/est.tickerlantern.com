@@ -1,6 +1,6 @@
 import { mkdir, copyFile, readFile, writeFile, rm } from 'node:fs/promises';
 import { project, DEFAULTS } from '../src/model.js';
-import { validateFeed } from '../src/index-data.js';
+import { validateFeed, historyCoverage } from '../src/index-data.js';
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 const m = project(DEFAULTS);
@@ -12,10 +12,9 @@ const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&
 const metric = value => value == null ? '—' : value.toFixed(2) + '×';
 const dated = value => value ? new Date(value).toLocaleDateString('en-GB', { timeZone: value.includes('T') ? 'America/Vancouver' : 'UTC', day:'numeric', month:'short', year:'numeric' }) : 'Not connected';
 const observed = feed.indices.filter(row => row.forwardPE != null).length;
-const withMean = feed.indices.filter(row => row.mean10YearForwardPE != null).length;
 const indexButtons = feed.indices.map(row => `<button type="button" class="index-choice" data-index="${row.id}" aria-pressed="${row.id === 'sp500'}" disabled><span>${esc(row.name)}<small>${esc(row.region)}</small></span><strong>${metric(row.forwardPE)}</strong></button>`).join('');
-const tableRows = feed.indices.map(row => `<tr><th scope="row"><button type="button" data-index="${row.id}" disabled>${esc(row.name)}</button></th><td>${metric(row.forwardPE)}</td><td>${metric(row.mean10YearForwardPE)}</td><td>${row.dividendYield == null ? '—' : row.dividendYield.toFixed(2) + '%'}</td><td>${dated(row.asOf)}</td></tr>`).join('');
-for (const [key,value] of Object.entries({ INDEX_BUTTONS:indexButtons, INDEX_TABLE_ROWS:tableRows, COVERAGE_COUNT:`${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`, SOURCE_CHECK_DATE:dated(feed.sourceCheckAt), HISTORY_COVERAGE:`${withMean} of ${feed.indices.length} benchmarks has a verified publisher-reported 10-year forward-P/E mean in this release. Other means are unavailable, not estimated. Complete historical coverage requires additional validated sources.` })) html = html.replaceAll(`{{${key}}}`, value);
+const tableRows = feed.indices.map(row => `<tr><th scope="row"><button type="button" data-index="${row.id}" disabled>${esc(row.name)}</button></th><td>${metric(row.forwardPE)}</td><td>${metric(row.mean10YearForwardPE)}${row.meanAsOf ? `<small>${dated(row.meanAsOf)}</small>` : ''}</td><td>${row.dividendYield == null ? '—' : row.dividendYield.toFixed(2) + '%'}</td><td>${dated(row.asOf)}</td></tr>`).join('');
+for (const [key,value] of Object.entries({ INDEX_BUTTONS:indexButtons, INDEX_TABLE_ROWS:tableRows, COVERAGE_COUNT:`${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`, SOURCE_CHECK_DATE:dated(feed.sourceCheckAt), HISTORY_COVERAGE:historyCoverage(feed) })) html = html.replaceAll(`{{${key}}}`, value);
 for (const [key, value] of Object.entries({ PRICE_CAGR: pct(m.priceCAGR), CASH_IRR: pct(m.cashIRR), REINVEST_CAGR: pct(m.reinvestedCAGR), FINAL_PRICE: m.last.price.toFixed(2), DIVIDENDS: m.last.cumulativeDividend.toFixed(2), CASH_WEALTH: m.last.cashWealth.toFixed(2), REINVEST_WEALTH: m.last.reinvestedWealth.toFixed(2) })) html = html.replaceAll(`{{${key}}}`, value);
 await writeFile('dist/index.html', html);
 for (const file of ['style.css', 'index-desk.css', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);

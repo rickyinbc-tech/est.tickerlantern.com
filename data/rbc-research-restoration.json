@@ -1,0 +1,73 @@
+{
+  "sourceRepository": "https://github.com/rickyinbc-tech/tickerlantern-terminal",
+  "sourceCommit": "5770a746eee935007c19540aee5884199ce189c3",
+  "restoredAt": "2026-10-23",
+  "researchModifiedAt": "2026-10-18",
+  "files": [
+    {
+      "file": "royal-bank-valuation.html",
+      "originalSha256": "bf07e38a3916752e2936a83160ccbd3e69b6cc472d683043071069109fecf413",
+      "sha256": "2095c7eb7f6b4d797c4212eb3d21e709134089a4d01eeff780ba752b19062b1f"
+    },
+    {
+      "file": "rbc-model.js",
+      "originalSha256": "68380cea818f42863f37e32ba8dea69e045f947d91bffe0a0a767070b82b8d65",
+      "sha256": "68380cea818f42863f37e32ba8dea69e045f947d91bffe0a0a767070b82b8d65"
+    },
+    {
+      "file": "rbc-research.css",
+      "originalSha256": "0c33a849483351678fc95c6847664cb3bc4c59059716a36ed04419f2d2f3ee98",
+      "sha256": "75a2eb4711f76c500d6bbd16d4a92c384d8e8055c2fb837d51e8af32ffbe2f81"
+    },
+    {
+      "file": "rbc-research.js",
+      "originalSha256": "2b89848731801940ec282bcf36e0bced3c96de5bd36eadf53256eac2c6d92d49",
+      "sha256": "2b89848731801940ec282bcf36e0bced3c96de5bd36eadf53256eac2c6d92d49"
+    },
+    {
+      "file": "rbc-return-data.js",
+      "originalSha256": "4be5f1398ed76df3635a4000b960cce392f184a68613fa47000a2594b2530514",
+      "sha256": "4be5f1398ed76df3635a4000b960cce392f184a68613fa47000a2594b2530514"
+    },
+    {
+      "file": "rbc-return-model.js",
+      "originalSha256": "c36b7823a6bdd507ab1675bf6a6da918ec5c256365ff67750752a93fe6323f71",
+      "sha256": "c36b7823a6bdd507ab1675bf6a6da918ec5c256365ff67750752a93fe6323f71"
+    },
+    {
+      "file": "rbc-return-ui.js",
+      "originalSha256": "d1c3bbcca5bed96258dde6fede45842db23b98b1070dcb13e690c4851621123d",
+      "sha256": "d1c3bbcca5bed96258dde6fede45842db23b98b1070dcb13e690c4851621123d"
+    },
+    {
+      "file": "rbc-senior-model.js",
+      "originalSha256": "9f88bfe1a759dd568614eb644a4aad5f17f94c47e3bb0854b9f0af4c81d3b0c0",
+      "sha256": "9f88bfe1a759dd568614eb644a4aad5f17f94c47e3bb0854b9f0af4c81d3b0c0"
+    },
+    {
+      "file": "rbc-forward-pe-returns.csv",
+      "originalSha256": "883e1931f730e042363058eb65935dd16c9f6a0f7004cfd08b691d697b8a4c41",
+      "sha256": "883e1931f730e042363058eb65935dd16c9f6a0f7004cfd08b691d697b8a4c41"
+    },
+    {
+      "file": "rbc-forward-pe-tests.csv",
+      "originalSha256": "18739df1dec20d5e5896750f04151bb6b897cab09ce0a7c82756e3d8bd9c4676",
+      "sha256": "18739df1dec20d5e5896750f04151bb6b897cab09ce0a7c82756e3d8bd9c4676"
+    },
+    {
+      "file": "rbc-return-research.json",
+      "originalSha256": "7c275ed217f72dd06d6f3ea6e86723f3f00d2201ed732dfbc9a48f649708ca62",
+      "sha256": "7c275ed217f72dd06d6f3ea6e86723f3f00d2201ed732dfbc9a48f649708ca62"
+    },
+    {
+      "file": "rbc-senior-analysis.json",
+      "originalSha256": "22dabd467c21ce4e7a166e79d041343b7bf303c5bb7de531a950c0d868c88509",
+      "sha256": "22dabd467c21ce4e7a166e79d041343b7bf303c5bb7de531a950c0d868c88509"
+    },
+    {
+      "file": "rbc-senior-forecast.csv",
+      "originalSha256": "e3a085d6acaf33e628502e9946179357b800189c1117d0bdeb6a0daaa6ef13b6",
+      "sha256": "e3a085d6acaf33e628502e9946179357b800189c1117d0bdeb6a0daaa6ef13b6"
+    }
+  ]
+}

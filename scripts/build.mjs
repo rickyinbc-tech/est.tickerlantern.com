@@ -1,4 +1,5 @@
 import { mkdir, copyFile, readFile, writeFile, rm } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { project, DEFAULTS, MODEL_CONVENTION_VERSION } from '../src/model.js';
 import { growthCoverage, growthIsStale } from '../src/growth-data.js';
 import { fiveYearGrowthPath } from '../src/five-year-growth.js';
@@ -30,11 +31,21 @@ html=html.replaceAll('{{DEFAULT_GROWTH_ROWS}}',firstGrowth?firstGrowth.estimates
 for (const [key,value] of Object.entries({ INDEX_BUTTONS:indexButtons, INDEX_TABLE_ROWS:tableRows, COVERAGE_COUNT:`${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`, SOURCE_CHECK_DATE:dated(feed.sourceCheckAt), HISTORY_COVERAGE:historyCoverage(feed), GROWTH_COVERAGE:growthCoverage(feed), SNAPSHOT_STATUS:esc(`Published ${checkTime(feed.publishedAt)}. ${updateHealth(feed).message} Loading a snapshot does not contact publishers.`) })) html = html.replaceAll(`{{${key}}}`, value);
 for (const [key, value] of Object.entries({ PRICE_CAGR: pct(m.priceCAGR), CASH_IRR: pct(m.cashIRR), REINVEST_CAGR: pct(m.reinvestedCAGR), FINAL_PRICE: m.last.price.toFixed(2), DIVIDENDS: m.last.cumulativeDividend.toFixed(2), CASH_WEALTH: m.last.cashWealth.toFixed(2), REINVEST_WEALTH: m.last.reinvestedWealth.toFixed(2) })) html = html.replaceAll(`{{${key}}}`, value);
 await writeFile('dist/index.html', html);
+// Restore only the reviewed public article and its exact supporting assets.
+const research = JSON.parse(await readFile('data/rbc-research-restoration.json', 'utf8'));
+await mkdir('dist/research', { recursive: true });
+for (const { file, sha256 } of research.files) {
+  if (!/^(?:royal-bank-valuation\.html|rbc-[a-z-]+\.(?:js|css|csv|json))$/.test(file)) throw Error('Unexpected research asset: ' + file);
+  const bytes = await readFile('src/research/' + file);
+  if (createHash('sha256').update(bytes).digest('hex') !== sha256) throw Error('Research restoration hash mismatch: ' + file);
+  await writeFile('dist/research/' + file, bytes);
+}
 for (const file of ['style.css', 'index-desk.css', 'workbench.css', 'growth.css', 'scenario-state.js', 'dividend-policy.js', 'five-year-growth.js', 'five-year-report.js', 'growth-data.js', 'valuation-policy.js', 'snapshot-client.js', 'update-status.js', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
 await mkdir('dist/data', { recursive: true });
 for (const file of ['indices.json','source-definitions.json','model-conventions.json']) await copyFile('data/'+file,'dist/data/'+file);
 await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nSitemap: https://tickerlantern.com/sitemap.xml\n');
-await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url></urlset>');
+await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url><url><loc>https://tickerlantern.com/research/royal-bank-valuation</loc><lastmod>2026-10-18</lastmod></url></urlset>');
 await writeFile('dist/404.html', '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Page not found | TickerLantern</title><body style="font:18px system-ui;max-width:680px;margin:15vh auto;padding:24px"><h1>Page not found</h1><p>Return to the <a href="/">S&amp;P 500 return report</a>.</p></body></html>');
 await writeFile('dist/_headers', '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; frame-ancestors \'none\'\n');
 console.log('Built static report. Illustrative baseline:', JSON.stringify({ priceCAGR: m.priceCAGR, cashIRR: m.cashIRR, reinvestedCAGR: m.reinvestedCAGR }));
+await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/research/*\n  Cache-Control: no-cache\n');

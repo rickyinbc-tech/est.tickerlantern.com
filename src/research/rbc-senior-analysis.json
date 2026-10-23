@@ -1,0 +1,270 @@
+{
+  "title": "TickerLantern RBC senior analysis",
+  "researchDate": "2026-10-18",
+  "priceDate": "2026-10-16",
+  "financialPeriod": "2026-07-31",
+  "currency": "CAD",
+  "units": "CAD billions except per-share amounts and ratios",
+  "horizon": "October2027;FY2027 almost complete, exit P/E on FY2027 earnings",
+  "inputs": {
+    "price": 280.01,
+    "dividend": 7.04,
+    "commonEquity": 133.922,
+    "endShares": 1.384554,
+    "taxRate": 0.223,
+    "baseEPS": 18,
+    "basePE": 15.5,
+    "roe": 0.181,
+    "requiredReturn": 0.095,
+    "growth": 0.05,
+    "cet1": 0.135,
+    "requiredCET1": 0.111,
+    "rwa": 777.987,
+    "creditLoans": 1170,
+    "creditShares": 1.3724,
+    "rateUpPretax": 0.373,
+    "rateDownPretax": -0.558
+  },
+  "forecast": [
+    {
+      "year": "2025A",
+      "nii": 33,
+      "fees": 33.605,
+      "cost": 35.937,
+      "pcl": 4.362,
+      "tax": 5.436,
+      "deduct": 0.501,
+      "shares": 1.411589,
+      "loans": null,
+      "revenue": 66.60499999999999,
+      "pppt": 30.667999999999992,
+      "pretax": 26.30599999999999,
+      "taxRate": 0.20664487189234404,
+      "net": 20.86999999999999,
+      "common": 20.36899999999999,
+      "eps": 14.429837580202161,
+      "efficiency": 0.5395540875309662,
+      "pclBps": null
+    },
+    {
+      "year": "2026E",
+      "nii": 34.9,
+      "fees": 37.6,
+      "cost": 38.1,
+      "pcl": 4,
+      "taxRate": 0.223,
+      "deduct": 0.55,
+      "shares": 1.3935,
+      "loans": 1100,
+      "revenue": 72.5,
+      "pppt": 34.4,
+      "pretax": 30.4,
+      "tax": 6.7791999999999994,
+      "net": 23.6208,
+      "common": 23.0708,
+      "eps": 16.556010046645138,
+      "efficiency": 0.5255172413793103,
+      "pclBps": 36.36363636363637
+    },
+    {
+      "year": "2027E",
+      "nii": 37,
+      "fees": 41,
+      "cost": 41,
+      "pcl": 4.5,
+      "taxRate": 0.223,
+      "deduct": 0.55,
+      "shares": 1.3724,
+      "loans": 1170,
+      "revenue": 78,
+      "pppt": 37,
+      "pretax": 32.5,
+      "tax": 7.2475000000000005,
+      "net": 25.252499999999998,
+      "common": 24.702499999999997,
+      "eps": 17.999489944622557,
+      "efficiency": 0.5256410256410257,
+      "pclBps": 38.46153846153847
+    },
+    {
+      "year": "2028E",
+      "nii": 39.2,
+      "fees": 44.7,
+      "cost": 43.7,
+      "pcl": 6,
+      "taxRate": 0.223,
+      "deduct": 0.55,
+      "shares": 1.35,
+      "loans": 1240,
+      "revenue": 83.9,
+      "pppt": 40.2,
+      "pretax": 34.2,
+      "tax": 7.626600000000001,
+      "net": 26.573400000000003,
+      "common": 26.023400000000002,
+      "eps": 19.276592592592593,
+      "efficiency": 0.5208581644815257,
+      "pclBps": 48.38709677419355
+    }
+  ],
+  "cases": [
+    {
+      "name": "Bear",
+      "eps": 15,
+      "pe": 13,
+      "weight": 0.3,
+      "price": 195,
+      "priceReturn": -0.3035963001321381,
+      "totalReturn": -0.27845434091639587
+    },
+    {
+      "name": "Base",
+      "eps": 18,
+      "pe": 15.5,
+      "weight": 0.5,
+      "price": 279,
+      "priceReturn": -0.0036070140352130187,
+      "totalReturn": 0.02153494518052934
+    },
+    {
+      "name": "Bull",
+      "eps": 19.5,
+      "pe": 17,
+      "weight": 0.2,
+      "price": 331.5,
+      "priceReturn": 0.18388628977536525,
+      "totalReturn": 0.2090282489911075
+    }
+  ],
+  "summary": {
+    "base": {
+      "name": "Base",
+      "eps": 18,
+      "pe": 15.5,
+      "weight": 0.5,
+      "price": 279,
+      "priceReturn": -0.0036070140352130187,
+      "totalReturn": 0.02153494518052934
+    },
+    "book": 96.72573261859053,
+    "weightedPrice": 264.3,
+    "weightedReturn": -0.03096317988643249,
+    "entryFor10pct": 260.03636363636366,
+    "epsFor10pct": 19.417483870967743,
+    "impliedROE": 0.18026988433043112,
+    "steadyValue": 281.5793549563413,
+    "fadeValue": 240.89151513953948,
+    "growthShare": 0.9213114754098356
+  },
+  "sources": {
+    "strategic": {
+      "label": "RBC 2025 Strategic Update",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/2025q4strategicupdate.pdf",
+      "observed": "2026-10-18",
+      "pages": "PDF9:medium-term return,payout and capital objectives"
+    },
+    "morningstar": {
+      "label": "Morningstar:Royal Bank quote and research",
+      "url": "https://www.morningstar.com/stocks/xtse/ry/quote",
+      "observed": "2026-10-18",
+      "pages": "Dated provider snapshot;fair-value widget8 Sep/research article22 Sep2026"
+    },
+    "quarter": {
+      "label": "RBC Q3 2026 Report to Shareholders",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/2026q3_report.pdf",
+      "published": "2026-08-27",
+      "pages": "PDF4,8,13–14,22,40–42,49,54"
+    },
+    "annual": {
+      "label": "RBC 2025 Annual Report",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/ar_2025_e.pdf",
+      "published": "2025-12-03",
+      "pages": "Printed23,34,148,242 (PDF25,36,150,244)"
+    },
+    "slides": {
+      "label": "RBC Q3 2026 Results Slides",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/2026q3slides.pdf",
+      "published": "2026-08-27",
+      "pages": "PDF4,8,18–19,22–23,25,27,32–33,36,49"
+    },
+    "release": {
+      "label": "RBC Q3 2026 Earnings Release",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/2026q3release.pdf",
+      "published": "2026-08-27",
+      "pages": "1–5"
+    },
+    "market": {
+      "label": "StockAnalysis: TSX RY price and statistics",
+      "url": "https://stockanalysis.com/quote/tsx/RY/statistics/",
+      "observed": "2026-10-17",
+      "priceDate": "2026-10-16"
+    },
+    "estimates": {
+      "label": "MarketScreener: Royal Bank financial estimates",
+      "url": "https://ca.marketscreener.com/quote/stock/ROYAL-BANK-OF-CANADA-1411559/finances/",
+      "observed": "2026-10-17"
+    },
+    "forwardHistory": {
+      "label": "GuruFocus: TSX RY forward-P/E history",
+      "url": "https://www.gurufocus.com/term/forward-pe-ratio/TSX:RY",
+      "observed": "2026-10-18"
+    },
+    "totalReturns": {
+      "label": "Yahoo Finance: TSX RY closes and dividends",
+      "url": "https://finance.yahoo.com/quote/RY.TO/history/",
+      "observed": "2026-10-18"
+    },
+    "forecastArchive": {
+      "label": "Archived original Yahoo RY.TO statistics",
+      "url": "https://web.archive.org/web/20101129085430/http://finance.yahoo.com:80/q/ks?s=RY.TO",
+      "observed": "2026-10-18"
+    },
+    "dividends": {
+      "label": "RBC common-share dividend declaration",
+      "url": "https://www.rbc.com/investor-relations/share-information.html",
+      "observed": "2026-10-17"
+    },
+    "calendar": {
+      "label": "RBC reporting dates",
+      "url": "https://www.rbc.com/investor-relations/financial-information.html",
+      "observed": "2026-10-17"
+    },
+    "osfi": {
+      "label": "OSFI: Domestic Stability Buffer",
+      "url": "https://www.osfi-bsif.gc.ca/en/supervision/financial-institutions/banks/domestic-stability-buffer",
+      "observed": "2026-10-17"
+    },
+    "boc": {
+      "label": "Bank of Canada: September 2, 2026 decision",
+      "url": "https://www.bankofcanada.ca/2026/09/fad-press-release-2026-09-02/",
+      "published": "2026-09-02"
+    },
+    "pandemic": {
+      "label": "RBC Q4 2020 Financial Supplement",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/20q4supp.pdf",
+      "pages": "3 (PDF 5)"
+    },
+    "crisis": {
+      "label": "RBC Q2 2010 Financial Supplement",
+      "url": "https://www.rbc.com/investor-relations/_assets-custom/pdf/supp_q210.pdf",
+      "pages": "5 (PDF 7)"
+    },
+    "framework": {
+      "label": "Aswath Damodaran, NYU Stern: financial-service firms",
+      "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/littlebook/financialsvccompanies.htm"
+    },
+    "tax": {
+      "label": "Income Tax Act, section 38",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/I-3.3/section-38.html",
+      "observed": "2026-10-17",
+      "consolidation": "2026-09-30"
+    }
+  },
+  "limitations": [
+    "All E columns, multiples, perpetual assumptions and scenario weights are analyst judgments",
+    "Scenario weights are not calibrated probabilities",
+    "Current steady-state values are separate from12-month exits",
+    "No full balance-sheet/CET1 forecast or personalized suitability assessment",
+    "Future dividends may change; no taxes/costs/reinvestment in scenario returns"
+  ]
+}

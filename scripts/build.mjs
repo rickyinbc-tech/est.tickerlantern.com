@@ -1,0 +1,15 @@
+import { mkdir, copyFile, readFile, writeFile, rm } from 'node:fs/promises';
+import { project, DEFAULTS } from '../src/model.js';
+await rm('dist', { recursive: true, force: true });
+await mkdir('dist', { recursive: true });
+const m = project(DEFAULTS);
+const pct = x => (x * 100).toFixed(2) + '%';
+let html = await readFile('src/index.html', 'utf8');
+for (const [key, value] of Object.entries({ PRICE_CAGR: pct(m.priceCAGR), CASH_IRR: pct(m.cashIRR), REINVEST_CAGR: pct(m.reinvestedCAGR), FINAL_PRICE: m.last.price.toFixed(2), DIVIDENDS: m.last.cumulativeDividend.toFixed(2), CASH_WEALTH: m.last.cashWealth.toFixed(2), REINVEST_WEALTH: m.last.reinvestedWealth.toFixed(2) })) html = html.replaceAll(`{{${key}}}`, value);
+await writeFile('dist/index.html', html);
+for (const file of ['style.css', 'app.js', 'model.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
+await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nSitemap: https://est.tickerlantern.com/sitemap.xml\n');
+await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://est.tickerlantern.com/</loc></url></urlset>');
+await writeFile('dist/404.html', '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Page not found | TickerLantern</title><body style="font:18px system-ui;max-width:680px;margin:15vh auto;padding:24px"><h1>Page not found</h1><p>Return to the <a href="/">S&amp;P 500 return report</a>.</p></body></html>');
+await writeFile('dist/_headers', '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; frame-ancestors \'none\'\n');
+console.log('Built static report. Illustrative baseline:', JSON.stringify({ priceCAGR: m.priceCAGR, cashIRR: m.cashIRR, reinvestedCAGR: m.reinvestedCAGR }));

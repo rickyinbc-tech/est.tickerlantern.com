@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-23T07:17:19Z",
-  "sourceCheckAt": "2026-10-23T05:53:50Z",
+  "publishedAt": "2026-10-23T07:30:39Z",
+  "sourceCheckAt": "2026-10-23T07:28:55Z",
   "refreshCadence": "Daily at 23:15 UTC plus daily scheduled browser source checks",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
@@ -24,7 +24,7 @@
         "japan"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -36,7 +36,7 @@
         "world"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -48,7 +48,7 @@
         "uk"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -59,7 +59,7 @@
         "russell2000"
       ],
       "status": "browser-verified",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "lastBrowserCheck": "2026-10-23T05:33:50Z",
       "hostedError": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR",
       "error": null
@@ -70,7 +70,7 @@
         "stoxx600"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -83,7 +83,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -92,7 +92,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -102,7 +102,7 @@
         "nikkei225"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -111,7 +111,7 @@
         "csi300"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "error": null
     },
     {
@@ -121,7 +121,7 @@
         "hangseng"
       ],
       "status": "browser-verified",
-      "checkedAt": "2026-10-23T05:53:50Z",
+      "checkedAt": "2026-10-23T07:28:55Z",
       "lastBrowserCheck": "2026-10-23T05:28:11Z",
       "hostedError": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped",
       "error": null
@@ -148,15 +148,15 @@
         "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2846695f55884287ef12e6a50eef99c41200ecf3c5e666ab6f4898dac76fdb46",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "meanSource": {
@@ -164,15 +164,15 @@
         "url": "https://insight.factset.com/sp-500-earnings-season-update-october-16-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2846695f55884287ef12e6a50eef99c41200ecf3c5e666ab6f4898dac76fdb46",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -200,14 +200,14 @@
           "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
           "page": 14,
           "sha256": "816935307252ff26eb8d719c4874064aa5b8a018ed57568baac0cbc6241a4508",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -303,15 +303,15 @@
           "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html",
           "discoveryUrl": "https://www.ubs.com/global/en.sitemap.xml",
           "page": null,
-          "sha256": "1d13769136ba3381886940b5b681602f534dcc6cf87404cd2762ec4c277ce4ff",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "sha256": "f057d898e58c31ab93780203a54187853ead7cf041a964ff0426621d433be3ce",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -387,7 +387,7 @@
       },
       "growthSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-23T07:17:19Z",
+        "lastAttempt": "2026-10-23T07:30:39Z",
         "lastSuccess": "2026-10-23T06:51:42Z",
         "error": "Publisher robots policy unavailable"
       },
@@ -420,7 +420,7 @@
         },
         "sync": {
           "status": "retained",
-          "lastAttempt": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
           "lastSuccess": "2026-10-23T06:51:42Z",
           "error": "Publisher robots policy unavailable"
         }
@@ -449,14 +449,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "raymond-james-tsx",
         "page": 20
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -469,14 +469,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "cumberland-tsx",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -502,14 +502,14 @@
           "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
           "page": 6,
           "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -534,15 +534,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -551,7 +551,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -566,14 +566,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -604,14 +604,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -639,14 +639,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -655,7 +655,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -670,14 +670,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -708,14 +708,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -740,15 +740,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -757,7 +757,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -772,14 +772,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -810,14 +810,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -842,15 +842,15 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -859,7 +859,7 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -874,14 +874,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -907,14 +907,14 @@
           "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
           "page": 6,
           "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -942,14 +942,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -958,7 +958,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -973,14 +973,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1011,14 +1011,14 @@
           "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
           "page": 19,
           "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1046,14 +1046,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -1062,7 +1062,7 @@
         "url": "https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-europe-index/06272422",
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "9ac90a1c99cad6f0f941bda76e52d7dfb34d3268ee6fe8661818b28a76cd2fbf",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -1077,14 +1077,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1115,14 +1115,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1147,15 +1147,15 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-09-30",
@@ -1164,7 +1164,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -1179,14 +1179,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1217,14 +1217,14 @@
           "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
           "page": 19,
           "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1307,14 +1307,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1343,13 +1343,13 @@
         "sha256": "55ae16d6a56b3cd7521fa75e3092c6904fa249ea6db8eaef616ba0d51b3e23da",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "lseg-stoxx"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1363,13 +1363,13 @@
         "sha256": "55ae16d6a56b3cd7521fa75e3092c6904fa249ea6db8eaef616ba0d51b3e23da",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "lseg-stoxx"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1395,14 +1395,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1430,14 +1430,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-10-13",
@@ -1498,14 +1498,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 30,
           "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1533,14 +1533,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "raymond-james-tsx",
         "page": 21
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1555,13 +1555,13 @@
         "parserVersion": "ig-asia-outlook-1",
         "frequency": "Dated research outlook; article revisions checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "ig-asia-reference"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1587,14 +1587,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 14,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1622,14 +1622,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1641,7 +1641,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1655,14 +1655,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1688,14 +1688,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1778,14 +1778,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1813,14 +1813,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 31
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "earningsBasis": "Forward 12-month earnings",
@@ -1833,14 +1833,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "scbam-reference",
         "page": 4
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1870,8 +1870,8 @@
           "url": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
           "discoveryUrl": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
           "page": null,
-          "sha256": "bfd582ee4efcd0e2e8f3bd95e6fb670b4d7e8eb46da5d8a13ae5e5629e49f265",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "sha256": "698b23d9c74bd623506890d348f471f937452e2b471fcaf92be3bdde5c54f8d7",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Dated article revision check daily",
           "contentUrl": "https://fsm.global/sg/rest/article/get-rcms-article-details?paramArticleId=370440&paramPlatformId=SGFSM",
@@ -1879,8 +1879,8 @@
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -1908,14 +1908,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -1927,7 +1927,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -1941,14 +1941,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -1974,14 +1974,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -2009,14 +2009,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -2028,7 +2028,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -2042,14 +2042,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -2075,14 +2075,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
@@ -2110,14 +2110,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "yieldAsOf": "2026-10-22",
@@ -2129,7 +2129,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -2143,14 +2143,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-23T05:53:50Z",
+        "checkedAt": "2026-10-23T07:28:55Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-23T05:53:50Z",
-        "lastSuccess": "2026-10-23T05:53:50Z",
+        "lastAttempt": "2026-10-23T07:28:55Z",
+        "lastSuccess": "2026-10-23T07:28:55Z",
         "error": null
       },
       "growthForecast": {
@@ -2176,23 +2176,23 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "0f30e2638a5b255be37c0cb6a9b00f8380c0c0d3fa64d5e43498ec6cf0aafe49",
-          "checkedAt": "2026-10-23T07:17:19Z",
+          "checkedAt": "2026-10-23T07:30:39Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-23T07:17:19Z",
-          "lastSuccess": "2026-10-23T07:17:19Z",
+          "lastAttempt": "2026-10-23T07:30:39Z",
+          "lastSuccess": "2026-10-23T07:30:39Z",
           "error": null
         }
       }
     }
   ],
-  "growthCheckAt": "2026-10-23T07:17:19Z",
+  "growthCheckAt": "2026-10-23T07:30:39Z",
   "growthRefresh": {
     "parserVersion": "annual-growth-1",
-    "checkedAt": "2026-10-23T07:17:19Z",
+    "checkedAt": "2026-10-23T07:30:39Z",
     "successfulIndices": [
       "sp500",
       "nasdaq100",

@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-10-23T16:14:10+00:00",
+  "url": "https://est.tickerlantern.com/",
+  "codeCommit": "2085778",
+  "workerVersion": "92d71952-9723-42a6-bf44-b2adb91166c7",
+  "snapshotVersion": 5,
+  "snapshotId": "55ab1d6cee55382cf5960939ebe6549c80f7cf1c982e05dd5960a727c86dd7eb",
+  "liveAssetsMatchBuild": 9,
+  "nodeTestsPassed": 118,
+  "pythonTestsPassed": 122,
+  "productionBrowserAssertionsPassed": 116,
+  "defaultCashModelsCalculated": 20,
+  "defaultCashModelsUnavailable": {
+    "stoxx600": "Published net-return-spread reference is not an eligible cash-dividend anchor."
+  },
+  "universeCSVRecords": 126,
+  "unavailableSTOXXRows": 6,
+  "holdingYears": 5,
+  "uncaughtBrowserErrors": 0,
+  "marketObservationsReviewed": 63,
+  "marketObservationsFreshlyRead": 58,
+  "marketObservationsDatedOnly": 5,
+  "growthObservationsVerified": 49,
+  "scope": "Conditional normalized scenarios; editorial growth and dated timing estimates remain assumptions. No uniquely accurate future return is established."
+}

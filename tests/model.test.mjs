@@ -50,7 +50,7 @@ test('invalid, blank, extreme and fractional holding-period inputs are rejected'
 });
 test('sensitivity uses exact model and keeps non-grid assumptions fixed', () => {
   const grid = sensitivity(DEFAULTS);
-  close(grid.rows[2][2], project().cashIRR);
+  close(grid.rows[2][2], project({ ...DEFAULTS, growth: grid.growths[2], exitPE: grid.multiples[2] }).cashIRR);
   for (let i = 0; i < 5; i++) for (let j = 1; j < 5; j++) assert.ok(grid.rows[i][j] > grid.rows[i][j - 1]);
 });
 test('export contains entry plus each annual cash flow and terminal wealth', () => {

@@ -17,7 +17,7 @@ const tableRows = feed.indices.map(row => `<tr><th scope="row"><button type="but
 for (const [key,value] of Object.entries({ INDEX_BUTTONS:indexButtons, INDEX_TABLE_ROWS:tableRows, COVERAGE_COUNT:`${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`, SOURCE_CHECK_DATE:dated(feed.sourceCheckAt), HISTORY_COVERAGE:historyCoverage(feed) })) html = html.replaceAll(`{{${key}}}`, value);
 for (const [key, value] of Object.entries({ PRICE_CAGR: pct(m.priceCAGR), CASH_IRR: pct(m.cashIRR), REINVEST_CAGR: pct(m.reinvestedCAGR), FINAL_PRICE: m.last.price.toFixed(2), DIVIDENDS: m.last.cumulativeDividend.toFixed(2), CASH_WEALTH: m.last.cashWealth.toFixed(2), REINVEST_WEALTH: m.last.reinvestedWealth.toFixed(2) })) html = html.replaceAll(`{{${key}}}`, value);
 await writeFile('dist/index.html', html);
-for (const file of ['style.css', 'index-desk.css', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
+for (const file of ['style.css', 'index-desk.css', 'growth.css', 'scenario-state.js', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
 await mkdir('dist/data', { recursive: true });
 await copyFile('data/indices.json', 'dist/data/indices.json');
 await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nSitemap: https://est.tickerlantern.com/sitemap.xml\n');

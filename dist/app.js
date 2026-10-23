@@ -1,5 +1,6 @@
 import { DEFAULTS, BOUNDS, project, sensitivity, validate, annualCSV } from './model.js';
-import { validateFeed, sourceInputs, isStale, premium, isDatedMean, historyCoverage, browserCheckOverdue } from './index-data.js';
+import { validateFeed, isStale, premium, isDatedMean, historyCoverage, browserCheckOverdue } from './index-data.js';
+import { scenarioInputs, switchScenario, restoreSourceLocks, presetScenario, fieldBasis, loadScenarios, saveScenarios } from './scenario-state.js';
 
 const $ = id => document.getElementById(id);
 const pct = v => `${(v * 100).toFixed(2)}%`;
@@ -10,13 +11,37 @@ const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', 
 const svgText = (x, y, value, extra = '') => `<text x="${x}" y="${y}" ${extra}>${escape(value)}</text>`;
 const inputKeys = Object.keys(BOUNDS);
 let activeModel = null, announceTimer;
-const editableKeys = [...inputKeys, 'dividendMode', 'dividendYield'];
-let indexFeed = null, selectedIndexId = 'sp500', sourceFollowing = true, updateInProgress = false;
-const indexOverrides = new Map(), savedScenarios = new Map();
+const editableKeys = [...inputKeys, 'growthMode', 'dividendMode', 'dividendYield'];
+let browserStorage;
+try { browserStorage = window.localStorage; } catch { /* Session-only editing remains available. */ }
+const stored = loadScenarios(browserStorage);
+let indexFeed = null, selectedIndexId = new URL(location.href).searchParams.get('index') || stored.selectedIndexId, sourceFollowing = stored.following, updateInProgress = false;
+const indexOverrides = stored.overrides, savedScenarios = stored.scenarios;
+let annualGrowth = [];
 const selectedIndex = () => indexFeed?.indices.find(row => row.id === selectedIndexId);
-const readInputs = () => Object.fromEntries(editableKeys.map(key => [key, $(key).value]));
-function writeInputs(values) { for (const key of editableKeys) if (values[key] != null) $(key).value = values[key]; }
-function lockField(key) { if (!['growth', 'years'].includes(key)) indexOverrides.set(selectedIndexId, { ...(indexOverrides.get(selectedIndexId) || {}), [key]: true }); }
+const readInputs = () => ({ ...Object.fromEntries(editableKeys.map(key => [key, $(key).value])), annualGrowth: [...annualGrowth] });
+function writeInputs(values) {
+  for (const key of editableKeys) if (values[key] != null) $(key).value = values[key];
+  annualGrowth = [...(values.annualGrowth || [])];
+  renderGrowthEditor();
+}
+function lockField(key) { if ([...editableKeys, 'annualGrowth'].includes(key)) indexOverrides.set(selectedIndexId, { ...(indexOverrides.get(selectedIndexId) || {}), [key]: true }); }
+function rememberScenario() {
+  savedScenarios.set(selectedIndexId, readInputs());
+  const saved = saveScenarios(browserStorage, { scenarios: savedScenarios, overrides: indexOverrides, selectedIndexId, following: sourceFollowing });
+  $('scenario-save-status').textContent = saved ? 'Saved in this browser · each benchmark keeps its own assumptions. Other devices and browsers have separate settings.' : 'Settings are kept for this visit only; browser storage is unavailable.';
+}
+function renderGrowthEditor() {
+  const annual = $('growthMode').value === 'annual', years = +$('years').value;
+  $('annual-growth-panel').hidden = !annual;
+  $('growth-label').textContent = annual ? 'Default for added years' : 'Annual EPS growth';
+  $('growth-help').textContent = annual ? 'New years start at this rate. Edit each year below, or apply this rate to all years.' : 'One rate for every year of this benchmark’s scenario.';
+  if (!annual || !Number.isInteger(years) || years < 1 || years > 20) return;
+  while (annualGrowth.length < years) annualGrowth.push($('growth').value);
+  const editor = $('annual-growth-inputs');
+  if (editor.children.length !== years) editor.innerHTML = Array.from({ length: years }, (_, i) => `<div class="annual-growth-field"><label for="growth-year-${i + 1}">Year ${i + 1} EPS growth</label><div class="input-wrap"><input id="growth-year-${i + 1}" name="annualGrowth" data-growth-year="${i}" type="number" min="-15" max="20" step="any" required aria-describedby="annualGrowth-error"><span>%</span></div></div>`).join('');
+  for (const input of editor.querySelectorAll('[data-growth-year]')) if (input !== document.activeElement) input.value = annualGrowth[+input.dataset.growthYear];
+}
 
 function axisStep(span) {
   const raw = Math.max(span, .01) / 4;
@@ -96,15 +121,17 @@ function waterfall(model) {
 
 function sensitivityTable(model) {
   const grid = sensitivity(model.input);
+  $('sensitivity-table').tHead.rows[0].innerHTML = '<th scope="col">EPS growth</th>' + grid.multiples.map(value => `<th scope="col">${short(value)}×</th>`).join('');
   const heat = value => value < -.02 ? 0 : value < 0 ? 1 : value < .03 ? 2 : value < .06 ? 3 : value < .09 ? 4 : 5;
-  $('sensitivity-body').innerHTML = grid.rows.map((row, i) => `<tr><th scope="row">${grid.growths[i]}%</th>${row.map((value, j) => `<td class="heat-${heat(value)}"><button type="button" data-growth="${grid.growths[i]}" data-pe="${grid.multiples[j]}" aria-pressed="${model.input.growth === grid.growths[i] && model.input.exitPE === grid.multiples[j]}" aria-label="EPS growth ${grid.growths[i]} percent, exit P/E ${grid.multiples[j]} times: cash-flow IRR ${pct(value)}">${pct(value)}</button></td>`).join('')}</tr>`).join('');
+  $('sensitivity-body').innerHTML = grid.rows.map((row, i) => `<tr><th scope="row">${short(grid.growths[i])}%</th>${row.map((value, j) => `<td class="heat-${heat(value)}"><button type="button" data-growth="${grid.growths[i]}" data-pe="${grid.multiples[j]}" aria-pressed="${model.input.growthMode !== 'annual' && Math.abs(model.input.growth - grid.growths[i]) < .00005 && Math.abs(model.input.exitPE - grid.multiples[j]) < .00005}" aria-label="Constant EPS growth ${short(grid.growths[i])} percent, exit P/E ${short(grid.multiples[j])} times: cash-flow IRR ${pct(value)}">${pct(value)}</button></td>`).join('')}</tr>`).join('');
   $('sensitivity-badge').textContent = `${model.input.years}-year holding period`;
   const dividendBasis = model.input.dividendMode === 'yield' ? `initial yield ${short(model.input.dividendYield)}%` : `payout ${short(model.input.payout)}%`;
-  $('sensitivity-note').textContent = `Entry P/E ${short(model.input.entryPE)}×, ${dividendBasis}, holding period ${model.input.years} years. Cells change only growth and exit P/E. Select a cell to load that scenario. No outline means the current inputs fall between these grid points.`;
+  $('sensitivity-active').textContent = model.input.growthMode === 'annual' ? `Custom yearly path active · equivalent EPS CAGR ${pct(model.epsCAGR)}. The grid shows alternative constant-rate paths.` : `Active scenario: ${short(model.input.growth)}% annual EPS growth · ${short(model.input.exitPE)}× exit P/E.`;
+  $('sensitivity-note').textContent = `Entry P/E ${short(model.input.entryPE)}×, ${dividendBasis}, holding period ${model.input.years} years. Each cell uses the same EPS growth rate in every year. Selecting a cell switches to that constant-rate scenario and exit P/E. Your saved yearly path is kept for switching back. No outline means the active path differs from these grid points.`;
 }
 
 function annualTable(model) {
-  $('annual-data-body').innerHTML = model.points.map(p => `<tr><th scope="row">${p.year === 0 ? 'Entry' : p.year}</th><td>${n(p.eps)}</td><td>${n(p.pe)}×</td><td>${n(p.price)}</td><td>${n(p.dividend)}</td><td>${n(p.cashWealth)}</td><td>${n(p.reinvestedWealth)}</td></tr>`).join('');
+  $('annual-data-body').innerHTML = model.points.map(p => `<tr><th scope="row">${p.year === 0 ? 'Entry' : p.year}</th><td>${p.year === 0 ? '—' : short(p.growth) + '%'}</td><td>${n(p.eps)}</td><td>${n(p.pe)}×</td><td>${n(p.price)}</td><td>${n(p.dividend)}</td><td>${n(p.cashWealth)}</td><td>${n(p.reinvestedWealth)}</td></tr>`).join('');
 }
 
 const dateLabel = value => value ? new Date(value).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: value.includes('T') ? 'America/Vancouver' : 'UTC' }) : 'Not connected';
@@ -148,6 +175,10 @@ function renderScenarioContext() {
   if (!row) return;
   const locks = indexOverrides.get(row.id) || {}, custom = Object.keys(locks).length;
   $('scenario-index-label').textContent = row.name;
+  if ($('compact-benchmark')) $('compact-benchmark').textContent = row.name;
+  if ($('compact-irr')) $('compact-irr').textContent = activeModel ? pct(activeModel.cashIRR) : '—';
+  const labels = { custom: 'Your assumption · saved for this benchmark', default: 'Illustrative default · not a sourced forecast', source: 'Linked to the source observation', reference: 'Linked to the published 10-year reference', fallback: 'Flat-multiple assumption · no verified mean', manual: 'Source following paused' };
+  for (const key of ['growth', 'years', 'payout', 'entryPE', 'exitPE', 'dividendYield']) if ($(key + '-basis')) $(key + '-basis').textContent = labels[fieldBasis(key, row, locks, sourceFollowing)];
   $('scenario-mode-label').textContent = row.forwardPE == null ? 'Illustrative inputs · source valuation unavailable' : !sourceFollowing ? 'Source following paused · custom scenario' : `Source-linked${custom ? ` · ${custom} protected field${custom > 1 ? 's' : ''}` : ''} · growth and horizon are your assumptions`;
   if (!activeModel) {
     $('index-model-note').textContent = 'Correct the highlighted scenario assumptions to calculate a return. Source observations above remain unchanged.';
@@ -161,7 +192,8 @@ function renderScenarioContext() {
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
   const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : row.mean10YearForwardPE != null ? `${isDatedMean(row) ? 'dated 10-year reference' : 'reported 10-year mean'} as of ${dateLabel(row.meanAsOf)}` : 'flat-multiple assumption; 10-year mean unavailable';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendMode && !locks.dividendYield ? ' anchored to the historical source yield' : ' (custom)'}` : `${short(input.payout)}% assumed payout; not a reported payout`;
-  $('index-model-note').textContent = `Scenario: ${short(input.growth)}% EPS growth, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. Source values are observations, not forecasts.`;
+  const growthBasis = input.growthMode === 'annual' ? `yearly EPS growth [${input.annualGrowth.map(value => short(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% EPS growth each year`;
+  $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. Growth rates are your assumptions. Source values are observations, not forecasts.`;
 }
 
 function renderIndexDetail() {
@@ -197,19 +229,17 @@ function renderIndexDetail() {
 
 function applySourceValues({ restore = false } = {}) {
   const row = selectedIndex();
-  if (!row || row.forwardPE == null) return;
-  if (restore) { indexOverrides.delete(row.id); sourceFollowing = true; $('follow-source').checked = true; }
-  if (sourceFollowing) writeInputs(sourceInputs(row, readInputs(), indexOverrides.get(row.id) || {}));
+  if (!row) return;
+  if (restore) { indexOverrides.set(row.id, restoreSourceLocks(indexOverrides.get(row.id))); sourceFollowing = true; $('follow-source').checked = true; }
+  if (sourceFollowing) writeInputs(scenarioInputs(row, readInputs(), indexOverrides.get(row.id) || {}));
   update({ announce: false });
 }
 
 function selectIndex(id) {
   if (!indexFeed?.indices.some(row => row.id === id)) return;
   savedScenarios.set(selectedIndexId, readInputs());
-  const globalAssumptions = { growth: $('growth').value, years: $('years').value };
   selectedIndexId = id;
-  writeInputs({ ...DEFAULTS, ...(savedScenarios.get(id) || {}), ...globalAssumptions });
-  if (sourceFollowing) applySourceValues();
+  writeInputs(switchScenario(selectedIndex(), savedScenarios.get(id), indexOverrides.get(id) || {}, sourceFollowing));
   update(); renderIndexList(); renderIndexDetail();
   const url = new URL(location.href); url.searchParams.set('index', id); history.replaceState(null, '', url);
   $('index-update-status').textContent = `${selectedIndex().name} selected. ${selectedIndex().forwardPE == null ? 'No sourced valuation is connected; model inputs are illustrative.' : 'Valuation details and the return scenario have updated.'}`;
@@ -233,7 +263,10 @@ async function loadIndexData({ manual = false } = {}) {
     if (indexFeed && feed.publishedAt < indexFeed.publishedAt) throw new Error('An older snapshot was returned');
     const firstLoad = !indexFeed;
     indexFeed = feed;
-    if (firstLoad) { const requested = new URL(location.href).searchParams.get('index'); if (feed.indices.some(row => row.id === requested)) selectedIndexId = requested; }
+    if (firstLoad) {
+      if (!feed.indices.some(row => row.id === selectedIndexId)) selectedIndexId = 'sp500';
+      writeInputs(switchScenario(selectedIndex(), savedScenarios.get(selectedIndexId), indexOverrides.get(selectedIndexId) || {}, sourceFollowing));
+    }
     const observed = feed.indices.filter(row => row.forwardPE != null).length;
     $('coverage-count').textContent = `${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`;
     $('data-check-date').textContent = 'Source checks (PT): ' + dateLabel(feed.sourceCheckAt);
@@ -252,13 +285,14 @@ for (const container of [$('index-list'), $('index-comparison-body')]) container
   selectIndex(button.dataset.index);
   container.querySelector(`button[data-index="${selectedIndexId}"]`)?.focus({ preventScroll: true });
 });
-$('follow-source').addEventListener('change', () => { sourceFollowing = $('follow-source').checked; if (sourceFollowing) applySourceValues(); renderScenarioContext(); });
+$('follow-source').addEventListener('change', () => { sourceFollowing = $('follow-source').checked; if (sourceFollowing) applySourceValues(); rememberScenario(); renderScenarioContext(); });
 $('restore-source').addEventListener('click', () => { applySourceValues({ restore: true }); renderIndexDetail(); $('index-update-status').textContent = 'Source values restored. EPS growth and the holding period remain your scenario assumptions.'; });
 $('check-data').addEventListener('click', () => loadIndexData({ manual: true }));
 setInterval(() => { if (document.visibilityState === 'visible') loadIndexData(); }, 300000);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadIndexData(); });
 
 function update({ announce = true } = {}) {
+  renderGrowthEditor();
   const input = readInputs();
   $('payout-field').hidden = input.dividendMode === 'yield';
   $('dividend-yield-field').hidden = input.dividendMode !== 'yield';
@@ -267,6 +301,12 @@ function update({ announce = true } = {}) {
     $(key).setAttribute('aria-invalid', errors[key] ? 'true' : 'false');
     $(key + '-error').textContent = errors[key] || '';
   }
+  $('annualGrowth-error').textContent = errors.annualGrowth || '';
+  for (const input of $('annual-growth-inputs').querySelectorAll('[data-growth-year]')) {
+    const value = annualGrowth[+input.dataset.growthYear];
+    input.setAttribute('aria-invalid', value === '' || value == null || !Number.isFinite(+value) || +value < -15 || +value > 20 ? 'true' : 'false');
+  }
+  rememberScenario();
   $('model-error').hidden = !invalid;
   $('valid-output').hidden = invalid;
   $('download-csv').disabled = invalid;
@@ -275,8 +315,10 @@ function update({ announce = true } = {}) {
     $('model-error').textContent = 'Update the highlighted assumptions to calculate a return. Results and charts are hidden until the inputs are valid.';
     $('waterfall-chart').innerHTML = '<p class="chart-fallback">Correct the scenario inputs to see the return bridge.</p>';
     $('sensitivity-body').innerHTML = '<tr><td colspan="6">Correct the scenario inputs to calculate sensitivity.</td></tr>';
-    $('annual-data-body').innerHTML = '<tr><td colspan="7">Correct the scenario inputs to view annual data.</td></tr>';
+    $('annual-data-body').innerHTML = '<tr><td colspan="8">Correct the scenario inputs to view annual data.</td></tr>';
+    $('annual-growth-summary').textContent = 'Complete the highlighted yearly rates to calculate this path.';
     $('sensitivity-badge').textContent = 'Inputs required';
+    $('sensitivity-active').textContent = '';
     $('sensitivity-note').textContent = 'No sensitivity results are shown while the scenario inputs are invalid.';
     renderScenarioContext();
     return;
@@ -290,8 +332,9 @@ function update({ announce = true } = {}) {
   wealthChart(m); waterfall(m); sensitivityTable(m); annualTable(m);
   const multipleText = m.input.exitPE < m.input.entryPE ? 'a lower exit P/E reduces price appreciation' : m.input.exitPE > m.input.entryPE ? 'a higher exit P/E amplifies price appreciation' : 'an unchanged P/E lets the price track EPS growth';
   const payoutText = m.last.cumulativeDividend === 0 ? 'With no dividends, all three annualized return measures coincide.' : `Cash dividends total ${n(m.last.cumulativeDividend)} per original unit; investor cash-flow IRR is ${pct(m.cashIRR)}.`;
-  $('model-takeaway').textContent = `At ${short(m.input.growth)}% annual EPS growth, ${multipleText}. ${payoutText}`;
-  savedScenarios.set(selectedIndexId, readInputs());
+  const growthDescription = m.input.growthMode === 'annual' ? `Your yearly EPS path compounds at ${pct(m.epsCAGR)} a year overall` : `At ${short(m.input.growth)}% annual EPS growth`;
+  $('model-takeaway').textContent = `${growthDescription}, ${multipleText}. ${payoutText}`;
+  $('annual-growth-summary').textContent = `Equivalent EPS CAGR: ${pct(m.epsCAGR)} · years compound in the order shown.`;
   renderScenarioContext();
   if (announce) {
     clearTimeout(announceTimer);
@@ -302,20 +345,28 @@ function update({ announce = true } = {}) {
 $('model-fields').disabled = false;
 for (const button of document.querySelectorAll('[data-preset], #reset-model, #print-report')) button.disabled = false;
 $('assumptions').addEventListener('submit', event => event.preventDefault());
-$('assumptions').addEventListener('input', event => { lockField(event.target.name); update(); });
-$('reset-model').addEventListener('click', () => { indexOverrides.delete(selectedIndexId); writeInputs(sourceFollowing && selectedIndex()?.forwardPE != null ? sourceInputs(selectedIndex(), DEFAULTS) : DEFAULTS); update(); });
+$('assumptions').addEventListener('input', event => {
+  if (event.target.matches('[data-growth-year]')) annualGrowth[+event.target.dataset.growthYear] = event.target.value;
+  lockField(event.target.name); update();
+});
+$('fill-annual-growth').addEventListener('click', () => {
+  if (!Number.isInteger(+$('years').value) || +$('years').value < 1 || +$('years').value > 20) return;
+  annualGrowth = Array.from({ length: +$('years').value }, () => $('growth').value);
+  lockField('annualGrowth'); update();
+});
+$('reset-model').addEventListener('click', () => { indexOverrides.delete(selectedIndexId); writeInputs(scenarioInputs(selectedIndex(), DEFAULTS, {}, sourceFollowing)); update(); });
 for (const button of document.querySelectorAll('[data-preset]')) button.addEventListener('click', () => {
-  if (button.dataset.preset === 'compression') { writeInputs(DEFAULTS); for (const key of ['entryPE','exitPE','dividendMode','payout','dividendYield']) lockField(key); }
-  if (button.dataset.preset === 'constant') { $('exitPE').value = $('entryPE').value; lockField('exitPE'); }
-  if (button.dataset.preset === 'zero') { $('dividendMode').value = 'payout'; $('payout').value = 0; lockField('dividendMode'); lockField('payout'); }
+  const preset = presetScenario(readInputs(), button.dataset.preset);
+  writeInputs(preset.values); for (const key of preset.locks) lockField(key);
   update();
 });
 $('sensitivity-body').addEventListener('click', event => {
   const button = event.target.closest('button[data-growth]');
   if (!button) return;
   const { growth, pe } = button.dataset;
-  $('growth').value = growth; $('exitPE').value = pe; update();
-  lockField('exitPE'); renderScenarioContext();
+  $('growthMode').value = 'constant'; $('growth').value = growth; $('exitPE').value = pe;
+  for (const key of ['growthMode', 'growth', 'exitPE']) lockField(key);
+  update();
   // Preserve keyboard focus after replacing the table's content.
   $('sensitivity-body').querySelector(`button[data-growth="${growth}"][data-pe="${pe}"]`)?.focus({ preventScroll: true });
 });
@@ -334,6 +385,8 @@ $('print-report').addEventListener('click', () => window.print());
 function revealAnchor() { const target = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (target?.tagName === 'DETAILS') target.open = true; }
 window.addEventListener('hashchange', revealAnchor);
 revealAnchor();
+writeInputs({ ...DEFAULTS, ...(savedScenarios.get(selectedIndexId) || {}) });
+$('follow-source').checked = sourceFollowing;
 update({ announce: false });
 for (const key of ['entryPE','exitPE']) { $(key).min = BOUNDS[key][0]; $(key).max = BOUNDS[key][1]; }
 loadIndexData();

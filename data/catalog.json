@@ -1,0 +1,212 @@
+[
+  {
+    "id": "sp500",
+    "name": "S&P 500",
+    "region": "North America",
+    "description": "US large-cap benchmark",
+    "profileUrl": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": "factset"
+  },
+  {
+    "id": "nasdaq100",
+    "name": "Nasdaq-100",
+    "region": "North America",
+    "description": "Large non-financial Nasdaq companies",
+    "profileUrl": "https://indexes.nasdaq.com/Index/Overview/NDX",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "russell2000",
+    "name": "Russell 2000",
+    "region": "North America",
+    "description": "US small-cap benchmark",
+    "profileUrl": "https://www.lseg.com/en/ftse-russell/indices/russell-us",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "tsx",
+    "name": "S&P/TSX Composite",
+    "region": "North America",
+    "description": "Canadian broad market",
+    "profileUrl": "https://www.spglobal.com/spdji/en/indices/equity/sp-tsx-composite-index/",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "msci-canada",
+    "name": "MSCI Canada",
+    "region": "North America",
+    "description": "Canadian large and mid caps; distinct from the TSX",
+    "profileUrl": "https://www.msci.com/indexes/index/912400/msci-canada-index",
+    "landingUrl": null,
+    "pdfUrl": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "acwi",
+    "name": "MSCI ACWI",
+    "region": "Global",
+    "description": "Developed and emerging markets",
+    "profileUrl": "https://www.msci.com/indexes/index/892400/msci-acwi-index",
+    "landingUrl": null,
+    "pdfUrl": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "world",
+    "name": "MSCI World",
+    "region": "Global",
+    "description": "Developed-market large and mid caps",
+    "profileUrl": "https://www.msci.com/indexes/index/990100/msci-world-index",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "eafe",
+    "name": "MSCI EAFE",
+    "region": "Global",
+    "description": "Developed markets outside the US and Canada",
+    "profileUrl": "https://www.msci.com/indexes/index/990300/msci-eafe-index",
+    "landingUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "em",
+    "name": "MSCI Emerging Markets",
+    "region": "Global",
+    "description": "Emerging-market large and mid caps",
+    "profileUrl": "https://www.msci.com/indexes/index/891800/msci-em-emerging-markets-index-2",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "europe",
+    "name": "MSCI Europe",
+    "region": "Europe",
+    "description": "Developed European large and mid caps",
+    "profileUrl": "https://www.msci.com/indexes/index/990500/msci-europe-index",
+    "landingUrl": "https://www.msci.com/www/index-factsheets/msci-europe-index/06272422",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "uk",
+    "name": "MSCI United Kingdom",
+    "region": "Europe",
+    "description": "UK large and mid caps; distinct from the FTSE 100",
+    "profileUrl": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
+    "landingUrl": null,
+    "pdfUrl": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "ftse100",
+    "name": "FTSE 100",
+    "region": "Europe",
+    "description": "UK large-cap benchmark",
+    "profileUrl": "https://www.lseg.com/en/ftse-russell/indices/uk",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "stoxx600",
+    "name": "STOXX Europe 600",
+    "region": "Europe",
+    "description": "Pan-European broad market",
+    "profileUrl": "https://www.stoxx.com/index-details?symbol=SXXP",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "japan",
+    "name": "MSCI Japan",
+    "region": "Asia Pacific",
+    "description": "Japanese large and mid caps; distinct from the Nikkei",
+    "profileUrl": "https://www.msci.com/indexes/index/939200/msci-japan-index",
+    "landingUrl": "https://www.msci.com/www/fact-sheet/msci-japan-index/08199682",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "nikkei225",
+    "name": "Nikkei 225",
+    "region": "Asia Pacific",
+    "description": "Japanese price-weighted large-cap benchmark",
+    "profileUrl": "https://indexes.nikkei.co.jp/en/nkave",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "china",
+    "name": "MSCI China",
+    "region": "Asia Pacific",
+    "description": "Chinese equities across eligible listing markets",
+    "profileUrl": "https://www.msci.com/indexes/index/302400/msci-china-index",
+    "landingUrl": "https://www.msci.com/www/index-factsheets/msci-china-index/05788560",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "hangseng",
+    "name": "Hang Seng",
+    "region": "Asia Pacific",
+    "description": "Hong Kong-listed large companies",
+    "profileUrl": "https://www.hsi.com.hk/eng/indexes/all-indexes/hsi",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "csi300",
+    "name": "CSI 300",
+    "region": "Asia Pacific",
+    "description": "Mainland China A-share large caps",
+    "profileUrl": "https://www.csindex.com.cn/#/about?section=about",
+    "landingUrl": null,
+    "pdfUrl": null,
+    "adapter": null
+  },
+  {
+    "id": "india",
+    "name": "MSCI India",
+    "region": "Asia Pacific",
+    "description": "Indian large and mid caps",
+    "profileUrl": "https://www.msci.com/indexes/index/935600/msci-india-index",
+    "landingUrl": "https://www.msci.com/www/fact-sheet/msci-india-index/06650865",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "asia-ex-japan",
+    "name": "MSCI AC Asia Pacific ex Japan",
+    "region": "Asia Pacific",
+    "description": "Developed and emerging Asia Pacific outside Japan",
+    "profileUrl": "https://www.msci.com/www/index-factsheets/msci-ac-asia-pacific-ex-japan/08499694",
+    "landingUrl": "https://www.msci.com/www/index-factsheets/msci-ac-asia-pacific-ex-japan/08499694",
+    "pdfUrl": null,
+    "adapter": "msci-pdf"
+  },
+  {
+    "id": "australia",
+    "name": "MSCI Australia",
+    "region": "Asia Pacific",
+    "description": "Australian large and mid caps",
+    "profileUrl": "https://www.msci.com/documents/10199/255599/msci-australia-index-aud-net.pdf",
+    "landingUrl": null,
+    "pdfUrl": "https://www.msci.com/documents/10199/255599/msci-australia-index-aud-net.pdf",
+    "adapter": "msci-pdf"
+  }
+]

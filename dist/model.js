@@ -1,14 +1,17 @@
 // All amounts are illustrative. EPS uses a consistent normalized basis.
-export const DEFAULTS = Object.freeze({ growth: 6, entryPE: 25, exitPE: 20, payout: 30, years: 5 });
-export const BOUNDS = Object.freeze({ growth: [-15, 20], entryPE: [8, 40], exitPE: [8, 40], payout: [0, 100], years: [1, 20] });
+export const DEFAULTS = Object.freeze({ growth: 6, entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
+export const BOUNDS = Object.freeze({ growth: [-15, 20], entryPE: [1, 100], exitPE: [1, 100], payout: [0, 100], years: [1, 20] });
 
 export function validate(input) {
   const errors = {};
   for (const [key, [min, max]] of Object.entries(BOUNDS)) {
+    if (key === 'payout' && input.dividendMode === 'yield') continue;
     if (input[key] === '' || input[key] === null || input[key] === undefined || !Number.isFinite(Number(input[key]))) errors[key] = 'Enter a number.';
     else if (+input[key] < min || +input[key] > max) errors[key] = `Use a value between ${min} and ${max}.`;
   }
   if (!errors.years && !Number.isInteger(+input.years)) errors.years = 'Use a whole number of years.';
+  if (input.dividendMode && !['payout', 'yield'].includes(input.dividendMode)) errors.dividendMode = 'Select a dividend convention.';
+  if (input.dividendMode === 'yield' && (input.dividendYield === '' || input.dividendYield == null || !Number.isFinite(+input.dividendYield) || +input.dividendYield < 0 || +input.dividendYield > 15)) errors.dividendYield = 'Enter an initial yield between 0 and 15%.';
   return errors;
 }
 
@@ -28,7 +31,8 @@ export function irr(cashflows) {
 export function project(input = DEFAULTS) {
   const errors = validate(input);
   if (Object.keys(errors).length) throw new Error('Invalid assumptions: ' + JSON.stringify(errors));
-  const { growth, entryPE, exitPE, payout, years } = Object.fromEntries(Object.entries(input).map(([k, v]) => [k, +v]));
+  const { growth, entryPE, exitPE, payout, years } = Object.fromEntries(Object.keys(BOUNDS).map(k => [k, +input[k]]));
+  const dividendMode = input.dividendMode || 'payout', dividendYield = dividendMode === 'yield' ? +input.dividendYield : null;
   const initialPrice = 100, initialEPS = initialPrice / entryPE, g = growth / 100, p = payout / 100;
   const points = [{ year: 0, eps: initialEPS, pe: entryPE, price: 100, dividend: 0, cumulativeDividend: 0, cashWealth: 100, reinvestedWealth: 100, shares: 1 }];
   const cashflows = [-initialPrice];
@@ -39,7 +43,7 @@ export function project(input = DEFAULTS) {
     const price = eps * pe;
     // Year t's distribution is p times the prior valuation date's EPS anchor.
     // Annual cash receipt/reinvestment at the year-end ex-distribution price.
-    const dividend = p * initialEPS * (1 + g) ** (year - 1);
+    const dividend = (dividendMode === 'yield' ? initialPrice * dividendYield / 100 : p * initialEPS) * (1 + g) ** (year - 1);
     cumulativeDividend += dividend;
     shares *= 1 + dividend / price;
     points.push({ year, eps, pe, price, dividend, cumulativeDividend, cashWealth: price + cumulativeDividend, reinvestedWealth: shares * price, shares });
@@ -51,7 +55,7 @@ export function project(input = DEFAULTS) {
   const reinvestedCAGR = (last.reinvestedWealth / initialPrice) ** (1 / years) - 1;
   const multipleEffect = (exitPE / entryPE) ** (1 / years) - 1;
   const epsOnlyPrice = initialPrice * (1 + g) ** years;
-  return { input: { growth, entryPE, exitPE, payout, years }, initialPrice, initialEPS, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
+  return { input: { growth, entryPE, exitPE, payout, years, dividendMode, dividendYield }, initialPrice, initialEPS, points, cashflows, priceCAGR, cashWealthCAGR, reinvestedCAGR, cashIRR: irr(cashflows), multipleEffect, epsOnlyPrice, epsGain: epsOnlyPrice - 100, multipleImpact: last.price - epsOnlyPrice, last };
 }
 
 export function sensitivity(input) {

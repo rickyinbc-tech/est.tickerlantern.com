@@ -53,7 +53,7 @@ test('one shared document failure is counted once across owned metrics and job m
  const row=structuredClone(feed.indices.find(r=>r.id==='world'));
  row.sync={status:'retained',lastAttempt:now.toISOString(),lastSuccess:'2026-10-22T08:00:00Z',error:'Fixture',ownerId:'primary:msci:acwi',metrics:['forwardPE','dividendYield']};
  row.yieldSync={...row.sync}; row.meanSync={status:'ok',lastAttempt:now.toISOString(),lastSuccess:now.toISOString()}; row.growthForecast.sync={...row.meanSync};
- const isolated={sourceCheckAt:now.toISOString(),growthCheckAt:now.toISOString(),indices:[row],primarySourceJobs:[{id:'primary:msci:acwi',status:'retained'}],sourceJobs:[],growthRefresh:{failures:[]},refresh:{failed:1}};
+ const isolated={sourceCheckAt:now.toISOString(),growthCheckAt:now.toISOString(),indices:[row],primarySourceJobs:[{id:'primary:msci:acwi',indices:['acwi','world','em'],status:'retained'}],sourceJobs:[],growthRefresh:{failures:[]},refresh:{failed:3}};
  assert.equal(updateHealth(isolated,now).failures,1);
 });
 test('retained evidence exposes check times and independently evaluated cadence',()=>{

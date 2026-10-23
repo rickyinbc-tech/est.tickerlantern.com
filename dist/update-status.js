@@ -32,9 +32,16 @@ export function updateHealth(feed, now = new Date()) {
     const status=resolvedSync(row,key);
     if(failed(status.status)) (key==='growthForecast'?growth:valuations).add(group(row,key,status));
   }
-  for(const job of [...feed?.primarySourceJobs || [],...feed?.sourceJobs || []]) if(!['ok','browser-verified'].includes(job.status)) valuations.add(job.id);
-  // Legacy aggregate counters are a lower bound, not an additional set of failures.
-  const valuationFailures=Math.max(valuations.size,Number.isSafeInteger(feed?.refresh?.failed)?feed.refresh.failed:0);
+  const primary=(feed?.primarySourceJobs || []).filter(job=>!['ok','browser-verified'].includes(job.status));
+  const supplemental=(feed?.sourceJobs || []).filter(job=>!['ok','browser-verified'].includes(job.status));
+  const jobs=new Set([...primary,...supplemental].map(job=>job.id));
+  for(const id of jobs) valuations.add(id);
+  // The old aggregate counts each failed primary target, rather than each job.
+  // Remove targets accounted for by explicit outcomes before using the remainder
+  // as a lower bound. A three-index factsheet failure is still one source check.
+  const reported=Number.isSafeInteger(feed?.refresh?.failed)?feed.refresh.failed:0;
+  const accounted=primary.reduce((n,job)=>n+(job.indices?.length || 1),0)+supplemental.length;
+  const valuationFailures=Math.max(valuations.size,jobs.size+Math.max(0,reported-accounted));
   const growthFailures=Math.max(growth.size,feed?.growthRefresh?.failures?.length || 0);
   const failures=valuationFailures+growthFailures;
   const browserDependencies=(feed?.sourceJobs || []).filter(job=>job.status==='browser-verified' && job.hostedError).length;

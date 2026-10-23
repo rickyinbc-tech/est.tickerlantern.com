@@ -20,7 +20,7 @@ npm run preview
 
 The explorer leads directly into assumptions, return metrics, wealth attribution and sensitivity. The navy/teal editorial style is retained in `src/workbench.css`, with a keyboard-operated section menu, larger labels, responsive SVGs, a mobile result summary, reduced-motion support and print-specific layouts.
 
-`src/scenario-state.js` defines the state policy. Growth and holding period carry across benchmark selections. Valuation, payout, dividend convention and yield edits are saved separately for each benchmark for the current page session. New benchmarks resolve their own source values or explicitly labelled defaults; another benchmark's valuation is never inherited. Source checks preserve edited fields. Pausing source following keeps the manual scenario. **Restore source values** resumes following and restores valuations, convention and available yield while preserving growth, payout and horizon. **Reset scenario** resets the current benchmark to source/default inputs, 6% growth, five years and 30% assumed payout; other saved benchmarks are kept. Saved scenarios are not persisted after page reload.
+`src/scenario-state.js` defines the state policy. Each benchmark retains its own growth schedule, holding period, valuation, payout, dividend convention and yield edits. New benchmarks resolve their own source values or explicitly labelled defaults; another benchmark's valuation is never inherited. Source checks preserve edited fields. Pausing source following keeps the manual scenario. **Restore source values** resumes following and restores valuations, convention and available yield while preserving growth, payout and horizon. **Reset scenario** resets the current benchmark to source/default inputs, 6% growth, five years and 30% assumed payout; other saved benchmarks are kept. Saved scenarios persist in this browser; other browsers and devices have separate settings.
 
 Compression changes only exit P/E to 80% of active entry (minimum 1×); Constant P/E sets exit equal to entry. No dividends zeros the active payout or initial yield. The fixed 25× → 20× teaching example is separate from the active wealth bridge.
 
@@ -37,6 +37,14 @@ Source is maintained in GitHub. Cloudflare Workers serves `dist/` and a narrow r
 Price begins at 100, EPS at `100 / entryPE`. EPS grows annually; P/E moves geometrically from entry to exit. Each year's dividend is the payout ratio times the prior valuation date's EPS anchor, received at year-end. Terminal prices reflect distributions. Investor IRR includes annual dividends plus final sale proceeds; reinvested CAGR purchases additional units at each modeled year-end price. These are different return conventions. The model assumes growth is feasible with the selected payout; it does not enforce that feasibility.
 
 Public references and exact formulas are included in the page. No raw conversation transcript, personal holdings, private archives, authentication material, or private source attachments are included.
+
+## Independent yearly growth scenarios
+
+In the scenario lab, choose **Different rate each year** to enter a separate EPS growth rate for every holding-period year. Each benchmark retains its own rates, horizon, dividend convention and protected valuation inputs. Charts, summary returns, annual calculations and CSV downloads use that same compounded EPS path. The annual table and CSV identify the rate used in each year. Dividends continue to use the prior-year EPS convention.
+
+Settings persist in this browser’s local storage under `tickerlantern.est.scenarios.v1`; they are not synchronized across devices or browsers. Source refreshes and Restore source values preserve custom growth paths. Reset affects only the selected benchmark. Shortening the horizon keeps later rates for reuse. Added years use that benchmark’s default rate. The 6% starting rate remains an illustrative assumption, not a sourced earnings forecast. Sensitivity cells explicitly use constant annual growth and selecting one switches to constant mode while retaining the saved yearly path for switching back.
+
+Optional browser regression checks require `agent-browser` and a running preview: `python3 tests/browser_growth_sync.py http://127.0.0.1:8764/`. They use a separate browser session, verify immediate mode switching, independent schedules, reload persistence, source protection and matching CSV output, and close the session afterward.
 
 ## Daily index source checks
 

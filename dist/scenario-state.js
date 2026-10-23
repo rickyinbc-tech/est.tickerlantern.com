@@ -13,8 +13,9 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
   return next;
 }
 
-export function switchScenario(row, saved, shared, locked = {}, following = true) {
-  return scenarioInputs(row, { ...DEFAULTS, ...saved, ...shared }, locked, following);
+export function switchScenario(row, saved, locked = {}, following = true) {
+  const values = scenarioInputs(row, { ...DEFAULTS, ...saved }, locked, following);
+  return { ...values, annualGrowth: [...(values.annualGrowth || [])] };
 }
 
 export function restoreSourceLocks(locked = {}) {
@@ -31,12 +32,40 @@ export function presetScenario(input, preset) {
   throw new Error('Unknown scenario preset');
 }
 
-export function fieldBasis(key, row, locked = {}, following = true, sharedEdited = {}) {
-  if (locked[key] || sharedEdited[key]) return 'custom';
+export function fieldBasis(key, row, locked = {}, following = true) {
+  if (locked[key]) return 'custom';
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
   if (key === 'entryPE') return row?.forwardPE != null ? 'source' : 'default';
   if (key === 'exitPE') return row?.mean10YearForwardPE != null && row?.forwardPE != null ? 'reference' : row?.forwardPE != null ? 'fallback' : 'default';
   if (key === 'dividendYield') return row?.dividendYield != null ? 'source' : 'default';
   return 'default';
+}
+
+export const STORAGE_KEY = 'tickerlantern.est.scenarios.v1';
+const SCENARIO_KEYS = [...Object.keys(DEFAULTS)];
+
+export function loadScenarios(storage) {
+  const empty = { scenarios: new Map(), overrides: new Map(), selectedIndexId: 'sp500', following: true };
+  try {
+    const data = JSON.parse(storage.getItem(STORAGE_KEY));
+    if (data?.version !== 1 || !Array.isArray(data.scenarios) || !Array.isArray(data.overrides)) return empty;
+    for (const [id, values] of data.scenarios) {
+      if (typeof id !== 'string' || !values || typeof values !== 'object') continue;
+      const clean = Object.fromEntries(SCENARIO_KEYS.filter(key => typeof values[key] === 'number' || typeof values[key] === 'string').map(key => [key, values[key]]));
+      if (Array.isArray(values.annualGrowth)) clean.annualGrowth = values.annualGrowth.slice(0, 20).map(value => typeof value === 'number' || typeof value === 'string' ? value : '');
+      empty.scenarios.set(id, clean);
+    }
+    for (const [id, locks] of data.overrides) if (typeof id === 'string' && locks && typeof locks === 'object') empty.overrides.set(id, Object.fromEntries(SCENARIO_KEYS.filter(key => locks[key] === true).map(key => [key, true])));
+    if (typeof data.selectedIndexId === 'string') empty.selectedIndexId = data.selectedIndexId;
+    empty.following = data.following !== false;
+  } catch { /* Storage may be disabled or contain an older, malformed value. */ }
+  return empty;
+}
+
+export function saveScenarios(storage, state) {
+  try {
+    storage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, scenarios: [...state.scenarios], overrides: [...state.overrides], selectedIndexId: state.selectedIndexId, following: state.following }));
+    return true;
+  } catch { return false; }
 }

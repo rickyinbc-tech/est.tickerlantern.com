@@ -42,15 +42,15 @@ test('source refresh updates unlocked inputs and protects edits', () => {
   assert.deepEqual(scenarioInputs(em,custom,{},false),custom);
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
-  const next=switchScenario({},undefined,{growth:9,years:8});
+  const next=switchScenario({},undefined);
   assert.equal(next.entryPE,DEFAULTS.entryPE);assert.equal(next.exitPE,DEFAULTS.exitPE);
   assert.equal(next.dividendYield,DEFAULTS.dividendYield);assert.equal(next.dividendMode,'payout');
-  assert.equal(next.growth,9); assert.equal(next.years,8);
+  assert.equal(next.growth,6); assert.equal(next.years,5);
   assert.equal(fieldBasis('entryPE',{}),'default');assert.equal(fieldBasis('exitPE',{}),'default');
 });
-test('saved benchmark edits restore while growth and horizon are shared', () => {
-  const next=switchScenario(em,{...DEFAULTS,entryPE:17,exitPE:19,growth:2,years:4},{growth:9,years:8},{entryPE:true,exitPE:true});
-  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,9);assert.equal(next.years,8);
+test('saved benchmark edits restore with its own growth and horizon', () => {
+  const next=switchScenario(em,{...DEFAULTS,entryPE:17,exitPE:19,growth:2,years:4},{entryPE:true,exitPE:true});
+  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,2);assert.equal(next.years,4);
 });
 test('restore source clears only source fields and keeps payout edits', () => {
   const locks=restoreSourceLocks({entryPE:true,exitPE:true,dividendMode:true,dividendYield:true,payout:true});
@@ -74,7 +74,7 @@ test('presets change only their declared active assumptions', () => {
 test('provenance distinguishes source, historical, fallback, default and custom', () => {
   assert.equal(fieldBasis('entryPE',em),'source');assert.equal(fieldBasis('exitPE',em),'reference');
   assert.equal(fieldBasis('exitPE',{forwardPE:8.9}),'fallback');assert.equal(fieldBasis('growth',em),'default');
-  assert.equal(fieldBasis('entryPE',em,{entryPE:true}),'custom');assert.equal(fieldBasis('growth',em,{},true,{growth:true}),'custom');
+  assert.equal(fieldBasis('entryPE',em,{entryPE:true}),'custom');assert.equal(fieldBasis('growth',em,{growth:true}),'custom');
   assert.equal(fieldBasis('entryPE',em,{},false),'manual');
 });
 test('compression reference, constant price CAGR and exported endpoints agree', () => {

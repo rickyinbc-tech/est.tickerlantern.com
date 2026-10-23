@@ -73,3 +73,6 @@ class MetricSyncTests(unittest.TestCase):
   apply_registry(f)
   self.assertEqual(r['metricDefinitions']['forwardPE']['state'],'not-meaningful');self.assertEqual(r['metricDefinitions']['forwardPE']['rawReportedValue'],'N/M')
   self.assertEqual(r['metricDefinitions']['forwardPE']['evidence']['checkStatus'],'ok')
+  mark_failure(r,ATTEMPT,'Isolated later failure',lambda source:source.get('url')==r['source']['url'],['forwardPE'],'primary:factset')
+  apply_registry(f)
+  self.assertEqual(r['metricDefinitions']['forwardPE']['state'],'not-meaningful');self.assertEqual(r['sync']['status'],'retained')

@@ -68,6 +68,8 @@ def mark_failure(row, checked, error, owns, metrics=None, owner_id=None):
     before = {key:resolved_sync(row,key) for key in affected}
     for key in affected:
         previous = own_sync(row,key)
+        if row.get(key) is None and previous.get('status') in AVAILABILITY:
+            row.setdefault('metricStates',{}).setdefault(key,previous['status'])
         accepted = row.get(key) is not None or (row.get('metricStates') or {}).get(key) in AVAILABILITY
         row[METRICS[key][1]] = dict(status='retained' if accepted else 'unavailable',lastAttempt=checked,
             lastSuccess=previous.get('lastSuccess') or before[key].get('lastSuccess'),error=safe_error(error),metrics=affected,ownerId=owner_id)

@@ -12,3 +12,5 @@ The workbench, static comparison table, interactive comparison table and CSV sha
 Original public PDFs and rendered source pages remain local and ignored. No source PDFs or private archive contents are published.
 
 Validation before publication: 125 automated tests passed. Production build and Wrangler dry run passed. Local browser checks confirmed the five annual inputs, 14.04% cash-flow IRR, downloaded CSV with correct per-year sources, protected user edits, benchmark isolation and source restoration. Desktop (1440px) and mobile (390px) layouts were inspected. The initial 720px-tall automated download click timed out; repeating the export check with a 1200px-tall viewport passed. This was a browser automation scroll issue; the exported rows reconciled to the model.
+
+Published as Worker version `6810961e-de4f-44ec-a899-d101feaf2071`. Live browser checks passed the same annual inputs, 14.04% IRR, CSV source attribution, edit protection and desktop/mobile layout checks. All five changed production assets matched local SHA-256 hashes. Stock analysis, structured notes and GIC routes returned HTTP 200.

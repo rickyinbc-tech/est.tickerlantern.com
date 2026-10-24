@@ -1,5 +1,7 @@
 # Site-wide numerical review — 23 October 2026
 
+GIC availability follow-up: all fifteen products now have model estimates, including an explicit World/cash proxy for ESG and identified capital-market fallbacks for incomplete EPS models. The earlier missing-output findings below describe the audited release. See [the subsequent model note](https://github.com/rickyinbc-tech/tickerlantern-notes/blob/main/research/gic-estimate-completion-2026-10-23.md).
+
 ## Verdict and scope
 
 The site is suitable for dated source comparison and conditional calculations.

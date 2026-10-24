@@ -247,5 +247,5 @@
     }
   ],
   "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
-  "growthPolicyVersion": "tickerlantern-forward-timing-v3"
+  "growthPolicyVersion": "tickerlantern-forward-timing-v4"
 }

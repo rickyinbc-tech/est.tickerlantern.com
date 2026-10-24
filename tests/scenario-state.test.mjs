@@ -53,11 +53,11 @@ test('legacy paused source paths migrate once and preserve only named yearly rea
   const legacy={...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[28,18],growthOverrides:{2027:9},years:2,growthPolicyVersion:'tickerlantern-five-year-fade-v1'};
   const migrated=scenarioInputs(source,legacy,{},false,new Date('2026-10-23T12:00:00Z'));
   assert.equal(migrated.years,5);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
-  assert.equal(migrated.growthStartYear,2026);assert.deepEqual(migrated.annualGrowth,[28,9,18,18,18]);
+  assert.equal(migrated.growthStartYear,2026);assert.deepEqual(migrated.annualGrowth,[28,9,8.04,8.04,8.04]);
   assert.deepEqual(migrated.growthOverrides,{2027:9});assert.deepEqual(migrated.growthPlan,[]);
   const changed={...source,asOf:'2027-01-15',growthForecast:{...source.growthForecast,estimates:[{year:2028,growth:45}]}};
   const frozen=scenarioInputs(changed,migrated,{},false,new Date('2028-01-01'));
-  assert.equal(frozen.growthStartYear,2026);assert.deepEqual(frozen.annualGrowth,[28,9,18,18,18]);
+  assert.equal(frozen.growthStartYear,2026);assert.deepEqual(frozen.annualGrowth,[28,9,8.04,8.04,8.04]);
 });
 
 test('timing-policy migration never rewrites custom constant or annual scenarios',()=>{

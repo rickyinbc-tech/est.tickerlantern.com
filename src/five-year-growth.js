@@ -2,18 +2,33 @@ import { nextForecastYear } from './growth-data.js';
 
 export const HOLDING_YEARS = 5;
 export const GROWTH_POLICY = Object.freeze({
-  version: 'tickerlantern-forward-timing-v3',
+  version: 'tickerlantern-forward-timing-v4',
   reviewedAt: '2026-10-23',
   maxExtensionSpread: 10,
   methodologyUrl: 'https://www.invesco.com/apac/en/institutional/insights/multi-asset/long-term-capital-market-assumptions.html',
-  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. Nasdaq-100 instead uses the published next-year input, carried forward without a cap or fade. Carried future years are projections. All resulting holding-year rates are model inputs. No extra buyback yield is added.'
+  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. Nasdaq-100 uses each published annual estimate only for its named year; missing years use a long-term EPS projection derived from Invesco US large-cap building blocks. All resulting holding-year rates are model inputs. No separate buyback return is added.'
 });
 
-// Rounded editorial nominal EPS assumptions, not observed index statistics or
-// quantitative estimates attributed to the methodology reference above.
+// Invesco's additive building blocks, converted to a nominal per-share growth
+// proxy. Buybacks enter EPS once; dividends and valuation remain in our model.
+// This is an application-derived US large-cap proxy, not Nasdaq consensus.
+export const NASDAQ_LONG_TERM = Object.freeze({
+  growth: 8.04,
+  components: Object.freeze({realEarningsGrowth:4.01, inflation:2.19, buybackYield:1.84}),
+  formula: '4.01% real earnings growth + 2.19% inflation + 1.84% buyback effect = 8.04% nominal EPS projection (additive approximation)',
+  publisher: 'Invesco Solutions',
+  title: '2026 Capital Market Assumptions, Q1 update',
+  url: 'https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7',
+  asOf: '2025-12-31', checkedAt: '2026-10-23', horizonYears:10,
+  pdfPages: Object.freeze([7,11]), benchmark:'S&P 500 / US large cap',
+  sha256:'28faab4574d491474f4eac99fc734e5c4615ec320793bcc2f0c264dc5b70ee7b',
+  application: 'Use a constant long-term US large-cap EPS proxy in missing Nasdaq annual forecast years. Exclude source dividends, valuation and FX components; these are not extra returns in this model.'
+});
+
+// Other entries remain rounded editorial nominal EPS assumptions.
 export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries([
   ['sp500', 6, 'Diversified mature US companies; nominal sales growth with modest per-share gains.'],
-  ['nasdaq100', null, 'Use the published next-year earnings growth input and project it forward without a cap or fade.'],
+  ['nasdaq100', NASDAQ_LONG_TERM.growth, 'Long-term nominal EPS projection derived from Invesco US large-cap earnings, inflation and buyback building blocks.'],
   ['russell2000', 6, 'Small-company rebound growth normalizes; financing costs and dilution limit long-run gains.'],
   ['tsx', 5, 'Mature financials and resources; commodity cycles do not compound indefinitely.'],
   ['msci-canada', 5, 'Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor.'],
@@ -55,26 +70,24 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
     && forecast?.periodBasis === 'calendar-year'
     && row?.metricDefinitions?.growthForecast?.permittedUse?.includes('approximate-scenario-growth');
   const estimates = new Map((forecast?.estimates || []).map(p=>[p.year,p]));
-  // Owner-selected Nasdaq scenario: retain the next-year published input,
-  // carrying it forward until another published annual estimate replaces it.
-  // A carried value is a projection, never an additional consensus estimate.
-  if (row?.id === 'nasdaq100' && recorded && ['calendar-year','publisher-year'].includes(forecast?.periodBasis) && estimates.has(startYear)) {
-    let reference = estimates.get(startYear);
-    const first = reference;
+  // Exact-year annual forecasts take precedence. Never repeat a near-term
+  // forecast into an uncovered year, including gaps between published years.
+  if (row?.id === 'nasdaq100' && recorded) {
+    const annual = ['calendar-year','publisher-year'].includes(forecast?.periodBasis);
     const points = Array.from({length:HOLDING_YEARS}, (_,i) => {
-      const year=startYear+i, published=estimates.get(year), custom=Object.hasOwn(overrides,year);
-      if (published) reference=published;
-      return {year,growth:custom?overrides[year]:reference.growth,
-        basis:custom?'custom assumption':published?'published-growth scenario':'growth projection',
+      const year=startYear+i, published=annual ? estimates.get(year) : null, custom=Object.hasOwn(overrides,year);
+      return {year,growth:custom?overrides[year]:published?published.growth:NASDAQ_LONG_TERM.growth,
+        basis:custom?'custom assumption':published?'published-growth scenario':'long-term EPS projection',
         periodLabel:`Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
-        scenarioDate:recorded,terminalGrowth:reference.growth,
-        method:'Use the published next-year earnings growth as a scenario input. Carry the latest published rate into later years without a cap or fade; later-year values are projections.',
-        sourceEvidence:{publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis,referenceYear:reference.year,referenceGrowth:reference.growth,publishedForYear:!!published}};
+        scenarioDate:recorded,terminalGrowth:NASDAQ_LONG_TERM.growth,
+        method:'Use a published annual forecast only in its named year. For missing years use the long-term EPS proxy, without fading or extending the near-term forecast.',
+        sourceEvidence:published
+          ? {publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis,referenceYear:published.year,referenceGrowth:published.growth,publishedForYear:true}
+          : {...NASDAQ_LONG_TERM,publishedForYear:false,derived:true}};
     });
     return {startYear,coveredYears:points.filter(p=>p.sourceEvidence.publishedForYear).length,rates:points.map(p=>p.growth),points,
-      anchor:{growth:first.growth,rationale:'Published next-year earnings growth, carried forward without a cap or fade.'},
-      bridge:false,sourceLinked:true,scenarioDate:recorded,
-      mappingReason:`The published ${startYear} earnings growth input is ${first.growth}%. Later years project the latest published rate without a cap or fade.`,
+      anchor,longTerm:NASDAQ_LONG_TERM,bridge:false,sourceLinked:true,scenarioDate:recorded,
+      mappingReason:`Published annual forecasts apply only to their named years. Missing years use an ${NASDAQ_LONG_TERM.growth}% long-term EPS projection derived from Invesco US large-cap assumptions. This is a regional proxy applied to the scenario's forward earnings.`,
       missingYears:[]};
   }
   let coveredYears=0;

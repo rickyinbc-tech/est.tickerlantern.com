@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { fiveYearGrowthPath, calendarToForwardRates, GROWTH_ANCHORS, GROWTH_POLICY } from '../src/five-year-growth.js';
+import { fiveYearGrowthPath, calendarToForwardRates, GROWTH_ANCHORS, GROWTH_POLICY, NASDAQ_LONG_TERM } from '../src/five-year-growth.js';
 import { baselineAssessment, baselineForecast, fiveYearCSV } from '../src/five-year-report.js';
 import { scenarioInputs, switchScenario, loadScenarios, STORAGE_KEY } from '../src/scenario-state.js';
 import { DEFAULTS, project, annualCSV } from '../src/model.js';
@@ -40,7 +40,7 @@ test('all 21 benchmarks have five dated growth scenarios; unsupported cash ancho
     close(path.rates.at(-1), path.anchor.growth);
     assert.ok(path.points.every(p => p.scenarioDate === r.asOf && p.policyVersion === GROWTH_POLICY.version));
     if (path.bridge) bridged.push(r.id);
-    else if (r.id === 'nasdaq100') { assert.deepEqual(path.rates,[28,28,28,28,28]); assert.ok(path.sourceLinked); }
+    else if (r.id === 'nasdaq100') { assert.deepEqual(path.rates,[28,8.04,8.04,8.04,8.04]); assert.ok(path.sourceLinked); }
     else { assert.deepEqual(path.rates, Array(5).fill(GROWTH_ANCHORS[r.id].growth)); assert.ok(path.points.every(p => p.basis === 'normalized model')); }
     if (r.id === 'stoxx600') { assert.equal(m, null); assert.match(assessment.reason, /cash-dividend anchor/); continue; }
     assert.equal(m.input.years, 5); assert.equal(m.points.length, 6);
@@ -184,28 +184,43 @@ test('invalid published calendar earnings block only the affected baseline and r
 });
 
 
-test('Nasdaq uses the published next-year growth without a cap or fade and exports later years as projections',()=>{
+test('Nasdaq uses each annual forecast only in its named year and fills missing years from long-term earnings assumptions',()=>{
   const r=row('nasdaq100'),path=fiveYearGrowthPath(r,now),m=baselineForecast(r,now);
-  assert.deepEqual(path.rates,[28,28,28,28,28]);assert.equal(path.sourceLinked,true);
+  assert.deepEqual(path.rates,[28,8.04,8.04,8.04,8.04]);assert.equal(path.sourceLinked,true);
+  assert.equal(path.coveredYears,1);
+  close(NASDAQ_LONG_TERM.growth,Object.values(NASDAQ_LONG_TERM.components).reduce((a,b)=>a+b,0));
   assert.equal(path.points[0].sourceEvidence.referenceYear,2027);
   assert.equal(path.points[0].sourceEvidence.referenceGrowth,28);
-  assert.deepEqual(path.points.map(p=>p.basis),['published-growth scenario',...Array(4).fill('growth projection')]);
-  close(m.epsCAGR,.28);close(m.last.price,100*1.28**5*m.input.exitPE/m.input.entryPE);
+  assert.deepEqual(path.points.map(p=>p.basis),['published-growth scenario',...Array(4).fill('long-term EPS projection')]);
+  const earningsFactor=1.28*1.0804**4;
+  close(m.epsCAGR,earningsFactor**.2-1);close(m.last.price,100*earningsFactor*m.input.exitPE/m.input.entryPE);
   assert.ok(!m.input.annualGrowth.includes(43));
   const records=parseCSV(annualCSV(m,r.growthForecast));
   assert.deepEqual(records.slice(2).map(p=>p[9]),path.points.map(p=>p.basis));
-  for(const p of records.slice(2))assert.equal(JSON.parse(p.at(-2)).sourceEvidence.referenceYear,2027);
+  assert.equal(JSON.parse(records[2].at(-2)).sourceEvidence.referenceYear,2027);
+  for(const record of records.slice(3)){
+    const evidence=JSON.parse(record.at(-2)).sourceEvidence;
+    assert.equal(evidence.publisher,'Invesco Solutions');assert.equal(evidence.asOf,'2025-12-31');
+    assert.equal(evidence.publishedForYear,false);assert.equal(evidence.derived,true);
+    assert.deepEqual(evidence.components,{realEarningsGrowth:4.01,inflation:2.19,buybackYield:1.84});
+    assert.equal(record[10],'');assert.equal(record[11],'');
+  }
   const high={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85}]}};
-  assert.deepEqual(fiveYearGrowthPath(high,now).rates,Array(5).fill(85));
+  assert.deepEqual(fiveYearGrowthPath(high,now).rates,[85,8.04,8.04,8.04,8.04]);
   assert.ok(Number.isFinite(baselineForecast(high,now).cashIRR));
 });
 
-test('Nasdaq accepts later published growth while preserving named user edits and replacing the old 8 percent schedule',()=>{
+test('Nasdaq respects later forecasts, gaps and user edits while migrating both earlier defaults',()=>{
   const r=row('nasdaq100');
-  const updated={...r,growthForecast:{...r.growthForecast,estimates:[...r.growthForecast.estimates,{year:2028,growth:24}]}};
-  assert.deepEqual(fiveYearGrowthPath(updated,now).rates,[28,24,24,24,24]);
-  const old={...DEFAULTS,growthMode:'source',annualGrowth:[8,8,8,8,8],growthOverrides:{2029:12},growthPolicyVersion:'tickerlantern-forward-timing-v2'};
-  const migrated=scenarioInputs(r,old,{},false,now);
-  assert.deepEqual(migrated.annualGrowth,[28,28,12,28,28]);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
-  assert.deepEqual(fiveYearGrowthPath({...r,growthForecast:undefined},now).rates,['','','','','']);
+  const updated={...r,growthForecast:{...r.growthForecast,estimates:[...r.growthForecast.estimates,{year:2028,growth:24},{year:2030,growth:17}]}};
+  assert.deepEqual(fiveYearGrowthPath(updated,now).rates,[28,24,8.04,17,8.04]);
+  for(const [version,rates] of [['tickerlantern-forward-timing-v2',[8,8,8,8,8]],['tickerlantern-forward-timing-v3',[28,28,28,28,28]]]){
+    const old={...DEFAULTS,growthMode:'source',annualGrowth:rates,growthOverrides:{2029:12},growthPolicyVersion:version};
+    const migrated=scenarioInputs(r,old,{},false,now);
+    assert.deepEqual(migrated.annualGrowth,[28,8.04,12,8.04,8.04]);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
+  }
+  const absent=fiveYearGrowthPath({...r,growthForecast:undefined},now);
+  assert.deepEqual(absent.rates,Array(5).fill(8.04));assert.equal(absent.coveredYears,0);
+  assert.ok(absent.points.every(p=>p.basis==='long-term EPS projection'));
+  assert.deepEqual(fiveYearGrowthPath({...r,growthForecast:{...r.growthForecast,periodBasis:'fiscal-year'}},now).rates,Array(5).fill(8.04));
 });

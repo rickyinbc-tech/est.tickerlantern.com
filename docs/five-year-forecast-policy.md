@@ -1,8 +1,8 @@
 # Five-year scenario timing policy
 
-Reviewed 23 October 2026 · `tickerlantern-forward-timing-v3`. Supersedes `tickerlantern-five-year-fade-v1`.
+Reviewed 23 October 2026 · `tickerlantern-forward-timing-v4`. Supersedes `tickerlantern-five-year-fade-v1`.
 
-Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. Nasdaq-100 now uses its published next-year growth as the owner-selected five-year scenario input, without a cap or fade.
+Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. Nasdaq-100 uses published annual forecasts only for their named years and a sourced long-term EPS projection in missing years.
 
 ## Eligible calendar-to-forward bridge
 
@@ -20,16 +20,19 @@ Keep contiguous published CY rates through the sixth input where available. To e
 
 S&P 500 uses 16%,13.5%,11%,8.5%,6%,6% as underlying CY inputs and an October 16 timing proxy. Its five modeled forward growth rates are approximately 13.968279%,11.476627%,8.985278%,6.494249%,6%. The original published 16% remains visible as CY2027 evidence. It is not the modeled first holding-year growth rate.
 
-## Nasdaq-100 published-growth scenario
+## Nasdaq-100 annual forecasts and long-term projection
 
-At the owner’s request, Nasdaq-100 now uses the published 2027 earnings growth
-of 28% in the model and carries that rate through the five holding years without
-an 8% fallback, cap or fade. The 43% figure for 2026 stays in the source card.
-The first model year is labelled published-growth scenario; subsequent years
-are labelled growth projection. Future published annual estimates replace the
-carried rate for their year and later years. Yearly user edits remain protected.
-The source does not publish those additional projected years as consensus.
-Source: UBS CIO, 7 October 2026, annual earnings growth 43%/28%.
+The published annual forecast applies only to its named year. UBS CIO's 7 October 2026 article provides 28% for 2027. The 43% figure describes 2026 and is not replayed as a future holding year. Missing years, including gaps between published estimates, use an **8.04% long-term nominal EPS proxy**. No near-term forecast is carried forward or faded.
+
+The long-term input is an application-derived additive approximation from [Invesco's 2026 Q1 capital-market assumptions](https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7), assumptions as of 31 December 2025, Figure 4a, PDF p. 7; definitions on p. 11:
+
+`4.01% real earnings growth + 2.19% inflation + 1.84% buyback effect = 8.04% nominal EPS projection`
+
+This uses US large-cap building blocks as a regional proxy for uncovered Nasdaq years. It is neither a source-published Nasdaq forecast nor Invesco's total-return forecast. The source horizon is ten years; applying a constant annual proxy in the remaining four scenario years is Ticker Lantern's choice. The additive approximation follows the source's building-block presentation rather than claiming an exact nonlinear conversion.
+
+The buyback effect enters per-share earnings once. Source dividends, valuation change and FX are excluded from this input: the workbench already calculates dividends and its own selected exit P/E separately. RBC GAM's long-term equity returns were checked but are not entered into an EPS field because they include other return components and valuation normalization.
+
+The current five-year EPS path is **28%, 8.04%, 8.04%, 8.04%, 8.04%**. Published years are labelled `published-growth scenario`; missing years are labelled `long-term EPS projection`. Every CSV row retains the appropriate source, vintage and calculation, rather than attributing future estimates to UBS. New annual forecasts replace only their named year; explicit user overrides remain protected.
 
 ## Other period definitions
 
@@ -40,7 +43,7 @@ The other benchmarks’ anchors are nominal per-share earnings assumptions. They
 | Benchmark | Year-five EPS growth | Rationale |
 | --- | ---: | --- |
 | S&P 500 | 6% | Diversified mature US companies; nominal sales growth with modest per-share gains. |
-| Nasdaq-100 | Latest published next-year input: 28% | Carried forward without a cap or fade; later years are projections. |
+| Nasdaq-100 | 8.04% | Derived long-term nominal EPS proxy from Invesco US large-cap building blocks; a published forecast replaces it only for the named year. |
 | Russell 2000 | 6% | Small-company rebound growth normalizes; financing costs and dilution limit long-run gains. |
 | S&P/TSX Composite | 5% | Mature financials and resources; commodity cycles do not compound indefinitely. |
 | MSCI Canada | 5% | Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor. |
@@ -66,7 +69,7 @@ The other benchmarks’ anchors are nominal per-share earnings assumptions. They
 
 Scenarios are dated to the recorded entry valuation, not automatically shifted forward by the current calendar year while retaining an old P/E. A publication date is explicitly qualified as a date proxy. A fresh market observation can move the scenario date; stale observations retain their date warnings.
 
-Unedited legacy source-mode paths migrate once to timing-v3, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
+Unedited legacy source-mode paths migrate once to timing-v4, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
 
 Eligible historical means can still supply explicitly labeled illustrative mean-reversion exits. Fifteen qualified references cannot supply comparisons or defaults. Neither a compatible mean nor a constant P/E is a fair-value forecast. The sensitivity matrix tests alternative growth/exit assumptions without assigning probabilities.
 

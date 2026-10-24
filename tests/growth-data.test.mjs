@@ -52,8 +52,8 @@ test('a source refresh flows into linked rates while custom growth stays protect
 
 test('unknown period mappings retain published figures as context and use benchmark-specific normalized assumptions',()=>{
   const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
-  const excluded=feed.indices.filter(r=>!['sp500','japan'].includes(r.id));
-  assert.equal(excluded.length,19);
+  const excluded=feed.indices.filter(r=>!['sp500','japan','nasdaq100'].includes(r.id));
+  assert.equal(excluded.length,18);
   for(const r of excluded){
     const original=structuredClone(r.growthForecast),input=scenarioInputs(r,undefined,{},true,now);
     assert.deepEqual(input.annualGrowth,Array(5).fill(GROWTH_ANCHORS[r.id].growth),r.id);

@@ -1,8 +1,8 @@
 # Five-year scenario timing policy
 
-Reviewed 23 October 2026 · `tickerlantern-forward-timing-v2`. Supersedes `tickerlantern-five-year-fade-v1`.
+Reviewed 23 October 2026 · `tickerlantern-forward-timing-v3`. Supersedes `tickerlantern-five-year-fade-v1`.
 
-Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. They are not directly replayed after an already-forward EPS anchor.
+Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. Nasdaq-100 now uses its published next-year growth as the owner-selected five-year scenario input, without a cap or fade.
 
 ## Eligible calendar-to-forward bridge
 
@@ -20,16 +20,27 @@ Keep contiguous published CY rates through the sixth input where available. To e
 
 S&P 500 uses 16%,13.5%,11%,8.5%,6%,6% as underlying CY inputs and an October 16 timing proxy. Its five modeled forward growth rates are approximately 13.968279%,11.476627%,8.985278%,6.494249%,6%. The original published 16% remains visible as CY2027 evidence. It is not the modeled first holding-year growth rate.
 
-## Unbridgeable definitions
+## Nasdaq-100 published-growth scenario
 
-Publisher-year, FY or forecast-endpoint labels are not silently converted into CY or rolling NTM. Where definitions cannot support the bridge, each of the five holding years uses the benchmark’s **editorial normalized EPS anchor**. Nineteen current benchmarks use this policy. This reduces unsupported period conversions; it does not establish the normalized rates as more accurate forecasts. Readers can edit any year or choose custom constant/annual growth.
+At the owner’s request, Nasdaq-100 now uses the published 2027 earnings growth
+of 28% in the model and carries that rate through the five holding years without
+an 8% fallback, cap or fade. The 43% figure for 2026 stays in the source card.
+The first model year is labelled published-growth scenario; subsequent years
+are labelled growth projection. Future published annual estimates replace the
+carried rate for their year and later years. Yearly user edits remain protected.
+The source does not publish those additional projected years as consensus.
+Source: UBS CIO, 7 October 2026, annual earnings growth 43%/28%.
 
-All 21 anchors are nominal per-share earnings assumptions. They are not provider consensus, asset-manager forecasts, GDP-derived estimates, or uniquely correct expected growth. Funding feasibility, retention/ROE, dilution and buybacks require additional evidence. No separate buyback yield is added.
+## Other period definitions
+
+Publisher-year, FY or forecast-endpoint labels are not silently converted into CY or rolling NTM. Where definitions cannot support the bridge, each of the five holding years uses the benchmark’s **editorial normalized EPS anchor**. Eighteen current benchmarks use this policy. This reduces unsupported period conversions; it does not establish the normalized rates as more accurate forecasts. Readers can edit any year or choose custom constant/annual growth.
+
+The other benchmarks’ anchors are nominal per-share earnings assumptions. They are not provider consensus, asset-manager forecasts, GDP-derived estimates, or uniquely correct expected growth. Funding feasibility, retention/ROE, dilution and buybacks require additional evidence. No separate buyback yield is added.
 
 | Benchmark | Year-five EPS growth | Rationale |
 | --- | ---: | --- |
 | S&P 500 | 6% | Diversified mature US companies; nominal sales growth with modest per-share gains. |
-| Nasdaq-100 | 8% | Technology mix supports a premium to broad US growth; competition and margin normalization limit persistence. |
+| Nasdaq-100 | Latest published next-year input: 28% | Carried forward without a cap or fade; later years are projections. |
 | Russell 2000 | 6% | Small-company rebound growth normalizes; financing costs and dilution limit long-run gains. |
 | S&P/TSX Composite | 5% | Mature financials and resources; commodity cycles do not compound indefinitely. |
 | MSCI Canada | 5% | Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor. |
@@ -55,7 +66,7 @@ All 21 anchors are nominal per-share earnings assumptions. They are not provider
 
 Scenarios are dated to the recorded entry valuation, not automatically shifted forward by the current calendar year while retaining an old P/E. A publication date is explicitly qualified as a date proxy. A fresh market observation can move the scenario date; stale observations retain their date warnings.
 
-Unedited legacy source-mode paths migrate once to timing-v2, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
+Unedited legacy source-mode paths migrate once to timing-v3, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
 
 Eligible historical means can still supply explicitly labeled illustrative mean-reversion exits. Fifteen qualified references cannot supply comparisons or defaults. Neither a compatible mean nor a constant P/E is a fair-value forecast. The sensitivity matrix tests alternative growth/exit assumptions without assigning probabilities.
 

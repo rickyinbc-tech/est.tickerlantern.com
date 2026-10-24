@@ -37,9 +37,10 @@ test('all 21 benchmarks have five dated growth scenarios; unsupported cash ancho
     const path = fiveYearGrowthPath(r, now), assessment = baselineAssessment(r, now), m = assessment.model;
     assert.equal(path.rates.length, 5); assert.deepEqual(path.missingYears, []);
     assert.equal(path.scenarioDate, r.asOf); assert.equal(path.startYear, +r.asOf.slice(0, 4) + 1);
-    close(path.rates.at(-1), GROWTH_ANCHORS[r.id].growth);
+    close(path.rates.at(-1), path.anchor.growth);
     assert.ok(path.points.every(p => p.scenarioDate === r.asOf && p.policyVersion === GROWTH_POLICY.version));
     if (path.bridge) bridged.push(r.id);
+    else if (r.id === 'nasdaq100') { assert.deepEqual(path.rates,[28,28,28,28,28]); assert.ok(path.sourceLinked); }
     else { assert.deepEqual(path.rates, Array(5).fill(GROWTH_ANCHORS[r.id].growth)); assert.ok(path.points.every(p => p.basis === 'normalized model')); }
     if (r.id === 'stoxx600') { assert.equal(m, null); assert.match(assessment.reason, /cash-dividend anchor/); continue; }
     assert.equal(m.input.years, 5); assert.equal(m.points.length, 6);
@@ -180,4 +181,31 @@ test('invalid published calendar earnings block only the affected baseline and r
   const status=records[0].indexOf('Model status'),reason=records[0].indexOf('Unavailable reason');
   assert.equal(records.length,7);
   assert.ok(records.slice(1).every(r=>r[status]==='unavailable' && r[reason] && r[3]===''));
+});
+
+
+test('Nasdaq uses the published next-year growth without a cap or fade and exports later years as projections',()=>{
+  const r=row('nasdaq100'),path=fiveYearGrowthPath(r,now),m=baselineForecast(r,now);
+  assert.deepEqual(path.rates,[28,28,28,28,28]);assert.equal(path.sourceLinked,true);
+  assert.equal(path.points[0].sourceEvidence.referenceYear,2027);
+  assert.equal(path.points[0].sourceEvidence.referenceGrowth,28);
+  assert.deepEqual(path.points.map(p=>p.basis),['published-growth scenario',...Array(4).fill('growth projection')]);
+  close(m.epsCAGR,.28);close(m.last.price,100*1.28**5*m.input.exitPE/m.input.entryPE);
+  assert.ok(!m.input.annualGrowth.includes(43));
+  const records=parseCSV(annualCSV(m,r.growthForecast));
+  assert.deepEqual(records.slice(2).map(p=>p[9]),path.points.map(p=>p.basis));
+  for(const p of records.slice(2))assert.equal(JSON.parse(p.at(-2)).sourceEvidence.referenceYear,2027);
+  const high={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85}]}};
+  assert.deepEqual(fiveYearGrowthPath(high,now).rates,Array(5).fill(85));
+  assert.ok(Number.isFinite(baselineForecast(high,now).cashIRR));
+});
+
+test('Nasdaq accepts later published growth while preserving named user edits and replacing the old 8 percent schedule',()=>{
+  const r=row('nasdaq100');
+  const updated={...r,growthForecast:{...r.growthForecast,estimates:[...r.growthForecast.estimates,{year:2028,growth:24}]}};
+  assert.deepEqual(fiveYearGrowthPath(updated,now).rates,[28,24,24,24,24]);
+  const old={...DEFAULTS,growthMode:'source',annualGrowth:[8,8,8,8,8],growthOverrides:{2029:12},growthPolicyVersion:'tickerlantern-forward-timing-v2'};
+  const migrated=scenarioInputs(r,old,{},false,now);
+  assert.deepEqual(migrated.annualGrowth,[28,28,12,28,28]);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
+  assert.deepEqual(fiveYearGrowthPath({...r,growthForecast:undefined},now).rates,['','','','','']);
 });

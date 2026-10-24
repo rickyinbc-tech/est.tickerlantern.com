@@ -2,18 +2,18 @@ import { nextForecastYear } from './growth-data.js';
 
 export const HOLDING_YEARS = 5;
 export const GROWTH_POLICY = Object.freeze({
-  version: 'tickerlantern-forward-timing-v2',
+  version: 'tickerlantern-forward-timing-v3',
   reviewedAt: '2026-10-23',
   maxExtensionSpread: 10,
   methodologyUrl: 'https://www.invesco.com/apac/en/institutional/insights/multi-asset/long-term-capital-market-assumptions.html',
-  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. All resulting rates are model estimates, not publisher forecasts. No extra buyback yield is added.'
+  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. Nasdaq-100 instead uses the published next-year input, carried forward without a cap or fade. Carried future years are projections. All resulting holding-year rates are model inputs. No extra buyback yield is added.'
 });
 
 // Rounded editorial nominal EPS assumptions, not observed index statistics or
 // quantitative estimates attributed to the methodology reference above.
 export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries([
   ['sp500', 6, 'Diversified mature US companies; nominal sales growth with modest per-share gains.'],
-  ['nasdaq100', 8, 'Technology mix supports a premium to broad US growth; competition and margin normalization limit persistence.'],
+  ['nasdaq100', null, 'Use the published next-year earnings growth input and project it forward without a cap or fade.'],
   ['russell2000', 6, 'Small-company rebound growth normalizes; financing costs and dilution limit long-run gains.'],
   ['tsx', 5, 'Mature financials and resources; commodity cycles do not compound indefinitely.'],
   ['msci-canada', 5, 'Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor.'],
@@ -55,6 +55,28 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
     && forecast?.periodBasis === 'calendar-year'
     && row?.metricDefinitions?.growthForecast?.permittedUse?.includes('approximate-scenario-growth');
   const estimates = new Map((forecast?.estimates || []).map(p=>[p.year,p]));
+  // Owner-selected Nasdaq scenario: retain the next-year published input,
+  // carrying it forward until another published annual estimate replaces it.
+  // A carried value is a projection, never an additional consensus estimate.
+  if (row?.id === 'nasdaq100' && recorded && ['calendar-year','publisher-year'].includes(forecast?.periodBasis) && estimates.has(startYear)) {
+    let reference = estimates.get(startYear);
+    const first = reference;
+    const points = Array.from({length:HOLDING_YEARS}, (_,i) => {
+      const year=startYear+i, published=estimates.get(year), custom=Object.hasOwn(overrides,year);
+      if (published) reference=published;
+      return {year,growth:custom?overrides[year]:reference.growth,
+        basis:custom?'custom assumption':published?'published-growth scenario':'growth projection',
+        periodLabel:`Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
+        scenarioDate:recorded,terminalGrowth:reference.growth,
+        method:'Use the published next-year earnings growth as a scenario input. Carry the latest published rate into later years without a cap or fade; later-year values are projections.',
+        sourceEvidence:{publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis,referenceYear:reference.year,referenceGrowth:reference.growth,publishedForYear:!!published}};
+    });
+    return {startYear,coveredYears:points.filter(p=>p.sourceEvidence.publishedForYear).length,rates:points.map(p=>p.growth),points,
+      anchor:{growth:first.growth,rationale:'Published next-year earnings growth, carried forward without a cap or fade.'},
+      bridge:false,sourceLinked:true,scenarioDate:recorded,
+      mappingReason:`The published ${startYear} earnings growth input is ${first.growth}%. Later years project the latest published rate without a cap or fade.`,
+      missingYears:[]};
+  }
   let coveredYears=0;
   while(coveredYears<6 && estimates.has(startYear+coveredYears)) coveredYears++;
   const bridge=!!(eligible && recorded && anchor && coveredYears);

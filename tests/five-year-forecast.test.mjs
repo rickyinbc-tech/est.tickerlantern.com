@@ -1,226 +1,118 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { fiveYearGrowthPath, calendarToForwardRates, GROWTH_ANCHORS, GROWTH_POLICY, NASDAQ_LONG_TERM } from '../src/five-year-growth.js';
-import { baselineAssessment, baselineForecast, fiveYearCSV } from '../src/five-year-report.js';
-import { scenarioInputs, switchScenario, loadScenarios, STORAGE_KEY } from '../src/scenario-state.js';
-import { DEFAULTS, project, annualCSV } from '../src/model.js';
+import {readFileSync} from 'node:fs';
+import {fiveYearGrowthPath,calendarToForwardRates,GROWTH_ANCHORS,GROWTH_POLICY,LONG_TERM_REGIONS,longTermGrowth} from '../src/five-year-growth.js';
+import {baselineAssessment,baselineForecast,fiveYearCSV} from '../src/five-year-report.js';
+import {scenarioInputs} from '../src/scenario-state.js';
+import {DEFAULTS,project,annualCSV} from '../src/model.js';
+const now=new Date('2026-10-23T12:00:00Z');
+const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
+const row=id=>feed.indices.find(r=>r.id===id);
+const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
+const expected={
+ sp500:[16,8.04,8.04,8.04,8.04],nasdaq100:[28,8.04,8.04,8.04,8.04],russell2000:[44,5.61,5.61,5.61,5.61],
+ tsx:[11.6,5.67,5.67,5.67,5.67],'msci-canada':[8.2,8.7,5.67,5.67,5.67],
+ acwi:[15.1,12.9,7.07,7.07,7.07],world:[13.2,13.5,7.07,7.07,7.07],eafe:[9.9,5.92,5.92,5.92,5.92],
+ em:[24,10,5.66,5.66,5.66],europe:[9.9,10.5,6.57,6.57,6.57],uk:[5,8,9.12,9.12,9.12],ftse100:[7,9.12,9.12,9.12,9.12],
+ stoxx600:[14,6.57,6.57,6.57,6.57],japan:[15,7.19,7.19,7.19,7.19],nikkei225:[22,7.19,7.19,7.19,7.19],
+ china:[13.7,2.6,2.6,2.6,2.6],hangseng:[3,2.6,2.6,2.6,2.6],csi300:[12,6,2.6,2.6,2.6],
+ india:[16.6,5.66,5.66,5.66,5.66],'asia-ex-japan':[26.8,5.66,5.66,5.66,5.66],australia:[4.9,5.92,5.92,5.92,5.92]
+};
+function parseCSV(text){return text.split('\n').map(line=>{const cells=[];let v='',quoted=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(quoted&&line[i+1]==='"'){v+='"';i++;}else quoted=!quoted;}else if(c===','&&!quoted){cells.push(v);v='';}else v+=c;}return [...cells,v];});}
 
-const now = new Date('2026-10-23T12:00:00Z');
-const feed = JSON.parse(readFileSync(new URL('../data/indices.json', import.meta.url)));
-const row = id => feed.indices.find(r => r.id === id);
-const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-9, `${a} != ${b}`);
-const closeRates = (actual, expected) => { assert.equal(actual.length, expected.length); actual.forEach((value, i) => close(value, expected[i])); };
-function parseCSV(text) {
-  return text.split('\n').map(line => {
-    const cells = []; let value = '', quoted = false;
-    for (let i = 0; i < line.length; i++) {
-      if (line[i] === '"') { if (quoted && line[i + 1] === '"') { value += '"'; i++; } else quoted = !quoted; }
-      else if (line[i] === ',' && !quoted) { cells.push(value); value = ''; } else value += line[i];
-    }
-    cells.push(value); return cells;
-  });
-}
+test('all 21 indices use named-year forecasts followed by their sourced market or region projection',()=>{
+ assert.equal(feed.indices.length,21);assert.equal(Object.keys(GROWTH_ANCHORS).length,21);
+ for(const r of feed.indices){
+  const before=structuredClone(r.growthForecast),p=fiveYearGrowthPath(r,now),a=baselineAssessment(r,now);
+  assert.deepEqual(p.rates,expected[r.id],r.id);assert.equal(p.sourceLinked,true);assert.equal(p.bridge,false);
+  assert.equal(p.scenarioDate,r.asOf);assert.equal(p.startYear,+r.asOf.slice(0,4)+1);assert.deepEqual(p.missingYears,[]);
+  assert.equal(p.points.length,5);assert.ok(p.points.every(x=>x.policyVersion===GROWTH_POLICY.version));
+  assert.deepEqual(r.growthForecast,before);
+  if(r.id==='stoxx600'){assert.equal(a.model,null);assert.match(a.reason,/cash-dividend anchor/);continue;}
+  const m=a.model,factor=expected[r.id].reduce((n,g)=>n*(1+g/100),1);
+  assert.equal(m.input.years,5);assert.equal(m.points.length,6);
+  close(m.last.price,100*factor*m.input.exitPE/m.input.entryPE);close(m.epsCAGR,factor**.2-1);
+  close(m.cashflows.reduce((npv,cash,i)=>npv+cash/(1+m.cashIRR)**i,0),0);
+ }
+});
 
-// Independently build relative annual earnings and date-weighted forward levels.
-function bridgeReference(calendarRates, weight) {
-  let earnings = 1; const levels = [earnings];
-  for (const rate of calendarRates) { earnings *= 1 + rate / 100; levels.push(earnings); }
-  const forward = levels.slice(0, -1).map((value, i) => value * (1 - weight) + levels[i + 1] * weight);
-  return { forward, rates: forward.slice(1).map((value, i) => 100 * (value / forward[i] - 1)) };
-}
+test('regional projection building blocks tie to the verified source table, including dilution',()=>{
+ const sourceRows={'us-large':[4.01,2.19,1.84,8.04],'us-small':[2.43,2.19,.99,5.61],canada:[2.99,1.95,.73,5.67],global:[3.92,2.14,1.01,7.07],'global-ex-us':[3.82,1.97,.13,5.92],europe:[4.24,1.79,.54,6.57],uk:[6.06,2.24,.82,9.12],japan:[4.3,2,.89,7.19],em:[3.73,2.24,-.31,5.66],china:[1.4,1.75,-.55,2.6]};
+ for(const [id,[real,inflation,buyback,growth]] of Object.entries(sourceRows)){
+  const p=LONG_TERM_REGIONS[id];assert.deepEqual(p.components,{realEarningsGrowth:real,inflation,buybackYield:buyback});close(p.growth,growth);close(real+inflation+buyback,growth);
+ }
+ for(const r of feed.indices){const p=longTermGrowth(r.id);assert.equal(p.publisher,'Invesco Solutions');assert.equal(p.asOf,'2025-12-31');assert.deepEqual(p.pdfPages,[7,11]);assert.ok(p.rationale);assert.equal(p.targetId,r.id);}
+ assert.match(longTermGrowth('india').rationale,/emerging-market proxy/);assert.match(longTermGrowth('australia').rationale,/Global ex-US equity proxy/);
+ assert.match(longTermGrowth('china').formula,/- 0.55% dilution/);assert.equal(longTermGrowth('unknown'),null);
+});
 
-test('all 21 benchmarks have five dated growth scenarios; unsupported cash anchors block returns', () => {
-  assert.equal(feed.indices.length, 21); assert.equal(Object.keys(GROWTH_ANCHORS).length, 21);
-  const bridged = [];
-  for (const r of feed.indices) {
-    const path = fiveYearGrowthPath(r, now), assessment = baselineAssessment(r, now), m = assessment.model;
-    assert.equal(path.rates.length, 5); assert.deepEqual(path.missingYears, []);
-    assert.equal(path.scenarioDate, r.asOf); assert.equal(path.startYear, +r.asOf.slice(0, 4) + 1);
-    close(path.rates.at(-1), path.anchor.growth);
-    assert.ok(path.points.every(p => p.scenarioDate === r.asOf && p.policyVersion === GROWTH_POLICY.version));
-    if (path.bridge) bridged.push(r.id);
-    else if (r.id === 'nasdaq100') { assert.deepEqual(path.rates,[28,8.04,8.04,8.04,8.04]); assert.ok(path.sourceLinked); }
-    else { assert.deepEqual(path.rates, Array(5).fill(GROWTH_ANCHORS[r.id].growth)); assert.ok(path.points.every(p => p.basis === 'normalized model')); }
-    if (r.id === 'stoxx600') { assert.equal(m, null); assert.match(assessment.reason, /cash-dividend anchor/); continue; }
-    assert.equal(m.input.years, 5); assert.equal(m.points.length, 6);
-    const factor = path.rates.reduce((value, growth) => value * (1 + growth / 100), 1);
-    close(m.last.price, 100 * factor * m.input.exitPE / m.input.entryPE);
-    close(m.epsCAGR, factor ** .2 - 1);
-    close(m.cashflows.reduce((npv, cash, i) => npv + cash / (1 + m.cashIRR) ** i, 0), 0);
-    assert.ok(Number.isFinite(m.reinvestedCAGR));
+test('house scenarios and original publisher periods retain their identity in model plans and exports',()=>{
+ for(const r of feed.indices){
+  const p=fiveYearGrowthPath(r,now);
+  for(const point of p.points){const published=r.growthForecast.estimates.find(x=>x.year===point.year);
+   if(published){assert.equal(point.growth,published.growth);assert.equal(point.periodLabel,published.periodLabel);assert.equal(point.sourceEvidence.periodBasis,r.growthForecast.periodBasis);assert.equal(point.sourceEvidence.forecastType,r.growthForecast.forecastType);assert.equal(point.sourceEvidence.publishedForYear,true);assert.equal(point.basis,r.growthForecast.forecastType==='house'?'published-house scenario':'published-growth scenario');}
+   else{assert.equal(point.basis,'long-term EPS projection');assert.equal(point.sourceEvidence.derived,true);assert.equal(point.sourceEvidence.publishedForYear,false);}
   }
-  assert.deepEqual(bridged, ['sp500', 'japan']);
+ }
+ const ftse=fiveYearGrowthPath(row('ftse100'),now).points[0];assert.equal(ftse.periodLabel,'Sep-2027 EPS growth scenario');assert.equal(ftse.sourceEvidence.forecastType,'house');
 });
 
-test('calendar-to-forward bridge matches independent high-precision reference values', () => {
-  // References independently evaluated using 55-digit Decimal arithmetic.
-  closeRates(fiveYearGrowthPath(row('sp500'), now).rates, [13.968278680548798, 11.476626720808161, 8.985277805788041, 6.494248741912293, 6]);
-  closeRates(fiveYearGrowthPath(row('japan'), now).rates, [12.520655096553410, 9.943439592285400, 7.451734405619322, 4.960345453602365, 4.5]);
-  const path = fiveYearGrowthPath(row('sp500'), now);
-  assert.deepEqual(path.points[0].calendarInputs.map(p => p.growth), [16, 13.5, 11, 8.5, 6, 6]);
-  assert.equal(path.points[0].calendarInputs.at(-1).year, 2032);
-  assert.equal(path.points[0].calendarInputs.at(-1).basis, 'editorial extension');
-  assert.ok(path.points.every(p => p.basis === 'calendar-to-forward model'));
-  assert.equal(baselineForecast(row('sp500'), now).input.annualGrowth.includes(32.8), false);
+test('a forecast is never capped, faded or carried across gaps and invalid rates block affected returns',()=>{
+ for(const r of feed.indices){
+  const changed={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85},{year:2029,growth:24}]}};
+  const p=fiveYearGrowthPath(changed,now),lt=longTermGrowth(r.id).growth;
+  assert.deepEqual(p.rates,[85,lt,24,lt,lt],r.id);
+  for(const growth of [-100,1001]){const broken={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth}]}};assert.equal(fiveYearGrowthPath(broken,now).rates[0],growth);assert.equal(baselineForecast(broken,now),null);}
+ }
 });
 
-test('bridge endpoint weights and five transitions prevent an extra investment year', () => {
-  const calendar = [10, 20, -5, 7, 4, 3];
-  closeRates(calendarToForwardRates(calendar, 0).rates, calendar.slice(0, 5));
-  closeRates(calendarToForwardRates(calendar, 1).rates, calendar.slice(1));
-  closeRates(calendarToForwardRates(Array(6).fill(8), .83).rates, Array(5).fill(8));
-  const calculated = calendarToForwardRates(calendar, .4), independent = bridgeReference(calendar, .4);
-  closeRates(calculated.rates, independent.rates);
-  assert.equal(calculated.levels.length, 7); assert.equal(calculated.forward.length, 6); assert.equal(calculated.rates.length, 5);
-  const m = project({ ...DEFAULTS, growthMode: 'annual', annualGrowth: calculated.rates, entryPE: 20, exitPE: 20, payout: 0 });
-  assert.equal(m.points.length, 6); assert.equal(m.last.year, 5);
-  close(m.last.price, 100 * independent.forward[5] / independent.forward[0]);
-  close(m.cashIRR, (independent.forward[5] / independent.forward[0]) ** .2 - 1);
-  for (const rates of [[], Array(5).fill(6), [6, 6, 6, 6, 6, NaN], [6, 6, 6, 6, 6, -100]]) assert.throws(() => calendarToForwardRates(rates, .4));
-  for (const weight of [-.1, 1.1, NaN, Infinity]) assert.throws(() => calendarToForwardRates(calendar, weight));
-});
-
-test('complete published calendar coverage supports the sixth forward anchor without division by zero', () => {
-  const r = row('sp500');
-  const full = { ...r, growthForecast: { ...r.growthForecast, estimates: Array.from({ length: 5 }, (_, i) => ({ year: 2027 + i, growth: 10 - i, periodLabel: `CY${2027 + i}` })) } };
-  const path = fiveYearGrowthPath(full, now);
-  assert.ok(path.rates.every(Number.isFinite)); assert.equal(path.points[0].calendarInputs.length, 6);
-  assert.equal(path.points[0].calendarInputs[5].growth, 6);
-  const sixth = { ...full, growthForecast: { ...full.growthForecast, estimates: [...full.growthForecast.estimates, { year: 2032, growth: 4, periodLabel: 'CY2032' }] } };
-  const withSixth = fiveYearGrowthPath(sixth, now);
-  assert.equal(withSixth.points[0].calendarInputs[5].growth, 4);
-  closeRates(withSixth.rates, bridgeReference([10, 9, 8, 7, 6, 4], 288 / 365).rates);
-});
-
-test('unknown period, horizon or unapproved growth inputs do not receive a calendar bridge', () => {
-  const r = row('sp500');
-  const variants = [
-    { ...r, growthForecast: { ...r.growthForecast, periodBasis: 'fiscal-year' } },
-    { ...r, growthForecast: { ...r.growthForecast, periodBasis: 'publisher-year' } },
-    { ...r, metricDefinitions: { ...r.metricDefinitions, forwardPE: { ...r.metricDefinitions.forwardPE, economic: { ...r.metricDefinitions.forwardPE.economic, horizon: 'forward-unspecified' } } } },
-    { ...r, metricDefinitions: { ...r.metricDefinitions, growthForecast: { ...r.metricDefinitions.growthForecast, permittedUse: ['display'] } } }
-  ];
-  for (const variant of variants) { const path = fiveYearGrowthPath(variant, now); assert.equal(path.bridge, false); assert.deepEqual(path.rates, [6, 6, 6, 6, 6]); assert.ok(path.points.every(p => p.basis === 'normalized model')); }
-  assert.deepEqual(fiveYearGrowthPath({ id: 'unknown' }, now).rates, ['', '', '', '', '']);
-});
-
-test('new source coverage updates modeled transitions while a custom holding year remains protected', () => {
-  const r = row('sp500'), changed = { ...r, growthForecast: { ...r.growthForecast, estimates: [...r.growthForecast.estimates, { year: 2028, growth: 9, periodLabel: 'CY2028' }] } };
-  const original = fiveYearGrowthPath(changed, now), path = fiveYearGrowthPath(changed, now, { 2029: 2 });
-  closeRates(original.rates, bridgeReference([16, 9, 8, 7, 6, 6], 288 / 365).rates);
-  for (let i = 0; i < 5; i++) close(path.rates[i], i === 2 ? 2 : original.rates[i]);
-  assert.equal(path.points[2].basis, 'custom assumption');
-  assert.equal(path.points[0].calendarInputs[1].basis, 'consensus');
-  assert.equal(changed.growthForecast.estimates.at(-1).growth, 9);
-});
-
-test('old browser horizons migrate to five even when paused or explicitly locked', () => {
-  const old = { ...DEFAULTS, growthMode: 'annual', years: 2, annualGrowth: [7, 8], growth: 4, entryPE: 17 };
-  const data = { version: 1, scenarios: [['sp500', old]], overrides: [['sp500', { growthMode: true, annualGrowth: true, years: true, entryPE: true }]], following: false };
-  const loaded = loadScenarios({ getItem: key => key === STORAGE_KEY ? JSON.stringify(data) : null });
-  const input = switchScenario(row('sp500'), loaded.scenarios.get('sp500'), loaded.overrides.get('sp500'), loaded.following, now);
-  assert.equal(input.years, 5); assert.deepEqual(input.annualGrowth, [7, 8, 4, 4, 4]); assert.equal(input.entryPE, 17);
-  const source = scenarioInputs(row('sp500'), { ...DEFAULTS, growthMode: 'source', growthStartYear: 2027, years: 1, annualGrowth: [12] }, {}, false, now);
-  closeRates(source.annualGrowth, fiveYearGrowthPath(row('sp500'), now).rates); assert.equal(source.years, 5);
-  const custom = scenarioInputs(row('sp500'), { ...DEFAULTS, growthMode: 'source', growthOverrides: { 2027: 12 }, annualGrowth: [12] }, {}, false, now);
-  closeRates(custom.annualGrowth, [12, ...fiveYearGrowthPath(row('sp500'), now).rates.slice(1)]);
-  const paused = scenarioInputs(row('sp500'), { ...DEFAULTS, growthMode: 'source', growthPolicyVersion: GROWTH_POLICY.version, growthStartYear: 2027, annualGrowth: [12] }, {}, false, now);
-  closeRates(paused.annualGrowth, [12, ...fiveYearGrowthPath(row('sp500'), now).rates.slice(1)]);
-});
-
-test('calendar rollover does not shift a retained valuation into a new investment date', () => {
-  for (const id of ['sp500', 'japan', 'india']) {
-    const original = fiveYearGrowthPath(row(id), now), later = fiveYearGrowthPath(row(id), new Date('2029-10-23T12:00:00Z'));
-    assert.equal(later.scenarioDate, row(id).asOf); assert.equal(later.startYear, 2027); assert.deepEqual(later.rates, original.rates);
+test('missing or unsupported annual source periods use the long-term projection without inventing source forecasts',()=>{
+ for(const r of feed.indices){
+  for(const forecast of [undefined,{...r.growthForecast,periodBasis:'quarterly'},{...r.growthForecast,estimates:[]}]){
+   const p=fiveYearGrowthPath({...r,growthForecast:forecast},now);assert.deepEqual(p.rates,Array(5).fill(longTermGrowth(r.id).growth));assert.equal(p.coveredYears,0);assert.ok(p.points.every(x=>x.basis==='long-term EPS projection'));
   }
+ }
+ assert.deepEqual(fiveYearGrowthPath({id:'unknown',asOf:'2026-10-23'},now).rates,['','','','','']);
 });
 
-test('annual and universe CSVs retain all 126 records and honest model provenance', () => {
-  const m = baselineForecast(row('sp500'), now), csv = parseCSV(annualCSV(m, row('sp500').growthForecast));
-  assert.equal(csv.length, 7);
-  const header = csv[0], basis = header.indexOf('Growth basis'), status = header.indexOf('Model status');
-  for (const record of csv.slice(2)) {
-    assert.equal(record[basis], 'calendar-to-forward model'); assert.equal(record[10], ''); assert.equal(record[11], '');
-    const evidence = JSON.parse(record.at(-2)); assert.equal(evidence.terminalGrowth, 6); assert.equal(evidence.policyVersion, GROWTH_POLICY.version);
-    assert.equal(evidence.calendarInputs.length, 6); assert.equal(evidence.scenarioDate, '2026-10-16'); assert.equal(record[status], 'calculated');
+test('user overrides and custom modes remain protected while all earlier source defaults migrate',()=>{
+ for(const r of feed.indices)for(const version of ['tickerlantern-five-year-fade-v1','tickerlantern-forward-timing-v2','tickerlantern-forward-timing-v3','tickerlantern-forward-timing-v4']){
+  const old={...DEFAULTS,growthMode:'source',annualGrowth:[28,28,28,28,28],growthOverrides:{2029:12},growthPolicyVersion:version};
+  const next=scenarioInputs(r,old,{},false,now),rates=[...expected[r.id]];rates[2]=12;
+  assert.deepEqual(next.annualGrowth,rates);assert.equal(next.growthPolicyVersion,GROWTH_POLICY.version);
+ }
+ for(const r of feed.indices){const custom={...DEFAULTS,growthMode:'annual',annualGrowth:[9,8,7,6,5]};assert.deepEqual(scenarioInputs(r,custom,{growthMode:true,annualGrowth:true},true,now).annualGrowth,custom.annualGrowth);}
+});
+
+test('calendar rollover never shifts a retained valuation or its named-year forecast schedule',()=>{
+ for(const r of feed.indices){const later=fiveYearGrowthPath(r,new Date('2030-01-10'));assert.equal(later.scenarioDate,r.asOf);assert.equal(later.startYear,2027);assert.deepEqual(later.rates,expected[r.id]);}
+});
+
+test('all-index CSV preserves all 126 records and the correct source for every forecast and projection',()=>{
+ const records=parseCSV(fiveYearCSV(feed,now)),h=records[0],at=name=>h.indexOf(name);
+ assert.equal(records.length,127);
+ for(const r of feed.indices){const rows=records.slice(1).filter(x=>x[at('Benchmark ID')]===r.id);assert.equal(rows.length,6);assert.deepEqual(rows.slice(1).map(x=>+x[at('EPS growth percent')]),expected[r.id]);
+  for(const [i,record] of rows.slice(1).entries()){
+   const plan=JSON.parse(record[at('Growth source provenance')]),published=r.growthForecast.estimates.find(x=>x.year===2027+i);
+   assert.equal(plan.policyVersion,GROWTH_POLICY.version);assert.equal(plan.sourceEvidence.publisher,published?r.growthForecast.source.publisher:'Invesco Solutions');
+   assert.equal(record[at('Growth basis')],published?r.growthForecast.forecastType==='house'?'published-house scenario':'published-growth scenario':'long-term EPS projection');
   }
-  close(+csv.at(-1)[3], m.last.price);
-  const all = parseCSV(fiveYearCSV(feed, now)); assert.equal(all.length, 127);
-  const id = header.indexOf('Benchmark ID'), years = header.indexOf('Holding years'), reason = header.indexOf('Unavailable reason');
-  for (const r of feed.indices) {
-    const records = all.slice(1).filter(p => p[id] === r.id); assert.equal(records.length, 6); assert.ok(records.every(p => p[years] === '5'));
-    if (r.id === 'stoxx600') {
-      assert.ok(records.every(p => p[status] === 'unavailable' && /cash-dividend anchor/.test(p[reason])));
-      for (const record of records) for (const column of [1, 2, 3, 4, 5, 6, 7]) assert.equal(record[column], '');
-      assert.deepEqual(records.slice(1).map(p => +p.at(-1)), [5, 5, 5, 5, 5]);
-    } else { assert.ok(records.every(p => p[status] === 'calculated')); close(+records.at(-1)[6], baselineForecast(r, now).last.cashWealth); }
-  }
+  if(r.id==='stoxx600')assert.ok(rows.every(x=>x[at('Model status')]==='unavailable'));
+  else{assert.ok(rows.every(x=>x[at('Model status')]==='calculated'));close(+rows.at(-1)[3],baselineForecast(r,now).last.price);}
+ }
 });
 
-test('a modeled rate numerically equal to a published rate remains a model assumption in CSV', () => {
-  const r = row('india'), sameNumber = { ...r, growthForecast: { ...r.growthForecast, estimates: [{ year: 2027, growth: 9, periodLabel: 'CY2027' }] } };
-  const m = baselineForecast(sameNumber, now), records = parseCSV(annualCSV(m, sameNumber.growthForecast));
-  assert.equal(records[2][9], 'normalized model'); assert.equal(records[2][10], ''); assert.equal(records[2][11], '');
-  assert.equal(JSON.parse(records[2].at(-2)).basis, 'normalized model');
+test('an equal numeric rate remains long-term projection when no forecast covers that year',()=>{
+ const r=row('india'),changed={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:5.66}]}};
+ const records=parseCSV(annualCSV(baselineForecast(changed,now),changed.growthForecast));
+ assert.equal(records[2][9],'published-growth scenario');assert.equal(records[3][9],'long-term EPS projection');assert.equal(JSON.parse(records[3].at(-2)).sourceEvidence.publisher,'Invesco Solutions');
 });
 
-test('five-year worked example independently reconciles annual cash-flow timing', () => {
-  const m = project({ ...DEFAULTS, entryPE: 20, exitPE: 20 });
-  close(m.last.price * 2, 267.64511552); close(m.last.cumulativeDividend * 2, 16.91127888);
-  close((m.last.cashWealth / 100 - 1) * 100, 42.2781972); close(m.cashIRR, .075);
+test('five-year worked example independently reconciles annual cash-flow timing',()=>{
+ const m=project({...DEFAULTS,entryPE:20,exitPE:20});close(m.last.price*2,267.64511552);close(m.last.cumulativeDividend*2,16.91127888);close(m.cashIRR,.075);
 });
 
-test('invalid published calendar earnings block only the affected baseline and remain explicit in exports',()=>{
-  const broken=structuredClone(row('sp500'));
-  broken.growthForecast.estimates.find(p=>p.year===2027).growth=-100;
-  const path=fiveYearGrowthPath(broken,now);
-  assert.deepEqual(path.rates,['','','','','']);
-  assert.equal(baselineForecast(broken,now),null);
-  const records=parseCSV(fiveYearCSV({...feed,indices:[broken]},now));
-  const status=records[0].indexOf('Model status'),reason=records[0].indexOf('Unavailable reason');
-  assert.equal(records.length,7);
-  assert.ok(records.slice(1).every(r=>r[status]==='unavailable' && r[reason] && r[3]===''));
-});
-
-
-test('Nasdaq uses each annual forecast only in its named year and fills missing years from long-term earnings assumptions',()=>{
-  const r=row('nasdaq100'),path=fiveYearGrowthPath(r,now),m=baselineForecast(r,now);
-  assert.deepEqual(path.rates,[28,8.04,8.04,8.04,8.04]);assert.equal(path.sourceLinked,true);
-  assert.equal(path.coveredYears,1);
-  close(NASDAQ_LONG_TERM.growth,Object.values(NASDAQ_LONG_TERM.components).reduce((a,b)=>a+b,0));
-  assert.equal(path.points[0].sourceEvidence.referenceYear,2027);
-  assert.equal(path.points[0].sourceEvidence.referenceGrowth,28);
-  assert.deepEqual(path.points.map(p=>p.basis),['published-growth scenario',...Array(4).fill('long-term EPS projection')]);
-  const earningsFactor=1.28*1.0804**4;
-  close(m.epsCAGR,earningsFactor**.2-1);close(m.last.price,100*earningsFactor*m.input.exitPE/m.input.entryPE);
-  assert.ok(!m.input.annualGrowth.includes(43));
-  const records=parseCSV(annualCSV(m,r.growthForecast));
-  assert.deepEqual(records.slice(2).map(p=>p[9]),path.points.map(p=>p.basis));
-  assert.equal(JSON.parse(records[2].at(-2)).sourceEvidence.referenceYear,2027);
-  for(const record of records.slice(3)){
-    const evidence=JSON.parse(record.at(-2)).sourceEvidence;
-    assert.equal(evidence.publisher,'Invesco Solutions');assert.equal(evidence.asOf,'2025-12-31');
-    assert.equal(evidence.publishedForYear,false);assert.equal(evidence.derived,true);
-    assert.deepEqual(evidence.components,{realEarningsGrowth:4.01,inflation:2.19,buybackYield:1.84});
-    assert.equal(record[10],'');assert.equal(record[11],'');
-  }
-  const high={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85}]}};
-  assert.deepEqual(fiveYearGrowthPath(high,now).rates,[85,8.04,8.04,8.04,8.04]);
-  assert.ok(Number.isFinite(baselineForecast(high,now).cashIRR));
-});
-
-test('Nasdaq respects later forecasts, gaps and user edits while migrating both earlier defaults',()=>{
-  const r=row('nasdaq100');
-  const updated={...r,growthForecast:{...r.growthForecast,estimates:[...r.growthForecast.estimates,{year:2028,growth:24},{year:2030,growth:17}]}};
-  assert.deepEqual(fiveYearGrowthPath(updated,now).rates,[28,24,8.04,17,8.04]);
-  for(const [version,rates] of [['tickerlantern-forward-timing-v2',[8,8,8,8,8]],['tickerlantern-forward-timing-v3',[28,28,28,28,28]]]){
-    const old={...DEFAULTS,growthMode:'source',annualGrowth:rates,growthOverrides:{2029:12},growthPolicyVersion:version};
-    const migrated=scenarioInputs(r,old,{},false,now);
-    assert.deepEqual(migrated.annualGrowth,[28,8.04,12,8.04,8.04]);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
-  }
-  const absent=fiveYearGrowthPath({...r,growthForecast:undefined},now);
-  assert.deepEqual(absent.rates,Array(5).fill(8.04));assert.equal(absent.coveredYears,0);
-  assert.ok(absent.points.every(p=>p.basis==='long-term EPS projection'));
-  assert.deepEqual(fiveYearGrowthPath({...r,growthForecast:{...r.growthForecast,periodBasis:'fiscal-year'}},now).rates,Array(5).fill(8.04));
+test('legacy calendar bridge research utility still spans five forward transitions',()=>{
+ const calendar=[10,20,-5,7,4,3];assert.equal(calendarToForwardRates(calendar,.4).rates.length,5);assert.deepEqual(calendarToForwardRates(calendar,0).rates.map(x=>+x.toFixed(10)),calendar.slice(0,5));
+ for(const invalid of [[],Array(5).fill(6),[6,6,6,6,6,-100]])assert.throws(()=>calendarToForwardRates(invalid,.4));
 });

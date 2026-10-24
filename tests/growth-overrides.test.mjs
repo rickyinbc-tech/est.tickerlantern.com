@@ -13,8 +13,8 @@ test('source revision protects only the year edited by the reader',()=>{
  const input=scenarioInputs(row,{...DEFAULTS,growthOverrides:{2027:8}}, {},true,now);
  const changed={...row,growthForecast:{...forecast,estimates:[{year:2027,growth:17},{year:2028,growth:10}]}};
  const next=scenarioInputs(changed,input,{},true,now);
- assert.equal(next.annualGrowth[0],8);[8.9308271949877,7.600086637825387,6.269397482169703,6].forEach((value,i)=>close(next.annualGrowth[i+1],value));assert.deepEqual(next.growthOverrides,{2027:8});
- assert.equal(next.growthPlan[0].basis,'custom assumption');assert.ok(next.growthPlan.slice(1).every(p=>p.basis==='calendar-to-forward model'));
+ assert.equal(next.annualGrowth[0],8);[10,8.04,8.04,8.04].forEach((value,i)=>close(next.annualGrowth[i+1],value));assert.deepEqual(next.growthOverrides,{2027:8});
+ assert.equal(next.growthPlan[0].basis,'custom assumption');assert.equal(next.growthPlan[1].basis,'published-growth scenario');assert.ok(next.growthPlan.slice(2).every(p=>p.basis==='long-term EPS projection'));
  assert.deepEqual(sourceGrowthPath(changed,2,now).rates,[17,10]);
 });
 test('source-linked overrides survive browser storage and stay with their own benchmark',()=>{
@@ -27,21 +27,21 @@ test('an uncovered year can be supplied without replacing the linked earlier yea
  const path=sourceGrowthPath(row,4,now,{2029:6});assert.deepEqual(path.rates,[15,12,6,'']);assert.deepEqual(path.missingYears,[2030]);
  const next=sourceGrowthPath(row,2,new Date('2027-10-23T12:00:00Z'),{2027:8,2028:9});assert.deepEqual(next.rates,[9,'']);assert.equal(next.startYear,2028);
 });
-test('CSV distinguishes modeled forward rates from published calendar inputs and reader overrides',()=>{
+test('CSV distinguishes published periods, long-term projections and reader overrides',()=>{
  const input=scenarioInputs(row,{...DEFAULTS,growthOverrides:{2027:8}}, {},true,now);
  const model=project(input),rows=csv(annualCSV(model,forecast));
  assert.equal(rows[1][9],'');assert.equal(rows[2][9],'custom assumption');assert.equal(rows[2][10],'');assert.equal(rows[2][11],'');assert.equal(+rows[2].at(-1),8);
- assert.equal(rows[3][9],'calendar-to-forward model');assert.equal(rows[3][10],'');assert.equal(rows[3][11],'');close(+rows[3].at(-1),10.390546765471642);
- assert.equal(rows[3][8],'Holding year 2');
+ assert.equal(rows[3][9],'published-growth scenario');assert.equal(rows[3][10],'');assert.equal(rows[3][11],'');close(+rows[3].at(-1),12);
+ assert.equal(rows[3][8],'Calendar year 2028');
  const evidence=JSON.parse(rows[3][rows[0].indexOf('Growth source provenance')]);
  assert.equal(evidence.policyVersion,GROWTH_POLICY.version);assert.equal(evidence.sourceEvidence.url,forecast.source.url);
- assert.deepEqual(evidence.calendarInputs.slice(0,2).map(p=>p.growth),[15,12]);
- close(model.last.eps,model.initialEPS*1.08*1.1039054676547164*1.083962407924816*1.0640210330961954*1.06);
+ assert.equal(evidence.sourceEvidence.referenceYear,2028);assert.equal(evidence.sourceEvidence.periodBasis,'calendar-year');
+ close(model.last.eps,model.initialEPS*1.08*1.12*1.0804**3);
 });
-test('numerical coincidence never upgrades a normalized model rate into published consensus',()=>{
- const reference={...row,metricDefinitions:{},growthForecast:{...forecast,estimates:[{year:2027,growth:6,periodLabel:'Calendar year 2027'}]}};
+test('display-only evidence never upgrades a long-term projection into published consensus',()=>{
+ const reference={...row,metricDefinitions:{growthForecast:{permittedUse:['display']}},growthForecast:{...forecast,estimates:[{year:2027,growth:8.04,periodLabel:'Calendar year 2027'}]}};
  const model=project(scenarioInputs(reference,undefined,{},true,now)),rows=csv(annualCSV(model,reference.growthForecast));
- assert.equal(+rows[2].at(-1),6);assert.equal(rows[2][9],'normalized model');assert.equal(rows[2][10],'');assert.equal(rows[2][11],'');
+ assert.equal(+rows[2].at(-1),8.04);assert.equal(rows[2][9],'long-term EPS projection');assert.equal(rows[2][10],'');assert.equal(rows[2][11],'');
  const evidence=JSON.parse(rows[2][rows[0].indexOf('Growth source provenance')]);
- assert.equal(evidence.policyVersion,GROWTH_POLICY.version);assert.equal(evidence.sourceEvidence,undefined);
+ assert.equal(evidence.policyVersion,GROWTH_POLICY.version);assert.equal(evidence.sourceEvidence.publisher,'Invesco Solutions');
 });

@@ -1,78 +1,64 @@
-# Five-year scenario timing policy
+# Five-year forecast and long-term EPS policy
 
-Reviewed 23 October 2026 · `tickerlantern-forward-timing-v4`. Supersedes `tickerlantern-five-year-fade-v1`.
+Reviewed 23 October 2026. Policy: tickerlantern-forecast-long-term-v5. Supersedes the earlier timing bridges, editorial anchors and Nasdaq-only exceptions.
 
-Every workbench mode, preset, sensitivity, chart and export keeps **five holding years**. Published growth observations retain their original values, dates and definitions in the source card. Nasdaq-100 uses published annual forecasts only for their named years and a sourced long-term EPS projection in missing years.
+All 21 benchmarks use published forecasts only for the years they cover. Missing years immediately use a sourced long-term nominal EPS projection. A new forecast replaces only its named year, including gaps between published estimates. No near-term forecast is capped, faded or carried forward. The current-year forecast stays in the evidence card, rather than being replayed as a full future holding year.
 
-## Eligible calendar-to-forward bridge
+Published calendar, publisher-year, fiscal and forecast-date labels retain their meaning. Consensus estimates and house forecasts are separately labelled. A house forecast for September 2027 remains a September 2027 house scenario when applied in the first model year; it is not relabelled calendar-year or rolling-NTM consensus. Applying the rates to synthetic forward earnings is an explicit scenario mapping.
 
-Only an explicitly calendar-year growth source paired with an explicitly rolling-12-month entry P/E and a recorded valuation date may supply a modeled bridge. Current accepted sources meet these conditions for S&P 500 and MSCI Japan. Their date is a **timing proxy** where the original separately observed price/estimate vintage is undisclosed; this is not a claim of an exact contemporaneous consensus EPS series.
+## Long-term source and derivation
 
-Set relative calendar EPS for the valuation year y to 1 and compound six calendar growth rates through y+6. With w equal to the elapsed fraction of the recorded valuation year, assume uniform earnings accrual and keep that within-year weight fixed:
+[Invesco 2026 Capital Market Assumptions, Q1 update](https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7), assumptions as of 31 December 2025. Figure 4a on PDF p. 7 supplies the components; p. 11 defines them. Original pages were visually verified. SHA-256: 28faab4574d491474f4eac99fc734e5c4615ec320793bcc2f0c264dc5b70ee7b. The original PDF and page captures remain private local QA files and are not published.
 
-`F_t = (1-w) E_CY(y+t) + w E_CY(y+t+1)`
+Nominal EPS projection = real earnings growth + expected inflation + buyback/dilution effect, as an additive approximation. The source presents separate building blocks; their conversion into an EPS proxy is Ticker Lantern’s derivation. A ten-year structural assumption is applied as a constant annual input only where the five-year scenario lacks a published forecast. This is not an Invesco forecast for a specific missing calendar year.
 
-`g_model,t = F_t / F_(t-1) - 1`, for t = 1…5.
+Buybacks enter per-share earnings once. Source dividends, valuation and FX components are excluded: the workbench calculates dividends and the selected exit P/E separately. RBC GAM total-return assumptions are not put into an EPS growth field.
 
-Normalize F0 to `100 / entry PE`. Six calendar growth inputs create six forward anchors F0…F5 and **five investment-year transitions**. They do not create a sixth holding year. No seasonality, quarterly estimate schedule or matched-provider bridge is verified.
+| Published market basis | Real earnings | Inflation | Buyback/dilution | Derived nominal EPS |
+| --- | ---: | ---: | ---: | ---: |
+| US large cap | 4.01% | 2.19% | 1.84% | 8.04% |
+| US small cap | 2.43% | 2.19% | 0.99% | 5.61% |
+| Canada equity | 2.99% | 1.95% | 0.73% | 5.67% |
+| Global equity | 3.92% | 2.14% | 1.01% | 7.07% |
+| Global ex-US equity | 3.82% | 1.97% | 0.13% | 5.92% |
+| Europe equity | 4.24% | 1.79% | 0.54% | 6.57% |
+| UK equity | 6.06% | 2.24% | 0.82% | 9.12% |
+| Japan equity | 4.3% | 2% | 0.89% | 7.19% |
+| EM equity | 3.73% | 2.24% | -0.31% | 5.66% |
+| China equity | 1.4% | 1.75% | -0.55% | 2.6% |
 
-Keep contiguous published CY rates through the sixth input where available. To extend uncovered calendar years, fade the last published rate’s spread toward the editorial anchor at calendar position five, with the carried spread limited to ±10 percentage points. Uncovered positions five and six use the anchor. Published values are never clipped. Every resulting holding-year rate is labeled **calendar-to-forward model**, including the first year, because the interpolation and later earnings assumptions are modeled.
+## All 21 mappings and current paths
 
-S&P 500 uses 16%,13.5%,11%,8.5%,6%,6% as underlying CY inputs and an October 16 timing proxy. Its five modeled forward growth rates are approximately 13.968279%,11.476627%,8.985278%,6.494249%,6%. The original published 16% remains visible as CY2027 evidence. It is not the modeled first holding-year growth rate.
+The target index keeps its own published forecasts. Only missing years use the named market/region proxy. Broader proxies carry no invented country, sector or index premium. They are not presented as index-specific published forecasts.
 
-## Nasdaq-100 annual forecasts and long-term projection
+| Benchmark | 2027 | 2028 | 2029 | 2030 | 2031 | Long-term basis and mapping |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| S&P 500 | 16% forecast | 8.04% projection | 8.04% projection | 8.04% projection | 8.04% projection | US large cap. US large-cap assumption for the S&P 500. |
+| Nasdaq-100 | 28% forecast | 8.04% projection | 8.04% projection | 8.04% projection | 8.04% projection | US large cap. US large-cap proxy for Nasdaq-100; no technology premium added. |
+| Russell 2000 | 44% forecast | 5.61% projection | 5.61% projection | 5.61% projection | 5.61% projection | US small cap. US small-cap proxy for Russell 2000; source return table uses S&P 600. |
+| S&P/TSX Composite | 11.6% forecast | 5.67% projection | 5.67% projection | 5.67% projection | 5.67% projection | Canada equity. Canadian broad-equity assumption for the S&P/TSX Composite. |
+| MSCI Canada | 8.2% forecast | 8.7% forecast | 5.67% projection | 5.67% projection | 5.67% projection | Canada equity. Canadian broad-equity proxy for MSCI Canada. |
+| MSCI ACWI | 15.1% forecast | 12.9% forecast | 7.07% projection | 7.07% projection | 7.07% projection | Global equity. Global equity assumption for MSCI ACWI. |
+| MSCI World | 13.2% forecast | 13.5% forecast | 7.07% projection | 7.07% projection | 7.07% projection | Global equity. Global all-country equity proxy for developed-market MSCI World. |
+| MSCI EAFE | 9.9% forecast | 5.92% projection | 5.92% projection | 5.92% projection | 5.92% projection | Global ex-US equity. Global ex-US equity proxy for EAFE; includes markets outside EAFE. |
+| MSCI Emerging Markets | 24% forecast | 10% forecast | 5.66% projection | 5.66% projection | 5.66% projection | EM equity. Emerging-market equity assumption for MSCI Emerging Markets. |
+| MSCI Europe | 9.9% forecast | 10.5% forecast | 6.57% projection | 6.57% projection | 6.57% projection | Europe equity. European equity assumption for MSCI Europe. |
+| MSCI United Kingdom | 5% forecast | 8% forecast | 9.12% projection | 9.12% projection | 9.12% projection | UK equity. UK equity assumption for MSCI United Kingdom. |
+| FTSE 100 | 7% forecast | 9.12% projection | 9.12% projection | 9.12% projection | 9.12% projection | UK equity. UK broad-equity proxy for FTSE 100. |
+| STOXX Europe 600 | 14% forecast | 6.57% projection | 6.57% projection | 6.57% projection | 6.57% projection | Europe equity. European broad-equity proxy for STOXX Europe 600. |
+| MSCI Japan | 15% forecast | 7.19% projection | 7.19% projection | 7.19% projection | 7.19% projection | Japan equity. Japanese equity assumption for MSCI Japan. |
+| Nikkei 225 | 22% forecast | 7.19% projection | 7.19% projection | 7.19% projection | 7.19% projection | Japan equity. Japanese broad-equity proxy for Nikkei 225. |
+| MSCI China | 13.7% forecast | 2.6% projection | 2.6% projection | 2.6% projection | 2.6% projection | China equity. Chinese equity assumption for MSCI China. |
+| Hang Seng | 3% forecast | 2.6% projection | 2.6% projection | 2.6% projection | 2.6% projection | China equity. Chinese broad-equity proxy for Hang Seng; no Hong Kong-specific premium added. |
+| CSI 300 | 12% forecast | 6% forecast | 2.6% projection | 2.6% projection | 2.6% projection | China equity. Chinese broad-equity proxy for CSI 300; no A-share premium added. |
+| MSCI India | 16.6% forecast | 5.66% projection | 5.66% projection | 5.66% projection | 5.66% projection | EM equity. Broad emerging-market proxy for MSCI India; no unsupported country premium added. |
+| MSCI AC Asia Pacific ex Japan | 26.8% forecast | 5.66% projection | 5.66% projection | 5.66% projection | 5.66% projection | EM equity. Broad emerging-market proxy for MSCI Asia ex Japan; no regional premium added. |
+| MSCI Australia | 4.9% forecast | 5.92% projection | 5.92% projection | 5.92% projection | 5.92% projection | Global ex-US equity. Global ex-US equity proxy for Australia; no Australia-specific building block is published in this table. |
 
-The published annual forecast applies only to its named year. UBS CIO's 7 October 2026 article provides 28% for 2027. The 43% figure describes 2026 and is not replayed as a future holding year. Missing years, including gaps between published estimates, use an **8.04% long-term nominal EPS proxy**. No near-term forecast is carried forward or faded.
+## Consistency and saved assumptions
 
-The long-term input is an application-derived additive approximation from [Invesco's 2026 Q1 capital-market assumptions](https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7), assumptions as of 31 December 2025, Figure 4a, PDF p. 7; definitions on p. 11:
+The workbench, initial static comparison, interactive comparison, annual cash-flow CSV and all-index CSV use the same policy. Published rows retain original period labels, dates, source URLs and consensus/house classification. Projection rows retain the long-term source vintage, proxy mapping and building-block formula. Even coincidentally equal numbers retain their correct provenance.
 
-`4.01% real earnings growth + 2.19% inflation + 1.84% buyback effect = 8.04% nominal EPS projection`
+Earlier source-mode defaults migrate once, including paused defaults. Explicit named-year overrides, custom constant/annual modes and each benchmark’s independent saved settings remain protected. A modern paused source scenario freezes its saved rates.
 
-This uses US large-cap building blocks as a regional proxy for uncovered Nasdaq years. It is neither a source-published Nasdaq forecast nor Invesco's total-return forecast. The source horizon is ten years; applying a constant annual proxy in the remaining four scenario years is Ticker Lantern's choice. The additive approximation follows the source's building-block presentation rather than claiming an exact nonlinear conversion.
-
-The buyback effect enters per-share earnings once. Source dividends, valuation change and FX are excluded from this input: the workbench already calculates dividends and its own selected exit P/E separately. RBC GAM's long-term equity returns were checked but are not entered into an EPS field because they include other return components and valuation normalization.
-
-The current five-year EPS path is **28%, 8.04%, 8.04%, 8.04%, 8.04%**. Published years are labelled `published-growth scenario`; missing years are labelled `long-term EPS projection`. Every CSV row retains the appropriate source, vintage and calculation, rather than attributing future estimates to UBS. New annual forecasts replace only their named year; explicit user overrides remain protected.
-
-## Other period definitions
-
-Publisher-year, FY or forecast-endpoint labels are not silently converted into CY or rolling NTM. Where definitions cannot support the bridge, each of the five holding years uses the benchmark’s **editorial normalized EPS anchor**. Eighteen current benchmarks use this policy. This reduces unsupported period conversions; it does not establish the normalized rates as more accurate forecasts. Readers can edit any year or choose custom constant/annual growth.
-
-The other benchmarks’ anchors are nominal per-share earnings assumptions. They are not provider consensus, asset-manager forecasts, GDP-derived estimates, or uniquely correct expected growth. Funding feasibility, retention/ROE, dilution and buybacks require additional evidence. No separate buyback yield is added.
-
-| Benchmark | Year-five EPS growth | Rationale |
-| --- | ---: | --- |
-| S&P 500 | 6% | Diversified mature US companies; nominal sales growth with modest per-share gains. |
-| Nasdaq-100 | 8.04% | Derived long-term nominal EPS proxy from Invesco US large-cap building blocks; a published forecast replaces it only for the named year. |
-| Russell 2000 | 6% | Small-company rebound growth normalizes; financing costs and dilution limit long-run gains. |
-| S&P/TSX Composite | 5% | Mature financials and resources; commodity cycles do not compound indefinitely. |
-| MSCI Canada | 5% | Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor. |
-| MSCI ACWI | 5.5% | Diversified developed and emerging markets; a rounded global nominal EPS anchor. |
-| MSCI World | 5.5% | Developed-market nominal growth with modest per-share gains. |
-| MSCI EAFE | 5% | Mature non-US developed markets with slower structural growth. |
-| MSCI Emerging Markets | 7% | Higher structural demand growth, discounted for cyclicality and dilution. |
-| MSCI Europe | 5% | Mature European companies with global revenues and modest nominal growth. |
-| MSCI United Kingdom | 4.5% | Mature financial, resource and defensive mix; limited sustained margin expansion. |
-| FTSE 100 | 4.5% | Global mature-company mix; separate from MSCI UK and not its consensus forecast. |
-| STOXX Europe 600 | 5% | Broad mature European earnings; normalize the near-term recovery. |
-| MSCI Japan | 4.5% | Low structural growth with some inflation and corporate-efficiency improvement. |
-| Nikkei 225 | 5% | Exporter and technology exposure allows a modest premium to broad Japan. |
-| MSCI China | 6% | Normalize the recovery; allow for slower structural growth and policy risk. |
-| Hang Seng | 5% | Mature financials and China exposure; a cautious normalized earnings anchor. |
-| CSI 300 | 6% | Domestic China exposure; normalize cyclical growth without extending a rebound. |
-| MSCI India | 9% | Higher structural nominal demand growth, moderated for dilution and competition. |
-| MSCI AC Asia Pacific ex Japan | 7% | Emerging Asia and technology mix; normalize the current semiconductor-led upswing. |
-| MSCI Australia | 5% | Mature banks and resources; normalize commodity-sensitive earnings. |
-
-
-## State, valuation and export
-
-Scenarios are dated to the recorded entry valuation, not automatically shifted forward by the current calendar year while retaining an old P/E. A publication date is explicitly qualified as a date proxy. A fresh market observation can move the scenario date; stale observations retain their date warnings.
-
-Unedited legacy source-mode paths migrate once to timing-v4, including paused paths. Explicit yearly overrides remain protected. Custom constant/annual modes keep their inputs. Modern paused source scenarios freeze their saved rates. Each benchmark remains independent.
-
-Eligible historical means can still supply explicitly labeled illustrative mean-reversion exits. Fifteen qualified references cannot supply comparisons or defaults. Neither a compatible mean nor a constant P/E is a fair-value forecast. The sensitivity matrix tests alternative growth/exit assumptions without assigning probabilities.
-
-All displays reuse one accepted engine output. CSV records preserve model/source provenance, timing dates, bridge calendar inputs, dividend evidence and snapshot identity. The universe export retains entry plus five rows for every benchmark. Unavailable cash models have status/reason and blank computed values rather than zero returns or silent omission. STOXX 600’s net-return spread cannot anchor automatic cash distributions.
-
-See [the complete audit](full-model-audit-2026-10-23.md) and [dividend policy](dividend-policy.md). The Invesco building-block methodology supports separating income, earnings and valuation, but does not substantiate these particular anchors or the uniform-accrual bridge.
+All growth paths contain exactly five holding years. Unsupported valuations or cash-dividend inputs still prevent a fabricated cash-return result: STOXX 600 has its full growth path but its net return-spread reference is not treated as a cash dividend. The cash-return table therefore has 20 calculated defaults, while the all-index export retains all 126 valuation-date rows.

@@ -14,7 +14,7 @@ export const MODEL_CONVENTIONS = Object.freeze({
   cashInterestPercent: 0,
   returnBasis: 'nominal; before taxes, fees and trading costs',
   currencyBasis: 'normalized currency-neutral illustration; no FX translation or hedging',
-  growthMapping: 'timing-v4: Nasdaq-100 uses each published annual earnings forecast only in its named year and a derived Invesco US large-cap long-term EPS proxy in missing years; explicit CY/rolling12m inputs for other benchmarks may use a uniform-accrual calendar-to-forward model bridge; remaining definitions use editorial normalized rates',
+  growthMapping: 'forecast-long-term-v5: all benchmarks use published forecasts only in their named years, preserving consensus/house and original period labels; missing years use a derived Invesco market/region long-term nominal EPS proxy; no near-term forecast carry-forward, fade or calendar-to-forward bridge is applied',
   exclusions: 'no separate buyback return; no independently forecast EPS series; no official daily total-return replication'
 });
 export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
@@ -158,7 +158,7 @@ export function annualCSV(model, forecast, context = {}) {
     const year = model.input.growthStartYear + p.year - 1;
     const point = model.input.growthMode === 'source' && forecast?.estimates.find(x => x.year === year);
     const plan = model.input.growthMode === 'source' && model.input.growthPlan?.find(x => x.year === year && +x.growth === p.growth);
-    const extension = !!p.year && ['model extension','calendar-to-forward model','normalized model','published-growth scenario','growth projection','long-term EPS projection'].includes(plan?.basis) && !Object.hasOwn(model.input.growthOverrides || {}, year);
+    const extension = !!p.year && ['model extension','calendar-to-forward model','normalized model','published-growth scenario','growth projection','long-term EPS projection','published-house scenario'].includes(plan?.basis) && !Object.hasOwn(model.input.growthOverrides || {}, year);
     const sourced = !!p.year && !extension && model.input.growthMode === 'source' && !Object.hasOwn(model.input.growthOverrides || {}, year) && !!point && +point.growth === p.growth;
     const growthEvidence = sourced ? provenance({ publisher: forecast.source.publisher, url: forecast.source.url, sha256: forecast.source.sha256 ?? null, parserVersion: forecast.source.parserVersion ?? null, asOf: forecast.asOf, forecastType: forecast.forecastType, periodBasis: forecast.periodBasis ?? null, periodLabel: point.periodLabel ?? null, year: point.year, periodEnd: point.periodEnd ?? null,synchronization:growthStatus.synchronization,health:growthStatus.health }) : '';
     return [

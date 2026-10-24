@@ -174,7 +174,7 @@ def _metric(row, key, registry, previous, feed):
     if key=='mean10YearForwardPE':
         record['history']=dict(statistic='publisher-reported mean',windowYears=10,windowStart=None,windowEnd=None,referenceDate=asof,windowEndpointBasis='reference date known; precise sampled endpoints not separately disclosed',samplingFrequency='daily' if family=='nasdaq-dashboard' else 'not disclosed',observationTreatment='not disclosed',methodologyBreaks='not disclosed',method=row.get('meanMethod'),reconstructedSeries=False)
     if growth:
-        record['periodMapping']=dict(sourceBasis=(value or {}).get('periodBasis'),modelUse='raw source reference; a modeled calendar-to-forward bridge requires explicit CY and rolling12m definitions; otherwise editorial normalized holding-year assumptions',currentYear='context only; never replayed as a full future holding year',uncoveredYears='no invented source values; any timing-model extension is separately labeled editorial assumption',forecastType=(value or {}).get('forecastType'))
+        record['periodMapping']=dict(sourceBasis=(value or {}).get('periodBasis'),modelUse='published forecast may supply its named-year synthetic earnings scenario, preserving source period and consensus/house labels; active model policy governs application',currentYear='context only; never replayed as a full future holding year',uncoveredYears='use a separately sourced long-term market or regional EPS projection; never extend a near-term forecast into an uncovered year',forecastType=(value or {}).get('forecastType'))
     if family=='unknown' and available:
         record['permittedUse']=['display']
     if family=='stoxx-net-yield' and available:

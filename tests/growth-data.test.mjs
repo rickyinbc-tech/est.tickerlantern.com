@@ -10,7 +10,7 @@ const row = { id:'sp500', asOf:'2026-10-15', dividendYield:1.2, historicalCompat
 const close = (actual, expected) => assert.ok(Math.abs(actual-expected)<1e-10,`${actual} != ${expected}`);
 const closeRates = (actual, expected) => { assert.equal(actual.length,expected.length); actual.forEach((v,i)=>close(v,expected[i])); };
 // Independently calculated with w=287/365 and CY rates [28,12,10,8,6,6].
-const bridgedRates = [14.802227411532254,10.390546765471687,8.396240792481603,6.4021033096195445,6];
+const projectedRates = [28,12,8.04,8.04,8.04];
 
 test('published growth begins with the next year and never repeats missing estimates', () => {
   const path = sourceGrowthPath(row, 5, now);
@@ -21,49 +21,37 @@ test('published growth begins with the next year and never repeats missing estim
   assert.equal(sourceGrowthPath(row, 1, new Date('2028-10-01')).coveredYears, 0);
 });
 
-test('eligible source-following scenarios convert calendar inputs into five modeled forward transitions', () => {
+test('source-following scenarios use published years and a sourced long-term projection', () => {
   const input = switchScenario(row, undefined, {}, true, now);
-  assert.equal(input.growthMode, 'source');
-  assert.equal(input.years, 5);
-  closeRates(input.annualGrowth,bridgedRates);
-  assert.equal(input.growthStartYear, 2027);
+  assert.equal(input.growthMode,'source');assert.equal(input.years,5);
+  assert.deepEqual(input.annualGrowth,projectedRates);assert.equal(input.growthStartYear,2027);
   assert.equal(input.growthPolicyVersion,GROWTH_POLICY.version);
-  assert.ok(input.growthPlan.every(point=>point.basis==='calendar-to-forward model'));
-  assert.deepEqual(input.growthPlan[0].calendarInputs.map(p=>p.growth),[28,12,10,8,6,6]);
-  assert.equal(input.growthPlan[0].calendarInputs[0].observationDate,'2026-10-15');
-  assert.equal(input.growthPlan[0].calendarInputs[2].observationDate,undefined);
-  const model = project(input);
-  // F5/F0, rather than the product of the first five calendar growth rates.
-  close(model.last.price,100*1.5493605655958334*.9);
-  closeRates(switchScenario(row,undefined,{},true,new Date('2028-10-01')).annualGrowth,bridgedRates);
+  assert.equal(input.growthPlan[0].sourceEvidence.asOf,'2026-10-15');
+  assert.equal(input.growthPlan[2].sourceEvidence.asOf,'2025-12-31');
+  close(project(input).last.price,100*1.28*1.12*1.0804**3*.9);
+  assert.deepEqual(switchScenario(row,undefined,{},true,new Date('2028-10-01')).annualGrowth,projectedRates);
 });
 
 test('a source refresh flows into linked rates while custom growth stays protected at five years', () => {
   const linked = switchScenario(row, undefined, {}, true, now);
   const changed = { ...row, growthForecast: { ...row.growthForecast, estimates: [{ year: 2027, growth: 30 }, { year: 2028, growth: 10 }] } };
-  closeRates(scenarioInputs(changed,linked,{},true,now).annualGrowth,[13.458213256484154,8.930827194987746,7.600086637825387,6.269397482169703,6]);
+  closeRates(scenarioInputs(changed,linked,{},true,now).annualGrowth,[30,10,8.04,8.04,8.04]);
   assert.deepEqual(sourceGrowthPath(changed,2,now).rates,[30,10]);
   const custom = { ...DEFAULTS, growthMode: 'annual', annualGrowth: [7, 8, 9], years: 3 };
   assert.deepEqual(scenarioInputs(changed, custom, { growthMode: true, annualGrowth: true, years: true }, true, now).annualGrowth, [7, 8, 9, 6, 6]);
   const extended = scenarioInputs(row, { ...linked, years: 5 }, { years: true }, true, now);
-  closeRates(extended.annualGrowth,bridgedRates);
+  closeRates(extended.annualGrowth,projectedRates);
   assert.equal(validate(extended).annualGrowth, undefined);
 });
 
-test('unknown period mappings retain published figures as context and use benchmark-specific normalized assumptions',()=>{
-  const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
-  const excluded=feed.indices.filter(r=>!['sp500','japan','nasdaq100'].includes(r.id));
-  assert.equal(excluded.length,18);
-  for(const r of excluded){
-    const original=structuredClone(r.growthForecast),input=scenarioInputs(r,undefined,{},true,now);
-    assert.deepEqual(input.annualGrowth,Array(5).fill(GROWTH_ANCHORS[r.id].growth),r.id);
-    assert.ok(input.growthPlan.every(point=>point.basis==='normalized model'),r.id);
-    assert.deepEqual(r.growthForecast,original);
+test('publisher periods preserve forecasts while unsupported periods use long-term projections',()=>{
+  for(const basis of ['calendar-year','publisher-year','fiscal-year']) {
+    const input=scenarioInputs({...row,growthForecast:{...row.growthForecast,periodBasis:basis}},undefined,{},true,now);
+    assert.deepEqual(input.annualGrowth,projectedRates);assert.equal(input.growthPlan[0].sourceEvidence.periodBasis,basis);
   }
-  for(const patch of [{asOf:undefined},{growthForecast:{...row.growthForecast,periodBasis:'publisher-year'}},{metricDefinitions:{...row.metricDefinitions,forwardPE:{economic:{horizon:'forward-unspecified'}}}},{metricDefinitions:{...row.metricDefinitions,growthForecast:{permittedUse:['display']}}}]){
+  for(const patch of [{asOf:undefined},{growthForecast:{...row.growthForecast,periodBasis:'quarterly'}},{metricDefinitions:{...row.metricDefinitions,growthForecast:{permittedUse:['display']}}}]){
     const input=scenarioInputs({...row,...patch},undefined,{},true,now);
-    assert.deepEqual(input.annualGrowth,[6,6,6,6,6]);
-    assert.ok(input.growthPlan.every(point=>point.basis==='normalized model'));
+    assert.deepEqual(input.annualGrowth,Array(5).fill(8.04));assert.ok(input.growthPlan.every(point=>point.basis==='long-term EPS projection'));
   }
 });
 

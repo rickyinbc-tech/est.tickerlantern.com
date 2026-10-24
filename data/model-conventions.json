@@ -19,7 +19,7 @@
     "entry": "Valuation date t=0. F0=100/entryPE is a synthetic normalized forward earnings anchor. In the illustrative NTM convention it covers approximately holding year 1; it is not an independently verified official index EPS value.",
     "followingValuations": "At each valuation date t, Ft=F(t-1)*(1+g_t). Exactly t growth factors are applied after t elapsed holding years. Ft represents the following earnings period, approximately holding year t+1 under the illustrative NTM convention.",
     "terminal": "At exit n, Pn=exitPE*Fn. The forward anchor represents earnings following exit. Do not add another growth factor because F0 was already forward-looking.",
-    "publisherYearMapping": "No direct replay of CY/FY/publisher-year/horizon estimates after an already-forward initial earnings anchor. Explicit CY plus rolling12m definitions may supply a dated uniform-accrual calendar-to-forward model bridge. Otherwise all five holding-year rates are labeled editorial normalized assumptions. Six underlying calendar growth rates complete F0 to F5 without adding an investment year.",
+    "publisherYearMapping": "All benchmarks apply published forecasts only to their named years, retaining consensus/house classifications and original period labels. Missing years use a sourced long-term market or regional nominal EPS projection from Invesco building blocks. This is an explicit mapping into a synthetic forward-earnings scenario, not a matched rolling-NTM consensus series. No cap, fade or near-term forecast carry-forward is applied.",
     "valuationPath": "Mt=entryPE*(exitPE/entryPE)^(t/n), a positive geometric interpolation. Intermediate multiples are assumptions, not sourced forecasts.",
     "dividend": "At year end t, per-original-unit Dt=payout*F(t-1), or D1=100*initialYield with Dt=D1*F(t-1)/F0 in yield mode.",
     "cash": "Cash-held wealth Wcash(t)=Pt+sum(D1..Dt), no cash interest. Cash dividends are those on one original unit; investor cash flows are -100, D1, ..., Dn+Pn.",
@@ -87,11 +87,11 @@
     },
     {
       "id": "growth-source-year-proxy",
-      "value": "raw reference; conditional calendar-to-forward bridge",
+      "value": "published named-year forecasts plus sourced long-term EPS projections",
       "units": "percent over the publisher's labeled period",
       "classification": "source fact plus explicit modeling assumptions",
-      "definition": "No direct replay of CY/FY/publisher-year/horizon estimates after an already-forward initial earnings anchor. Explicit CY plus rolling12m definitions may supply a dated uniform-accrual calendar-to-forward model bridge. Otherwise all five holding-year rates are labeled editorial normalized assumptions. Six underlying calendar growth rates complete F0 to F5 without adding an investment year.",
-      "permittedUse": "Source reference always retained; derived timing inputs labeled model estimates. No implicit FY/CY/NTM conversion."
+      "definition": "All benchmarks apply published forecasts only to their named years, retaining consensus/house classifications and original period labels. Missing years use a sourced long-term market or regional nominal EPS projection from Invesco building blocks. This is an explicit mapping into a synthetic forward-earnings scenario, not a matched rolling-NTM consensus series. No cap, fade or near-term forecast carry-forward is applied.",
+      "permittedUse": "Retain the original source period and consensus/house classification. Named-year scenario inputs and derived long-term EPS projections carry separate source provenance."
     },
     {
       "id": "entry-pe-default",
@@ -247,5 +247,5 @@
     }
   ],
   "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
-  "growthPolicyVersion": "tickerlantern-forward-timing-v4"
+  "growthPolicyVersion": "tickerlantern-forecast-long-term-v5"
 }

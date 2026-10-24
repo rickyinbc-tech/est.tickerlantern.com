@@ -2,54 +2,75 @@ import { nextForecastYear } from './growth-data.js';
 
 export const HOLDING_YEARS = 5;
 export const GROWTH_POLICY = Object.freeze({
-  version: 'tickerlantern-forward-timing-v4',
+  version: 'tickerlantern-forecast-long-term-v5',
   reviewedAt: '2026-10-23',
-  maxExtensionSpread: 10,
-  methodologyUrl: 'https://www.invesco.com/apac/en/institutional/insights/multi-asset/long-term-capital-market-assumptions.html',
-  method: 'Only explicit calendar-year growth paired with an explicit rolling-12m entry definition receives a modeled calendar-to-forward EPS bridge. Assume uniform earnings accrual and a fixed within-year weight from the recorded valuation date (a date proxy where stated). Extend missing calendar rates toward the editorial anchor, including a sixth calendar rate for five forward transitions. Other period definitions use the editorial normalized anchor in each holding year; published growth remains reference only. Nasdaq-100 uses each published annual estimate only for its named year; missing years use a long-term EPS projection derived from Invesco US large-cap building blocks. All resulting holding-year rates are model inputs. No separate buyback return is added.'
+  methodologyUrl: 'https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7',
+  method: 'For every benchmark, use each published forecast only in its named year. Use a sourced long-term nominal EPS projection for missing years. Preserve consensus, house, calendar, publisher and forecast-date labels. Applying these published rates to synthetic forward earnings is a scenario mapping, not a matched rolling-NTM forecast. Do not cap, fade or carry forward a near-term forecast. Buybacks enter EPS once; dividends and the selected exit P/E remain separate.'
 });
 
-// Invesco's additive building blocks, converted to a nominal per-share growth
-// proxy. Buybacks enter EPS once; dividends and valuation remain in our model.
-// This is an application-derived US large-cap proxy, not Nasdaq consensus.
-export const NASDAQ_LONG_TERM = Object.freeze({
-  growth: 8.04,
-  components: Object.freeze({realEarningsGrowth:4.01, inflation:2.19, buybackYield:1.84}),
-  formula: '4.01% real earnings growth + 2.19% inflation + 1.84% buyback effect = 8.04% nominal EPS projection (additive approximation)',
-  publisher: 'Invesco Solutions',
-  title: '2026 Capital Market Assumptions, Q1 update',
-  url: 'https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7',
-  asOf: '2025-12-31', checkedAt: '2026-10-23', horizonYears:10,
-  pdfPages: Object.freeze([7,11]), benchmark:'S&P 500 / US large cap',
+export const LONG_TERM_SOURCE = Object.freeze({
+  publisher:'Invesco Solutions', title:'2026 Capital Market Assumptions, Q1 update',
+  url:GROWTH_POLICY.methodologyUrl, asOf:'2025-12-31', checkedAt:'2026-10-23', horizonYears:10,
+  pdfPages:Object.freeze([7,11]),
   sha256:'28faab4574d491474f4eac99fc734e5c4615ec320793bcc2f0c264dc5b70ee7b',
-  application: 'Use a constant long-term US large-cap EPS proxy in missing Nasdaq annual forecast years. Exclude source dividends, valuation and FX components; these are not extra returns in this model.'
+  application:'Derived nominal EPS proxy: real earnings growth + inflation + buyback effect, using the additive building-block approximation. Exclude source dividends, valuation and FX components; they are not extra returns in this model.'
 });
 
-// Other entries remain rounded editorial nominal EPS assumptions.
-export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries([
-  ['sp500', 6, 'Diversified mature US companies; nominal sales growth with modest per-share gains.'],
-  ['nasdaq100', NASDAQ_LONG_TERM.growth, 'Long-term nominal EPS projection derived from Invesco US large-cap earnings, inflation and buyback building blocks.'],
-  ['russell2000', 6, 'Small-company rebound growth normalizes; financing costs and dilution limit long-run gains.'],
-  ['tsx', 5, 'Mature financials and resources; commodity cycles do not compound indefinitely.'],
-  ['msci-canada', 5, 'Mature Canadian market; separate benchmark from the TSX, with a similar long-run economic anchor.'],
-  ['acwi', 5.5, 'Diversified developed and emerging markets; a rounded global nominal EPS anchor.'],
-  ['world', 5.5, 'Developed-market nominal growth with modest per-share gains.'],
-  ['eafe', 5, 'Mature non-US developed markets with slower structural growth.'],
-  ['em', 7, 'Higher structural demand growth, discounted for cyclicality and dilution.'],
-  ['europe', 5, 'Mature European companies with global revenues and modest nominal growth.'],
-  ['uk', 4.5, 'Mature financial, resource and defensive mix; limited sustained margin expansion.'],
-  ['ftse100', 4.5, 'Global mature-company mix; separate from MSCI UK and not its consensus forecast.'],
-  ['stoxx600', 5, 'Broad mature European earnings; normalize the near-term recovery.'],
-  ['japan', 4.5, 'Low structural growth with some inflation and corporate-efficiency improvement.'],
-  ['nikkei225', 5, 'Exporter and technology exposure allows a modest premium to broad Japan.'],
-  ['china', 6, 'Normalize the recovery; allow for slower structural growth and policy risk.'],
-  ['hangseng', 5, 'Mature financials and China exposure; a cautious normalized earnings anchor.'],
-  ['csi300', 6, 'Domestic China exposure; normalize cyclical growth without extending a rebound.'],
-  ['india', 9, 'Higher structural nominal demand growth, moderated for dilution and competition.'],
-  ['asia-ex-japan', 7, 'Emerging Asia and technology mix; normalize the current semiconductor-led upswing.'],
-  ['australia', 5, 'Mature banks and resources; normalize commodity-sensitive earnings.']
-].map(([id, growth, rationale]) => [id, Object.freeze({ growth, rationale })])));
+// Figure 4a, p. 7. The earnings component is real; buyback effects are separate.
+// No source-published total-return forecast is put into an EPS growth field.
+export const LONG_TERM_REGIONS = Object.freeze(Object.fromEntries([
+  ['us-large','US large cap',4.01,2.19,1.84],
+  ['us-small','US small cap',2.43,2.19,0.99],
+  ['canada','Canada equity',2.99,1.95,0.73],
+  ['global','Global equity',3.92,2.14,1.01],
+  ['global-ex-us','Global ex-US equity',3.82,1.97,0.13],
+  ['europe','Europe equity',4.24,1.79,0.54],
+  ['uk','UK equity',6.06,2.24,0.82],
+  ['japan','Japan equity',4.30,2.00,0.89],
+  ['em','EM equity',3.73,2.24,-0.31],
+  ['china','China equity',1.40,1.75,-0.55]
+].map(([id,benchmark,realEarningsGrowth,inflation,buybackYield])=>{
+  const growth=+(realEarningsGrowth+inflation+buybackYield).toFixed(2);
+  return [id,Object.freeze({benchmark,growth,components:Object.freeze({realEarningsGrowth,inflation,buybackYield}),
+    formula:`${realEarningsGrowth.toFixed(2)}% real earnings growth + ${inflation.toFixed(2)}% inflation ${buybackYield<0?'-':'+'} ${Math.abs(buybackYield).toFixed(2)}% ${buybackYield<0?'dilution':'buyback'} effect = ${growth.toFixed(2)}% nominal EPS projection (additive approximation)`})];
+})));
 
+// Each target keeps its own published forecast. Only missing years use this
+// explicitly named market/region proxy, with no unsupported index premium.
+export const INDEX_LONG_TERM_MAP = Object.freeze(Object.fromEntries([
+  ['sp500','us-large','US large-cap assumption for the S&P 500.'],
+  ['nasdaq100','us-large','US large-cap proxy for Nasdaq-100; no technology premium added.'],
+  ['russell2000','us-small','US small-cap proxy for Russell 2000; source return table uses S&P 600.'],
+  ['tsx','canada','Canadian broad-equity assumption for the S&P/TSX Composite.'],
+  ['msci-canada','canada','Canadian broad-equity proxy for MSCI Canada.'],
+  ['acwi','global','Global equity assumption for MSCI ACWI.'],
+  ['world','global','Global all-country equity proxy for developed-market MSCI World.'],
+  ['eafe','global-ex-us','Global ex-US equity proxy for EAFE; includes markets outside EAFE.'],
+  ['em','em','Emerging-market equity assumption for MSCI Emerging Markets.'],
+  ['europe','europe','European equity assumption for MSCI Europe.'],
+  ['uk','uk','UK equity assumption for MSCI United Kingdom.'],
+  ['ftse100','uk','UK broad-equity proxy for FTSE 100.'],
+  ['stoxx600','europe','European broad-equity proxy for STOXX Europe 600.'],
+  ['japan','japan','Japanese equity assumption for MSCI Japan.'],
+  ['nikkei225','japan','Japanese broad-equity proxy for Nikkei 225.'],
+  ['china','china','Chinese equity assumption for MSCI China.'],
+  ['hangseng','china','Chinese broad-equity proxy for Hang Seng; no Hong Kong-specific premium added.'],
+  ['csi300','china','Chinese broad-equity proxy for CSI 300; no A-share premium added.'],
+  ['india','em','Broad emerging-market proxy for MSCI India; no unsupported country premium added.'],
+  ['asia-ex-japan','em','Broad emerging-market proxy for MSCI Asia ex Japan; no regional premium added.'],
+  ['australia','global-ex-us','Global ex-US equity proxy for Australia; no Australia-specific building block is published in this table.']
+].map(([id,region,rationale])=>[id,Object.freeze({region,rationale})])));
+
+export function longTermGrowth(id) {
+  const mapping=INDEX_LONG_TERM_MAP[id];
+  return mapping ? {...LONG_TERM_SOURCE,...LONG_TERM_REGIONS[mapping.region],region:mapping.region,targetId:id,rationale:mapping.rationale} : null;
+}
+export const NASDAQ_LONG_TERM = Object.freeze(longTermGrowth('nasdaq100'));
+export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries(Object.keys(INDEX_LONG_TERM_MAP).map(id=>{
+  const value=longTermGrowth(id);return [id,Object.freeze({growth:value.growth,rationale:value.rationale})];
+})));
+
+// Retained research utility; the default paths below do not apply this bridge.
 // Six calendar growth rates create seven relative annual EPS levels and six
 // forward anchors: F0 through F5. Exactly five investment years elapse.
 export function calendarToForwardRates(calendarRates, elapsedFraction) {
@@ -60,62 +81,28 @@ export function calendarToForwardRates(calendarRates, elapsedFraction) {
   return {rates:forward.slice(1).map((f,i)=>(f/forward[i]-1)*100),levels,forward};
 }
 
+
 export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
-  const anchor = GROWTH_ANCHORS[row?.id];
-  const recorded = /^20\d{2}-\d{2}-\d{2}$/.test(row?.asOf || '') ? row.asOf : null;
-  const date = recorded ? new Date(recorded+'T00:00:00Z') : now;
-  const baseYear = recorded ? date.getUTCFullYear() : nextForecastYear(now)-1;
-  const startYear=baseYear+1, forecast=row?.growthForecast;
-  const eligible = row?.metricDefinitions?.forwardPE?.economic?.horizon === 'rolling-12m'
-    && forecast?.periodBasis === 'calendar-year'
-    && row?.metricDefinitions?.growthForecast?.permittedUse?.includes('approximate-scenario-growth');
-  const estimates = new Map((forecast?.estimates || []).map(p=>[p.year,p]));
-  // Exact-year annual forecasts take precedence. Never repeat a near-term
-  // forecast into an uncovered year, including gaps between published years.
-  if (row?.id === 'nasdaq100' && recorded) {
-    const annual = ['calendar-year','publisher-year'].includes(forecast?.periodBasis);
-    const points = Array.from({length:HOLDING_YEARS}, (_,i) => {
-      const year=startYear+i, published=annual ? estimates.get(year) : null, custom=Object.hasOwn(overrides,year);
-      return {year,growth:custom?overrides[year]:published?published.growth:NASDAQ_LONG_TERM.growth,
-        basis:custom?'custom assumption':published?'published-growth scenario':'long-term EPS projection',
-        periodLabel:`Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
-        scenarioDate:recorded,terminalGrowth:NASDAQ_LONG_TERM.growth,
-        method:'Use a published annual forecast only in its named year. For missing years use the long-term EPS proxy, without fading or extending the near-term forecast.',
-        sourceEvidence:published
-          ? {publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis,referenceYear:published.year,referenceGrowth:published.growth,publishedForYear:true}
-          : {...NASDAQ_LONG_TERM,publishedForYear:false,derived:true}};
-    });
-    return {startYear,coveredYears:points.filter(p=>p.sourceEvidence.publishedForYear).length,rates:points.map(p=>p.growth),points,
-      anchor,longTerm:NASDAQ_LONG_TERM,bridge:false,sourceLinked:true,scenarioDate:recorded,
-      mappingReason:`Published annual forecasts apply only to their named years. Missing years use an ${NASDAQ_LONG_TERM.growth}% long-term EPS projection derived from Invesco US large-cap assumptions. This is a regional proxy applied to the scenario's forward earnings.`,
-      missingYears:[]};
-  }
-  let coveredYears=0;
-  while(coveredYears<6 && estimates.has(startYear+coveredYears)) coveredYears++;
-  const bridge=!!(eligible && recorded && anchor && coveredYears);
-  const yearStart=Date.UTC(baseYear,0,1), nextYear=Date.UTC(baseYear+1,0,1);
-  const weight=(+date-yearStart)/(nextYear-yearStart);
-  const last=coveredYears ? estimates.get(startYear+coveredYears-1).growth : anchor?.growth;
-  const spread=anchor ? Math.max(-GROWTH_POLICY.maxExtensionSpread,Math.min(GROWTH_POLICY.maxExtensionSpread,last-anchor.growth)) : 0;
-  const calendarInputs=bridge ? Array.from({length:6},(_,i)=>({year:startYear+i,
-    growth:i<coveredYears ? estimates.get(startYear+i).growth : i>=4 ? anchor.growth : anchor.growth+spread*(4-i)/(5-coveredYears),
-    basis:i<coveredYears ? forecast.forecastType : 'editorial extension',
-    ...(i<coveredYears ? {periodLabel:estimates.get(startYear+i).periodLabel,observationDate:forecast.asOf,sourceURL:forecast.source.url} : {})})) : [];
-  let calculated=null,bridgeError='';
-  if(bridge)try{calculated=calendarToForwardRates(calendarInputs.map(p=>p.growth),weight);}catch(error){bridgeError=error.message;}
-  const reason=bridgeError || (bridge ? 'Calendar inputs converted to a synthetic forward earnings path with uniform annual accrual; not a verified rolling consensus series.' : 'No verified calendar-to-forward period bridge. Published estimates remain reference only; each holding year uses the editorial normalized EPS assumption.');
-  const points=Array.from({length:5},(_,i)=>{
-    const year=startYear+i, custom=Object.hasOwn(overrides,year);
-    const growth=custom ? overrides[year] : bridgeError ? '' : calculated ? calculated.rates[i] : anchor?.growth ?? '';
-    return {year,growth,basis:custom?'custom assumption':bridgeError?'unavailable':bridge?'calendar-to-forward model':anchor?'normalized model':'unavailable',
-      periodLabel:`Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
-      scenarioDate:recorded,dateBasis:row?.metricDefinitions?.forwardPE?.evidence?.dateBasis || 'scenario date unavailable',
-      terminalGrowth:anchor?.growth,rationale:anchor?.rationale,method:GROWTH_POLICY.method,mappingReason:reason,
-      ...(bridge ? {elapsedFraction:weight,calendarInputs,forwardAnchorRatio:calculated ? calculated.forward[i+1]/calculated.forward[i] : null,
-        formula:'F_t=(1-w)*E_CY(y+t)+w*E_CY(y+t+1); modeled growth=F_t/F_(t-1)-1',
-        sourceEvidence:{publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis}}
-        : {})};
+  const anchor=GROWTH_ANCHORS[row?.id],longTerm=longTermGrowth(row?.id);
+  const recorded=/^20\d{2}-\d{2}-\d{2}$/.test(row?.asOf||'') ? row.asOf : null;
+  const startYear=recorded ? +recorded.slice(0,4)+1 : nextForecastYear(now);
+  const forecast=row?.growthForecast;
+  const allowed=row?.metricDefinitions?.growthForecast?.permittedUse;
+  const eligible=!!(recorded && ['calendar-year','publisher-year','fiscal-year','forecast-horizon'].includes(forecast?.periodBasis)
+    && (!allowed || allowed.includes('approximate-scenario-growth')));
+  const estimates=new Map((eligible ? forecast.estimates : []).map(p=>[p.year,p]));
+  const points=Array.from({length:HOLDING_YEARS},(_,i)=>{
+    const year=startYear+i,published=estimates.get(year),custom=Object.hasOwn(overrides,year);
+    const growth=custom ? overrides[year] : published ? published.growth : longTerm?.growth ?? '';
+    return {year,growth,basis:custom?'custom assumption':published?forecast.forecastType==='house'?'published-house scenario':'published-growth scenario':longTerm?'long-term EPS projection':'unavailable',
+      periodLabel:published?.periodLabel || `Holding year ${i+1}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
+      scenarioDate:recorded,terminalGrowth:longTerm?.growth,method:GROWTH_POLICY.method,
+      sourceEvidence:published
+        ? {publisher:forecast.source.publisher,url:forecast.source.url,asOf:forecast.asOf,periodBasis:forecast.periodBasis,forecastType:forecast.forecastType,periodLabel:published.periodLabel??null,referenceYear:published.year,referenceGrowth:published.growth,publishedForYear:true,application:'Use this named-year published rate as a synthetic forward-earnings scenario input; retain its original source period.'}
+        : longTerm ? {...longTerm,publishedForYear:false,derived:true} : {publishedForYear:false}};
   });
-  return {startYear,coveredYears,rates:points.map(p=>p.growth),points,anchor,bridge,scenarioDate:recorded,mappingReason:reason,
+  return {startYear,coveredYears:points.filter(p=>p.sourceEvidence.publishedForYear).length,rates:points.map(p=>p.growth),points,
+    anchor,longTerm,bridge:false,sourceLinked:!!longTerm,scenarioDate:recorded,
+    mappingReason:longTerm ? `Published forecasts apply only to their named years and retain their original period labels. Missing years use a ${longTerm.growth}% long-term EPS projection based on Invesco’s ${longTerm.benchmark} market/region proxy.` : 'No sourced long-term EPS projection is connected for this benchmark.',
     missingYears:points.filter(p=>p.growth==='').map(p=>p.year)};
 }

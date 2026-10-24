@@ -1,9 +1,11 @@
 # Nasdaq-100 forecast coverage correction - 23 October 2026
 
+This Nasdaq-only release is superseded by the [shared policy for all 21 indices](five-year-forecast-policy.md).
+
 The five-year path now uses published annual forecasts only for the years they cover, then a sourced long-term EPS projection. This supersedes the same-day carry-forward release, which incorrectly repeated the 2027 rate in all five years.
 
 - 2027: 28%, from [UBS CIO, 7 October 2026](https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html).
-- 2028-2031: 8.04% annual nominal EPS projection, derived from Invesco US large-cap building blocks. See [the source and formula](five-year-forecast-policy.md#nasdaq-100-annual-forecasts-and-long-term-projection).
+- 2028-2031: 8.04% annual nominal EPS projection, derived from Invesco US large-cap building blocks. See [the source and formula](five-year-forecast-policy.md#long-term-source-and-derivation).
 
 Forecasts replace only their named year. Missing annual estimates use the long-term input immediately, including gaps between published estimates. User overrides stay protected. The timing-v4 migration updates both the earlier 8% defaults and the repeated-28% defaults, including paused source scenarios; explicit constant and annual custom modes retain their settings.
 

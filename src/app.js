@@ -85,7 +85,7 @@ function renderGrowthEditor() {
 }
 
 function renderGrowthForecast(row) {
-  const forecast = row.growthForecast, path = sourceGrowthPath(row, 1);
+  const forecast = row.growthForecast, path = fiveYearGrowthPath(row);
   $('use-source-growth').disabled = !fiveYearGrowthPath(row).anchor && !path.coveredYears;
   $('growth-forecast-body').innerHTML = forecast?.estimates?.length ? forecast.estimates.map(point => `<tr><th scope="row">${escape(point.periodLabel || point.year + ' estimate')}</th><td>${rateLabel(point.growth)}%</td></tr>`).join('') : '<tr><td colspan="2">No verified annual earnings-growth forecast is connected for this exact benchmark.</td></tr>';
   $('growth-forecast-status').textContent = forecast?.estimates?.length ? `${forecast.forecastType === 'house' ? 'Publisher house forecast' : 'Published consensus estimates'} · ${metricDateBasis(row,'growthForecast').toLowerCase()} ${dateLabel(forecast.asOf)}${metricStatusText(row,'growthForecast') ? ' · '+metricStatusText(row,'growthForecast') : ''}` : 'Annual growth evidence unavailable';

@@ -7,7 +7,7 @@
     {
       "file": "royal-bank-valuation.html",
       "originalSha256": "bf07e38a3916752e2936a83160ccbd3e69b6cc472d683043071069109fecf413",
-      "sha256": "7204c3c003367c909d26285d573005a21f33d3146774c4c8927579c1c306366d"
+      "sha256": "c248439d163607f2d074f49962186013821148b81f0cbe104456632960842eeb"
     },
     {
       "file": "rbc-model.js",
@@ -71,5 +71,5 @@
     }
   ],
   "presentationUpdatedAt": "2026-10-23",
-  "presentationNote": "Site-wide light theme, shared header and chart colours; financial inputs and calculations unchanged."
+  "presentationNote": "Site-wide light theme, shared header and chart colours; neutral exit EPS/P/E labels support both FY2027 senior and FY2028 forward cases. Financial inputs and calculations unchanged."
 }

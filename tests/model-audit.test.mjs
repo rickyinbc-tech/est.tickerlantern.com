@@ -64,7 +64,7 @@ test('synthetic forward earnings timeline has exactly one growth factor per elap
   close(model.last.price, 112.36); close(model.points[2].dividend, 1.272);
   assert.equal(model.conventions.version, MODEL_CONVENTION_VERSION);
   assert.match(model.conventions.earningsTimeline, /F0 covers approximately holding year 1/);
-  assert.match(model.conventions.growthMapping, /all benchmarks use published forecasts only in their named years/);
+  assert.match(model.conventions.growthMapping, /uniform-accrual calendar-to-forward model/);
 });
 
 test('constant multiple and zero-dividend identities cover the full supported domain', () => {
@@ -134,7 +134,7 @@ test('CSV retains tiny non-zero synthetic anchors and source/custom classificati
   assert.ok(+rows.at(-1)[1] > 0); assert.equal(+rows.at(-1)[1], model.last.eps);
   assert.equal(rows[2][9], 'house'); assert.equal(rows[3][9], 'custom assumption');
   assert.equal(rows[3][10], ''); assert.equal(rows[3][11], '');
-  assert.match(rows[1][29], /all benchmarks use published forecasts only in their named years/);
+  assert.match(rows[1][29], /uniform-accrual calendar-to-forward model/);
 });
 
 test('CSV cannot attach a newer growth observation to a different accepted rate', () => {

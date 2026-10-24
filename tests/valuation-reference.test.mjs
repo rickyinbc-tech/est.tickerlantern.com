@@ -14,14 +14,18 @@ function trailingRow(){const row=r('sp500');row.mean10YearForwardPE=null;row.mea
  row.trailingValuation={indexId:row.id,verification:'verified-exact-index',earningsBasis:'trailing-12m',windowYears:10,statistic:'arithmetic-mean',outlierTreatment:'none',aggregationAligned:true,currentPE:25,currentAsOf:'2026-10-22',currentSource:evidence,mean10YearPE:20,meanAsOf:'2026-09-30',meanSource:evidence};return row;}
 function csv(text){return text.split('\n').map(line=>{const a=[];let v='',q=false;for(let i=0;i<line.length;i++){if(line[i]==='"'){if(q&&line[i+1]==='"'){v+='"';i++;}else q=!q;}else if(line[i]===','&&!q){a.push(v);v='';}else v+=line[i];}return [...a,v];});}
 
-test('six paired references stay paired and fifteen qualified forward means become explicit exit assumptions',()=>{
+test('only six compatible pairs default historical exits; qualified fifteen remain optional assumptions',()=>{
  const types={};for(const row of feed.indices){const ref=valuationReference(row),input=scenarioInputs(row);types[ref.type]=(types[ref.type]||0)+1;
-  assert.equal(input.exitPE,row.mean10YearForwardPE);assert.equal(ref.historicalPE,row.mean10YearForwardPE);assert.equal(ref.asOf,row.meanAsOf);
-  close(ref.normalizedCurrentEPS,100/row.forwardPE);close(ref.normalizedReferenceValue,100*row.mean10YearForwardPE/row.forwardPE);
-  assert.equal(eligibleExitMean(row),true);
-  if(historicalAssessment(row).outcome==='qualified'){assert.equal(canCompareHistory(row),false);assert.match(ref.qualification,/scenario assumption/);}
+  if(historicalAssessment(row).allowExitDefault){
+   assert.equal(input.exitPE,row.mean10YearForwardPE);assert.equal(ref.historicalPE,row.mean10YearForwardPE);
+   close(ref.normalizedCurrentEPS,100/row.forwardPE);close(ref.normalizedReferenceValue,100*row.mean10YearForwardPE/row.forwardPE);
+  }else{
+   assert.equal(input.exitPE,row.forwardPE);assert.equal(ref.normalizedReferenceValue,undefined);assert.equal(canCompareHistory(row),false);
+   assert.equal(qualifiedForwardReference(row),true);assert.equal(eligibleExitMean(row),false);
+   assert.equal(scenarioInputs(row,{...input,exitPE:row.mean10YearForwardPE},{exitPE:true}).exitPE,row.mean10YearForwardPE);
+  }
  }
- assert.deepEqual(types,{'matched-forward':6,'qualified-forward':15});
+ assert.deepEqual(types,{'matched-forward':6,'constant-multiple':15});
 });
 
 test('a qualified reference still needs exact index, ten-year mean, forward definition and accepted evidence',()=>{
@@ -72,5 +76,5 @@ test('CSV exports historical basis, current EPS normalization and terminal conve
  }
  const all=csv(fiveYearCSV(feed,now)),header=all[0],id=header.indexOf('Benchmark ID'),provenance=header.indexOf('Exit metric provenance');
  for(const record of all.slice(1).filter(x=>x[id]==='stoxx600'))assert.equal(JSON.parse(record[provenance]).reference.type,'matched-forward');
- const qualified=r('em'),value=exitMetricProvenance(qualified,scenarioInputs(qualified));assert.equal(value.reference.type,'qualified-forward');assert.equal(value.reference.asOf,'2025-12-31');assert.equal(value.sourceMetric.observationDate,'2025-12-31');
+ const qualified=r('em'),value=exitMetricProvenance(qualified,scenarioInputs(qualified));assert.equal(value.reference.type,'constant-multiple');assert.equal(value.classification,'model-assumption');assert.equal(value.sourceMetric,null);assert.equal(value.reference.normalizedReferenceValue,undefined);
 });

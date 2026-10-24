@@ -13,13 +13,13 @@ export function historicalAssessment(row) {
   };
 }
 export const canCompareHistory = row => historicalAssessment(row).allowComparison;
-export const VALUATION_POLICY_VERSION = 'historical-earnings-reference-v1';
+export const VALUATION_POLICY_VERSION = 'historical-earnings-reference-v2';
 const positive = value => Number.isFinite(value) && value > 0;
 const dated = value => {const date=new Date(value+'T00:00:00Z');return /^20\d{2}-\d{2}-\d{2}$/.test(value || '') && Number.isFinite(+date) && date.toISOString().slice(0,10)===value;};
 const sourceURL = source => {try {const url=new URL(source.url);return !!source.publisher && url.protocol==='https:' && !!url.hostname && !url.username && !url.password;}catch{return false;}};
 
-// A qualified same-index forward mean can support an explicit exit assumption
-// without certifying a precise, directly comparable premium/discount statistic.
+// A qualified mean remains an optional reader-selected scenario assumption.
+// It cannot support an automatic exit or a current-versus-history value ratio.
 export function qualifiedForwardReference(row) {
   const d=row?.metricDefinitions?.mean10YearForwardPE,c=row?.metricDefinitions?.forwardPE;
   return historicalAssessment(row).outcome==='qualified' && positive(row?.forwardPE) && positive(row?.mean10YearForwardPE)
@@ -30,7 +30,7 @@ export function qualifiedForwardReference(row) {
     && d.history?.windowYears===10 && d.history?.statistic==='publisher-reported mean'
     && d.permittedUse?.includes('historical-reference') && dated(row.meanAsOf) && sourceURL(row.meanSource || row.source);
 }
-export const eligibleExitMean = row => historicalAssessment(row).allowExitDefault || !!qualifiedForwardReference(row);
+export const eligibleExitMean = row => historicalAssessment(row).allowExitDefault;
 
 // A fallback must be an exact-index trailing series, not CAPE, a median, a
 // trimmed ETF proxy or a current P/E mistakenly described as a ten-year mean.
@@ -45,14 +45,13 @@ export function eligibleTTMReference(row) {
 export function valuationReference(row, input={}) {
   const entry=Number(input.entryPE ?? row?.forwardPE);
   if (eligibleExitMean(row)) {
-    const assessed=historicalAssessment(row).allowExitDefault;
-    return {policyVersion:VALUATION_POLICY_VERSION,type:assessed?'matched-forward':'qualified-forward',earningsBasis:'forward',
+    return {policyVersion:VALUATION_POLICY_VERSION,type:'matched-forward',earningsBasis:'forward',
       historicalPE:row.mean10YearForwardPE,exitPE:row.mean10YearForwardPE,asOf:row.meanAsOf,
       source:row.meanSource || row.source,currentAsOf:row.asOf,currentPE:row.forwardPE,
       normalizedCurrentEPS:positive(row.forwardPE)?100/row.forwardPE:null,
       normalizedReferenceValue:positive(row.forwardPE)?100*row.mean10YearForwardPE/row.forwardPE:null,
       formula:'Historical forward P/E × current normalized forward EPS; exit P/E × projected forward EPS at exit.',
-      qualification:assessed?'Internally paired forward reference.':'Dated or cross-source forward reference used as a scenario assumption; direct statistical comparability is not established.'};
+      qualification:'Internally paired forward reference; normalized EPS is synthetic, not independently observed official index EPS.'};
   }
   if(eligibleTTMReference(row)) {
     const t=row.trailingValuation;
@@ -73,10 +72,11 @@ export function valuationReference(row, input={}) {
     qualification:'No verified historical earnings-basis match. Constant P/E scenario until an explicit assumption is supplied.'};
 }
 export const sourceExitPE = (row, activeEntry, input={}) => valuationReference(row,{...input,entryPE:activeEntry}).exitPE;
-export const valuationReferenceLabel = ref => ({'matched-forward':'Paired forward mean','qualified-forward':'Dated / qualified forward mean','trailing-fallback':'TTM fallback','constant-multiple':'Constant P/E scenario'}[ref.type]);
+export const valuationReferenceLabel = ref => ({'matched-forward':'Paired forward mean','trailing-fallback':'TTM fallback','constant-multiple':'Constant P/E scenario'}[ref.type]);
 export function exitMetricProvenance(row,input,sourceFollowing=true,locks={}) {
   if(!sourceFollowing || locks.exitPE)return {classification:'user-assumption',value:input.exitPE,units:'times'};
-  return {classification:'historical-exit-scenario-assumption',value:input.exitPE,units:'times',reference:valuationReference(row,input),sourceMetric:eligibleExitMean(row)?metricProvenance(row,'mean10YearForwardPE'):null};
+  const reference=valuationReference(row,input);
+  return {classification:reference.type==='constant-multiple'?'model-assumption':'historical-exit-scenario-assumption',value:input.exitPE,units:'times',reference,sourceMetric:eligibleExitMean(row)?metricProvenance(row,'mean10YearForwardPE'):null};
 }
 
 export function metricDisplay(row, key, unit = key === 'dividendYield' ? '%' : '×') {

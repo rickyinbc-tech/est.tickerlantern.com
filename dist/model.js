@@ -14,7 +14,7 @@ export const MODEL_CONVENTIONS = Object.freeze({
   cashInterestPercent: 0,
   returnBasis: 'nominal; before taxes, fees and trading costs',
   currencyBasis: 'normalized currency-neutral illustration; no FX translation or hedging',
-  growthMapping: 'forecast-long-term-v5: all benchmarks use published forecasts only in their named years, preserving consensus/house and original period labels; missing years use a derived Invesco market/region long-term nominal EPS proxy; no near-term forecast carry-forward, fade or calendar-to-forward bridge is applied',
+  growthMapping: 'forward-bridge-long-term-v6: annual CY/publisher-year forecasts inform a uniform-accrual calendar-to-forward model; inferred calendar alignment and unspecified NTM horizons remain disclosed assumptions; unsupported horizon series use a derived sourced long-term EPS scenario; published rates remain visible uncapped, not replayed as NTM growth',
   exclusions: 'no separate buyback return; no independently forecast EPS series; no official daily total-return replication'
 });
 export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });

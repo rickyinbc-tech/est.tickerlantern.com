@@ -3,7 +3,7 @@
   "modelConventionVersion": "tickerlantern-annual-forward-anchor-v2",
   "reviewDate": "2026-10-23",
   "classification": "illustrative annual scenario model",
-  "definitionVersion": "2.2.0",
+  "definitionVersion": "2.3.0",
   "compatibilityIdentifier": "synthetic-forward-anchor-annual-prior-earnings-dividends-v2",
   "evidence": "src/model.js; independent algebra and tests/model-audit.test.mjs. Model constants and policies are application assumptions, not published market observations.",
   "constants": {
@@ -19,7 +19,7 @@
     "entry": "Valuation date t=0. F0=100/entryPE is a synthetic normalized forward earnings anchor. In the illustrative NTM convention it covers approximately holding year 1; it is not an independently verified official index EPS value.",
     "followingValuations": "At each valuation date t, Ft=F(t-1)*(1+g_t). Exactly t growth factors are applied after t elapsed holding years. Ft represents the following earnings period, approximately holding year t+1 under the illustrative NTM convention.",
     "terminal": "At exit n, Pn=exitPE*Fn. The forward anchor represents earnings following exit. Do not add another growth factor because F0 was already forward-looking.",
-    "publisherYearMapping": "All benchmarks apply published forecasts only to their named years, retaining consensus/house classifications and original period labels. Missing years use a sourced long-term market or regional nominal EPS projection from Invesco building blocks. This is an explicit mapping into a synthetic forward-earnings scenario, not a matched rolling-NTM consensus series. No cap, fade or near-term forecast carry-forward is applied.",
+    "publisherYearMapping": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Six CY growth inputs generate five NTM transitions. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
     "valuationPath": "Mt=entryPE*(exitPE/entryPE)^(t/n), a positive geometric interpolation. Intermediate multiples are assumptions, not sourced forecasts.",
     "dividend": "At year end t, per-original-unit Dt=payout*F(t-1), or D1=100*initialYield with Dt=D1*F(t-1)/F0 in yield mode.",
     "cash": "Cash-held wealth Wcash(t)=Pt+sum(D1..Dt), no cash interest. Cash dividends are those on one original unit; investor cash flows are -100, D1, ..., Dn+Pn.",
@@ -87,10 +87,10 @@
     },
     {
       "id": "growth-source-year-proxy",
-      "value": "published named-year forecasts plus sourced long-term EPS projections",
+      "value": "modeled annual NTM transitions from source CY levels and sourced long-term EPS projections",
       "units": "percent over the publisher's labeled period",
       "classification": "source fact plus explicit modeling assumptions",
-      "definition": "All benchmarks apply published forecasts only to their named years, retaining consensus/house classifications and original period labels. Missing years use a sourced long-term market or regional nominal EPS projection from Invesco building blocks. This is an explicit mapping into a synthetic forward-earnings scenario, not a matched rolling-NTM consensus series. No cap, fade or near-term forecast carry-forward is applied.",
+      "definition": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Six CY growth inputs generate five NTM transitions. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
       "permittedUse": "Retain the original source period and consensus/house classification. Named-year scenario inputs and derived long-term EPS projections carry separate source provenance."
     },
     {
@@ -106,7 +106,7 @@
       "value": 20,
       "units": "times",
       "classification": "illustrative default",
-      "definition": "Opening teaching-example multiple. Source-linked scenarios select an internally paired or qualified exact-index forward mean; a verified TTM fallback is converted to the terminal earnings basis. All remain explicit historical exit assumptions.",
+      "definition": "Opening teaching-example multiple. Source-linked historical exits require an assessed compatible pair. Qualified dated or cross-source means remain optional reader-selected assumptions; otherwise use a verified exact-index matched TTM fallback or constant active entry P/E.",
       "permittedUse": "Illustrative compression example. No claim of fair value or inevitable mean reversion."
     },
     {
@@ -119,10 +119,10 @@
     },
     {
       "id": "payout",
-      "value": "benchmark-specific source dividend-anchor percent × active entry PE; 30 only in teaching example",
+      "value": "benchmark-specific source dividend-anchor percent \u00d7 active entry PE; 30 only in teaching example",
       "units": "percent of the prior valuation date earnings anchor",
       "classification": "derived model calibration or user assumption",
-      "definition": "D_t=p F_(t-1). For accepted benchmark defaults, p percent = source dividend-anchor percent × active entry PE, so D1 reproduces that benchmark anchor on initial wealth 100. This is not a publisher-reported payout ratio or matched-period D/E statistic. Missing or ineligible anchors leave the benchmark payout blank. Net-return-spread references are ineligible cash anchors.",
+      "definition": "D_t=p F_(t-1). For accepted benchmark defaults, p percent = source dividend-anchor percent \u00d7 active entry PE, so D1 reproduces that benchmark anchor on initial wealth 100. This is not a publisher-reported payout ratio or matched-period D/E statistic. Missing or ineligible anchors leave the benchmark payout blank. Net-return-spread references are ineligible cash anchors.",
       "permittedUse": "Synthetic annual scenario distributions; preserve source yield construction and separate dates. Economic feasibility is not established."
     },
     {
@@ -247,18 +247,17 @@
     }
   ],
   "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
-  "growthPolicyVersion": "tickerlantern-forecast-long-term-v5",
-  "valuationPolicyVersion": "historical-earnings-reference-v1",
+  "growthPolicyVersion": "tickerlantern-forward-bridge-long-term-v6",
+  "valuationPolicyVersion": "historical-earnings-reference-v2",
   "valuationReferencePolicy": {
     "priority": [
-      "internally paired forward mean",
-      "verified same-index qualified forward mean as an explicit assumption",
-      "verified exact-index ten-year TTM arithmetic mean with matched earnings",
-      "constant-multiple scenario"
+      "assessed compatible forward mean",
+      "verified exact-index matched untrimmed ten-year TTM mean, converted to terminal earnings basis",
+      "constant active entry P/E"
     ],
-    "currentValue": "Historical multiple multiplied by current earnings on the same basis, normalized to current market value 100.",
-    "qualifiedForward": "Dated or cross-source forward references can supply an exit assumption without certifying direct statistical comparability. Original dates, definitions and qualifications stay visible.",
-    "trailingCurrent": "Reference value = mean10YearTTMPE × (100/currentTTMPE). Current TTM PE and historical TTM mean must refer to the exact same index and aligned aggregation.",
+    "currentValue": "100*historicalMeanPE/currentPE only for assessed compatible same-earnings-basis observations. Normalized EPS is synthetic, not independently observed official index EPS.",
+    "qualifiedForward": "Retained as optional reader-selected exit assumptions. They cannot automatically drive an exit or a normalized current-earnings valuation ratio. Original source dates and definition qualifications remain visible.",
+    "trailingCurrent": "Reference value = mean10YearTTMPE \u00d7 (100/currentTTMPE). Current TTM PE and historical TTM mean must refer to the exact same index and aligned aggregation.",
     "trailingExit": "The engine retains forward earnings. Projected trailing earnings at exit = terminal forward earnings/(1+final-year growth). Equivalent forward exit P/E = mean10YearTTMPE/(1+final-year growth).",
     "rejected": [
       "CAPE",
@@ -267,6 +266,7 @@
       "different-index series",
       "unverified or mismatched earnings basis"
     ],
-    "manualProtection": "Edited exits and paused scenarios remain protected."
+    "manualProtection": "Edited exits and paused scenarios remain protected.",
+    "TTMAvailability": "No production TTM observations are currently connected. Synthetic QA fixtures are not production evidence."
   }
 }

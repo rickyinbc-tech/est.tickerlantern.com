@@ -1,6 +1,6 @@
 # Source and assumption audit — 23 October 2026
 
-Current application policy: [historical earnings valuation v1](historical-valuation-policy-2026-10-23.md) permits verified same-index qualified forward means as dated exit assumptions. The source-definition and strict direct-comparison findings below remain the audit record; they do not certify the newer scenario assumptions as directly comparable statistics.
+Current application policy: [historical earnings valuation v2](historical-valuation-policy-2026-10-23.md) permits automatic historical exits and current-reference values only for assessed compatible pairs. Qualified means remain optional reader assumptions. [Growth v6](five-year-forecast-policy.md) uses disclosed calendar-to-NTM bridges and sourced long-term EPS proxies. The source-definition findings below remain a dated audit record.
 
 **Historical audit snapshot. Growth timing and STOXX cash use were subsequently corrected; see the [current full audit](full-model-audit-2026-10-23.md).**
 

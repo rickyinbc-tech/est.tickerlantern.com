@@ -1,5 +1,7 @@
 # Full model audit — 23 October 2026
 
+Current methodology is [growth v6](five-year-forecast-policy.md) and [valuation v2](historical-valuation-policy-2026-10-23.md). The timing-v2/editorial defaults described in this historical audit have been superseded; source transcription evidence remains dated as shown.
+
 **Verdict: ready with caveats for conditional scenario exploration. Not an underwritten expected-return forecast or a uniform ranking for portfolio decisions.**
 
 The original price, dividend, cash-flow IRR and annual reinvestment arithmetic was internally consistent. Material corrections were required in the economic use of source growth, dividend eligibility, incomplete exports and wording. The five-year holding period is preserved everywhere.

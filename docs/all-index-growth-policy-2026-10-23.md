@@ -1,5 +1,7 @@
 # Shared forecast/projection policy for all 21 indices
 
+Historical release record. Its direct named-year mapping is superseded by the [v6 timing policy](five-year-forecast-policy.md) and [site-wide numerical audit](sitewide-numerical-audit-2026-10-23.md). The validation below describes that earlier release.
+
 The shared five-year policy now applies to every index. Published growth supplies only its named year; missing years use a sourced long-term nominal EPS projection for the target's market or region. This replaces the older S&P/Japan timing bridges and 18 editorial normalized paths, while retaining Nasdaq's already-corrected forecast/projection pattern.
 
 The workbench, initial static comparison, interactive table and both cash-flow exports use the same path. Source cards name the applicable Invesco market/region, vintage and calculation. Consensus and house forecasts retain their identity and source period labels. Published rates are not capped, faded or carried into uncovered years.

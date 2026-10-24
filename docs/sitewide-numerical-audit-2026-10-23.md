@@ -120,3 +120,25 @@ Fresh prepublication checks: 129 index JavaScript tests, 122 index Python tests,
 builds and Wrangler dry runs passed. The notes publication gate accepts the retained
 reviewed snapshot and changed source hashes. Browser and live-publication results
 are recorded after execution below.
+
+Final live publication: index/stock application `cbbaa8d`, Worker
+`d4ce96ee-f96c-4658-b1e2-b062ef2cfb0b`; notes/GIC application `8797db7`, Worker
+`15a1e71a-cd50-4d36-a24e-31b0384f1094`. All 49 checked deployed assets/downloads
+match the reviewed bytes. The live API retains the reviewed dated observations.
+HTTP 404, twenty notes/GIC HTTP routes and twenty-two legacy redirects passed.
+
+The final rendered workbench passed all 21 benchmark defaults, an independently
+calculated Nasdaq timing bridge, the qualified-exit selection/reset, saved custom
+edits, actual CSV download, desktop/mobile containment and browser-error checks.
+The downloaded CSV's 126 rows reconcile to independently recalculated earnings,
+prices, dividends, cash wealth, reinvestment and IRRs for all twenty calculated
+benchmarks; STOXX cash returns remain unavailable. The standalone regression is
+`node tests/browser_numerical_audit.mjs <origin>`; it also checks nonempty source
+method text and reference-only period descriptions.
+
+Stock tools passed 57 browser checks locally; live assets match those tested and
+the senior preset was rechecked live. GIC checks passed sixty product/language/width
+views, both actual CSV downloads, numerical parity of their fifteen rows and the
+new accuracy labels. The thirty-one-route live capture reported no browser errors.
+Desktop/mobile screenshots were visually inspected. No original source PDFs,
+private archive records or raw daily histories were deployed.

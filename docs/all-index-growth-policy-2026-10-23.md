@@ -18,3 +18,5 @@ Validation before publication:
 - Per-index edit isolation, source restoration and no browser errors were verified. Desktop/mobile screenshots were visually inspected.
 
 No private PDFs, archives or downloaded source bytes are included in publication.
+
+Published as Worker version `d83d4184-7f7d-4a7c-8f0a-8ce3fbe57ec2`. Live checks passed all 21 indices at desktop and mobile widths, all-index CSV reconciliation, source/projection attribution and saved-edit protection. The five changed live asset hashes matched the local build. Stock analysis, structured notes and GIC routes returned HTTP 200. Final live desktop/mobile screenshots were visually inspected.

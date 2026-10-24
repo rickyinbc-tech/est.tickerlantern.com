@@ -1,6 +1,6 @@
 import { DEFAULTS, BOUNDS } from './model.js';
 import { fiveYearGrowthPath, HOLDING_YEARS, GROWTH_POLICY } from './five-year-growth.js';
-import { sourceExitPE, eligibleExitMean } from './valuation-policy.js';
+import { sourceExitPE, eligibleExitMean, eligibleTTMReference } from './valuation-policy.js';
 import { calibratedPayout, DIVIDEND_POLICY_VERSION } from './dividend-policy.js';
 
 export const SOURCE_FIELDS = ['entryPE', 'exitPE', 'dividendMode', 'dividendYield'];
@@ -31,7 +31,6 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
     return next;
   }
   if (!locked.entryPE) next.entryPE = row?.forwardPE ?? DEFAULTS.entryPE;
-  if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
   if (!locked.dividendMode) next.dividendMode = 'payout';
   if (!locked.dividendYield) next.dividendYield = row?.id ? calibratedPayout(row,next.entryPE)!=='' ? row.dividendYield : '' : row?.dividendYield ?? DEFAULTS.dividendYield;
   if (!locked.payout) next.payout = row?.dividendYield != null ? calibratedPayout(row,next.entryPE) : row?.id ? '' : DEFAULTS.payout;
@@ -44,6 +43,7 @@ export function scenarioInputs(row, current = DEFAULTS, locked = {}, following =
     next.growthStartYear = selected.startYear;
     next.growthPlan = selected.points;
   }
+  if (!locked.exitPE) next.exitPE = sourceExitPE(row,next.entryPE,next);
   return next;
 }
 
@@ -74,7 +74,7 @@ export function fieldBasis(key, row, locked = {}, following = true) {
   if (['growth', 'years', 'payout'].includes(key)) return 'default';
   if (!following) return 'manual';
   if (key === 'entryPE') return row?.forwardPE != null ? 'source' : 'default';
-  if (key === 'exitPE') return eligibleExitMean(row) ? 'reference' : 'fallback';
+  if (key === 'exitPE') return eligibleExitMean(row) ? 'reference' : eligibleTTMReference(row) ? 'trailing' : 'fallback';
   if (key === 'dividendYield') return row?.dividendYield != null ? 'source' : 'default';
   return 'default';
 }

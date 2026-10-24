@@ -106,7 +106,7 @@
       "value": 20,
       "units": "times",
       "classification": "illustrative default",
-      "definition": "Opening five-year teaching-example terminal multiple. Source-linked historical defaults require a separate compatibility assessment.",
+      "definition": "Opening teaching-example multiple. Source-linked scenarios select an internally paired or qualified exact-index forward mean; a verified TTM fallback is converted to the terminal earnings basis. All remain explicit historical exit assumptions.",
       "permittedUse": "Illustrative compression example. No claim of fair value or inevitable mean reversion."
     },
     {
@@ -247,5 +247,26 @@
     }
   ],
   "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
-  "growthPolicyVersion": "tickerlantern-forecast-long-term-v5"
+  "growthPolicyVersion": "tickerlantern-forecast-long-term-v5",
+  "valuationPolicyVersion": "historical-earnings-reference-v1",
+  "valuationReferencePolicy": {
+    "priority": [
+      "internally paired forward mean",
+      "verified same-index qualified forward mean as an explicit assumption",
+      "verified exact-index ten-year TTM arithmetic mean with matched earnings",
+      "constant-multiple scenario"
+    ],
+    "currentValue": "Historical multiple multiplied by current earnings on the same basis, normalized to current market value 100.",
+    "qualifiedForward": "Dated or cross-source forward references can supply an exit assumption without certifying direct statistical comparability. Original dates, definitions and qualifications stay visible.",
+    "trailingCurrent": "Reference value = mean10YearTTMPE × (100/currentTTMPE). Current TTM PE and historical TTM mean must refer to the exact same index and aligned aggregation.",
+    "trailingExit": "The engine retains forward earnings. Projected trailing earnings at exit = terminal forward earnings/(1+final-year growth). Equivalent forward exit P/E = mean10YearTTMPE/(1+final-year growth).",
+    "rejected": [
+      "CAPE",
+      "ten-year median",
+      "trimmed ETF proxy",
+      "different-index series",
+      "unverified or mismatched earnings basis"
+    ],
+    "manualProtection": "Edited exits and paused scenarios remain protected."
+  }
 }

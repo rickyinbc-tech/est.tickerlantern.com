@@ -6,7 +6,7 @@ import { sourceGrowthPath, growthCoverage, growthIsStale, nextForecastYear } fro
 import { fiveYearGrowthPath, HOLDING_YEARS } from './five-year-growth.js';
 import { baselineForecast, baselineAssessment, fiveYearCSV } from './five-year-report.js';
 import { calibratedPayout, payoutProvenance } from './dividend-policy.js';
-import { historicalAssessment, canCompareHistory, eligibleExitMean, metricDisplay, metricDateBasis } from './valuation-policy.js';
+import { historicalAssessment, canCompareHistory, eligibleExitMean, valuationReference, valuationReferenceLabel, sourceExitPE, exitMetricProvenance, metricDisplay, metricDateBasis } from './valuation-policy.js';
 import { assertSnapshotAdvance } from './snapshot-client.js';
 import { updateHealth, checkTime, metricStatusText, metricDisclosure, metricProvenance } from './update-status.js';
 
@@ -224,7 +224,7 @@ function renderIndexList() {
   $('index-comparison-body').innerHTML = indexFeed.indices.map(row => `<tr${row.id === selectedIndexId ? ' class="selected-index-row"' : ''}><th scope="row"><button type="button" data-index="${row.id}" aria-pressed="${row.id === selectedIndexId}">${escape(row.name)}</button></th><td>${metricDisplay(row,'forwardPE')}</td><td>${metricDisplay(row,'mean10YearForwardPE')}${row.meanAsOf ? `<small>${dateLabel(row.meanAsOf)}${isDatedMean(row) ? ' · dated reference' : ''}</small>` : ''}</td><td>${metricDisplay(row,'dividendYield')}</td><td>${row.growthForecast?.estimates.map(p => `${escape(p.periodLabel || p.year)}: ${rateLabel(p.growth)}%`).join('<br>') || '—'}${row.growthForecast ? `<small>${row.growthForecast.forecastType === 'house' ? 'House forecast' : 'Consensus'} · ${dateLabel(row.growthForecast.asOf)}${metricStatusText(row,'growthForecast') ? ' · '+escape(metricStatusText(row,'growthForecast')) : ''}</small>` : ''}</td><td>${dateLabel(row.asOf)}${isStale(row) ? ' · retained' : ''}</td></tr>`).join('');
   $('five-year-comparison-body').innerHTML = indexFeed.indices.map(row => {
     const assessment=baselineAssessment(row), model=assessment.model, path=fiveYearGrowthPath(row);
-    return `<tr><th scope="row"><button type="button" data-index="${row.id}">${escape(row.name)}</button><small>Valuation · ${dateLabel(row.asOf)}</small><small>${escape(path.sourceLinked?'Published forecast + long-term projection':path.bridge?'Modeled timing bridge':'Editorial EPS scenario')}${growthIsStale(row) ? ' · reference warning' : ''}${!model?' · cash return unavailable':''}</small></th>${path.points.map(p=>`<td>${p.growth===''||p.growth==null?'—':rateLabel(p.growth)+'%'}<small>${p.year} · ${escape(p.basis)}</small></td>`).join('')}<td>${metricDisplay(row,'dividendYield')}<small>${dateLabel(row.yieldAsOf)}${row.id==='stoxx600'?' · net spread, reference only':''}</small></td><td>${model ? rateLabel(model.input.payout)+'%' : '—'}</td><td>${model ? pct(model.epsCAGR) : '—'}</td><td>${model ? pct(model.cashIRR) : '—'}</td><td>${model ? n(model.last.cashWealth) : '—'}</td></tr>`;
+    return `<tr><th scope="row"><button type="button" data-index="${row.id}">${escape(row.name)}</button><small>Valuation · ${dateLabel(row.asOf)}</small><small>${escape(path.sourceLinked?'Published forecast + long-term projection':path.bridge?'Modeled timing bridge':'Editorial EPS scenario')}${growthIsStale(row) ? ' · reference warning' : ''}${!model?' · cash return unavailable':''}</small><small>Exit basis · ${escape(valuationReferenceLabel(valuationReference(row,model?.input || {})))}</small></th>${path.points.map(p=>`<td>${p.growth===''||p.growth==null?'—':rateLabel(p.growth)+'%'}<small>${p.year} · ${escape(p.basis)}</small></td>`).join('')}<td>${metricDisplay(row,'dividendYield')}<small>${dateLabel(row.yieldAsOf)}${row.id==='stoxx600'?' · net spread, reference only':''}</small></td><td>${model ? rateLabel(model.input.payout)+'%' : '—'}</td><td>${model ? pct(model.epsCAGR) : '—'}</td><td>${model ? pct(model.cashIRR) : '—'}</td><td>${model ? n(model.last.cashWealth) : '—'}</td></tr>`;
   }).join('');
   const unavailable=indexFeed.indices.filter(row=>!baselineForecast(row));
   $('five-year-comparison-status').textContent=`${indexFeed.indices.length-unavailable.length} of ${indexFeed.indices.length} cash-return scenarios calculated. ${unavailable.length ? unavailable.map(row=>row.name+': '+baselineAssessment(row).reason).join(' ') : ''} CSV retains every benchmark and labels unavailable rows.`;
@@ -274,12 +274,13 @@ function renderScenarioContext() {
     if (key==='growth' && $('growthMode').value!=='source' && !locks.growth) basis='default';
     if(key==='growth' && $('growthMode').value==='source' && sourceFollowing)basis='modeled';
     const forecastHorizon = key==='years';
-    const label = forecastHorizon ? 'Fixed five-year holding period' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',calibrated:'Model-implied payout',modeled:'Model growth assumption',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical reference' : 'Historical reference',fallback:'Flat-multiple fallback'}[basis];
+    const label = forecastHorizon ? 'Fixed five-year holding period' : {custom:'Your assumption',manual:'Manual scenario',default:'Model default',calibrated:'Model-implied payout',modeled:'Model growth assumption',forecast:'Published growth estimate',source:'Sourced observation',reference:isDatedMean(row) ? 'Dated historical exit assumption' : 'Historical exit assumption',trailing:'TTM fallback · converted exit',fallback:'Flat-multiple fallback'}[basis];
     let detail = '';
     if (basis === 'source') detail = key === 'dividendYield' ? provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf) : provenance(key,row.source,row.asOf);
     if (basis === 'modeled') detail=fiveYearGrowthPath(row).mappingReason;
     if (basis === 'forecast') detail = provenance(key,row.growthForecast.source,row.growthForecast.asOf);
-    if (basis === 'reference') detail = provenance(key,row.meanSource || row.source,row.meanAsOf);
+    if (basis === 'reference') detail = provenance(key,row.meanSource || row.source,row.meanAsOf)+'<br>'+escape(valuationReference(row,readInputs()).qualification);
+    if (basis === 'trailing') {const v=valuationReference(row,readInputs());detail=provenance(key,v.source,v.asOf)+`<br>${rateLabel(v.historicalPE)}× TTM mean ÷ (1 + ${rateLabel(v.terminalGrowth)}% final-year growth).`;}
     if (basis === 'fallback') detail = 'No eligible historical default. Exit follows your active entry P/E until you edit the exit; this is an illustrative constant-multiple assumption.';
     if (basis === 'calibrated') detail = `${rateLabel(row.dividendYield)}% dividend anchor × active entry P/E. Ratio of the modeled first dividend to synthetic forward EPS; not a reported payout ratio. ${provenance(key,row.yieldSource || row.source,row.yieldAsOf || row.asOf)}<span class="metric-check-disclosure">${escape(row.metricDefinitions?.dividendYield?.economic?.yieldConstruction || 'Yield construction not disclosed')}. ${escape(row.yieldSource?.frequency || '')}</span>`;
     if (basis === 'default') detail = key === 'growth' ? '6% EPS growth assumption; no forecast connected.' : key === 'years' ? 'Five-year holding period assumption.' : key === 'payout' ? row.id ? 'No eligible cash-dividend anchor is available. A net-return spread cannot substitute for cash yield. Enter an explicit payout or initial-yield assumption.' : '30% teaching-example assumption; no benchmark selected.' : key === 'dividendYield' ? 'No reported yield. Enter your own assumption.' : 'No source valuation. Edit this illustrative assumption.';
@@ -303,10 +304,24 @@ function renderScenarioContext() {
     return;
   }
   const entryBasis = sourceFollowing && !locks.entryPE ? 'source' : 'custom';
-  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : eligibleExitMean(row) ? `illustrative mean-reversion to an assessed historical reference, reported ${dateLabel(row.meanAsOf)}` : +input.exitPE === +input.entryPE ? 'illustrative constant P/E; follows active entry' : 'illustrative exit assumption';
+  const exitBasis = !sourceFollowing || locks.exitPE ? 'custom' : eligibleExitMean(row) ? `historical forward-P/E exit assumption, reported ${dateLabel(row.meanAsOf)}` : valuationReference(row,input).type==='trailing-fallback' ? 'TTM mean converted to the terminal earnings basis' : +input.exitPE === +input.entryPE ? 'illustrative constant P/E; follows active entry' : 'illustrative exit assumption';
   const dividendBasis = input.dividendMode === 'yield' ? `${n(input.dividendYield)}% initial yield${sourceFollowing && !locks.dividendYield && row.dividendYield != null ? ' anchored to the historical source yield' : ' (custom)'}` : `${rateLabel(input.payout)}% ${sourceFollowing && !locks.payout ? 'model-implied payout calibrated to the benchmark dividend anchor' : 'custom payout'}; not a reported payout`;
   const growthBasis = input.growthMode === 'source' ? `yearly growth path [${input.annualGrowth.map((value, i) => `Year ${i+1}: ${rateLabel(value)}%${Object.hasOwn(growthOverrides,input.growthStartYear+i)?' custom':!sourceFollowing?' saved assumption':' '+(growthPlan[i]?.basis || 'model assumption')}`).join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : input.growthMode === 'annual' ? `custom yearly EPS growth [${input.annualGrowth.map(value => rateLabel(value) + '%').join(', ')}]; equivalent CAGR ${pct(activeModel.epsCAGR)}` : `${short(input.growth)}% assumed EPS growth each year`;
   $('index-model-note').textContent = `${row.name} scenario: ${growthBasis}, ${input.years} years; entry ${n(input.entryPE)}× (${entryBasis}), exit ${n(input.exitPE)}× (${exitBasis}); ${dividendBasis}. ${input.growthMode === 'source' ? 'Holding-year rates are model calculations or assumptions; original publisher-period estimates remain separately visible. No claim of matched rolling consensus.' : 'Custom growth rates are your assumptions.'}`;
+}
+
+function renderValuationReference(row) {
+  const v=valuationReference(row,readInputs()),card=$('valuation-reference-card');
+  card.hidden=v.type==='constant-multiple';
+  if(card.hidden)return;
+  const trailing=v.type==='trailing-fallback',basis=trailing?'TTM':'forward';
+  $('valuation-reference-title').textContent=trailing?'TTM fallback valuation':'Historical multiple × current earnings';
+  $('valuation-reference-basis').textContent=v.type==='matched-forward'?'Paired forward reference':trailing?'Verified TTM fallback':'Dated / qualified forward reference';
+  $('valuation-reference-value').textContent=n(v.normalizedReferenceValue);
+  $('valuation-reference-formula').textContent=`${rateLabel(v.historicalPE)}× historical ${basis} P/E × ${v.normalizedCurrentEPS.toFixed(6)} current normalized ${basis} EPS = ${n(v.normalizedReferenceValue)}. Current market value is normalized to 100.`;
+  $('valuation-reference-detail').textContent=`Earnings valuation dated ${dateLabel(v.currentAsOf)}; ten-year mean dated ${dateLabel(v.asOf)}. ${v.qualification} ${trailing?'The five-year exit uses projected terminal trailing earnings, rather than holding current EPS fixed.':'The five-year exit applies the historical multiple to projected forward earnings.'}`;
+  const source=$('valuation-reference-source');source.href=v.source.url;source.textContent=`${v.source.publisher} · historical source ↗`;
+  const current=$('valuation-reference-current-source');current.href=(v.currentSource || row.source).url;current.textContent=`Current ${basis} earnings valuation source ↗`;
 }
 
 function renderIndexDetail() {
@@ -327,7 +342,9 @@ function renderIndexDetail() {
   $('index-premium').textContent = gap == null ? '—' : `${gap >= 0 ? '+' : '−'}${Math.abs(gap * 100).toFixed(2)}%`;
   $('index-premium-label').textContent = gap == null ? 'Historical comparison' : isDatedMean(row) ? 'Relative to the dated 10-year reference' : 'Relative to the published 10-year mean';
   const assessment = historicalAssessment(row);
-  $('index-premium-note').textContent = gap == null ? `${assessment.outcome === 'insufficient' ? 'Insufficient comparison evidence' : 'Qualified historical reference'}. ${assessment.reasons[0] || ''} No direct premium/discount or historical exit default is offered.` : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its assessed comparable reference. Its reference date is ${dateLabel(row.meanAsOf)}; undisclosed window endpoints and sampling remain unknown. This is not fair value or an expected return.`;
+  $('index-premium').closest('.valuation-view').hidden = !canCompareHistory(row);
+  $('index-premium-note').textContent = gap == null ? `${assessment.outcome === 'insufficient' ? 'Insufficient comparison evidence' : 'Qualified historical reference'}. ${assessment.reasons[0] || ''} A direct premium/discount statistic is not shown. The dated mean may still be used as an explicit historical exit assumption.` : `The current multiple is ${gap >= 0 ? 'above' : 'below'} its assessed comparable reference. Its reference date is ${dateLabel(row.meanAsOf)}; undisclosed window endpoints and sampling remain unknown. This is not fair value or an expected return.`;
+  renderValuationReference(row);
   const stale = isStale(row);
   $('selected-data-badge').textContent = row.forwardPE == null ? 'Valuation not connected' : stale ? 'Retained observation' : 'Sourced observation';
   $('selected-data-badge').classList.toggle('retained-badge', stale || row.forwardPE == null);
@@ -440,9 +457,10 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 
 function update({ announce = true, reanchor = false } = {}) {
   clearTimeout(announceTimer);
-  if (selectedIndex() && sourceFollowing && !indexOverrides.get(selectedIndexId)?.exitPE && !eligibleExitMean(selectedIndex())) $('exitPE').value = $('entryPE').value;
   if (selectedIndex() && sourceFollowing && !indexOverrides.get(selectedIndexId)?.payout) $('payout').value = calibratedPayout(selectedIndex(),$('entryPE').value);
   renderGrowthEditor();
+  if (selectedIndex() && sourceFollowing && !indexOverrides.get(selectedIndexId)?.exitPE) $('exitPE').value = sourceExitPE(selectedIndex(),+$('entryPE').value,readInputs());
+  if(selectedIndex()) renderValuationReference(selectedIndex());
   const input = readInputs();
   $('payout-field').hidden = input.dividendMode === 'yield';
   $('dividend-yield-field').hidden = input.dividendMode !== 'yield';
@@ -554,7 +572,7 @@ $('download-csv').addEventListener('click', () => {
   const evaluatedAt=new Date();
   const context={benchmarkId:selectedIndexId,snapshotId:indexFeed?.snapshotId,snapshotVersion:indexFeed?.snapshotVersion,publishedAt:indexFeed?.publishedAt,sourceFollowing,healthEvaluatedAt:evaluatedAt.toISOString(),
     entryMetric:sourceFollowing && !locks.entryPE ? metricProvenance(row,'forwardPE',evaluatedAt) : {classification:'user-assumption',value:activeModel.input.entryPE,units:'times'},
-    exitMetric:sourceFollowing && !locks.exitPE && eligibleExitMean(row) ? metricProvenance(row,'mean10YearForwardPE',evaluatedAt) : {classification:sourceFollowing && !locks.exitPE?'illustrative-constant-multiple':'user-assumption',value:activeModel.input.exitPE,units:'times'},
+    exitMetric:exitMetricProvenance(row,activeModel.input,sourceFollowing,locks),
     yieldMetric:activeModel.input.dividendMode!=='yield'?null:sourceFollowing && !locks.dividendYield && row?.dividendYield != null ? metricProvenance(row,'dividendYield',evaluatedAt) : {classification:'user-assumption',value:activeModel.input.dividendYield,units:'percent'},
     growthMetric:sourceFollowing?metricProvenance(row,'growthForecast',evaluatedAt):null,payoutMetric:payoutProvenance(row,activeModel.input,locks,sourceFollowing,evaluatedAt),fieldOverrides:locks};
   const blob = new Blob([annualCSV(activeModel, sourceFollowing ? row?.growthForecast : undefined, context)], { type: 'text/csv;charset=utf-8' });

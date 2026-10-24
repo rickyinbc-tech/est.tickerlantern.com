@@ -1,6 +1,6 @@
 import { project, annualCSV, ANNUAL_CSV_HEADER, validate, MODEL_CONVENTION_VERSION } from './model.js';
 import { scenarioInputs } from './scenario-state.js';
-import { eligibleExitMean } from './valuation-policy.js';
+import { exitMetricProvenance } from './valuation-policy.js';
 import { metricProvenance } from './update-status.js';
 import { payoutProvenance } from './dividend-policy.js';
 
@@ -26,7 +26,8 @@ function unavailableRows(row,feed,assessment,now) {
       'EPS growth percent':year ? assessment.input.annualGrowth[year-1] : '',
       'Growth basis':year ? assessment.input.growthPlan?.[year-1]?.basis : '',
       'Growth source provenance':year ? JSON.stringify(assessment.input.growthPlan?.[year-1] || {}) : '',
-      'Yield metric provenance':JSON.stringify(metricProvenance(row,'dividendYield',now))};
+      'Yield metric provenance':JSON.stringify(metricProvenance(row,'dividendYield',now)),
+      'Exit metric provenance':JSON.stringify(exitMetricProvenance(row,assessment.input))};
     return columns.map(k=>cell(fields[k])).join(',');
   });
 }
@@ -42,7 +43,7 @@ export function fiveYearCSV(feed, now = new Date()) {
       benchmarkId:row.id, snapshotId:feed.snapshotId, snapshotVersion:feed.snapshotVersion,
       publishedAt:feed.publishedAt, sourceFollowing:true, healthEvaluatedAt:now.toISOString(),
       entryMetric:metricProvenance(row,'forwardPE',now),
-      exitMetric:eligibleExitMean(row) ? metricProvenance(row,'mean10YearForwardPE',now) : {classification:'illustrative-constant-multiple',value:model.input.exitPE},
+      exitMetric:exitMetricProvenance(row,model.input),
       yieldMetric:model.input.dividendMode === 'yield' ? metricProvenance(row,'dividendYield',now) : null,
       growthMetric:metricProvenance(row,'growthForecast',now), payoutMetric:payoutProvenance(row,model.input,{},true,now),fieldOverrides:{}
     }).split('\n');

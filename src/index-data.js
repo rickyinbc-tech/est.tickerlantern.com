@@ -1,6 +1,6 @@
 import { DEFAULTS } from './model.js';
 import { validateGrowthForecast } from './growth-data.js';
-import { canCompareHistory, sourceExitPE } from './valuation-policy.js';
+import { canCompareHistory, sourceExitPE, eligibleTTMReference } from './valuation-policy.js';
 import { metricHealth } from './update-status.js';
 
 export const CATALOGUE = Object.freeze({sp500:'S&P 500',nasdaq100:'Nasdaq-100',russell2000:'Russell 2000',tsx:'S&P/TSX Composite','msci-canada':'MSCI Canada',acwi:'MSCI ACWI',world:'MSCI World',eafe:'MSCI EAFE',em:'MSCI Emerging Markets',europe:'MSCI Europe',uk:'MSCI United Kingdom',ftse100:'FTSE 100',stoxx600:'STOXX Europe 600',japan:'MSCI Japan',nikkei225:'Nikkei 225',china:'MSCI China',hangseng:'Hang Seng',csi300:'CSI 300',india:'MSCI India','asia-ex-japan':'MSCI AC Asia Pacific ex Japan',australia:'MSCI Australia'});
@@ -42,6 +42,7 @@ export function validateFeed(feed, now = new Date()) {
   for (const row of feed.indices) {
     if (!Object.hasOwn(CATALOGUE,row.id) || ids.has(row.id) || row.name !== CATALOGUE[row.id]) throw new Error('Invalid index identity.');
     ids.add(row.id);
+    if(row.trailingValuation!=null && (!eligibleTTMReference(row) || !validDate(row.trailingValuation.currentAsOf,now) || !validDate(row.trailingValuation.meanAsOf,now))) throw new Error('Unverified or mismatched trailing valuation fallback.');
     validateGrowthForecast(row.growthForecast);
     if (row.growthForecast != null) {
       if (!validDate(row.growthForecast.asOf, now)) throw new Error('Invalid EPS observation date.');
@@ -71,7 +72,7 @@ export function sourceInputs(row, current = DEFAULTS, locked = {}) {
   const next = { ...DEFAULTS, ...current };
   if (row?.forwardPE == null) return next;
   if (!locked.entryPE) next.entryPE = row.forwardPE;
-  if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE);
+  if (!locked.exitPE) next.exitPE = sourceExitPE(row, next.entryPE,next);
   if (!locked.dividendMode) next.dividendMode = row.dividendYield == null ? 'payout' : 'yield';
   if (row.dividendYield != null && !locked.dividendYield) next.dividendYield = row.dividendYield;
   return next;

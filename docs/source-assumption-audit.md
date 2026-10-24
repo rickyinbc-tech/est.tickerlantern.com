@@ -1,5 +1,7 @@
 # Source and assumption audit — 23 October 2026
 
+Current application policy: [historical earnings valuation v1](historical-valuation-policy-2026-10-23.md) permits verified same-index qualified forward means as dated exit assumptions. The source-definition and strict direct-comparison findings below remain the audit record; they do not certify the newer scenario assumptions as directly comparable statistics.
+
 **Historical audit snapshot. Growth timing and STOXX cash use were subsequently corrected; see the [current full audit](full-model-audit-2026-10-23.md).**
 
 Registry `source-definitions-2026-10-23.1`; model convention `tickerlantern-annual-forward-anchor-v2`. Audited baseline `6760c0f9c80494395b6b048ea52056dd6a25938a`. Observations below are a dated review of snapshot published `2026-10-23T07:30:39Z`; the live feed can subsequently update. The versioned registry and each snapshot’s metric definitions control machine decisions.

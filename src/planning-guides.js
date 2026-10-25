@@ -1,4 +1,12 @@
 import { cpiWindowGuides } from './planning-cpi-window-guides.js';
+import { percentageDeductibleGuides } from './planning-percentage-deductible-guides.js';
+import { commuteCashGuides } from './planning-commute-cash-guides.js';
+import { graduateDebtGuides } from './planning-graduate-debt-guides.js';
+import { paymentShareGuides } from './planning-payment-shares-guides.js';
+import { giftCardGuides } from './planning-gift-card-guides.js';
+import { policySettlementGuides } from './planning-policy-settlement-guides.js';
+import { dayBasisGuides } from './planning-day-basis-guides.js';
+import { currencyMatchGuides } from './planning-currency-match-guides.js';
 import { tailMeasureGuides } from './planning-tail-measures-guides.js';
 import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
@@ -181,6 +189,14 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...cpiWindowGuides,
+  ...percentageDeductibleGuides,
+  ...commuteCashGuides,
+  ...graduateDebtGuides,
+  ...paymentShareGuides,
+  ...giftCardGuides,
+  ...policySettlementGuides,
+  ...dayBasisGuides,
+  ...currencyMatchGuides,
   ...tailMeasureGuides,
   ...contributionTaxCashGuides,
   ...fuelMixGuides,

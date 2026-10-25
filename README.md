@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 214 visual planning guides and 871
+charts**. The library now leads with 215 visual planning guides and 875
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -131,6 +131,10 @@ A tuition-credit guide adds four graphics separating eligible tuition, baseline
 credit value, tax capacity and matched prepayment refunds. It excludes complete
 return calculations, top-up rules, transfers and carryforward balances; its
 source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
+A purchase-average guide follows equal monthly cash through fractional units,
+security spending and fixed fees. Arithmetic quoted-price averages remain
+separate from harmonic purchase-price averages and all-in household cash per
+unit. A separate valuation and signed matrix keep losses visible.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

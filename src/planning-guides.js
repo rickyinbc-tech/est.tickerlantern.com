@@ -1,3 +1,4 @@
+import { averageCostGuides } from './planning-average-cost-guides.js';
 import { rrifKindGuides } from './planning-rrif-kind-guides.js';
 import { employeeOptionGuides } from './planning-employee-option-guides.js';
 import { shareVestingGuides } from './planning-share-vesting-guides.js';
@@ -121,6 +122,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...averageCostGuides,
   ...rrifKindGuides,
   ...employeeOptionGuides,
   ...shareVestingGuides,

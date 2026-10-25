@@ -40,7 +40,7 @@ Seventeen focused tests check independent arithmetic, conservation of cash,
 AHA/cap constraints, transition ages, out-of-window events, negative positions,
 zero cases, deductibles/limits and narrow accessible rendering at each boundary.
 A negative-zero required-reserve result was corrected to an exact nonnegative
-zero. Full JavaScript suite: 725 passed. Python suite: 122 passed.
+zero. Full JavaScript suite: 733 passed. Python suite: 122 passed.
 
 Browser verification uses tests/browser_access_bridge_cover.py at 1440, 390
 and 320 pixels, checking twelve figures and tables, dynamic edits, reset and

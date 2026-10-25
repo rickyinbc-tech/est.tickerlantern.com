@@ -1,4 +1,5 @@
 import { repairConditionGuides } from './planning-repair-condition-guides.js';
+import { paymentPauseGuides } from './planning-payment-pause-guides.js';
 import { inventoryCycleGuides } from './planning-inventory-cycle-guides.js';
 import { feeSlicesGuides } from './planning-fee-slices-guides.js';
 import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
@@ -153,6 +154,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...repairConditionGuides,
+  ...paymentPauseGuides,
   ...inventoryCycleGuides,
   ...feeSlicesGuides,
   ...tfsaKindGuides,

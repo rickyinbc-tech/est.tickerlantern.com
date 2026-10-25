@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 132 visual planning guides and 534
+charts**. The library now leads with 137 visual planning guides and 554
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -369,3 +369,11 @@ Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML 
 - `/research/child-benefit-2026-payment-calendar-budget-cash` retains the official twelve-date 2026 CCB calendar and two base-tax-year blocks, with independently entered half-year receipt amounts. It models first-of-month bills, other dedicated funding and a calendar-day receipt lag, separating year-end cash from any 2027 collection-only runoff. It does not determine entitlement or low-entitlement lump sums.
 
 `python3 scripts/check-planning-ccb-source.py` validates the bundled dates, base-year mappings and source context against the original public HTML hash; raw source remains ignored in `qa/`. `tests/planning-loan-family.test.mjs` checks discounted payment sums, closed-form debt balances, cash conservation, independent required-buffer formulas, same-day ordering and post-year receipts. `tests/browser_loan_family.py [origin]` checks real inputs, whole-number validation, reset, tables and mobile chart bounds.
+
+The `planning-funding-boundaries` guides add a rising goal-price solver, a
+single-balance earmark calendar and a borrowed-capital comparison. Each has
+four interactive figures with data tables and original hypothetical ledgers.
+The goal solver reprices the deadline; earmark funding respects the lowest
+cash point; the borrowing comparison gives both alternatives identical outside
+resources and charges all loan interest. No forecast, tax benefit or credit
+qualification is assumed.

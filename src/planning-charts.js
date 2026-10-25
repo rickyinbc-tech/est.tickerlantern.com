@@ -42,6 +42,38 @@ function fanPlot(spec,width) {
   const keys='<ul class="plot-legend"><li><span class="plot-key plot-key-fill plot-key-fan-outer" aria-hidden="true"></span>5th–95th percentiles</li><li><span class="plot-key plot-key-fill plot-key-fan-inner" aria-hidden="true"></span>25th–75th percentiles</li><li><span class="plot-key plot-key-fan-median" aria-hidden="true"></span>Median</li></ul>';
   return keys+svgShell(spec,width,height,body,'Pointwise percentile fan. Shaded regions describe the assumed distribution at each year, not a prediction interval for an entire investment path. Vertical axis begins at zero; values in CAD.');
 }
+function scatterPlot(spec,width) {
+  if(!spec.rows.length||spec.rows.some(r=>!Number.isFinite(r.x)||r.x<0||!Number.isFinite(r.value)))throw Error('Scatter coordinates must be finite; this chart requires a non-negative horizontal measure.');
+  const height=350,left=64,right=22,top=25,bottom=58;
+  const xmax=niceMax(Math.max(.01,...spec.rows.map(r=>r.x))),minimum=Math.min(0,...spec.rows.map(r=>r.value)),maximum=Math.max(0,...spec.rows.map(r=>r.value));
+  const ymin=minimum<0?-niceMax(-minimum):0,ymax=maximum>0?niceMax(maximum):minimum<0?0:.01;
+  const x=v=>left+v/xmax*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
+  let body='';
+  for(let i=0;i<=4;i++){
+    const xv=xmax*i/4,yv=ymin+(ymax-ymin)*i/4;
+    body+=line(x(xv),top,x(xv),height-bottom)+txt(x(xv),height-bottom+24,format(xv,spec.xUnit,true),'middle');
+    body+=line(left,y(yv),width-right,y(yv))+txt(left-9,y(yv)+4,format(yv,spec.unit,true),'end');
+  }
+  body+=line(left,top,left,height-bottom,'plot-axis')+line(left,height-bottom,width-right,height-bottom,'plot-axis');
+  if(ymin<0&&ymax>0)body+=line(left,y(0),width-right,y(0),'plot-axis');
+  for(const row of [...spec.rows].sort((a,b)=>Number(Boolean(a.selected))-Number(Boolean(b.selected)))){
+    const px=x(row.x),py=y(row.value),selected=Boolean(row.selected);
+    body+=`<circle cx="${px}" cy="${py}" r="${selected?5.5:3.5}" fill="${selected?colors[0]:'white'}" stroke="${selected?colors[0]:colors[1]}" stroke-width="${selected?2.4:1.5}" tabindex="0" role="img" aria-label="${escapeHTML(row.label+': '+spec.xLabel+' '+format(row.x,spec.xUnit)+', '+spec.yLabel+' '+format(row.value,spec.unit))}"><title>${escapeHTML(row.label+': '+format(row.x,spec.xUnit)+' / '+format(row.value,spec.unit))}</title></circle>`;
+  }
+  const placed=[],overlap=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+  for(const row of spec.rows.filter(r=>r.annotate||r.selected).sort((a,b)=>Number(Boolean(b.selected))-Number(Boolean(a.selected)))){
+    const px=x(row.x),py=y(row.value),labelWidth=String(row.label).length*7.5;
+    const candidates=[-12,22,-30,40,-48,58].flatMap(dy=>[[-10,dy,'end'],[10,dy,'start']]).map(([dx,dy,anchor])=>{
+      const tx=px+dx,ty=py+dy,box={left:anchor==='end'?tx-labelWidth:tx,right:anchor==='end'?tx:tx+labelWidth,top:ty-13,bottom:ty+3};
+      const outside=box.left<left+2||box.right>width-right-2||box.top<top+2||box.bottom>height-bottom-2;
+      const collisions=spec.rows.filter(r=>overlap(box,{left:x(r.x)-8,right:x(r.x)+8,top:y(r.value)-8,bottom:y(r.value)+8})).length+placed.filter(b=>overlap(box,b)).length;
+      return {tx,ty,anchor,box,score:collisions+(outside?100:0)};
+    });
+    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
+  }
+  body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
+  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. Filled larger marker identifies the selected allocation; hollow markers are alternatives.')+'<p class="plot-scale">Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.</p>';
+}
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
   const values=spec.series.flatMap(s=>s.rows.map(r=>r.value)),ymax=spec.yMax??niceMax(Math.max(0,...values)),ymin=spec.yMin??(Math.min(0,...values)<0?-niceMax(-Math.min(...values)):0);
@@ -182,7 +214,8 @@ function returnsPlot(spec,width) {
 }
 function chartTable(spec) {
   let headers,rows;
-  if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
+  if(spec.type==='scatter'){headers=['Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
+  else if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
@@ -193,7 +226,7 @@ function chartTable(spec) {
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
-  const chart=spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
+  const chart=spec.type==='scatter'?scatterPlot(spec,width):spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
   return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {

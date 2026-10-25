@@ -592,3 +592,10 @@ Four charts separate credit usage from the final settlement of prior tax payment
 ### Employee option grant cash planning
 
 The English guide `employee-stock-options-vesting-exercise-cash-spread` separates granted and vested units, current intrinsic spread, hypothetical exercise-and-sale proceeds and exercise-and-hold strike funding. Four original interactive figures use a fixed authored 48-month schedule with a 12-month cliff, whole-unit rounding and independently entered cash. Only vested units enter the sale illustration, which assumes a permitted immediate sale at the entered price and shows no transaction at or below strike. All scenarios are hypothetical CAD arithmetic, excluding actual employer terms, full option valuation, tax, fees, expiry and settlement. Public Investor.gov and current Fidelity stock-plan sources support the conceptual distinctions. No option exercise or sale is initiated.
+
+## Equal cash, different unit quantities
+
+Four charts calculate average purchase cost from total cash and total units,
+with distinct cash/unit denominators and a marked-value ledger. The harmonic
+mean identity is an accounting comparison, not a strategy ranking. See
+`docs/planning-unit-cost-2026-10-25.md` for scope and checks.

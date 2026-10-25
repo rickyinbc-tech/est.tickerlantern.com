@@ -1,3 +1,4 @@
+import { taperGuides } from './planning-taper-guides.js';
 import { aiTimeGuides } from './planning-ai-time-guides.js';
 import { tieredSavingsGuides } from './planning-tiered-savings-guides.js';
 import { unpaidTimeGuides } from './planning-unpaid-time-guides.js';
@@ -170,6 +171,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...taperGuides,
   ...aiTimeGuides,
   ...tieredSavingsGuides,
   ...unpaidTimeGuides,

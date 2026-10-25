@@ -720,3 +720,7 @@ use, requested carryback allocations and unapplied carryforward; see
 
 Five charts distinguish reported time, overlapping responses and independent paid-work cash assumptions. See
 `docs/planning-ai-time-2026-10-25.md` for sources and checks.
+
+## Pay rises, tax and a separate benefit phase-out
+
+Four charts distinguish resource levels, full-increase offsets and local slopes in an invented monthly system. See `docs/planning-taper-2026-10-25.md` for assumptions, sources and checks.

@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with thirty-nine visual planning guides and 151
+charts**. The library now leads with forty-two visual planning guides and 163
 charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -21,7 +21,8 @@ schedules, foreign-currency goals, annuity cash-flow trade-offs, repayment order
 shared-budget goal deadlines, ordinary RRIF withdrawals versus spending,
 TFSA recontribution calendars, RESP withdrawal sources and mortgage prepayments
 versus liquid savings, tuition benchmarks and student budgets, promotional
-balance transfers and insurance reimbursement timing.
+balance transfers, insurance reimbursement timing, home-purchase cash requirements,
+shared household bill assignments and interest-free student-loan repayment.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

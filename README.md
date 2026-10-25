@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 195 visual planning guides and 796
+charts**. The library now leads with 196 visual planning guides and 800
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -117,6 +117,10 @@ interactive charts. Eight checked FCAC advice-source observations stay fixed
 while independent fee schedules change. The other models separate conditional
 refunds from weighted costs, and renewed principal from spendable interest.
 Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
+A gain-timing guide compares annual realization with one final sale using
+a common opening investment and an assumed tax fraction on full gains. Both
+endpoints deduct remaining modeled tax, each case reconciles its own growth,
+and interim liquidation values are distinct from actual tax payments.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

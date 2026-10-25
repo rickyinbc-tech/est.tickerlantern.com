@@ -1,4 +1,5 @@
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
+import { replacementRatioGuides } from './planning-replacement-ratio-guides.js';
 import { arrearsCountGuides } from './planning-arrears-count-guides.js';
 import { dailyResetGuides } from './planning-daily-reset-guides.js';
 import { disabilityCapGuides } from './planning-disability-cap-guides.js';
@@ -200,6 +201,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...paymentPerceptionGuides,
+  ...replacementRatioGuides,
   ...arrearsCountGuides,
   ...dailyResetGuides,
   ...disabilityCapGuides,

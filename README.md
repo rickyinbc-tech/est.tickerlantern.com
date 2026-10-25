@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 293 visual planning guides and 1211 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 294 visual planning guides and 1215 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -163,6 +163,10 @@ A complete invented fund cohort remains inspectable beside an end-year
 directory filter. Count weights reconcile subgroup means, all original
 positions retain their known ending values, and an omitted-return sensitivity
 shows why the reporting gap cannot be signed from a missing-record label.
+A retirement replacement-ratio guide reconciles gross pay, disjoint current
+cash uses and a retirement spending budget. Explicit average tax assumptions
+translate gross receipts into cash; continuing debt and added spending remain
+visible. A one-year cash excess is not treated as lifetime retirement funding.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

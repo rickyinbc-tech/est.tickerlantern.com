@@ -9,13 +9,14 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with twenty-four visual planning guides and 91
+charts**. The library now leads with twenty-seven visual planning guides and 103
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
 work breaks, employer matching, consolidation, variable income, federal tax
-brackets, an ordinary-case FHSA calendar and moving-home cash release.
+brackets, an ordinary-case FHSA calendar, moving-home cash release, retirement
+income bridges, caregiving cash needs and estate liquidity timing.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -36,6 +37,12 @@ case only; it does not determine personal eligibility or current account room.
 `python3 scripts/extract-planning-life-table.py --archive qa/statcan-life-table.zip`.
 The extraction checks dimensions, units, missingness, duplicates and monotonicity;
 raw public downloads remain ignored under `qa/`.
+`planning-care-data.js` holds four attributed 2022 Canadian Social Survey
+categories, including the source confidence intervals. Validate the extract with
+`python3 scripts/check-planning-care-source.py qa/caregiving-statcan-2024.html`.
+The caregiving budget is a separate hypothetical scenario. The retirement bridge
+does not calculate pension start-age adjustments or expenses beyond its horizon;
+the estate ledger does not determine legal authority, taxes or distributions.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

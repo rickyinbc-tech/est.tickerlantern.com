@@ -4,7 +4,9 @@ import { resilienceGuides } from './planning-resilience-guides.js';
 import { lifeEventGuides } from './planning-life-events-guides.js';
 import { incomeCreditGuides } from './planning-income-credit-guides.js';
 import { taxHomeGuides } from './planning-tax-home-guides.js';
+import { transitionGuides } from './planning-transitions-guides.js';
 export const planningGuides = [
+  ...transitionGuides,
   ...taxHomeGuides,
   ...incomeCreditGuides,
   ...lifeEventGuides,

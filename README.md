@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 231 visual planning guides and 943
+charts**. The library now leads with 233 visual planning guides and 952
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -144,6 +144,10 @@ An annuity-payment-term guide distinguishes a minimum guarantee period in
 a lifetime contract from a fixed payment term. Recipient ledgers, death-date
 conditions and truncated display windows reconcile to scheduled instalments.
 No purchase premium, mortality weighting or contract-price comparison is made.
+A price-basis guide values the same spending schedule using matched nominal
+and real cash and discount rates. Exact growth-factor conversion reconciles
+both present costs; signed bars expose the two mismatched-convention errors.
+It calculates a valuation, without treating a chosen rate as an assured yield.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

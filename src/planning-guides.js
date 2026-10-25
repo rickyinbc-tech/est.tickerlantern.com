@@ -1,3 +1,4 @@
+import { settlementCashGuides } from './planning-settlement-cash-guides.js';
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
 import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
 import { charitableGuides } from './planning-charitable-guides.js';
@@ -89,6 +90,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...settlementCashGuides,
   ...jointIncomeGuides,
   ...fundCostBaseGuides,
   ...charitableGuides,

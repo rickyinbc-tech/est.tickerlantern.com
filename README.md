@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 182 visual planning guides and 741 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 183 visual planning guides and 746 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -492,3 +492,12 @@ independent hypothetical project/review and annual-retainer fee calendars. See
 `python3 scripts/check-planning-charitable-source.py` checks 126 source values, header units, both-sex grouping, cross-table national totals, release scope and three original HTML hashes; raw source remains ignored in `qa/`. The new `statistics` explorer mode identifies source-year controls, and a dedicated count formatter plus billion-CAD compact labels preserve full values in accessible tables. `tests/planning-charitable.test.mjs` and `tests/browser_charitable.py [origin]` verify data selection, unsupported years, units, source-mode wording, reset and mobile chart bounds.
 
 The two-income household guide adds an exact four-state probability grid, cash-severity bars and separate frequency and severity curves. Its feasible-overlap stress control preserves both marginal probabilities and is not an estimated correlation. Window risks are original assumptions; expected unfunded dollars are not a sufficient reserve target. Mobile interaction, probability bounds and cash arithmetic are verified.
+
+The new investment-settlement cash calendar separates an assumed completed
+sale, settlement and bank receipt before one bill. Five figures include a
+14-day signed bank ledger, exclusive proceeds snapshots, an invented open-day
+calendar, a closure comparison and a timing/funding matrix. Weekends and zero
+after-settlement waits are explicit; receipts beyond Day14 remain outside the
+ledger. No trade, account eligibility, actual holiday or provider timetable is
+assumed confirmed. Sources and independent calendar verification are in
+`docs/investment-settlement-cash-calendar-source-research-2026-10-25.md`.

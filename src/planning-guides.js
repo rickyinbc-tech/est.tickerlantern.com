@@ -1,4 +1,9 @@
 import { incomeTransitionGuides } from './planning-income-transition-guides.js';
+import { aiTimeGuides } from './planning-ai-time-guides.js';
+import { tieredSavingsGuides } from './planning-tiered-savings-guides.js';
+import { unpaidTimeGuides } from './planning-unpaid-time-guides.js';
+import { capitalLossGuides } from './planning-capital-loss-guides.js';
+import { maturityAverageGuides } from './planning-maturity-average-guides.js';
 import { repeatedRiskGuides } from './planning-repeated-risk-guides.js';
 import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
 import { repeatRiskGuides } from './planning-repeat-risk-guides.js';
@@ -167,6 +172,11 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...incomeTransitionGuides,
+  ...aiTimeGuides,
+  ...tieredSavingsGuides,
+  ...unpaidTimeGuides,
+  ...capitalLossGuides,
+  ...maturityAverageGuides,
   ...repeatedRiskGuides,
   ...wholeReinvestGuides,
   ...repeatRiskGuides,

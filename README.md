@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 185 visual planning guides and 754
+charts**. The library now leads with 191 visual planning guides and 779 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
@@ -512,6 +512,13 @@ Five charts reconcile purchases, card repayments and internal savings transfers.
 
 `planning-illness-cash` adds independent benefit cash calendars; see
 `docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+The extended-warranty guide separates whole-window repair probability, conditional eligibility and the capped provider payment in five interactive charts. All probabilities and contract terms are hypothetical. The model counts the upfront price once in every state, distinguishes expected cost from an actual repair reserve, and handles infeasible cost-equality thresholds explicitly. State arithmetic, boundary cases and mobile chart layout are verified.
+
+## Warranty costs and repair-day reserves
+
+Four charts separate expected repair costs from the cash required in each outcome. See
+`docs/planning-warranty-risk-2026-10-25.md` for sources and checks.
 
 ### Upfront receipts and dated payment value
 

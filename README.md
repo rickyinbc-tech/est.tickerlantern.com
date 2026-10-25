@@ -224,3 +224,22 @@ visible assumptions and a data table for every chart.
 Run `node --test tests/planning-runway-spending.test.mjs` for the independent
 financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
 input, invalid-input retention, reset, table, responsive and runtime checks.
+
+## Savings promotions, overdraft ledgers and housing statistics
+
+Three English guides add twelve interactive charts on promotional savings-rate
+expiry, overdraft fees and daily borrowing, and housing-affordability statistics
+versus household cash budgets. The savings model uses nominal annual rates
+divided by twelve, monthly crediting and equal month-end contributions. The
+thirty-day overdraft ledger charges each arrangement’s own fees into its daily
+balance, accrues simple daily interest and posts it at month-end. All amounts
+and rates in those two models are hypothetical. The housing module preserves
+28 official Canadian Housing Survey percentages across seven rows and four
+cycles, with source hashes and explicit conditional denominators. Its editable
+budget remains separate from those fixed observations.
+
+Run `python3 scripts/check-planning-housing-source.py` with the original CSV and
+release HTML retained under ignored `qa/` to verify all source values and notes.
+Run `node --test tests/planning-banking-housing.test.mjs` and
+`python3 tests/browser_banking_housing.py <origin>` for the mathematical and
+rendered checks.

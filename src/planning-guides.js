@@ -1,3 +1,4 @@
+import { debtDenominatorGuides } from './planning-debt-denominators-guides.js';
 import { currencyTranslationGuides } from './planning-currency-translation-guides.js';
 import { optionalCoverGuides } from './planning-optional-cover-guides.js';
 import { currencyReturnGuides } from './planning-currency-return-guides.js';
@@ -69,6 +70,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...debtDenominatorGuides,
   ...currencyTranslationGuides,
   ...optionalCoverGuides,
   ...currencyReturnGuides,

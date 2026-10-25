@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 155 visual planning guides and 629
+charts**. The library now leads with 161 visual planning guides and 653
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -93,6 +93,14 @@ Debt-statistics guides distinguish holding shares, conditional medians and
 whole-population means. Ten 2023 SFS estimates retain twenty confidence bounds;
 interval bars and accessible tables display the published 95% intervals.
 Verify with `python3 scripts/check-planning-debt-denominators-source.py <source-table.zip>`.
+Pension-expiry, withdrawal-allocation and mortgage-life guides add twelve
+interactive charts. The pension ledger makes a temporary bridge ending visible
+before separately entered CPP cash begins. Withdrawal sources use the smaller
+remaining portfolio and report a separate residual rebalance. Insurance curves
+separate declining debt, flat assumed premiums and conditional claim destinations.
+See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
+New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
+retain their existing dates rather than being redated at every build.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -425,6 +433,11 @@ keep premium principal separate from financing interest, and do not assume
 equivalent coverage across independently entered premium quotes. Premium-related
 cash schedules exclude the common base loan payment. No claim, premium refund
 or policy eligibility is calculated.
+
+`planning-access-bridge-cover-models.js` adds ordinary RDSP payment/repayment
+cash, temporary pension bridge endings and hypothetical rebuilding coverage
+gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
+explicit contract assumptions and validation.
 
 
 ### Insurance renewal budgets and deposit access

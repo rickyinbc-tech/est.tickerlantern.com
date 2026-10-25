@@ -1,3 +1,6 @@
+import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
+import { bookingRefundGuides } from './planning-booking-refund-guides.js';
+import { adviceCostGuides } from './planning-advice-cost-guides.js';
 import { salesTaxGuides } from './planning-sales-tax-guides.js';
 import { renewalAccessGuides } from './planning-renewal-access-guides.js';
 import { diversificationGuides } from './planning-diversification-guides.js';
@@ -76,6 +79,9 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...ladderRenewalGuides,
+  ...bookingRefundGuides,
+  ...adviceCostGuides,
   ...salesTaxGuides,
   ...renewalAccessGuides,
   ...diversificationGuides,

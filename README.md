@@ -101,6 +101,11 @@ separate declining debt, flat assumed premiums and conditional claim destination
 See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
 New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
 retain their existing dates rather than being redated at every build.
+Advice-fee, refundable-booking and renewing-GIC-income guides add twelve
+interactive charts. Eight checked FCAC advice-source observations stay fixed
+while independent fee schedules change. The other models separate conditional
+refunds from weighted costs, and renewed principal from spendable interest.
+Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

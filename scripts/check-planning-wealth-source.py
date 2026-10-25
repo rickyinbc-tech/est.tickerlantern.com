@@ -1,38 +1,83 @@
-#!/usr/bin/env python3
-"""Check the selected public HTML observations against the shipped model rows."""
+"""Reconcile the small public SFS extract against saved official HTML tables."""
 import argparse
+import hashlib
 import json
-import re
-import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
+import re
+import subprocess
 
-class Reader(HTMLParser):
+
+class Tables(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.parts = []
-    def handle_data(self, data):
-        self.parts.append(data)
+        self.rows, self.row, self.cell = [], None, None
 
-parser = argparse.ArgumentParser()
-parser.add_argument('source', type=Path, help='Original official Daily HTML download')
-args = parser.parse_args()
-reader = Reader()
-reader.feed(args.source.read_text())
-text = re.sub(r'\s+', ' ', ' '.join(reader.parts))
-assert 'Survey of Financial Security, 2023' in text
-assert '2024-10-29' in text
-assert 'Dollar estimates are expressed in 2023 constant dollars' in text
-assert 'major income earner was 55 to 64 years of age' in text
-assert 'younger families who owned their principal residence increased by $142,800 from 2019 to $457,100 in 2023' in text
-assert 'younger families without a principal residence increased by $26,700 from 2019 to $44,000 in 2023' in text
-assert 'those who rented and who did not have an employer-sponsored pension plan had a median net worth of $11,900' in text
-assert 'did not have an employer-sponsored pension plan had a median net worth of $914,000' in text
-assert 'did not own their principal residence, had a median net worth of $359,000' in text
-assert 'had a median net worth of $1.4 million in 2023' in text
-script = "import {wealthSource} from './src/planning-wealth-flex-models.js'; console.log(JSON.stringify(wealthSource));"
-rows = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', script], text=True))
-assert [r['value'] for r in rows['younger']] == [457100, 44000]
-assert [r['value'] for r in rows['older']] == [1400000, 914000, 359000, 11900]
-assert rows['released'] == '2024-10-29' and rows['period'] == '2023'
-print('Verified six published medians, group context, constant-dollar units and release date.')
+    def handle_starttag(self, tag, attrs):
+        if tag == 'tr':
+            self.row = []
+        if tag in ('td', 'th') and self.row is not None:
+            self.cell = []
+
+    def handle_data(self, value):
+        if self.cell is not None:
+            self.cell.append(value)
+
+    def handle_endtag(self, tag):
+        if tag in ('td', 'th') and self.cell is not None:
+            self.row.append(' '.join(''.join(self.cell).split()))
+            self.cell = None
+        if tag == 'tr' and self.row is not None:
+            self.rows.append(self.row)
+            self.row = None
+
+
+def read_tables(path):
+    raw = path.read_bytes()
+    parser = Tables()
+    parser.feed(raw.decode('utf-8'))
+    return parser.rows, hashlib.sha256(raw).hexdigest()
+
+
+def amount(value):
+    assert re.fullmatch(r'\$?[0-9,]+', value), value
+    return int(value.replace('$', '').replace(',', ''))
+
+
+def main():
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('table', type=Path, help='Saved official t001a-eng.htm')
+    cli.add_argument('infographic', type=Path, help='Saved official 11-627-m2024047-eng.htm')
+    args = cli.parse_args()
+    root = Path(__file__).resolve().parents[1]
+    snapshot = json.loads(subprocess.check_output(
+        ['node', '--input-type=module', '-e',
+         "import {wealthSource} from './src/planning-wealth-data.js'; console.log(JSON.stringify(wealthSource));"], cwd=root))
+    rows, table_hash = read_tables(args.table)
+    header = next(row for row in rows if any('2019 - Median net worth' in cell for cell in row))
+    assert header[-2:] == ['2019 - Median net worth', '2023 - Median net worth']
+    for record in snapshot['ages']:
+        label = 'under 35' if record['label'] == 'Under 35' else record['label']
+        matches = [row for row in rows if row and row[0] == label]
+        assert len(matches) == 1, label
+        assert [amount(value) for value in matches[0][-2:]] == [record['before'], record['after']], label
+    national = next(row for row in rows if row and row[0] == 'Economic families and persons not in an economic family')
+    assert amount(national[-1]) == snapshot['national']
+    province_rows, infographic_hash = read_tables(args.infographic)
+    for record in snapshot['provinces']:
+        matches = [row for row in province_rows if row and row[0] == record['label']]
+        assert len(matches) == 1 and len(matches[0]) == 2, record['label']
+        assert amount(matches[0][-1]) == record['value'], record['label']
+        # Independent public release-table cross-check of the same 2023 median.
+        source = next(row for row in rows if row and row[0] == record['label'])
+        assert amount(source[-1]) == record['value']
+    text = args.table.read_text()
+    assert '2023 dollars' in text and '2024-10-29' in text
+    assert len(snapshot['ages']) == 5 and len(snapshot['provinces']) == 10
+    print(json.dumps({'status': 'verified', 'age_period_cells': 10, 'province_cells': 10,
+                      'national_cell': 1, 'table_sha256': table_hash,
+                      'infographic_sha256': infographic_hash}, indent=2))
+
+
+if __name__ == '__main__':
+    main()

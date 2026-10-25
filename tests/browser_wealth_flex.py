@@ -23,7 +23,7 @@ def run(*args, expression=None):
         return result['data']['result']
     return result.stdout
 
-slugs = ['canadian-wealth-statistics-liquidity-context', 'retirement-spending-guardrails-consumption-tradeoff', 'family-gift-retirement-capacity']
+slugs = ['home-pension-wealth-statistics-cash', 'retirement-spending-guardrails-consumption-tradeoff', 'family-gift-retirement-capacity']
 checks = []
 for slug in slugs:
     path = f'{origin}/research/{slug}.html'

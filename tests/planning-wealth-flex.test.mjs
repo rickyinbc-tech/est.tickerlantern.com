@@ -10,16 +10,16 @@ test('official public observations retain their own units, population and dates'
  assert.deepEqual(wealthSource.younger.map(r=>r.value),[457100,44000]);
  assert.deepEqual(wealthSource.older.map(r=>r.value),[1400000,914000,359000,11900]);
  assert.equal(wealthSource.released,'2024-10-29');assert.match(wealthSource.scope,/2023 constant CAD/);
- const a=planningResult('wealthContext'),b=planningResult('wealthContext',{...defaults('wealthContext'),cash:40000});
+ const a=planningResult('wealthHousing'),b=planningResult('wealthHousing',{...defaults('wealthHousing'),cash:40000});
  assert.deepEqual(a.charts.slice(0,2),b.charts.slice(0,2));
 });
 test('the balance sheet and income-interruption cash requirement reconcile independently',()=>{
- const d=defaults('wealthContext'),p=liquiditySnapshot(d);near(p.netWorth,970000);near(p.needed,32000);near(p.extra,12000);near(p.ending,-12000);
+ const d=defaults('wealthHousing'),p=liquiditySnapshot(d);near(p.netWorth,970000);near(p.needed,32000);near(p.extra,12000);near(p.ending,-12000);
  near(liquiditySnapshot({...d,homeEquity:d.homeEquity+100000}).extra,p.extra);
  near(liquiditySnapshot({...d,cash:32000}).extra,0);
 });
 test('zero cash and zero bills have a finite zero stress',()=>{
- const i=Object.fromEntries(wealthFlexDefinitions.wealthContext.fields.map(([key])=>[key,0]));assert.deepEqual(liquiditySnapshot(i),{netWorth:0,needed:0,extra:0,ending:0});
+ const i=Object.fromEntries(wealthFlexDefinitions.wealthHousing.fields.map(([key])=>[key,0]));assert.deepEqual(liquiditySnapshot(i),{netWorth:0,needed:0,extra:0,ending:0});
 });
 test('the first guardrail decisions match an independent two-year calculation',()=>{
  const i=defaults('spendingGuardrail'),p=guardrailPlan(i);near(p.rows[1].value,(600000-30000)*.82);

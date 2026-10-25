@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 72 visual planning guides and 288
-charts, including English articles on Canadian wealth statistics and liquidity,
-retirement spending cuts, and gifts to adult children. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 75 visual planning guides and 300
+charts, including new home/pension wealth comparisons, retirement spending cuts
+and gifts to adult children. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -34,6 +34,8 @@ income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
 basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
 principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
+The latest additions examine dated wealth medians versus liquid cash, career
+retraining opportunity costs and pension service buyback cash flows.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -116,12 +118,12 @@ allocation keeps prices and existing holdings fixed, with no tax or security
 recommendation. Parental-leave examples keep published gross percentages
 separate from independent net cash inputs over a common 78-week window.
 
-`planning-wealth-flex-models.js` preserves six dated public SFS medians. Validate
-them with `python3 scripts/check-planning-wealth-source.py qa/statcan-wealth-2023.html`.
-Its observation charts stay fixed when the separate cash inputs change.
-The retirement cut rule separates voluntary reductions from unfunded requests.
-The gift ledger caps payments and labels gifts outside the selected horizon.
-Both models disclose payment timing and preserve full cash reconciliations.
+`planning-wealth-flex-models.js` adds the separate `wealthHousing`, spending-cut
+and family-gift tools. Its six public medians are checked with
+`python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
+The home/pension observation charts remain fixed as the cash inputs change.
+The retirement rule separates voluntary spending cuts from unfunded requests;
+the gift ledger caps payments and labels dates outside the selected horizon.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

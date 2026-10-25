@@ -17,12 +17,12 @@ and unavailable confidence intervals are disclosed. No percentile or causal
 estimate is calculated. No local financial account or private research file is used.
 
 The ignored local HTML check copy has SHA-256 `5667dcb179237d5d8e11d509a24602d1fa785d52509357ee83478520cef77239`.
-Recheck with `python3 scripts/check-planning-wealth-source.py qa/statcan-wealth-2023.html`.
+Recheck with `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
 The original downloaded page is not included in the deployed assets.
 
 ## Model conventions
 
-- Wealth context: observation charts never change with scenario controls. Net home
+- Home/pension wealth context: observation charts never change with scenario controls. Net home
   equity, restricted/pension value, other investments and uncommitted cash are
   separate net inputs. The six-month stress has no income, interest, liquidation
   or borrowing; it is independent of the statistical medians.
@@ -44,7 +44,7 @@ The focused suite checks source transcription, source/scenario isolation,
 hand-worked calculations, cash conservation, essential-floor behavior, strict
 relative triggers, zero cuts/gifts, depletion, partial gifts, dates beyond the
 horizon, input validation and finite rendering at every field boundary.
-The complete JavaScript suite passed 372 tests and the Python suite passed 122.
+The complete JavaScript suite passed 378 tests and the Python suite passed 122.
 `npm run build` succeeded; the browser module dependency graph, canonical paths
 and sitemap entries were checked against the local build.
 

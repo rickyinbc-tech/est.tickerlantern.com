@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 231 visual planning guides and 943
+charts**. The library now leads with 232 visual planning guides and 947
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -643,3 +643,5 @@ Four charts compare consistent nominal/real valuation with deliberate basis mism
 `docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.
+
+The family-loan guide separates accessible lender cash from an unpaid-principal record, comparing on-schedule and shifted receipts against the lender’s own bill. Negative ledger dates represent unfunded amounts rather than automatic borrowing; later receipts do not erase an earlier funding need. Capped final repayments, zero repayment, events beyond the reporting window, underlying deficits and the independent receipt-count reconciliation are verified, alongside mobile controls.

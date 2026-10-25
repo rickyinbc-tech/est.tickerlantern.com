@@ -1,3 +1,4 @@
+import { equivalentCostGuides } from './planning-equivalent-cost-guides.js';
 import { dayBasisGuides } from './planning-day-basis-guides.js';
 import { currencyMatchGuides } from './planning-currency-match-guides.js';
 import { tailMeasureGuides } from './planning-tail-measures-guides.js';
@@ -181,6 +182,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...equivalentCostGuides,
   ...dayBasisGuides,
   ...currencyMatchGuides,
   ...tailMeasureGuides,

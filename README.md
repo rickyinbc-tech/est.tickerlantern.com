@@ -752,3 +752,7 @@ See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).
 
 Four charts separate actual days, fixed denominators and a calendar-year example. See
 `docs/planning-day-basis-2026-10-25.md` for sources and checks.
+
+## Unequal service lives and annual-equivalent costs
+
+Four charts compare repeated equal-service cycles while retaining actual purchase and replacement dates. See `docs/planning-equivalent-cost-2026-10-25.md` for assumptions, sources and checks.

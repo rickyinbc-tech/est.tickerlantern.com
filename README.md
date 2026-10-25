@@ -301,3 +301,19 @@ Run `node --test tests/planning-benefits-credit-growth.test.mjs` for independent
 financial identities, boundary cases and signed-bar geometry. Run
 `python3 tests/browser_benefits_credit_growth.py <origin>` for real interactions
 and normal/narrow rendered checks. All amounts and paths are hypothetical.
+
+## Tax-instalment reserves and return order during saving
+
+Two further English guides add eight figures. The fixed 2026 instalment
+calendar separates month-end reserve transfers from four independently
+confirmed payment amounts, retains real event dates and tests the lowest
+reserve balance. It applies the ordinary March weekend adjustment but does not
+assess personal eligibility, payment amounts, final tax or processing time.
+The ten-year contribution illustration applies each annual total return before
+an equal year-end deposit and compares exactly reversed return lists. Its
+principal ledger, signed growth chart and delay matrix preserve the shared
+cash-flow schedule. Neither return path is market data or a forecast.
+
+Run `node --test tests/planning-tax-contribution.test.mjs` and
+`python3 tests/browser_tax_contribution.py <origin>` for mathematical, date,
+input, table and responsive checks.

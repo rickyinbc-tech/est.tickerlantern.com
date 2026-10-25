@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 221 visual planning guides and 902
+charts**. The library now leads with 231 visual planning guides and 943
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -135,6 +136,14 @@ A purchase-average guide follows equal monthly cash through fractional units,
 security spending and fixed fees. Arithmetic quoted-price averages remain
 separate from harmonic purchase-price averages and all-in household cash per
 unit. A separate valuation and signed matrix keep losses visible.
+A homeownership-age guide retains twelve dated household rates from the
+2022 Statistics Canada release. A separate cash accumulation model uses no
+ownership rates as probabilities or personal deadlines. Verify the twelve
+cells with `python3 scripts/check-planning-homeownership-age-source.py <source.csv>`.
+An annuity-payment-term guide distinguishes a minimum guarantee period in
+a lifetime contract from a fixed payment term. Recipient ledgers, death-date
+conditions and truncated display windows reconcile to scheduled instalments.
+No purchase premium, mortality weighting or contract-price comparison is made.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -613,5 +622,24 @@ Four charts connect equal cash purchases with units, weighted cost and marked va
 `/research/collateral-equity-ratio-cash-loan-repayment-asset-sale` compares three invented balance-sheet treatments in five charts. Direct loan repayment, extra held collateral and asset-sale repayment use different denominators; subtracting new outside cash preserves the original post-price equity. The held-cash arrangement and required ratio are explicit hypothetical assumptions, not broker procedures or Canadian regulatory requirements. Sale-only repair is unavailable for a remaining funded account with nonpositive equity. Independent ratio equations, negative equity and near-zero numerical stability are checked in `tests/planning-collateral-repair.test.mjs`; the browser companion verifies controls, tables and mobile labels.
 
 The collateral guide uses a fictional loan-to-value covenant to separate positive equity from a funding test. It calculates outside debt repayment, fully eligible collateral additions and internal sales using distinct equations, with an explicit no-partial-sale boundary when debt reaches collateral value. No lender or regulatory margin rule is implemented. Transfer accounting, signed equity, exact-limit and zero-debt cases, and mobile controls are verified.
+
+## Client-name deposits across channels
+
+Four charts group client-name eligible deposits by issuing member and category. See
+`docs/planning-deposit-map-2026-10-25.md` for sources and checks.
+
+### Elapsed unemployment and future reserve horizons
+
+`/research/unemployment-duration-elapsed-weeks-future-cash-reserve` retains eight disjoint 2025 LFS duration categories, the separate long-duration aggregate and two 2015–2025 mean series with their original top-code definitions. It distinguishes annual-average stocks, unknown duration and elapsed weeks from an independently selected future household funding horizon. Public observations retain units, flags, coordinates, vectors and ZIP hash; no confidence bounds are invented. Reproduce with `python3 scripts/extract-unemployment-duration.py <14100057-eng.zip>`. Financial and source tests cover the national controls, category reconciliation, fixed-source behavior and zero-deficit boundary; the browser companion covers real controls, tables and mobile labels.
+
+
+### Retirement-age survey statistics
+
+The English guide `canada-retirement-age-statistics-mean-median-planning-date` presents a fixed corrected 2021–2025 extract from Statistics Canada table 14-10-0060-01. Four interactive figures distinguish total mean/median history, worker-class snapshots, differences between rounded mean and median, and changes between annual class medians. The source-year filter selects official observations, with no invented 2026 estimate or personal retirement-age target. The 64–66-year line axis is explicitly truncated; bars start at zero and signed differences retain negative values. A separate authored bridge example is identified as fictional. The public-source checker verifies all 40 CSV cells, dimensions, units, flags, correction metadata and original ZIP hash. Shared chart rendering gains optional plain-language value units for line descriptions and optional heatmap row labels and precise signed-axis ticks, preserving defaults.
+
+## Matching real and nominal valuation bases
+
+Four charts compare consistent nominal/real valuation with deliberate basis mismatches. See
+`docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.

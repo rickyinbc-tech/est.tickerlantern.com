@@ -1,5 +1,7 @@
 import { additionalPlanningGuides } from './planning-more-guides.js';
+import { decisionGuides } from './planning-decisions-guides.js';
 export const planningGuides = [
+  ...decisionGuides,
   ...additionalPlanningGuides,
   {
     slug:'savings-compounding', category:'Financial planning · Saving', planning:'savings',

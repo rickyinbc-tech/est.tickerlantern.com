@@ -23,14 +23,17 @@ function svgShell(spec,width,height,inner,description) {
 }
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
-  const ymax=niceMax(Math.max(0,...spec.series.flatMap(s=>s.rows.map(r=>r.value)))),xmax=Math.max(1,...spec.series.flatMap(s=>s.rows.map(r=>r.x)));
-  const x=v=>left+v/xmax*(width-left-right),y=v=>height-bottom-v/ymax*(height-top-bottom);
+  const values=spec.series.flatMap(s=>s.rows.map(r=>r.value)),ymax=niceMax(Math.max(0,...values)),ymin=Math.min(0,...values)<0?-niceMax(-Math.min(...values)):0;
+  const xmin=spec.xMin??0,xmax=Math.max(xmin+1,...spec.series.flatMap(s=>s.rows.map(r=>r.x)));
+  const x=v=>left+(v-xmin)/(xmax-xmin)*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
   let body='';
-  for(let i=0;i<=4;i++) {const v=ymax*i/4;body+=line(left,y(v),width-right,y(v))+txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
+  const yticks=[...new Set([...Array.from({length:5},(_,i)=>ymin+(ymax-ymin)*i/4),...(ymin<0?[0]:[])])];
+  for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
   const count=width<500?2:4;
-  const ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmax*i/count)))];
+  const ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))];
   ticks.forEach(v=>{body+=txt(x(v),height-bottom+24,v,'middle');});
   body+=line(left,top,left,height-bottom,'plot-axis')+line(left,height-bottom,width-right,height-bottom,'plot-axis');
+  if(ymin<0)body+=line(left,y(0),width-right,y(0),'plot-axis');
   body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
   spec.series.forEach((s,i)=>{
     const d=s.rows.map((r,j)=>(j?'L':'M')+x(r.x).toFixed(2)+','+y(r.value).toFixed(2)).join(' ');
@@ -41,7 +44,7 @@ function linePlot(spec,width) {
 }
 function barPlot(spec,width) {
   const left=52,right=18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
-  const rowHeight=group?82:62, height=top+spec.rows.length*rowHeight+40;
+  const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:62, height=top+spec.rows.length*rowHeight+40;
   const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):r.value??0;
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
@@ -58,7 +61,7 @@ function barPlot(spec,width) {
     else body+=`<rect x="${left}" y="${y+24}" width="${Math.max(0,x(r.value)-left)}" height="18" fill="${colors[0]}"/>`;
     const labelValue=group?r.values.map(v=>format(v,spec.unit)).join(' / '):format(rowMax(r),spec.unit);
     // Values sit on a separate text row so long currency labels never clip the plot.
-    body+=txt(left,y+(group?77:57),labelValue,'start','class="plot-value"');
+    body+=txt(left,y+(group?37+20*groupCount:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
   return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
@@ -98,7 +101,8 @@ function waterfallPlot(spec,width){
   const span=Math.max(1,hi-lo),height=top+rows.length*rowHeight+42;
   const x=v=>left+(v-lo)/span*(width-left-right);
   let body='';
-  for(let i=0;i<=4;i++){const v=lo+span*i/4;body+=line(x(v),top,x(v),height-34)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
+  const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+span*i/4),0])];
+  for(const v of ticks){body+=line(x(v),top,x(v),height-34);if(v===0||lo===0||hi===0||Math.abs(x(v)-x(0))>=38)body+=txt(x(v),height-10,format(v,spec.unit,true),'middle');}
   body+=line(x(0),top,x(0),height-34,'plot-axis');
   rows.forEach((r,i)=>{
     const y=top+i*rowHeight,label=r.label.length>(width<500?32:65)?r.label.slice(0,width<500?29:62)+'…':r.label;

@@ -1,3 +1,4 @@
+import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
 import { loanRateOrderGuides } from './planning-loan-rate-order-guides.js';
 import { incomeTransitionGuides } from './planning-income-transition-guides.js';
 import { aiTimeGuides } from './planning-ai-time-guides.js';
@@ -172,6 +173,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...bondConvexityGuides,
   ...loanRateOrderGuides,
   ...incomeTransitionGuides,
   ...aiTimeGuides,

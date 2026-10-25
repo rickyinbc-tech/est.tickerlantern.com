@@ -48,4 +48,4 @@ including source data tables, 2025 income to the July 2026–June 2027 review
 window, changing the year/month, January/December month intervals, the maximum
 withdrawal boundary, invalid-input retention and reset. The four mobile charts
 were inspected after concise household and source labels were applied. The
-integrated full suite and live deployment checks remain pending.
+The merged source is pushed at head c6c28e97961a3647fd5f342cd1ce741f76d064ac and deployed to the existing tickerlantern-est Worker (version 294765cf-e139-473d-b277-a6a8b98b12db). The live article returned HTTPS 200, has four interactive charts and tables, appears in the research hub, and loaded its registered model and all four official source links. The same interactions passed on the live page at 1440, 390 and 320 CSS-pixel viewports. These are browser viewport checks, not physical-device tests.

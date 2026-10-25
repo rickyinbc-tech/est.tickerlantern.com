@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 152 visual planning guides and 616
+charts**. The library now leads with 153 visual planning guides and 620
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -415,3 +415,12 @@ single-balance earmark calendar and a leveraged-loss stress illustration.
 Each has four interactive graphics and data tables. The goal solver reprices
 the deadline, the earmark ledger checks the lowest balance against a floor,
 and the loss example retains unchanged debt and all outside interest costs.
+
+The existing `/research/currency-cad-hedging` article now contains four quote-reading
+figures: a separate FCU ledger, reciprocal quote-change bars, ending CAD wealth
+against the ending quote, and the conditional break-even curve. Its original
+URL and worked USD examples are retained. This complements the separate repeated
+annual currency-return guide. All quotes and returns are fictional; no actual
+hedge, product recommendation, historical series or private record is modeled.
+The public-source derivation is in
+`docs/currency-return-visual-upgrade-source-research-2026-10-25.md`.

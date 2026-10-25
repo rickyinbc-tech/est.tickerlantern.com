@@ -1,3 +1,4 @@
+import { currencyTranslationGuides } from './planning-currency-translation-guides.js';
 import { currencyReturnGuides } from './planning-currency-return-guides.js';
 import { fundingBoundaryGuides } from './planning-funding-boundaries-guides.js';
 import { everydayCapitalGuides } from './planning-everyday-capital-guides.js';
@@ -67,6 +68,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...currencyTranslationGuides,
   ...currencyReturnGuides,
   ...fundingBoundaryGuides,
   ...everydayCapitalGuides,

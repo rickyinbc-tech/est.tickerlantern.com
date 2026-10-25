@@ -1,4 +1,11 @@
 import { accessRentGuides } from './planning-access-rent-guides.js';
+import { lookthroughGuides } from './planning-lookthrough-guides.js';
+import { distributionGuides } from './planning-distribution-guides.js';
+import { cardGraceGuides } from './planning-card-grace-guides.js';
+import { packagePriceGuides } from './planning-package-price-guides.js';
+import { glideExposureGuides } from './planning-glide-exposure-guides.js';
+import { investmentBorrowingGuides } from './planning-investment-borrowing-guides.js';
+import { cpiLevelGuides } from './planning-cpi-level-guides.js';
 import { rentalDailyGuides } from './planning-rental-daily-guides.js';
 import { loanFamilyGuides } from './planning-loan-family-guides.js';
 import { accruedInterestGuides } from './planning-accrued-interest-guides.js';
@@ -58,6 +65,13 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...accessRentGuides,
+  ...lookthroughGuides,
+  ...distributionGuides,
+  ...cardGraceGuides,
+  ...packagePriceGuides,
+  ...glideExposureGuides,
+  ...investmentBorrowingGuides,
+  ...cpiLevelGuides,
   ...rentalDailyGuides,
   ...loanFamilyGuides,
   ...accruedInterestGuides,

@@ -126,7 +126,7 @@ function heatPlot(spec,width) {
         fill='rgb('+rgb.join(',')+')';
       }
       body+=`<rect x="${x+1}" y="${y+1}" width="${cellWidth-2}" height="${cellHeight-2}" fill="${fill}"/>`;
-      body+=txt(x+cellWidth/2,y+cellHeight/2+5,value==null?'NR':format(value,spec.unit,true),'middle','class="plot-cell-label"');
+      body+=txt(x+cellWidth/2,y+cellHeight/2+5,value==null?'NR':format(value,spec.unit,spec.compactValues!==false),'middle','class="plot-cell-label"');
     });
   });
   const scale=spec.signed?'Negative values use gold; positive values use teal. Read the signed cell labels.':`Darker cells mean larger values. Scale: ${format(min,spec.unit,true)} to ${format(max,spec.unit,true)}.`;

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 227 visual planning guides and 925
+charts**. The library now leads with 229 visual planning guides and 933
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -631,3 +631,13 @@ Four charts group client-name eligible deposits by issuing member and category. 
 ### Elapsed unemployment and future reserve horizons
 
 `/research/unemployment-duration-elapsed-weeks-future-cash-reserve` retains eight disjoint 2025 LFS duration categories, the separate long-duration aggregate and two 2015–2025 mean series with their original top-code definitions. It distinguishes annual-average stocks, unknown duration and elapsed weeks from an independently selected future household funding horizon. Public observations retain units, flags, coordinates, vectors and ZIP hash; no confidence bounds are invented. Reproduce with `python3 scripts/extract-unemployment-duration.py <14100057-eng.zip>`. Financial and source tests cover the national controls, category reconciliation, fixed-source behavior and zero-deficit boundary; the browser companion covers real controls, tables and mobile labels.
+
+
+### Retirement-age survey statistics
+
+The English guide `canada-retirement-age-statistics-mean-median-planning-date` presents a fixed corrected 2021–2025 extract from Statistics Canada table 14-10-0060-01. Four interactive figures distinguish total mean/median history, worker-class snapshots, differences between rounded mean and median, and changes between annual class medians. The source-year filter selects official observations, with no invented 2026 estimate or personal retirement-age target. The 64–66-year line axis is explicitly truncated; bars start at zero and signed differences retain negative values. A separate authored bridge example is identified as fictional. The public-source checker verifies all 40 CSV cells, dimensions, units, flags, correction metadata and original ZIP hash. Shared chart rendering gains optional plain-language value units for line descriptions and optional heatmap row labels and precise signed-axis ticks, preserving defaults.
+
+## Matching real and nominal valuation bases
+
+Four charts compare consistent nominal/real valuation with deliberate basis mismatches. See
+`docs/planning-discount-basis-2026-10-25.md` for sources and checks.

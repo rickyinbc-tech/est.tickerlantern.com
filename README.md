@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with seventy-two visual planning guides and 288
+charts**. The library now leads with seventy-five visual planning guides and 300
 charts, with new guides on shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -34,6 +34,8 @@ income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
 basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
 principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
+The latest additions examine dated wealth medians versus liquid cash, career
+retraining opportunity costs and pension service buyback cash flows.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

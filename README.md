@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 78 visual planning guides and 312
-charts, including new home/pension wealth comparisons, retirement spending cuts
-and gifts to adult children. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 81 visual planning guides and 324
+charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -123,12 +123,25 @@ allocation keeps prices and existing holdings fixed, with no tax or security
 recommendation. Parental-leave examples keep published gross percentages
 separate from independent net cash inputs over a common 78-week window.
 
-`planning-wealth-flex-models.js` adds the separate `wealthHousing`, spending-cut
-and family-gift tools. Its six public medians are checked with
+`planning-budget-exposure-data.js` retains nine public 2025 annual-average CPI
+observations from Statistics Canada Table 18-10-0005-01. The new guides explain
+personal spending-basket exposure, automatic-saving transfer dates and operating
+cash, and the interaction of net-pay growth, price changes and lifestyle expansion.
+The budget applies observed rates once to hypothetical amounts. The transfer
+comparison preserves annual pay and saving across different saving dates. The
+income-growth tool records unfunded living costs separately from its conditional
+positive-surplus investment balances.
+
+Verify the public CPI extract against the saved original accessible HTML table:
+
+```sh
+python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
+```
+
+`planning-wealth-flex-models.js` adds home/pension group comparisons, retirement
+spending-cut rules and family gifts. Its six public medians are checked with
 `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
-The home/pension observation charts remain fixed as the cash inputs change.
-The retirement rule separates voluntary spending cuts from unfunded requests;
-the gift ledger caps payments and labels dates outside the selected horizon.
+Observation charts stay fixed when the separate cash controls change.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

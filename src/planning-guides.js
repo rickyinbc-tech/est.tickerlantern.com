@@ -1,4 +1,5 @@
 import { cpiWindowGuides } from './planning-cpi-window-guides.js';
+import { etfPremiumGuides } from './planning-etf-premium-guides.js';
 import { percentageDeductibleGuides } from './planning-percentage-deductible-guides.js';
 import { commuteCashGuides } from './planning-commute-cash-guides.js';
 import { graduateDebtGuides } from './planning-graduate-debt-guides.js';
@@ -189,6 +190,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...cpiWindowGuides,
+  ...etfPremiumGuides,
   ...percentageDeductibleGuides,
   ...commuteCashGuides,
   ...graduateDebtGuides,

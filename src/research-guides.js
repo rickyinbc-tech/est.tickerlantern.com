@@ -1,78 +1,53 @@
-// Original educational articles. All companies, portfolios and figures below are hypothetical.
-export const reviewedAt = '2026-10-25';
+export const reviewedAt = "2026-10-25";
 export const guides = [
   {
-    slug: 'earnings-quality-cash-flow', category: 'Company analysis',
-    title: 'Earnings quality: follow the profit into cash',
-    description: 'Read an earnings-to-cash bridge, test working capital and capital spending, and distinguish a temporary cash shortfall from a weak business model.',
-    takeaway: 'An attractive earnings multiple needs an explanation of how those earnings become cash available to owners.',
-    related: ['buybacks-dilution-per-share-value', 'etf-tracking-difference-costs'],
-    sections: [
-      { id: 'start', title: 'Start with the claim you are trying to test', html: `
-        <p>A company reports rising earnings, yet its cash balance is falling. That observation is a question to investigate. The business might be building inventory for signed orders, opening stores, repaying debt, or struggling to collect money from customers. Each explanation has a different implication for future earning power.</p>
-        <p>Our research approach is to write one testable sentence before building a valuation: “The company can convert its reported profit into cash after maintaining the assets required to earn it.” Then identify which disclosures would support or weaken that sentence. A low P/E alone cannot answer it.</p>
-        <p>The <a href="https://www.sec.gov/investor/pubs/begfinstmtguide.htm">SEC financial-statement guide</a> distinguishes income, cash flows, and the balance sheet. Read the statements together: profit measures a period, the balance sheet records resources and obligations at a date, and the cash-flow statement reconciles cash movements.</p>` },
-      { id: 'bridge', title: 'Build a bridge from net income to operating cash', html: `
-        <p>Consider an invented manufacturer. Every amount below is in millions and covers the same financial year. The bridge uses an indirect cash-flow presentation. It simplifies the statement to expose the main drivers.</p>
-        <div class="guide-table" role="region" aria-label="Hypothetical earnings to cash reconciliation" tabindex="0"><table><caption>Worked example · same year, same reporting perimeter</caption><thead><tr><th scope="col">Component</th><th scope="col">Cash-flow adjustment</th></tr></thead><tbody>
-        <tr><th scope="row">Net income</th><td>100</td></tr><tr><th scope="row">Depreciation and amortization</th><td>+25</td></tr><tr><th scope="row">Stock-based compensation</th><td>+10</td></tr><tr><th scope="row">Increase in receivables</th><td>−30</td></tr><tr><th scope="row">Increase in inventory</th><td>−20</td></tr><tr><th scope="row">Increase in payables</th><td>+15</td></tr><tr><th scope="row">Operating cash flow</th><td><strong>100</strong></td></tr><tr><th scope="row">Cash purchases of property and equipment</th><td>−45</td></tr><tr><th scope="row">Simplified free cash flow</th><td><strong>55</strong></td></tr></tbody></table></div>
-        <p>Operating cash flow equals net income here, but the business still needs 45 of capital spending. The remaining 55 is a starting point for examining financing capacity. It has not yet paid dividends, repurchased shares, completed acquisitions, or met debt principal repayments.</p>
-        <p>The stock-compensation add-back deserves separate attention. It is noncash in this period, but new shares can dilute ownership. Treating the add-back as permanently free money while assuming an unchanged share count would make the owner-return model inconsistent.</p>` },
-      { id: 'working-capital', title: 'Test the working-capital explanation', html: `
-        <p>In this example, receivables and inventory absorb 50 while payables supply 15. Ask whether the 35 net cash use represents healthy expansion, deteriorating collections, or goods that may need discounting. Compare several periods and use consistent definitions.</p>
-        <p>Suppose revenue rises from 800 to 1,000 while year-end receivables rise from 80 to 150. Receivables increase from 10% to 15% of annual sales. That is a useful warning flag; it does not prove customers are failing to pay. Seasonality, acquisitions, payment terms, and the timing of large invoices can all change the ratio. Average balances and credit-sales data would improve the test.</p>
-        <p>Read the receivables aging, credit-loss allowance, inventory policy, and management discussion. Compare the explanation with later collections. A working-capital release can also flatter cash flow: collecting old invoices or running down inventory can produce strong cash in a year with weak new demand.</p>` },
-      { id: 'capital', title: 'Separate maintenance needs from expansion claims', html: `
-        <p>The 45 capital-spending figure is observable in our example. The split between maintenance and growth is an analytical judgment unless the company discloses a reliable breakdown. Calling all spending “growth investment” can overstate cash available for distribution.</p>
-        <p>Test a range. If maintaining productive capacity requires 25, cash after that requirement would be 75 before other claims. If it requires the full 45, the result is 55. Those are alternative assumptions, not two versions of reported free cash flow. Record the basis for the split rather than presenting your preferred answer as an accounting fact.</p>
-        <p>Also inspect leases, acquisitions, capitalized development, and supplier financing. The cash-flow classification can vary with the accounting framework and transaction. A consistent multi-year analysis should explain which outflows it includes and avoid comparing unlike definitions.</p>` },
-      { id: 'adjusted', title: 'Audit adjustments before using an adjusted P/E', html: `
-        <p>Management may exclude restructuring, acquisition costs, impairments, or compensation from an adjusted earnings measure. Start with the reconciliation and ask what economic activity produced each adjustment. Repeated exclusions need a reason to disappear from a future forecast.</p>
-        <p>The <a href="https://www.sec.gov/rules-regulations/staff-guidance/corporation-finance-interpretations/non-gaap-financial-measures">SEC’s non-GAAP interpretations</a> discuss potentially misleading exclusions of recurring operating expenses and inconsistent adjustments. This is US disclosure guidance; it is not a substitute for the reporting rules that apply to a particular issuer.</p>
-        <p>For your model, preserve reported and adjusted results side by side. If reported EPS is 4.00 and adjusted EPS is 5.00, a price of 80 represents 20× reported earnings and 16× adjusted earnings. Neither denominator is automatically the right forecast anchor. Explain why an excluded cost will not recur or retain a realistic allowance for it.</p>` },
-      { id: 'workflow', title: 'Turn the evidence into a valuation decision', html: `
-        <ol><li>Reconcile three to five years of net income, operating cash, capital spending, and share count.</li><li>Identify temporary working-capital movements and test whether they later reverse.</li><li>Document maintenance-spending assumptions and other contractual cash claims.</li><li>Read adjusted-earnings reconciliations and identify exclusions that repeatedly return.</li><li>Stress revenue, margins, collections, and funding together before selecting an earnings multiple.</li></ol>
-        <p>A useful conclusion names both the evidence and the unresolved issue: “Cash conversion improved after collections normalized, but the maintenance-spending requirement remains uncertain.” That sentence tells the next researcher what to verify. It is more useful than a single quality score detached from the statements.</p>
-        <p>For banks and insurers, deposits, investments, regulatory capital, and financing are central to operations. Do not transfer this manufacturer’s free-cash-flow template mechanically to a financial institution. Use a framework suited to its business and capital constraints.</p>` }
+    "slug": "buybacks-dilution-per-share-value",
+    "category": "Company analysis",
+    "title": "Buybacks and dilution: what changes for each share?",
+    "description": "Reconcile repurchases, new issuance, EPS growth and financing costs before deciding whether a buyback improves the economics for continuing shareholders.",
+    "takeaway": "The repurchase announcement is the beginning of the analysis. The price paid, net share reduction and source of funding determine the economics.",
+    "related": [
+      "earnings-quality-cash-flow",
+      "portfolio-concentration-overlap"
     ],
-    sources: [
-      { title: 'SEC · Beginners’ Guide to Financial Statement', url: 'https://www.sec.gov/investor/pubs/begfinstmtguide.htm', note: 'Statement structure, EPS, cash-flow reconciliation, and the importance of footnotes. Published 4 February 2007.' },
-      { title: 'SEC · Non-GAAP Financial Measures', url: 'https://www.sec.gov/rules-regulations/staff-guidance/corporation-finance-interpretations/non-gaap-financial-measures', note: 'US staff interpretations on recurring expenses and consistent presentation; page last update shown as 13 December 2022.' }
+    "sections": [
+      {
+        "id": "denominator",
+        "title": "Start with earnings and the share denominator",
+        "html": "\n        <p>When a company earns the same profit with fewer shares outstanding, earnings per share can rise without any improvement in total operating profit. This is arithmetic, and it can be economically useful. It does not establish that the repurchase price was attractive.</p>\n        <p>The <a href=\"https://www.sec.gov/investor/pubs/begfinstmtguide.htm\">SEC financial-statement guide</a> describes the relationship between earnings and shares and points readers to stock-option disclosures. In a full issuer analysis, use the reported weighted-average basic and diluted share counts, and distinguish them from the shares outstanding at the reporting date.</p>\n        <div class=\"guide-formula\">EPS growth factor = net-income growth factor ÷ share-count growth factor</div>\n        <p>For example, 6% net-income growth and a 2% decline in the comparable share denominator produce 1.06 ÷ 0.98 − 1 = 8.16% EPS growth. Adding 6% and 2% is a rough approximation. The exact calculation preserves the interaction.</p>"
+      },
+      {
+        "id": "worked",
+        "title": "Reconcile the gross buyback with net dilution",
+        "html": "\n        <p>Our invented company begins with 100 million shares and annual net income of 500 million. It spends 300 million to buy six million shares at 50 each, while issuing two million new shares through employee awards. Assume all changes happen at the start of the modeled year and profit is unchanged.</p>\n        <div class=\"guide-table\" role=\"region\" aria-label=\"Hypothetical share-count reconciliation\" tabindex=\"0\"><table><caption>Worked example · simplified full-year effects</caption><thead><tr><th scope=\"col\">Measure</th><th scope=\"col\">Calculation</th><th scope=\"col\">Result</th></tr></thead><tbody><tr><th scope=\"row\">Opening shares</th><td>Given</td><td>100 million</td></tr><tr><th scope=\"row\">Repurchased shares</th><td>300 ÷ 50</td><td>6 million</td></tr><tr><th scope=\"row\">Newly issued shares</th><td>Given</td><td>2 million</td></tr><tr><th scope=\"row\">Closing modeled shares</th><td>100 − 6 + 2</td><td>96 million</td></tr><tr><th scope=\"row\">EPS before</th><td>500 ÷ 100</td><td>5.00</td></tr><tr><th scope=\"row\">EPS after</th><td>500 ÷ 96</td><td>5.2083</td></tr><tr><th scope=\"row\">EPS increase</th><td>100 ÷ 96 − 1</td><td><strong>4.17%</strong></td></tr></tbody></table></div>\n        <p>The gross repurchase removed 6% of opening shares. Net shares declined 4%. Neither figure is the same as the 4.17% EPS increase. A research note should state which quantity it means instead of calling all three “buyback yield.”</p>\n        <p>Actual weighted-average share counts reflect transaction dates. Potential dilution can depend on award terms and the applicable accounting method. Our simplified closing-share calculation is a teaching scenario, not a reconstruction of a company’s reported diluted EPS.</p>"
+      },
+      {
+        "id": "funding",
+        "title": "Charge the repurchase for its funding",
+        "html": "\n        <p>Suppose the entire 300 million is borrowed at 6% and interest is deductible at an assumed 25% tax rate. The annual after-tax interest cost is 13.5 million. Under the same immediate-timing assumption, net income falls to 486.5 million and EPS becomes 486.5 ÷ 96 = 5.0677. EPS accretion falls to 1.35%.</p>\n        <p>That calculation omits issuance fees, refinancing risk, changes in credit quality, and any operating effect of the awards. It isolates the funding cost. If cash funds the repurchase, test foregone after-tax interest or the value of an alternative use of that cash rather than assuming a zero opportunity cost.</p>\n        <p>Debt maturity and liquidity matter independently of EPS. A small per-share earnings improvement can coexist with a weaker ability to withstand a downturn. Extend the model through a lower-profit year and a higher refinancing rate before treating leverage as a permanent enhancement.</p>"
+      },
+      {
+        "id": "price",
+        "title": "Compare the repurchase price with a value range",
+        "html": "\n        <p>A separate, deliberately simplified thought experiment shows why the price matters. Assume total equity is worth 1,000 million, including 200 million of excess cash, and there are 100 million shares. The starting estimated value is 10 per share. Ignore tax, signaling, transaction costs, and any change in operating value.</p>\n        <p>Spending 200 million at 8 per share retires 25 million shares. Remaining equity value is 800 million across 75 million shares: 10.67 per share. Spending the same cash at 12 retires only 16.67 million shares, leaving approximately 9.60 of value per remaining share.</p>\n        <p>The estimated value of the whole company has fallen by the cash spent in both cases. The different per-share outcomes arise from the price paid. This is our own conditional valuation example; it does not establish an observable intrinsic value or justify a company-specific price target.</p>"
+      },
+      {
+        "id": "double-count",
+        "title": "Keep the return model internally consistent",
+        "html": "\n        <p>If forecast EPS already includes the assumed decline in shares, terminal EPS multiplied by an exit P/E already reflects that per-share benefit. Adding a separate repurchase yield as an extra shareholder return can count the same mechanism twice.</p>\n        <p>Alternatively, begin with aggregate earnings, model the cash allocated to repurchases, estimate the price paid each year, and calculate the resulting share path. Reconcile this with dividends, reinvestment, and debt changes. A dollar cannot simultaneously fund a dividend, an acquisition, and a repurchase.</p>\n        <p>Authorization is also different from execution. Record the announced capacity, actual spending, average price, period-end shares, and diluted weighted-average shares as separate fields. A large remaining authorization alone is weak evidence for future share reduction.</p>"
+      },
+      {
+        "id": "questions",
+        "title": "Questions to answer before rewarding the buyback",
+        "html": "\n        <ol><li>How much of gross repurchasing offsets employee issuance or other dilution?</li><li>What earnings and cash-flow assumptions fund the program?</li><li>How does the price paid compare with a defensible range of estimated value?</li><li>What changes in debt, liquidity, and financial flexibility?</li><li>Does the EPS forecast already incorporate the share-count effect?</li></ol>\n        <p>Track the answers over several reporting periods. A disciplined program can reduce purchases when valuation is demanding and increase them when cash is truly surplus and the price is attractive. The useful evidence is the realized allocation record and its effect on continuing owners, assessed alongside the business’s investment needs.</p>"
+      }
+    ],
+    "sources": [
+      {
+        "title": "SEC · Beginners’ Guide to Financial Statement",
+        "url": "https://www.sec.gov/investor/pubs/begfinstmtguide.htm",
+        "note": "EPS, financial-statement relationships, financing cash flows, and stock-option footnotes. All repurchase scenarios and valuations on this page are original hypothetical calculations."
+      }
     ]
-  },
-  {
-    slug: 'buybacks-dilution-per-share-value', category: 'Company analysis',
-    title: 'Buybacks and dilution: what changes for each share?',
-    description: 'Reconcile repurchases, new issuance, EPS growth and financing costs before deciding whether a buyback improves the economics for continuing shareholders.',
-    takeaway: 'The repurchase announcement is the beginning of the analysis. The price paid, net share reduction and source of funding determine the economics.',
-    related: ['earnings-quality-cash-flow', 'portfolio-concentration-overlap'],
-    sections: [
-      { id: 'denominator', title: 'Start with earnings and the share denominator', html: `
-        <p>When a company earns the same profit with fewer shares outstanding, earnings per share can rise without any improvement in total operating profit. This is arithmetic, and it can be economically useful. It does not establish that the repurchase price was attractive.</p>
-        <p>The <a href="https://www.sec.gov/investor/pubs/begfinstmtguide.htm">SEC financial-statement guide</a> describes the relationship between earnings and shares and points readers to stock-option disclosures. In a full issuer analysis, use the reported weighted-average basic and diluted share counts, and distinguish them from the shares outstanding at the reporting date.</p>
-        <div class="guide-formula">EPS growth factor = net-income growth factor ÷ share-count growth factor</div>
-        <p>For example, 6% net-income growth and a 2% decline in the comparable share denominator produce 1.06 ÷ 0.98 − 1 = 8.16% EPS growth. Adding 6% and 2% is a rough approximation. The exact calculation preserves the interaction.</p>` },
-      { id: 'worked', title: 'Reconcile the gross buyback with net dilution', html: `
-        <p>Our invented company begins with 100 million shares and annual net income of 500 million. It spends 300 million to buy six million shares at 50 each, while issuing two million new shares through employee awards. Assume all changes happen at the start of the modeled year and profit is unchanged.</p>
-        <div class="guide-table" role="region" aria-label="Hypothetical share-count reconciliation" tabindex="0"><table><caption>Worked example · simplified full-year effects</caption><thead><tr><th scope="col">Measure</th><th scope="col">Calculation</th><th scope="col">Result</th></tr></thead><tbody><tr><th scope="row">Opening shares</th><td>Given</td><td>100 million</td></tr><tr><th scope="row">Repurchased shares</th><td>300 ÷ 50</td><td>6 million</td></tr><tr><th scope="row">Newly issued shares</th><td>Given</td><td>2 million</td></tr><tr><th scope="row">Closing modeled shares</th><td>100 − 6 + 2</td><td>96 million</td></tr><tr><th scope="row">EPS before</th><td>500 ÷ 100</td><td>5.00</td></tr><tr><th scope="row">EPS after</th><td>500 ÷ 96</td><td>5.2083</td></tr><tr><th scope="row">EPS increase</th><td>100 ÷ 96 − 1</td><td><strong>4.17%</strong></td></tr></tbody></table></div>
-        <p>The gross repurchase removed 6% of opening shares. Net shares declined 4%. Neither figure is the same as the 4.17% EPS increase. A research note should state which quantity it means instead of calling all three “buyback yield.”</p>
-        <p>Actual weighted-average share counts reflect transaction dates. Potential dilution can depend on award terms and the applicable accounting method. Our simplified closing-share calculation is a teaching scenario, not a reconstruction of a company’s reported diluted EPS.</p>` },
-      { id: 'funding', title: 'Charge the repurchase for its funding', html: `
-        <p>Suppose the entire 300 million is borrowed at 6% and interest is deductible at an assumed 25% tax rate. The annual after-tax interest cost is 13.5 million. Under the same immediate-timing assumption, net income falls to 486.5 million and EPS becomes 486.5 ÷ 96 = 5.0677. EPS accretion falls to 1.35%.</p>
-        <p>That calculation omits issuance fees, refinancing risk, changes in credit quality, and any operating effect of the awards. It isolates the funding cost. If cash funds the repurchase, test foregone after-tax interest or the value of an alternative use of that cash rather than assuming a zero opportunity cost.</p>
-        <p>Debt maturity and liquidity matter independently of EPS. A small per-share earnings improvement can coexist with a weaker ability to withstand a downturn. Extend the model through a lower-profit year and a higher refinancing rate before treating leverage as a permanent enhancement.</p>` },
-      { id: 'price', title: 'Compare the repurchase price with a value range', html: `
-        <p>A separate, deliberately simplified thought experiment shows why the price matters. Assume total equity is worth 1,000 million, including 200 million of excess cash, and there are 100 million shares. The starting estimated value is 10 per share. Ignore tax, signaling, transaction costs, and any change in operating value.</p>
-        <p>Spending 200 million at 8 per share retires 25 million shares. Remaining equity value is 800 million across 75 million shares: 10.67 per share. Spending the same cash at 12 retires only 16.67 million shares, leaving approximately 9.60 of value per remaining share.</p>
-        <p>The estimated value of the whole company has fallen by the cash spent in both cases. The different per-share outcomes arise from the price paid. This is our own conditional valuation example; it does not establish an observable intrinsic value or justify a company-specific price target.</p>` },
-      { id: 'double-count', title: 'Keep the return model internally consistent', html: `
-        <p>If forecast EPS already includes the assumed decline in shares, terminal EPS multiplied by an exit P/E already reflects that per-share benefit. Adding a separate repurchase yield as an extra shareholder return can count the same mechanism twice.</p>
-        <p>Alternatively, begin with aggregate earnings, model the cash allocated to repurchases, estimate the price paid each year, and calculate the resulting share path. Reconcile this with dividends, reinvestment, and debt changes. A dollar cannot simultaneously fund a dividend, an acquisition, and a repurchase.</p>
-        <p>Authorization is also different from execution. Record the announced capacity, actual spending, average price, period-end shares, and diluted weighted-average shares as separate fields. A large remaining authorization alone is weak evidence for future share reduction.</p>` },
-      { id: 'questions', title: 'Questions to answer before rewarding the buyback', html: `
-        <ol><li>How much of gross repurchasing offsets employee issuance or other dilution?</li><li>What earnings and cash-flow assumptions fund the program?</li><li>How does the price paid compare with a defensible range of estimated value?</li><li>What changes in debt, liquidity, and financial flexibility?</li><li>Does the EPS forecast already incorporate the share-count effect?</li></ol>
-        <p>Track the answers over several reporting periods. A disciplined program can reduce purchases when valuation is demanding and increase them when cash is truly surplus and the price is attractive. The useful evidence is the realized allocation record and its effect on continuing owners, assessed alongside the business’s investment needs.</p>` }
-    ],
-    sources: [{ title: 'SEC · Beginners’ Guide to Financial Statement', url: 'https://www.sec.gov/investor/pubs/begfinstmtguide.htm', note: 'EPS, financial-statement relationships, financing cash flows, and stock-option footnotes. All repurchase scenarios and valuations on this page are original hypothetical calculations.' }]
   }
 ];

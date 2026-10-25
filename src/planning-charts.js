@@ -126,7 +126,7 @@ function heatPlot(spec,width) {
         fill='rgb('+rgb.join(',')+')';
       }
       body+=`<rect x="${x+1}" y="${y+1}" width="${cellWidth-2}" height="${cellHeight-2}" fill="${fill}"/>`;
-      body+=txt(x+cellWidth/2,y+cellHeight/2+5,value==null?'NR':format(value,spec.unit,spec.compactValues!==false),'middle','class="plot-cell-label"');
+      body+=txt(x+cellWidth/2,y+cellHeight/2+5,value==null?(spec.unavailableLabel??'NR'):format(value,spec.unit,spec.compactValues!==false),'middle','class="plot-cell-label"');
     });
   });
   const scale=spec.signed?'Negative values use gold; positive values use teal. Read the signed cell labels.':`Darker cells mean larger values. Scale: ${format(min,spec.unit,true)} to ${format(max,spec.unit,true)}.`;
@@ -185,7 +185,7 @@ function chartTable(spec) {
   if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
-  else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>format(v,spec.unit))]);}
+  else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
   else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
   else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
   const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='percent'?'percent':spec.unit);

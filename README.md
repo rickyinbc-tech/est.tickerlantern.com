@@ -19,8 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 283 visual planning guides and 1169 charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 287 visual planning guides and 1185
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -765,5 +764,14 @@ The English guide `life-insurance-surrender-death-quote-policy-loan` separates a
 A discounted retailer gift-card guide tracks matched purchases through four interactive figures. Upfront card cash, later top-ups, actual redemptions and unused nominal purchasing credit stay separate. The original example distinguishes the shopping-stop month from expiry and reconciles cash catch-up without treating unused credit as a refund. FCAC supplies general mechanics only.
 
 A percentage-deductible guide adds four charts comparing insured-value, loss-based and flat-dollar teaching formulas. Its single accepted loss is split between household and insurer, and assigned reserve use is capped at the final household share. The declared-base matrix retains the loss cap. NAIC HTML provides U.S. context only; no real policy trigger or Canadian rule is implemented.
+
+`planning-cpi-window` retains monthly source dates, seasonal adjustment and
+revision flags beside a separate twelve-bill cash illustration; see
+`docs/planning-cpi-window-2026-10-25.md`.
+
+## Unequal service lives and annual-equivalent costs
+
+Four charts compare equal-service cycles, annual equivalents and actual replacement dates. See
+`docs/planning-equivalent-cost-2026-10-25.md` for sources and checks.
 
 A self-employed pricing guide adds four charts separating revenue growth from unit contribution and operating surplus. Its exact price-volume bridge values additional units at the new contribution, while whole-unit preservation targets remain distinct from operating break-even and a separate capacity assumption. Non-positive discounted contribution produces an explicit unavailable recovery target.

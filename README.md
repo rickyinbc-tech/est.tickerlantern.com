@@ -9,20 +9,22 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with fifteen visual planning guides and 55
+charts**. The library now leads with eighteen visual planning guides and 67
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees
-and periodic-bill calendars.
+periodic-bill calendars, car ownership, insurance deductibles and planned
+work breaks.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
 
 `src/planning-guides.js`, `planning-more-guides.js` and
-`planning-decisions-guides.js` and `planning-resilience-guides.js` contain the articles. `planning-models.js`,
+`planning-decisions-guides.js`, `planning-resilience-guides.js` and
+`planning-life-events-guides.js` contain the articles. `planning-models.js`,
 `planning-more-models.js`, `planning-decisions-models.js` and
-`planning-resilience-models.js` own the
+`planning-resilience-models.js` and `planning-life-events-models.js` own the
 explicit cash-flow conventions and the dated Statistics Canada spending rows;
 `planning-charts.js` renders the figures on the server and in the browser.
 `planning-ui.js` handles edits, validation and responsive chart sizing. The

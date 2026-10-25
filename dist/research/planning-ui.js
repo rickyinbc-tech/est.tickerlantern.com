@@ -19,7 +19,7 @@ for(const app of document.querySelectorAll('[data-planning-app]')) {
     const input=Object.fromEntries(definitions[kind].fields.map(([key])=>[key,form.elements[key].value===''?NaN:Number(form.elements[key].value)]));
     let valid=validInputs(kind,input);
     error.hidden=valid;
-    error.textContent=valid?'':'Enter values within the displayed ranges. Use whole ages, years and months. Charts retain the last valid scenario.';
+    error.textContent=valid?'':'Enter values within the displayed ranges. Use whole numbers for ages, years, months and claim counts. Charts retain the last valid scenario.';
     for(const [key,,,min,max] of definitions[kind].fields)form.elements[key].setAttribute('aria-invalid',String(!Number.isFinite(input[key])||input[key]<min||input[key]>max||(wholeInputKeys.includes(key)&&!Number.isInteger(input[key]))));
     if(valid){accepted=input;cancelAnimationFrame(frame);frame=requestAnimationFrame(paint);}
   };

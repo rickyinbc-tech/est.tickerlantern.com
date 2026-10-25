@@ -31,12 +31,12 @@ function linePlot(spec,width) {
   for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
   const count=width<500?2:4;
   const ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))];
-  ticks.forEach(v=>{body+=txt(x(v),height-bottom+24,v,'middle');});
+  ticks.forEach(v=>{body+=txt(x(v),height-bottom+24,spec.xUnit?format(v,spec.xUnit,true):v,'middle');});
   body+=line(left,top,left,height-bottom,'plot-axis')+line(left,height-bottom,width-right,height-bottom,'plot-axis');
   if(ymin<0)body+=line(left,y(0),width-right,y(0),'plot-axis');
   body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
   spec.series.forEach((s,i)=>{
-    const d=s.rows.map((r,j)=>(j?'L':'M')+x(r.x).toFixed(2)+','+y(r.value).toFixed(2)).join(' ');
+    const d=s.rows.map((r,j)=>j&&s.step?'H'+x(r.x).toFixed(2)+'V'+y(r.value).toFixed(2):(j?'L':'M')+x(r.x).toFixed(2)+','+y(r.value).toFixed(2)).join(' ');
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });

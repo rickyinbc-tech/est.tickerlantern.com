@@ -34,7 +34,7 @@ export async function buildResearch() {
   }
   await mkdir('dist/research', { recursive: true });
   await copyFile('src/research-guides.css', 'dist/research/guides.css');
-  for (const file of ['planning-models.js','planning-more-models.js','planning-decisions-models.js','planning-resilience-models.js','planning-life-data.js','planning-charts.js','planning-ui.js','planning.css']) await copyFile('src/'+file, 'dist/research/'+file);
+  for (const file of ['planning-models.js','planning-more-models.js','planning-decisions-models.js','planning-resilience-models.js','planning-life-events-models.js','planning-life-data.js','planning-charts.js','planning-ui.js','planning.css']) await copyFile('src/'+file, 'dist/research/'+file);
   for (const guide of guides) {
     const related = guide.related.map(slug => {
       const match = guides.find(row => row.slug === slug);

@@ -1,3 +1,4 @@
+import { cpiWindowGuides } from './planning-cpi-window-guides.js';
 import { tailMeasureGuides } from './planning-tail-measures-guides.js';
 import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
@@ -179,6 +180,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...cpiWindowGuides,
   ...tailMeasureGuides,
   ...contributionTaxCashGuides,
   ...fuelMixGuides,

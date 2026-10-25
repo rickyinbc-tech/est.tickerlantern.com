@@ -1,4 +1,8 @@
 import { callableBondGuides } from './planning-callable-bond-guides.js';
+import { vacationCommitmentGuides } from './planning-vacation-commitment-guides.js';
+import { constructionQuoteGuides } from './planning-construction-quote-guides.js';
+import { etfTrackingGuides } from './planning-etf-tracking-guides.js';
+import { rdspRepaymentGuides } from './planning-rdsp-repayment-guides.js';
 import { salesTaxGuides } from './planning-sales-tax-guides.js';
 import { renewalAccessGuides } from './planning-renewal-access-guides.js';
 import { diversificationGuides } from './planning-diversification-guides.js';
@@ -78,6 +82,10 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...callableBondGuides,
+  ...vacationCommitmentGuides,
+  ...constructionQuoteGuides,
+  ...etfTrackingGuides,
+  ...rdspRepaymentGuides,
   ...salesTaxGuides,
   ...renewalAccessGuides,
   ...diversificationGuides,

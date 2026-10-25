@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 168 visual planning guides and 683 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 172 visual planning guides and 700 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -101,6 +101,10 @@ separate declining debt, flat assumed premiums and conditional claim destination
 See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
 New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
 retain their existing dates rather than being redated at every build.
+An RDSP guide separates a hypothetical permitted gross beneficiary payment
+from ordinary assistance repayment and the remaining plan value. It uses an
+entered issuer-confirmed AHA, excludes exceptional cases and payment eligibility,
+and keeps plan outflow separate from combined household resources.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -452,3 +456,9 @@ withdrawals and on nominal versus effective annual rate conventions. See
 - `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
 
 `tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.
+
+The vacation-commitment illustration compares the same nights actually used,
+keeps annual dues payable in zero-use cases, separates a possible assessment,
+and distinguishes nominal cash costs from discounted totals. The reporting
+window does not establish contract termination, resale value or cancellation
+rights. No proceeds from unused rights, exit receipt or property value is added.

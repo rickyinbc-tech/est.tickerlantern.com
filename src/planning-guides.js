@@ -1,4 +1,11 @@
 import { rrifKindGuides } from './planning-rrif-kind-guides.js';
+import { shareVestingGuides } from './planning-share-vesting-guides.js';
+import { creditSettlementGuides } from './planning-credit-settlement-guides.js';
+import { cardHoldGuides } from './planning-card-holds-guides.js';
+import { labourBudgetGuides } from './planning-labour-budget-guides.js';
+import { sensitivityGuides } from './planning-sensitivity-guides.js';
+import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
+import { tailShapeGuides } from './planning-tail-shape-guides.js';
 import { ageIncomeGuides } from './planning-age-income-guides.js';
 import { earningsCashflowGuides } from './planning-earnings-cashflow-guides.js';
 import { multipleIrrGuides } from './planning-multiple-irr-guides.js';
@@ -114,6 +121,13 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...rrifKindGuides,
+  ...shareVestingGuides,
+  ...creditSettlementGuides,
+  ...cardHoldGuides,
+  ...labourBudgetGuides,
+  ...sensitivityGuides,
+  ...tuitionCreditCapacityGuides,
+  ...tailShapeGuides,
   ...ageIncomeGuides,
   ...earningsCashflowGuides,
   ...multipleIrrGuides,

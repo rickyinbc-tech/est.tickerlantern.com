@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 206 visual planning guides and 839
+charts**. The library now leads with 213 visual planning guides and 867
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -122,6 +123,14 @@ A gain-timing guide compares annual realization with one final sale using
 a common opening investment and an assumed tax fraction on full gains. Both
 endpoints deduct remaining modeled tax, each case reconciles its own growth,
 and interim liquidation values are distinct from actual tax payments.
+A return-shape guide compares two completely specified discrete distributions
+with identical mean and standard deviation. Outcome probabilities, CDF steps,
+expected wealth and goal failure remain separate. All probabilities are
+original assumptions, verified through deterministic outcome enumeration.
+A tuition-credit guide adds four graphics separating eligible tuition, baseline
+credit value, tax capacity and matched prepayment refunds. It excludes complete
+return calculations, top-up rules, transfers and carryforward balances; its
+source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -559,6 +568,26 @@ Three charts retain a later required payment and inspect multiple IRR solutions.
 `planning-age-income` adds dated source income counts and conditional summaries; see
 `docs/planning-age-income-2026-10-25.md` for scope and validation.
 
-`planning-rrif-kind` separates a property payment from actual bank cash and
-two independent cash assignments. See `docs/planning-rrif-kind-2026-10-25.md`
-for source scope, resource conservation and verification.
+## Statistical methodology software reference
+
+The return-shape modeling workflow used the statistical-analysis skill for
+explicit population estimands, assumption scope and reproducible verification.
+Methodology acknowledgement: Kassis, T., Agarwal, V., He, Y., Patel, D., and
+Brueckner, A. M. (2026). [Scientific Agent Skills: A Library of Procedural
+Knowledge for Research Agents](https://doi.org/10.48550/arXiv.2609.00065).
+Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflow
+reference, not financial evidence or a market-data source.
+
+The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.
+
+### Temporary card authorizations and usable credit
+
+`/research/credit-card-authorization-holds-available-capacity-calendar` traces two requested incidental holds, posted debt and one usable-credit payment date. It tests a separate planned purchase without posting it or simulating issuer approval. Negative headroom describes excess requested capacity; hold release restores credit capacity without creating cash income. Tests preserve release-day boundaries, capped debt repayment, absent purchases and never-fitting transactions; the browser companion checks controls, tables, reset and 320/390-pixel labels.
+
+## Credit usage and the tax-return settlement
+
+Four charts separate credit usage from the final settlement of prior tax payments. See
+`docs/planning-credit-settlement-2026-10-25.md` for sources and checks.
+
+`planning-rrif-kind` separates securities received from assigned bank cash; see
+`docs/planning-rrif-kind-2026-10-25.md` for scope and validation.

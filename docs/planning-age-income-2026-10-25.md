@@ -51,7 +51,7 @@ count conservation, independent ratios and weighting, moving quality codes,
 matching scatter coordinates, source units, immutable observations, supported
 whole years, accessible finite figures, article scope and related links.
 
-Full JavaScript suite: 986 passed. Python suite: 122 passed.
+Full JavaScript suite: 995 passed. Python suite: 122 passed.
 Browser checks cover 1440, 390 and 320 pixels: four figures/tables, six observed
 scatter points, year/quality changes, invalid fractional year, reset and data
 disclosure. All four mobile figures are visually inspected before publication.

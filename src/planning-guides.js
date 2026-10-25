@@ -1,4 +1,5 @@
 import { ageIncomeGuides } from './planning-age-income-guides.js';
+import { earningsCashflowGuides } from './planning-earnings-cashflow-guides.js';
 import { multipleIrrGuides } from './planning-multiple-irr-guides.js';
 import { repairReplaceGuides } from './planning-repair-replace-guides.js';
 import { stagedDrawGuides } from './planning-staged-draw-guides.js';
@@ -112,6 +113,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...ageIncomeGuides,
+  ...earningsCashflowGuides,
   ...multipleIrrGuides,
   ...repairReplaceGuides,
   ...stagedDrawGuides,

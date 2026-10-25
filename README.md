@@ -677,3 +677,7 @@ The inventory cash-cycle guide models identical batches over a fixed 365-day win
 
 Four charts separate principal, an unposted interest memo and the final conditional assessment. See
 `docs/planning-promo-condition-2026-10-25.md` for sources and checks.
+
+## Flat and reducing-balance interest bases
+
+Four charts compare explicit loan interest bases, principal allocations and payment-date cash-flow equivalents. See `docs/planning-flat-loan-2026-10-25.md` for sources and checks.

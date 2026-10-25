@@ -19,8 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 256 visual planning guides and 1053
-charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 263 visual planning guides and 1083
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -148,6 +147,10 @@ A coupon-accrual guide separates clean quote, purchased accrued coupon and
 fees in settlement cash. A before/after coupon transfer preserves combined
 value, and an independent sale-plus-coupon ledger reconciles the final cash
 result. The invented 180-day period is not a market day-count implementation.
+A mean-maturity guide compares two principal calendars with identical face
+totals and face-weighted mean dates. Exact deadline ledgers retain missing
+cash even when later receipts equalize the endpoints. Prices, coupons and
+duration are excluded, so the example does not rank investment returns.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -709,6 +712,11 @@ See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.
 Four charts separate repeated-event probabilities, average costs and reserve shortfalls. See
 `docs/planning-repeat-risk-2026-10-25.md` for sources and checks.
 
+`planning-capital-loss` reconciles a historical 2025 loss record across same-year
+use, requested carryback allocations and unapplied carryforward; see
+`docs/planning-capital-loss-2026-10-25.md`.
+
 ## AI work-time survey and personal income scenarios
 
-Five charts distinguish reported time, overlapping survey responses and independently entered paid-work cash assumptions. See `docs/planning-ai-time-2026-10-25.md` for sources, bounded data-quality checks and validation.
+Five charts distinguish reported time, overlapping responses and independent paid-work cash assumptions. See
+`docs/planning-ai-time-2026-10-25.md` for sources and checks.

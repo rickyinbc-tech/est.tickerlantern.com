@@ -452,3 +452,10 @@ withdrawals and on nominal versus effective annual rate conventions. See
 - `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
 
 `tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.
+
+
+### Charitable-donation claim statistics
+
+`/research/charitable-donation-statistics-claimants-medians-means` presents a fixed official 2022/2023 extract with a source-year selector: jurisdiction claimant counts, conditional medians, nominal claimed totals and age-group median/derived-mean comparisons. Canada is separate from the thirteen provinces and territories; age data uses only the Both sexes section. Derived means are clearly labelled approximations from published rounded totals. No personal giving target, tax-credit calculation or missing year is inferred.
+
+`python3 scripts/check-planning-charitable-source.py` checks 126 source values, header units, both-sex grouping, cross-table national totals, release scope and three original HTML hashes; raw source remains ignored in `qa/`. The new `statistics` explorer mode identifies source-year controls, and a dedicated count formatter plus billion-CAD compact labels preserve full values in accessible tables. `tests/planning-charitable.test.mjs` and `tests/browser_charitable.py [origin]` verify data selection, unsupported years, units, source-mode wording, reset and mobile chart bounds.

@@ -1,3 +1,4 @@
+import { tradingEquityGuides } from './planning-trading-equity-guides.js';
 import { taxableRealGuides } from './planning-taxable-real-guides.js';
 import { spousalCalendarGuides } from './planning-spousal-calendar-guides.js';
 import { spendingUtilityGuides } from './planning-spending-utility-guides.js';
@@ -48,6 +49,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...tradingEquityGuides,
   ...taxableRealGuides,
   ...spousalCalendarGuides,
   ...spendingUtilityGuides,

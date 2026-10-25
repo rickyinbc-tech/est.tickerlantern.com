@@ -1,4 +1,14 @@
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
+import { renewalSupplementTimeGuides } from './planning-renewal-supplement-time-guides.js';
+import { callableBondGuides } from './planning-callable-bond-guides.js';
+import { vacationCommitmentGuides } from './planning-vacation-commitment-guides.js';
+import { constructionQuoteGuides } from './planning-construction-quote-guides.js';
+import { etfTrackingGuides } from './planning-etf-tracking-guides.js';
+import { rdspRepaymentGuides } from './planning-rdsp-repayment-guides.js';
+import { salesTaxGuides } from './planning-sales-tax-guides.js';
+import { renewalAccessGuides } from './planning-renewal-access-guides.js';
+import { diversificationGuides } from './planning-diversification-guides.js';
+import { timingConventionGuides } from './planning-timing-conventions-guides.js';
 import { accessBridgeCoverGuides } from './planning-access-bridge-cover-guides.js';
 import { pensionWithdrawalProtectionGuides } from './planning-pension-withdrawal-protection-guides.js';
 import { debtDenominatorGuides } from './planning-debt-denominators-guides.js';
@@ -74,6 +84,16 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...rppStatisticsGuides,
+  ...renewalSupplementTimeGuides,
+  ...callableBondGuides,
+  ...vacationCommitmentGuides,
+  ...constructionQuoteGuides,
+  ...etfTrackingGuides,
+  ...rdspRepaymentGuides,
+  ...salesTaxGuides,
+  ...renewalAccessGuides,
+  ...diversificationGuides,
+  ...timingConventionGuides,
   ...accessBridgeCoverGuides,
   ...pensionWithdrawalProtectionGuides,
   ...debtDenominatorGuides,

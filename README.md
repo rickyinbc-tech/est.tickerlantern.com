@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 162 visual planning guides and 657
+charts**. The library now leads with 176 visual planning guides and 716
+charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -101,6 +102,10 @@ separate declining debt, flat assumed premiums and conditional claim destination
 See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
 New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
 retain their existing dates rather than being redated at every build.
+An RDSP guide separates a hypothetical permitted gross beneficiary payment
+from ordinary assistance repayment and the remaining plan value. It uses an
+entered issuer-confirmed AHA, excludes exceptional cases and payment eligibility,
+and keeps plan outflow separate from combined household resources.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -439,8 +444,32 @@ cash, temporary pension bridge endings and hypothetical rebuilding coverage
 gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
 explicit contract assumptions and validation.
 
-`planning-rpp-statistics` adds four source-backed count charts from Statistics
-Canada Table 11-10-0099-01, with reference-year filtering and explicit date/unit
-boundaries. Reproduce the forty observations with
-`scripts/extract-planning-rpp-statistics.py`; see
-`docs/planning-rpp-statistics-2026-10-25.md` for scope and verification.
+## Inflation order and rate conventions
+
+Two English guides add nine charts on the order of price increases during
+withdrawals and on nominal versus effective annual rate conventions. See
+`docs/planning-timing-conventions-2026-10-25.md` for sources and checks.
+
+
+### Insurance renewal budgets and deposit access
+
+- `/research/term-life-renewal-premium-household-reserve` follows two independently entered equal premium periods, a recurring household assignment and a separately held reserve. Cash retained before a hypothetical renewal can fund later premiums; it is not a policy cash value or a premium refund. No renewal right, quote or insurance recommendation is inferred.
+- `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
+
+`tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.
+
+The vacation-commitment illustration compares the same nights actually used,
+keeps annual dues payable in zero-use cases, separates a possible assessment,
+and distinguishes nominal cash costs from discounted totals. The reporting
+window does not establish contract termination, resale value or cancellation
+rights. No proceeds from unused rights, exit receipt or property value is added.
+
+### Renewal rates, pension quote price years and personal time
+
+Three four-chart guides compare a five-year deposit with repeated one-year renewals, distinguish a later pension quote from its purchasing power in the first modeled year, and reconcile DIY cash costs with displaced paid work and separately valued personal time. All entered amounts and rates are hypothetical. The pension illustration separates a temporary supplement from a later payment and does not calculate benefit entitlement or required retirement capital.
+
+`tests/planning-renewal-supplement-time.test.mjs` checks independent deposit endpoints, renewal-rate equality, future quote discounting, annual component boundaries, and cash/time reconciliation. `tests/browser_renewal_supplement_time.py` checks real controls, reset, data tables and 320/390-pixel chart labels.
+
+`planning-rpp-statistics` adds four official count charts with reference-year
+filtering. Reproduce forty observations with `scripts/extract-planning-rpp-statistics.py`;
+see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.

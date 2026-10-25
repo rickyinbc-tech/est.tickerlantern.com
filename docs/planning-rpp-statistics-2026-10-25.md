@@ -36,4 +36,4 @@ Browser checks passed at 1440, 390 and 320 pixels: four figures and data tables,
 no overflow, actual period filtering, invalid-year retention, reset and table
 disclosure. Mobile screenshots were visually inspected.
 
-Full JavaScript suite: 741 passed. Python suite: 122 passed.
+Full JavaScript suite: 810 passed. Python suite: 122 passed.

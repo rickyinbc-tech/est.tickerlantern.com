@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 139 visual planning guides and 563
+charts**. The library now leads with 140 visual planning guides and 567
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -85,6 +85,10 @@ An investment-borrowing guide compares net positions using matched monthly
 household cash. Interest reduces the borrowing case’s new investing cash,
 principal is repaid once, and signed differences are retained. Constant returns
 exclude tax deductions, margin calls and any strategy suitability finding.
+A card-grace guide separates posting, statement closing and a common due day
+inside a numbered thirty-day example. Full-payment reserves and funding gaps
+are independent from minimum payments or actual charged interest. Required
+daily saving rounds up to cents; actual issuer dates remain outside the model.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

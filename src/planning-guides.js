@@ -1,3 +1,4 @@
+import { cardGraceGuides } from './planning-card-grace-guides.js';
 import { packagePriceGuides } from './planning-package-price-guides.js';
 import { glideExposureGuides } from './planning-glide-exposure-guides.js';
 import { investmentBorrowingGuides } from './planning-investment-borrowing-guides.js';
@@ -60,6 +61,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...cardGraceGuides,
   ...packagePriceGuides,
   ...glideExposureGuides,
   ...investmentBorrowingGuides,

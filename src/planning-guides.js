@@ -2,7 +2,9 @@ import { additionalPlanningGuides } from './planning-more-guides.js';
 import { decisionGuides } from './planning-decisions-guides.js';
 import { resilienceGuides } from './planning-resilience-guides.js';
 import { lifeEventGuides } from './planning-life-events-guides.js';
+import { incomeCreditGuides } from './planning-income-credit-guides.js';
 export const planningGuides = [
+  ...incomeCreditGuides,
   ...lifeEventGuides,
   ...resilienceGuides,
   ...decisionGuides,

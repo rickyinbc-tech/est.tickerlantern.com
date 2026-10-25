@@ -68,7 +68,7 @@ independent recurrence and geometric-series sums, default checkpoints,
 twelve-bill timing, signed deflation, source/input independence, all control
 extrema, finite accessible rendering, invalid ranges and editorial scope.
 
-Full JavaScript suite: 1517 passed. Python suite: 122 passed.
+Full JavaScript suite: 1523 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/data tables,
 no page overflow, exact revised/date labels, fixed source figures under cash
 edits, zero and negative price changes, zero budget, invalid-range retention,

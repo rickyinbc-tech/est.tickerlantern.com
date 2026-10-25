@@ -93,7 +93,7 @@ function linePlot(spec,width) {
   const x=v=>left+(v-xmin)/(xmax-xmin)*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
   let body='';
   const yticks=[...new Set([...Array.from({length:5},(_,i)=>ymin+(ymax-ymin)*i/4),...(ymin<0?[0]:[])])];
-  for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
+  for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,spec.compactYTicks!==false),'end');}
   const count=width<500?2:4;
   const ticks=spec.xTicks??[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))].map(value=>({value,label:spec.xUnit?format(value,spec.xUnit,true):value}));
   ticks.forEach(t=>{body+=txt(x(t.value),height-bottom+24,t.label,'middle');});

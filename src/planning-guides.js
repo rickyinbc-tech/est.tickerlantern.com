@@ -1,4 +1,11 @@
 import { rewardRedemptionGuides } from './planning-reward-redemption-guides.js';
+import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
+import { disabilityOffsetGuides } from './planning-disability-offset-guides.js';
+import { inventoryCashGuides } from './planning-inventory-cash-guides.js';
+import { promoConditionGuides } from './planning-promo-condition-guides.js';
+import { forwardRateGuides } from './planning-forward-rate-guides.js';
+import { repairConditionGuides } from './planning-repair-condition-guides.js';
+import { paymentPauseGuides } from './planning-payment-pause-guides.js';
 import { inventoryCycleGuides } from './planning-inventory-cycle-guides.js';
 import { feeSlicesGuides } from './planning-fee-slices-guides.js';
 import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
@@ -153,6 +160,13 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...rewardRedemptionGuides,
+  ...cppAmountsGuides,
+  ...disabilityOffsetGuides,
+  ...inventoryCashGuides,
+  ...promoConditionGuides,
+  ...forwardRateGuides,
+  ...repairConditionGuides,
+  ...paymentPauseGuides,
   ...inventoryCycleGuides,
   ...feeSlicesGuides,
   ...tfsaKindGuides,

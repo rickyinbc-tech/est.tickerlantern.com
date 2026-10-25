@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 156 visual planning guides and 633
+charts**. The library now leads with 155 visual planning guides and 629
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -89,6 +89,10 @@ A card-grace guide separates posting, statement closing and a common due day
 inside a numbered thirty-day example. Full-payment reserves and funding gaps
 are independent from minimum payments or actual charged interest. Required
 daily saving rounds up to cents; actual issuer dates remain outside the model.
+Debt-statistics guides distinguish holding shares, conditional medians and
+whole-population means. Ten 2023 SFS estimates retain twenty confidence bounds;
+interval bars and accessible tables display the published 95% intervals.
+Verify with `python3 scripts/check-planning-debt-denominators-source.py <source-table.zip>`.
 Pension-expiry, withdrawal-allocation and mortgage-life guides add twelve
 interactive charts. The pension ledger makes a temporary bridge ending visible
 before separately entered CPP cash begins. Withdrawal sources use the smaller

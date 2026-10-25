@@ -2,6 +2,7 @@ import { gisWithdrawalGuides } from './planning-gis-withdrawal-guides.js';
 import { cppPrbGuides } from './planning-cpp-prb-guides.js';
 import { oasDeferralGuides } from './planning-oas-deferral-guides.js';
 import { principalResidenceGuides } from './planning-principal-residence-guides.js';
+import { ownerManagerGuides } from './planning-owner-manager-guides.js';
 import { respAipGuides } from './planning-resp-aip-guides.js';
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
 import { jointOwnerGuides } from './planning-joint-owner-guides.js';
@@ -212,6 +213,7 @@ export const planningGuides = [
   ...cppPrbGuides,
   ...oasDeferralGuides,
   ...principalResidenceGuides,
+  ...ownerManagerGuides,
   ...respAipGuides,
   ...paymentPerceptionGuides,
   ...jointOwnerGuides,

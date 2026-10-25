@@ -41,7 +41,7 @@ capacity, cent boundaries, fixed-pool sensitivity scope, every control endpoint,
 zero inventory, finite accessible figures, invalid inputs and substantive
 English source/related-reading scope.
 
-Full JavaScript suite: 1555 passed. Python suite: 122 passed.
+Full JavaScript suite: 1565 passed. Python suite: 122 passed.
 Local browser checks at 1440, 390 and 320 pixels passed: four figures/data
 tables, no page overflow, default checkpoints, isolated matrix invariance,
 exact threshold, zero inventory, one-cent excess, invalid input retention,

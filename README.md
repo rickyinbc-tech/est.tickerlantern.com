@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 290 visual planning guides and 1198
+charts**. The library now leads with 292 visual planning guides and 1206
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -785,4 +785,5 @@ A self-employed pricing guide adds four charts separating revenue growth from un
 `/research/gift-card-bonus-redemption-cash-price-comparison` separates bonus-on-cash percentages, conditional full-basket discounts, unspent restricted credit and cumulative cash outlays in five original hypothetical charts. The comparison does not write off unused credit or label its outlay gap as an investment loss. Paid and bonus credit share one explicitly assumed noncash pool, with actual terms outside the model. Tests check denominator identities, partial and full use, cash catch-up thresholds, monthly timing and finite boundaries; the browser companion also checks small negative/zero axis-label separation on mobile.
 
 `planning-joint-owner` combines joint deposits by member and owner set before
-applying a conditional limit; see `docs/planning-joint-owner-2026-10-25.md`.
+applying a conditional limit; see
+`docs/planning-joint-owner-2026-10-25.md`.

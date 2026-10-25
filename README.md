@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 239 visual planning guides and 979
+charts**. The library now leads with 240 visual planning guides and 983
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -652,3 +652,7 @@ The family-loan guide separates accessible lender cash from an unpaid-principal 
 `planning-fee-waiver` compares equal starting funds and outside monthly budgets,
 with saved waived fees and the opportunity cost of an additional balance; see
 `docs/planning-fee-waiver-2026-10-25.md`.
+
+`planning-tfsa-kind` separates contribution-date FMV, allocated cost, gain/loss
+and room capacity while conserving gross market value; see
+`docs/planning-tfsa-kind-2026-10-25.md`.

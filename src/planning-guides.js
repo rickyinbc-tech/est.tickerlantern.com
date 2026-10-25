@@ -1,3 +1,4 @@
+import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
 import { bankWaiverGuides } from './planning-bank-waiver-guides.js';
 import { feeWaiverGuides } from './planning-fee-waiver-guides.js';
 import { adjustedIncomeGuides } from './planning-adjusted-income-guides.js';
@@ -146,6 +147,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...tfsaKindGuides,
   ...bankWaiverGuides,
   ...feeWaiverGuides,
   ...adjustedIncomeGuides,

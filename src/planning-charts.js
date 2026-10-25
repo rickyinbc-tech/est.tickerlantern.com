@@ -145,7 +145,7 @@ function signedBarPlot(spec,width) {
   let body='';
   const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4),0])].sort((a,b)=>a-b);
   for(const v of ticks){
-    if(v!==0&&v!==lo&&v!==hi&&Math.abs(x(v)-x(0))<34)continue;
+    if(v!==0&&Math.abs(x(v)-x(0))<34)continue;
     const label=spec.axisDecimals==null?format(v,spec.unit,true):Number(v.toFixed(spec.axisDecimals)).toLocaleString('en-CA',{useGrouping:false});
     body+=line(x(v),top+18,x(v),height-32,v===0?'plot-axis':'plot-grid')+txt(x(v),height-10,label,'middle');
   }

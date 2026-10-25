@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 241 visual planning guides and 988 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 247 visual planning guides and 1015 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -143,6 +143,10 @@ A price-basis guide values the same spending schedule using matched nominal
 and real cash and discount rates. Exact growth-factor conversion reconciles
 both present costs; signed bars expose the two mismatched-convention errors.
 It calculates a valuation, without treating a chosen rate as an assured yield.
+A coupon-accrual guide separates clean quote, purchased accrued coupon and
+fees in settlement cash. A before/after coupon transfer preserves combined
+value, and an independent sale-plus-coupon ledger reconciles the final cash
+result. The invented 180-day period is not a market day-count implementation.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -657,3 +661,14 @@ with saved waived fees and the opportunity cost of an additional balance; see
 
 Five charts preserve official survey medians and independent household price assumptions. See
 `docs/planning-expectations-2026-10-25.md` for sources and checks.
+
+`planning-tfsa-kind` separates contribution-date FMV, allocated cost, gain/loss
+and room capacity while conserving gross market value; see
+`docs/planning-tfsa-kind-2026-10-25.md`.
+
+## Progressive fee slices and whole-balance bands
+
+Four charts explain annual fee allocation, minimums, fixed charges and threshold repricing. See
+`docs/planning-fee-slices-2026-10-25.md` for sources and checks.
+
+The inventory cash-cycle guide models identical batches over a fixed 365-day window, separating sale recognition from supplier and customer cash dates. Five charts distinguish a fixed per-batch timing interval, cumulative simplified profit, net trading cash, a funding trough and inventory/receivable/payable reconciliation at a selected day. Trade balances reconcile every modeled day, all supported events close within the year, and payment-term changes preserve fixed-year margin and overhead. Mobile snapshot and funding controls are verified.

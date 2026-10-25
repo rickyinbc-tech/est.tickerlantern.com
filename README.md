@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 81 visual planning guides and 324
+charts**. The library now leads with 84 visual planning guides and 336
 charts, with new guides on shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -45,6 +45,15 @@ Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
+
+The latest three guides compare annual versus monthly insurance payments,
+lump-sum versus phased investment timing and renovation payment calendars.
+Each has four interactive graphics with explicit cash ledgers and accessible
+data tables. Payment percentages, returns and overruns are hypothetical;
+source notes identify the public mechanics reviewed. The premium equivalent
+rate is a mathematical IRR comparison, not a disclosed APR. Phased investment
+values include retained cash interest, and renovation gaps use the lowest
+balance rather than the final balance alone.
 
 `src/planning-guides.js` composes the article modules named
 `planning-*-guides.js`. `planning-models.js` composes the topic models, whose
@@ -139,7 +148,7 @@ python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
 ```
 
 `planning-wealth-flex-models.js` adds home/pension group comparisons, retirement
-spending-cut rules and family gifts. Its six public medians are checked with
+spending-cut rules and family gifts. Six public medians are checked with
 `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
 Observation charts stay fixed when the separate cash controls change.
 

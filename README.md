@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 176 visual planning guides and 716
+charts**. The library now leads with 177 visual planning guides and 720
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -473,3 +473,7 @@ Three four-chart guides compare a five-year deposit with repeated one-year renew
 `planning-rpp-statistics` adds four official count charts with reference-year
 filtering. Reproduce forty observations with `scripts/extract-planning-rpp-statistics.py`;
 see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.
+
+`planning-illness-cash` compares independent one-time and monthly net-benefit
+calendars, preserving early deficits and excluding future receipts. See
+`docs/planning-illness-cash-2026-10-25.md` for scope and validation.

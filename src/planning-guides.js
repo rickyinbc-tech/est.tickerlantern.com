@@ -1,3 +1,4 @@
+import { illnessCashGuides } from './planning-illness-cash-guides.js';
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
 import { renewalSupplementTimeGuides } from './planning-renewal-supplement-time-guides.js';
 import { callableBondGuides } from './planning-callable-bond-guides.js';
@@ -83,6 +84,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...illnessCashGuides,
   ...rppStatisticsGuides,
   ...renewalSupplementTimeGuides,
   ...callableBondGuides,

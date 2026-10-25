@@ -1,4 +1,5 @@
 import { disabilityCapGuides } from './planning-disability-cap-guides.js';
+import { vacancyBandGuides } from './planning-vacancy-band-guides.js';
 import { giftCreditGuides } from './planning-gift-credit-guides.js';
 import { survivorRecordGuides } from './planning-survivor-records-guides.js';
 import { priceCutGuides } from './planning-price-cut-guides.js';
@@ -196,6 +197,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...disabilityCapGuides,
+  ...vacancyBandGuides,
   ...giftCreditGuides,
   ...survivorRecordGuides,
   ...priceCutGuides,

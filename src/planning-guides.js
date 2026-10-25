@@ -1,4 +1,11 @@
 import { premiumBondGuides } from './planning-premium-bond-guides.js';
+import { unemploymentDurationGuides } from './planning-unemployment-duration-guides.js';
+import { annuityGuaranteeGuides } from './planning-annuity-guarantee-guides.js';
+import { lifeTableGuides } from './planning-life-table-guides.js';
+import { depositMapGuides } from './planning-deposit-map-guides.js';
+import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
+import { homeownershipAgeGuides } from './planning-homeownership-age-guides.js';
+import { collateralGuides } from './planning-collateral-guides.js';
 import { collateralRepairGuides } from './planning-collateral-repair-guides.js';
 import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
 import { unitCostGuides } from './planning-unit-cost-guides.js';
@@ -128,6 +135,13 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...premiumBondGuides,
+  ...unemploymentDurationGuides,
+  ...annuityGuaranteeGuides,
+  ...lifeTableGuides,
+  ...depositMapGuides,
+  ...benefitCoordinationGuides,
+  ...homeownershipAgeGuides,
+  ...collateralGuides,
   ...collateralRepairGuides,
   ...buybackDilutionGuides,
   ...unitCostGuides,

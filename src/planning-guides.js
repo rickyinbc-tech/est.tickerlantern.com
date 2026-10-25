@@ -1,4 +1,16 @@
 import { settlementCashGuides } from './planning-settlement-cash-guides.js';
+import { paymentValueGuides } from './planning-payment-value-guides.js';
+import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
+import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
+import { deferredCashGuides } from './planning-deferred-cash-guides.js';
+import { tfsaLossGuides } from './planning-tfsa-loss-guides.js';
+import { warrantyGuides } from './planning-warranty-guides.js';
+import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
+import { bookingRefundGuides } from './planning-booking-refund-guides.js';
+import { adviceFeeCashGuides } from './planning-advice-fee-cash-guides.js';
+import { illnessCashGuides } from './planning-illness-cash-guides.js';
+import { cardLedgerGuides } from './planning-card-ledger-guides.js';
+import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
 import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
 import { charitableGuides } from './planning-charitable-guides.js';
@@ -91,6 +103,18 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...settlementCashGuides,
+  ...paymentValueGuides,
+  ...billableCapacityGuides,
+  ...warrantyRiskGuides,
+  ...deferredCashGuides,
+  ...tfsaLossGuides,
+  ...warrantyGuides,
+  ...ladderRenewalGuides,
+  ...bookingRefundGuides,
+  ...adviceFeeCashGuides,
+  ...illnessCashGuides,
+  ...cardLedgerGuides,
+  ...assetResilienceGuides,
   ...jointIncomeGuides,
   ...fundCostBaseGuides,
   ...charitableGuides,

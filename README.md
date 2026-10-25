@@ -19,7 +19,9 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 183 visual planning guides and 746 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 195 visual planning guides and 796
+charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -110,6 +112,11 @@ A fund-cost guide reconciles reinvested distributions, positive cash return
 of capital and the adjusted cost base before an all-unit sale. Units, NAV,
 retained cash and gain are separate records; no personal tax or inclusion rate
 is calculated. Fractional units keep full precision until display.
+Advice-fee, refundable-booking and renewing-GIC-income guides add twelve
+interactive charts. Eight checked FCAC advice-source observations stay fixed
+while independent fee schedules change. The other models separate conditional
+refunds from weighted costs, and renewed principal from spendable interest.
+Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -493,11 +500,30 @@ independent hypothetical project/review and annual-retainer fee calendars. See
 
 The two-income household guide adds an exact four-state probability grid, cash-severity bars and separate frequency and severity curves. Its feasible-overlap stress control preserves both marginal probabilities and is not an estimated correlation. Window risks are original assumptions; expected unfunded dollars are not a sufficient reserve target. Mobile interaction, probability bounds and cash arithmetic are verified.
 
-The new investment-settlement cash calendar separates an assumed completed
-sale, settlement and bank receipt before one bill. Five figures include a
-14-day signed bank ledger, exclusive proceeds snapshots, an invented open-day
-calendar, a closure comparison and a timing/funding matrix. Weekends and zero
-after-settlement waits are explicit; receipts beyond Day14 remain outside the
-ledger. No trade, account eligibility, actual holiday or provider timetable is
-assumed confirmed. Sources and independent calendar verification are in
-`docs/investment-settlement-cash-calendar-source-research-2026-10-25.md`.
+### Asset-resilience definitions and essential-expense targets
+
+`/research/asset-resilience-statistics-household-emergency-target` pairs two fixed Statistics Canada interval charts with two separate hypothetical household cash-target charts. The selected national person-based observations retain reference years, supplied 95% bounds, source units/precision, vectors, coordinates, flags and the public download hash. Ten-province coverage excludes the territories. The invented benchmark is not an official current LIM or a classification of the reader.
+
+Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py <11100082-eng.zip>` using the official CSV ZIP identified in the data module. The extractor rejects duplicate/missing grains, changed latest-year coverage, flagged observations, invalid units and unordered intervals. Tests verify the independent hub controls, household reconciliation and fixed-source behavior; `tests/browser_asset_resilience.py` exercises real controls, invalid-input retention, reset, data tables and mobile SVG labels.
+
+## Card purchases and household bookkeeping
+
+Five charts reconcile purchases, card repayments and internal savings transfers. See
+`docs/planning-card-ledger-2026-10-25.md` for sources and checks.
+
+`planning-illness-cash` adds independent benefit cash calendars; see
+`docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+The extended-warranty guide separates whole-window repair probability, conditional eligibility and the capped provider payment in five interactive charts. All probabilities and contract terms are hypothetical. The model counts the upfront price once in every state, distinguishes expected cost from an actual repair reserve, and handles infeasible cost-equality thresholds explicitly. State arithmetic, boundary cases and mobile chart layout are verified.
+
+## Warranty costs and repair-day reserves
+
+Four charts separate expected repair costs from the cash required in each outcome. See
+`docs/planning-warranty-risk-2026-10-25.md` for sources and checks.
+
+`planning-billable-capacity` adds billable hours and annual cash allocation; see
+`docs/planning-billable-capacity-2026-10-25.md` for scope and validation.
+
+### Upfront receipts and dated payment value
+
+`/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.

@@ -579,6 +579,10 @@ reference, not financial evidence or a market-data source.
 
 The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.
 
+### Temporary card authorizations and usable credit
+
+`/research/credit-card-authorization-holds-available-capacity-calendar` traces two requested incidental holds, posted debt and one usable-credit payment date. It tests a separate planned purchase without posting it or simulating issuer approval. Negative headroom describes excess requested capacity; hold release restores credit capacity without creating cash income. Tests preserve release-day boundaries, capped debt repayment, absent purchases and never-fitting transactions; the browser companion checks controls, tables, reset and 320/390-pixel labels.
+
 ## Credit usage and the tax-return settlement
 
 Four charts separate credit usage from the final settlement of prior tax payments. See

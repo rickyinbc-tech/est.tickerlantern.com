@@ -1,3 +1,4 @@
+import { homeownershipAgeGuides } from './planning-homeownership-age-guides.js';
 import { collateralGuides } from './planning-collateral-guides.js';
 import { collateralRepairGuides } from './planning-collateral-repair-guides.js';
 import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
@@ -127,6 +128,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...homeownershipAgeGuides,
   ...collateralGuides,
   ...collateralRepairGuides,
   ...buybackDilutionGuides,

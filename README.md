@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 220 visual planning guides and 897
+charts**. The library now leads with 221 visual planning guides and 901
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -135,6 +135,10 @@ A purchase-average guide follows equal monthly cash through fractional units,
 security spending and fixed fees. Arithmetic quoted-price averages remain
 separate from harmonic purchase-price averages and all-in household cash per
 unit. A separate valuation and signed matrix keep losses visible.
+A homeownership-age guide retains twelve dated household rates from the
+2022 Statistics Canada release. A separate cash accumulation model uses no
+ownership rates as probabilities or personal deadlines. Verify the twelve
+cells with `python3 scripts/check-planning-homeownership-age-source.py <source.csv>`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

@@ -1,3 +1,4 @@
+import { investmentBorrowingGuides } from './planning-investment-borrowing-guides.js';
 import { cpiLevelGuides } from './planning-cpi-level-guides.js';
 import { rentalDailyGuides } from './planning-rental-daily-guides.js';
 import { loanFamilyGuides } from './planning-loan-family-guides.js';
@@ -57,6 +58,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...investmentBorrowingGuides,
   ...cpiLevelGuides,
   ...rentalDailyGuides,
   ...loanFamilyGuides,

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 251 visual planning guides and 1032 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 253 visual planning guides and 1040
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -686,3 +686,12 @@ Four charts separate principal, an unposted interest memo and the final conditio
 ### Disability-benefit offsets and retroactive awards
 
 The English guide `disability-benefit-offset-retroactive-award-repayment-cash` uses four original interactive CAD figures to separate ongoing coordination, past overlapping benefit periods, a retroactive award and an unpaid repayment earmark. Two independently entered trailing payment windows determine overlap; Plan A reductions are capped at its initial amount. A day-end ledger keeps cash, unpaid repayment and residual separate, including immediate same-day repayment. A matrix varies the offset and B's covered months while retaining A's history. All amounts are before tax, and the example estimates no eligibility, actual contract terms, overall-income cap or tax result. Current public FCAC, TBS and Service Canada HTML supports the conceptual context; the federal plan's individual-policy exception remains explicitly plan-specific.
+
+`planning-cpp-amounts` retains dated new-beneficiary means and new-start maxima
+beside a separate editable household cash ledger; see
+`docs/planning-cpp-amounts-2026-10-25.md`.
+
+## Flat and reducing-balance interest bases
+
+Four charts compare explicit loan interest bases and payment-date equivalents. See
+`docs/planning-flat-loan-2026-10-25.md` for sources and checks.

@@ -1,3 +1,4 @@
+import { adjustedIncomeGuides } from './planning-adjusted-income-guides.js';
 import { lifeTableGuides } from './planning-life-table-guides.js';
 import { depositMapGuides } from './planning-deposit-map-guides.js';
 import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
@@ -131,6 +132,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...adjustedIncomeGuides,
   ...lifeTableGuides,
   ...depositMapGuides,
   ...benefitCoordinationGuides,

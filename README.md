@@ -534,6 +534,11 @@ Four charts separate expected repair costs from the cash required in each outcom
 
 The disability-prevalence guide uses a dated Statistics Canada all-gender extract with the exact published 2017/2022 estimates and asymmetric 95% confidence limits. Its separate invented age-mix illustration preserves fixed subgroup rates, excludes youth explicitly, and does not infer aggregate intervals, individual transition risks or insurance-claim probabilities. Source units, percentage-point differences, weighted arithmetic and mobile controls are verified.
 
+## Fraud-reporting statistics
+
+Three charts separate CAFC reported losses, counts and derived category ratios. See
+`docs/planning-fraud-2026-10-25.md` for sources and checks.
+
 
 ### Inflation-indexed bond cash flows
 

@@ -1,4 +1,5 @@
 import { indexedBondGuides } from './planning-indexed-bond-guides.js';
+import { fraudGuides } from './planning-fraud-guides.js';
 import { savingDistributionGuides } from './planning-saving-distribution-guides.js';
 import { disabilityPrevalenceGuides } from './planning-disability-prevalence-guides.js';
 import { gainTimingGuides } from './planning-gain-timing-guides.js';
@@ -107,6 +108,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...indexedBondGuides,
+  ...fraudGuides,
   ...savingDistributionGuides,
   ...disabilityPrevalenceGuides,
   ...gainTimingGuides,

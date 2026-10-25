@@ -8,12 +8,18 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
+The household-saving guide separates twelve official quarterly observations and
+a verified pension-adjusted accounting bridge from a hypothetical personal
+cash budget. Verify source bytes and all 60 source rows with
+`python3 scripts/check-planning-saving-rate-source.py <csv-path>`.
+
+
 New cash-mechanics guides cover mortgage payment frequency, savings-promotion windows
 and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 96 visual planning guides and 384
+charts**. The library now leads with 103 visual planning guides and 412
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -50,6 +56,10 @@ interest-free instalments, and international-transfer costs. A small attributed
 FCAC worked-example extract uses quotes recorded on 23 June 2026; it stays fixed
 while the separate hypothetical transfer budget changes. Verify the source with
 `python3 scripts/check-planning-remittance-source.py <saved-source.html>`.
+Income-ledger guides distinguish rental cash from an operating subtotal, annual
+certificate-interest receipts from consumption and reinvestment, and two card
+balance buckets from their combined debt. Their models use independent cash
+inputs, explicit accrual conventions and incomplete-projection flags.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

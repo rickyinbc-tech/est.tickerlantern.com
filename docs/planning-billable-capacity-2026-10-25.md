@@ -40,7 +40,7 @@ Default capacity is 1,290 billable hours, CAD 129,000 collected fees and
 CAD 94,680 remaining before personal tax after the selected allocations. The
 CAD 80,000 target requires about CAD 87.63 per billable hour.
 
-Full JavaScript suite: 881 passed. Python suite: 122 passed.
+Full JavaScript suite: 908 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/tables, zero
 billing, actual rate changes, invalid weeks, reset and data disclosure. Mobile
 screenshots of all four figures are visually inspected before publication.

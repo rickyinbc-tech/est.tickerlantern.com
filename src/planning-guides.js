@@ -1,3 +1,4 @@
+import { disabilityPrevalenceGuides } from './planning-disability-prevalence-guides.js';
 import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
 import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
@@ -100,6 +101,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...disabilityPrevalenceGuides,
   ...billableCapacityGuides,
   ...warrantyRiskGuides,
   ...deferredCashGuides,

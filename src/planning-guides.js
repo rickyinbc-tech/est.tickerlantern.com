@@ -1,3 +1,4 @@
+import { rrspRoomGuides } from './planning-rrsp-room-guides.js';
 import { depositMapGuides } from './planning-deposit-map-guides.js';
 import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
 import { homeownershipAgeGuides } from './planning-homeownership-age-guides.js';
@@ -130,6 +131,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rrspRoomGuides,
   ...depositMapGuides,
   ...benefitCoordinationGuides,
   ...homeownershipAgeGuides,

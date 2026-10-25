@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 220 visual planning guides and 897
+charts**. The library now leads with 221 visual planning guides and 902
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -613,3 +613,5 @@ Four charts connect equal cash purchases with units, weighted cost and marked va
 `/research/collateral-equity-ratio-cash-loan-repayment-asset-sale` compares three invented balance-sheet treatments in five charts. Direct loan repayment, extra held collateral and asset-sale repayment use different denominators; subtracting new outside cash preserves the original post-price equity. The held-cash arrangement and required ratio are explicit hypothetical assumptions, not broker procedures or Canadian regulatory requirements. Sale-only repair is unavailable for a remaining funded account with nonpositive equity. Independent ratio equations, negative equity and near-zero numerical stability are checked in `tests/planning-collateral-repair.test.mjs`; the browser companion verifies controls, tables and mobile labels.
 
 The collateral guide uses a fictional loan-to-value covenant to separate positive equity from a funding test. It calculates outside debt repayment, fully eligible collateral additions and internal sales using distinct equations, with an explicit no-partial-sale boundary when debt reaches collateral value. No lender or regulatory margin rule is implemented. Transfer accounting, signed equity, exact-limit and zero-debt cases, and mobile controls are verified.
+
+The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.

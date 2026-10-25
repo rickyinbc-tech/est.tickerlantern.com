@@ -9,8 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 78 visual planning guides and 312
-charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+charts**. The library now leads with 81 visual planning guides and 324
+charts, with new guides on mortgage payment frequency, savings-promotion windows,
+foreign-card refunds, shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,

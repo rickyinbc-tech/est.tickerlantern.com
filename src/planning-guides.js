@@ -1,4 +1,5 @@
 import { taxableRealGuides } from './planning-taxable-real-guides.js';
+import { spousalCalendarGuides } from './planning-spousal-calendar-guides.js';
 import { spendingUtilityGuides } from './planning-spending-utility-guides.js';
 import { returnReadingGuides } from './planning-return-reading-guides.js';
 import { carEquityGuides } from './planning-car-equity-guides.js';
@@ -48,6 +49,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...taxableRealGuides,
+  ...spousalCalendarGuides,
   ...spendingUtilityGuides,
   ...returnReadingGuides,
   ...carEquityGuides,

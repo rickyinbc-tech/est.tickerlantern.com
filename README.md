@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 141 visual planning guides and 571
+charts**. The library now leads with 152 visual planning guides and 616
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -206,6 +206,18 @@ spending-cut rules and family gifts. Six public medians are checked with
 `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
 Observation charts stay fixed when the separate cash controls change.
 
+`planning-access-rent-models.js` adds three visual guides on account-access
+interruptions, unused credit limits versus cash reserves, and asking-versus-paid
+rental statistics. The access delay is hypothetical and establishes no legal
+authority. The borrowing exercise separates an unpaid bill from debt actually
+drawn. `planning-access-rent-data.js` holds ten public Q2 2026 observations for
+five selected CMAs, with asking and paid rental populations kept distinct.
+Verify the source extract with:
+
+```sh
+python3 scripts/check-planning-rent-source.py qa/access-rent-sources/rent-q2-2026-chart.html
+```
+
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,
 CAD currency returns, and portfolio concentration. Original hypothetical
@@ -384,3 +396,22 @@ Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML 
 `/research/target-date-glide-path-equity-dollar-exposure` traces an original linear allocation path beside a contribution-only balance. It compares equity percentages and dollars, finds the peak whole-year equity exposure, and applies separate one-time equity shocks to start/peak/target snapshots. Other assets staying unchanged is an authored assumption, and the example does not predict fund returns or retirement adequacy.
 
 `tests/planning-glide-exposure.test.mjs` checks annual asset reconciliation, an independent quadratic-vertex peak solution, proportional snapshot changes, endpoint-matrix invariants, whole-year validation and supported boundaries. `tests/browser_glide_exposure.py [origin]` verifies real inputs, reset, tables and responsive chart text. Investor.gov’s March 2025 target-date bulletin supplies general context; no actual fund path or allocation recommendation is encoded.
+
+The analytical wealth-distribution guide adds a pointwise percentile fan. It
+assumes independent normal log gross returns and exposes the expected simple
+return and log-return standard deviation separately. No return parameters are
+fitted to securities or historical observations. Quantiles are analytical;
+conditional probabilities use a tested normal-CDF approximation. The percentile
+bands describe each date, not the probability that an entire path stays inside.
+
+## Everyday capital planning
+
+Three English guides cover owner-level assessment reserves, the nominal and
+real burden of fixed debt, and weekly versus batched purchase fees. See
+`docs/planning-everyday-capital-2026-10-25.md` for sources and verified checks.
+
+The `planning-funding-boundaries` guides add a rising goal-price solver, a
+single-balance earmark calendar and a leveraged-loss stress illustration.
+Each has four interactive graphics and data tables. The goal solver reprices
+the deadline, the earmark ledger checks the lowest balance against a floor,
+and the loss example retains unchanged debt and all outside interest costs.

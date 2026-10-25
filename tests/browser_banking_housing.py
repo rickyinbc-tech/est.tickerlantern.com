@@ -33,7 +33,6 @@ def metric():
 
 
 pages = [
-    ('savings-promotional-rate-expiry-interest', 'introRate', '4', 'introMonths'),
     ('overdraft-daily-interest-transaction-fees', 'opening', '1000', 'firstSalaryDay'),
     ('housing-affordability-statistics-household-budget', 'netMonthly', '6000', None),
 ]
@@ -84,5 +83,5 @@ for slug, key, replacement, whole in pages:
 
 browser('set', 'viewport', '1440', '1000')
 browser('open', ORIGIN + '/research/')
-check('library links all three new topics', value('Array.from(document.querySelectorAll(".planning-topic h3 a")).filter(a=>' + json.dumps([row[0] for row in pages]) + '.some(s=>a.pathname.endsWith(s))).length===3'))
+check('library links both new topics', value('Array.from(document.querySelectorAll(".planning-topic h3 a")).filter(a=>' + json.dumps([row[0] for row in pages]) + '.some(s=>a.pathname.endsWith(s))).length===2'))
 print('Browser verification complete.', flush=True)

@@ -1,0 +1,312 @@
+{
+  "slug": "scotiabank-valuation",
+  "name": "The Bank of Nova Scotia",
+  "shortName": "Scotiabank",
+  "ticker": "BNS",
+  "title": "Scotiabank: a better bank still needs a sensible entry price",
+  "deck": "The turnaround is producing stronger earnings, but a price near twice July common book already anticipates more. Canadian funding, international credit and capital discipline determine whether the recovery can persist.",
+  "stance": "Watchlist · turnaround versus valuation",
+  "hinge": "Can recurring returns rise enough to justify the premium after international reshaping and record market activity?",
+  "actual": {
+    "reportedEPS": 2.27,
+    "adjustedEPS": 2.28,
+    "bvps": 64.99,
+    "roe": 14.2,
+    "cet1": 13.1
+  },
+  "epsBridge": {
+    "annual": 7.09,
+    "priorYtd": 5.16,
+    "currentYtd": 6.35
+  },
+  "market": {
+    "price": 130,
+    "date": "2026-10-23",
+    "sourceId": "bns-price"
+  },
+  "dividend": 1.14,
+  "loanProxy": 770700,
+  "loanProxyLabel": "31 July 2026 net loans and acceptances, a period-end balance rather than an average",
+  "ytd": {
+    "revenue": 30465,
+    "expenses": 15984,
+    "pcl": 3472,
+    "pretax": 11009,
+    "tax": 2689,
+    "net": 8320,
+    "common": 7827,
+    "shares": 1232
+  },
+  "q4": {
+    "revenue": 10350,
+    "expenses": 5450,
+    "pcl": 1078,
+    "taxRate": 0.245,
+    "nonCommon": 157,
+    "shares": 1215,
+    "afterTaxCharge": 55
+  },
+  "forecast": [
+    {
+      "year": 2027,
+      "revenueGrowth": 0.058434399117971436,
+      "expenseGrowth": 0.04040309788186991,
+      "pcl": 4800,
+      "taxRate": 0.245,
+      "nonCommon": 680,
+      "shares": 1200
+    },
+    {
+      "year": 2028,
+      "revenueGrowth": 0.06018518518518512,
+      "expenseGrowth": 0.04035874439461873,
+      "pcl": 4900,
+      "taxRate": 0.245,
+      "nonCommon": 710,
+      "shares": 1180
+    }
+  ],
+  "basePE": 13,
+  "book": {
+    "roe": 0.145,
+    "cost": 0.105,
+    "growth": 0.04
+  },
+  "longGrowth": 0.06,
+  "cases": [
+    {
+      "name": "Bear",
+      "revenueChange": -0.02777777777777779,
+      "expenseChange": 0.013452914798206317,
+      "pcl": 6000,
+      "pe": 11,
+      "rationale": "Credit and funding pressure offsets the international return recovery"
+    },
+    {
+      "name": "Base",
+      "revenueChange": 0,
+      "expenseChange": 0,
+      "pcl": 4800,
+      "pe": 13,
+      "rationale": "Continued Canadian and international progress with normalized activity and credit"
+    },
+    {
+      "name": "Bull",
+      "revenueChange": 0.04166666666666674,
+      "expenseChange": 0.017937219730941756,
+      "pcl": 4300,
+      "pe": 15,
+      "rationale": "Continuing-business growth and better credit make the return improvement durable"
+    }
+  ],
+  "modelNotes": [
+    "Q4 assumes revenue below Q3 and a 24.5% ordinary tax rate, then explicitly deducts the C$55m Chile deferred-tax-asset charge announced 21 October. It remains inside bank-adjusted earnings. The ordinary-tax row and additional-charge row are separated so that the charge cannot disappear in normalization.",
+    "The Q4 revenue assumption includes the announced C$104m adjusted KeyCorp contribution, already net of funding costs. It is not added a second time to the income total. The one-month reporting lag and foreign-currency effects can alter future comparisons.",
+    "FY2027 growth improves the revenue/expense spread, but provisions rise to C$4.8bn. This tempers extrapolation of one strong quarter. Diluted shares of 1,200m and 1,180m are capital-dependent assumptions; the expanded NCIB establishes capacity rather than completed repurchases or future authorization."
+  ],
+  "modelSources": [
+    "bns-q3",
+    "bns-report",
+    "bns-oct21",
+    "bns-ncib"
+  ],
+  "valuationSources": [
+    "bns-q3",
+    "bns-fy25",
+    "bns-report",
+    "bns-price"
+  ],
+  "multipleRationale": "Our 13× base exit multiple recognises a more focused and improving franchise while retaining a penalty for international credit, currency, associate-investment and execution uncertainty. The 11× bear and 15× bull assumptions are judgment-based stress points. They are not a documented historical trading range or a statement of consensus fair value.",
+  "bookRationale": "The 14.5% sustainable ROE assumption is slightly above the latest adjusted quarter, but still below the roughly 17% implied by two times common book under the same 10.5% equity cost and 4% growth. The gap explains why a better operating business need not be an inexpensive stock. It does not account for an eventual transition to stronger returns or future book growth.",
+  "peerView": "Scotiabank’s international and associate-investment exposures demand a different confidence level from a purely Canadian retail comparison. Its larger dividend yield partly reflects business mix, payout and valuation; it does not establish a larger expected total return. Evaluate continuing-business returns and common-income ownership before comparing the headline multiple.",
+  "marketNote": "The TSX reference close is C$130.00. Using the rounded 31 July period-end share count of 1,219m gives a mixed-date market-value proxy of about C$158.47bn, not a verified October capitalization. Q3 weighted diluted shares are 1,226m. Reported TTM EPS is approximately C$7.65; adjusted TTM is C$8.28. Share counts, book value and the market price are separately dated.",
+  "nextEvent": "2 December 2026 · scheduled FY2026 results. Include the Chile tax charge and lagged KeyCorp earnings once.",
+  "sources": [
+    {
+      "id": "bns-q3",
+      "title": "Scotiabank Q3 2026 results",
+      "url": "https://scotiabank.investorroom.com/2026-08-25-Scotiabank-reports-third-quarter-results",
+      "published": "2026-08-25",
+      "period": "Q3 and 9M FY2026 ended July 31, 2026",
+      "location": "HTML: Financial Highlights; Business Segment Review; reconciliation"
+    },
+    {
+      "id": "bns-report",
+      "title": "Scotiabank Q3 2026 Report to Shareholders",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/2026/q3/Q326_Shareholders_Report-EN.pdf",
+      "published": "2026-08-25",
+      "period": "July 31, 2026",
+      "location": "PDF pages 4, 6, 8, 40, 79; text tables; screenshots unavailable"
+    },
+    {
+      "id": "bns-sfi",
+      "title": "Scotiabank Q3 2026 Supplementary Financial Information",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/2026/q3/Q326_Supplementary_Financial_Information-EN.pdf",
+      "published": "2026-08-25",
+      "period": "Q3 and 9M FY2026",
+      "location": "PDF pages 4–7, 19, 35–39: adjustments, shares, average balance sheet"
+    },
+    {
+      "id": "bns-deck",
+      "title": "Scotiabank Q3 2026 Investor Presentation",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/2026/q3/Q326_Investor_Presentation.pdf",
+      "published": "2026-08-25",
+      "period": "Q3 FY2026",
+      "location": "Slides 4, 9, 10, 42, 47–49"
+    },
+    {
+      "id": "bns-fy25",
+      "title": "Scotiabank fourth quarter and FY2025 results",
+      "url": "https://scotiabank.investorroom.com/2025-12-02-Scotiabank-reports-fourth-quarter-and-2025-results",
+      "published": "2025-12-02",
+      "period": "FY2025 ended October 31, 2025",
+      "location": "HTML fiscal highlights and medium-term objectives"
+    },
+    {
+      "id": "bns-dividend",
+      "title": "Scotiabank common dividend announcement",
+      "url": "https://scotiabank.investorroom.com/2026-08-25-Scotiabank-Announces-Dividend-on-Outstanding-Common-Shares",
+      "published": "2026-08-25",
+      "period": "Dividend payable October 28, 2026",
+      "location": "Common Shares; dividend no. 629"
+    },
+    {
+      "id": "bns-ncib",
+      "title": "Scotiabank expands NCIB to 40 million shares",
+      "url": "https://scotiabank.investorroom.com/2026-10-02-Scotiabank-Amends-Normal-Course-Issuer-Bid-to-Repurchase-Up-to-40-Million-of-its-Common-Shares",
+      "published": "2026-10-02",
+      "period": "Amendment effective October 6, 2026; bid expires no later than April 6, 2027",
+      "location": "Opening paragraphs"
+    },
+    {
+      "id": "bns-oct21",
+      "title": "Scotiabank KeyCorp contribution and Chile tax update",
+      "url": "https://scotiabank.investorroom.com/2026-10-21-Scotiabank-announces-Expected-Contribution-from-KeyCorps-Third-Quarter-Earnings-and-the-impact-of-Deferred-Tax-asset-write-down-from-the-Chile-tax-rate-reduction,-on-its-fourth-quarter-earnings",
+      "published": "2026-10-21",
+      "period": "Expected Q4 FY2026 impacts; not completed results",
+      "location": "Opening three paragraphs"
+    },
+    {
+      "id": "bns-price",
+      "title": "StockAnalysis TSX BNS price history",
+      "url": "https://stockanalysis.com/quote/tsx/BNS/history/",
+      "published": "2026-10-23",
+      "period": "TSX close October 23, 2026",
+      "location": "CAD130.00 closing price at 4:00pm EDT"
+    },
+    {
+      "id": "bns-calendar",
+      "title": "Scotiabank financial results calendar",
+      "url": "https://www.scotiabank.com/ca/en/about/investors-shareholders/financial-result.html",
+      "published": "Retrieved 2026-10-25",
+      "period": "2026 quarterly earnings calendar",
+      "location": "2026 Quarterly Earnings Release Dates"
+    }
+  ],
+  "sections": [
+    {
+      "id": "investment-case",
+      "kicker": "Investment case",
+      "title": "The turnaround is working; the valuation already expects more.",
+      "sourceIds": [
+        "bns-q3",
+        "bns-report",
+        "bns-fy25",
+        "bns-price"
+      ],
+      "paragraphs": [
+        "Scotiabank’s investment debate has moved from whether earnings can recover to how much improvement shareholders already own. The TSX closing price was <strong>C$130.00 on October 23, 2026</strong>. Against July book value of C$64.99, that represents approximately 2.00 times book. A successful operating recovery can coexist with modest prospective share returns when the starting valuation incorporates a much stronger franchise.",
+        "The latest quarter provides evidence of execution: adjusted diluted EPS reached C$2.28 and adjusted annualized ROE reached 14.2%. Those results strengthen the case that the bank can earn an acceptable return on its capital. They also raise the burden of proof. Investors need to establish that the mix of margins, credit costs and capital-markets income can survive less favourable conditions before treating one quarter’s return as a durable earnings base.",
+        "The historical bridge is useful because an annualized quarter and trailing earnings answer different questions. FY2025 adjusted EPS of C$7.09, less C$5.16 in the first nine months of FY2025, plus C$6.35 in the comparable FY2026 period gives approximately C$8.28 trailing EPS. The approximation combines different diluted share weights. At the price anchor, it implies about 15.7 times adjusted trailing earnings; multiplying Q3 by four instead would describe a run rate.",
+        "Our central question is the sustainable return required to justify the price. A steady-state diagnostic using 10.5% cost of equity and 4% growth implies approximately 17% sustainable ROE at two times book. The diagnostic shows why the investment needs continued improvement beyond the latest 14.2% result. Clear evidence of stronger recurring returns would support the price; progress that plateaus near today’s profitability would leave limited room for disappointment."
+      ]
+    },
+    {
+      "id": "earnings-quality",
+      "kicker": "Earnings quality",
+      "title": "Separate recovery, accounting clean-up and a record revenue quarter.",
+      "sourceIds": [
+        "bns-q3",
+        "bns-report",
+        "bns-sfi",
+        "bns-fy25",
+        "bns-oct21"
+      ],
+      "paragraphs": [
+        "The first task is to retain both reported and adjusted earnings. Nine-month FY2026 reported diluted EPS was C$6.00, versus C$6.35 adjusted. The difference does not make the adjusted measure invalid; it identifies costs and accounting effects excluded from management’s presentation. Shareholders ultimately absorb losses recognised in equity or earnings even when the operating business is improving.",
+        "The divestiture accounting requires particular care. The supplementary information attributes C$367 million of the nine-month common-income adjustment to divestitures after tax and non-controlling interests, alongside C$59 million of acquisition-related amortization. Mixing those numbers can produce an incorrect earnings bridge. The strategic question is whether the capital released and management attention recovered earn better returns than the businesses relinquished.",
+        "Normalization also needs economic judgment beyond the issuer’s reconciliation. Record underwriting and advisory activity can be legitimate recurring business while still exceeding a reasonable through-cycle assumption. Wealth fees can benefit from market levels that subsequently reverse. A defensible model therefore retains the operating franchise, moderates unusually strong activity where appropriate, and recognises the costs required to maintain it. Mechanically adding back every inconvenient expense would overstate distributable earnings.",
+        "The October update provides a practical test of consistent definitions. The expected C$55 million Chile deferred-tax-asset writedown reduces both reported and bank-adjusted fourth-quarter earnings. An analyst may separately examine earnings without that discrete item, but that would be an independently normalized measure requiring a visible reconciliation. The announced KeyCorp contribution also needs to enter the model once, with the associated funding cost already reflected, rather than being layered onto earnings that already contain it."
+      ]
+    },
+    {
+      "id": "franchise",
+      "kicker": "Franchise and business mix",
+      "title": "Canada supplies the anchor; international execution decides the premium.",
+      "sourceIds": [
+        "bns-q3",
+        "bns-deck",
+        "bns-report"
+      ],
+      "paragraphs": [
+        "Canadian Banking gives the investment a measurable operating anchor. Q3 revenue was C$3.646 billion, expenses C$1.674 billion and PCL C$498 million. Its net interest margin was 2.38% and ROE 19.4%. Those figures suggest that mix, funding and execution can create value without exceptional balance-sheet expansion. The next test is whether improvement comes with durable primary relationships and deposits, rather than a temporary gap between asset yields and funding costs.",
+        "International Banking must be evaluated on consistent ownership and currency bases. Q3 income attributable to the bank’s equity holders was C$725 million, while the segment headline before non-controlling interests was C$766 million. Neither should be silently substituted for the other. The published comparison also shows the importance of foreign-exchange translation and divested operations. Investors need evidence of growth in continuing local businesses before capitalizing a favourable translation effect as operating momentum.",
+        "The geography creates diversification and a more demanding underwriting problem. Mexico’s growth opportunity must compensate for trade sensitivity and credit risk; Chile’s inflation-linked mortgages require attention to borrower affordability; Peru’s improving portfolio still needs to demonstrate resilience across the cycle. Different country tax rates, funding structures and minority interests mean a dollar of segment profit can have a different value to common shareholders depending on its source.",
+        "KeyCorp adds a different route to North American exposure. Scotiabank held a 14.9% interest at July 31 and accounts for it as an associate. This structure brings earnings participation without full ownership of the underlying franchise. It also introduces dependence on another bank’s underwriting, funding and capital decisions. The relevant question is whether the investment earns an adequate return after Scotiabank’s funding and capital costs, including under a more difficult US regional-bank environment.",
+        "Wealth and capital markets can improve group returns, but their earnings mix should influence the multiple. Q3 attributable earnings were C$515 million in wealth and C$647 million in Global Banking and Markets. The premium deserves greater confidence when fee relationships persist through weaker activity."
+      ]
+    },
+    {
+      "id": "credit-capital",
+      "kicker": "Credit and capital",
+      "title": "Lower quarterly provisions do not mean the credit cycle is finished.",
+      "sourceIds": [
+        "bns-q3",
+        "bns-report",
+        "bns-sfi",
+        "bns-deck"
+      ],
+      "paragraphs": [
+        "Credit gives a mixed signal. The annualized Q3 PCL rate fell to 56 basis points from 66 in Q2, while the nine-month rate was 61 basis points. Yet gross impaired loans reached C$7.801 billion, or 1.00% of loans and acceptances. A lower provision flow can reflect better recent outcomes without establishing that the stock of problem exposures has peaked.",
+        "The composition matters as much as the total. Canadian net impaired loans increased from C$1.860 billion to C$1.950 billion quarter over quarter; international net impaired loans edged from C$3.079 billion to C$3.093 billion. Investors should distinguish newly impaired borrowers, foreign-currency translation, write-offs and allowance changes. A stable aggregate ratio can conceal deterioration in a specific portfolio, especially where collateral values or refinancing capacity are weakening.",
+        "Capital is adequate to support strategy only if deployment remains disciplined. CET1 was 13.1% at July 31, down 20 basis points sequentially. The presentation attributes the movement to retained earnings, RWA growth, a synthetic-risk-transfer recall, repurchases and currency effects. The lesson is that accounting earnings are not entirely available for distribution: business growth and risk migration can consume capital at the same time that shareholders receive cash.",
+        "Credit sensitivity should be expressed through earnings and capital together. In an illustrative C$800 billion average-loan portfolio, 20 additional basis points of annual losses would cost C$1.6 billion before tax. The accompanying reduction in retained earnings would also narrow distribution flexibility. The thesis strengthens if impaired formations improve while capital remains resilient after growth and distributions. It weakens if provision relief precedes another rise in impaired assets or requires increasingly optimistic macroeconomic assumptions."
+      ]
+    },
+    {
+      "id": "distributions",
+      "kicker": "Distributions and capital allocation",
+      "title": "Buybacks help EPS; purchase price determines their economic value.",
+      "sourceIds": [
+        "bns-dividend",
+        "bns-ncib",
+        "bns-deck",
+        "bns-price"
+      ],
+      "paragraphs": [
+        "The declared quarterly common dividend is C$1.14, payable October 28, 2026. Four times that amount gives a C$4.56 annualized run rate and approximately 3.5% yield at C$130. Neither is a promise of future dividends. The investment should be evaluated through earnings retained for growth and total distributions, because the headline yield alone does not establish an attractive prospective return.",
+        "The October 2 NCIB amendment raised the authorization from 15 million to 40 million common shares, effective October 6. The bid continues no later than April 6, 2027, subject to its terms. This is capacity, not a completed repurchase.",
+        "Repurchasing shares can raise EPS by reducing the denominator, but the cash committed has an opportunity cost. At a material premium to book, a repurchase generally reduces book value per remaining share compared with retaining the same cash. It can still create value if the stock trades below conservatively estimated intrinsic value. The argument therefore depends on purchase price, sustainable earnings and the alternatives available for that capital.",
+        "The appropriate scorecard combines organic common-income growth, share count, book value per share and CET1. Management deserves credit when all four evolve consistently with better returns. A shrinking share count accompanied by weak underlying growth or pressure on capital would be less persuasive. Capital returned to shareholders is useful evidence of financial capacity; it should not substitute for evidence that the reshaped franchise can compound value."
+      ]
+    },
+    {
+      "id": "catalysts-risks",
+      "kicker": "Catalysts and risks",
+      "title": "The next proof points are recurring returns and international credit.",
+      "sourceIds": [
+        "bns-calendar",
+        "bns-oct21",
+        "bns-deck",
+        "bns-q3"
+      ],
+      "paragraphs": [
+        "The next scheduled results release is December 2, 2026. The most useful evidence will be Canadian margin durability, customer funding, impaired-loan formations and the quality of capital-markets revenues. A headline EPS beat could be less informative than the components if it depends on unusually strong activity, currency translation or temporary credit relief.",
+        "The October 21 announcement supplies two known fourth-quarter inputs: expected KeyCorp income of C$96 million reported or C$104 million adjusted, and the approximately C$55 million Chile tax-asset writedown. The associate income is reported with a one-month lag. The future benefit from lower Chilean tax rates should be assessed separately from the immediate accounting charge.",
+        "International execution is the central operating catalyst. Evidence of improved continuing-business revenue, risk-adjusted margins and local-currency profitability would support confidence that the reshaping is producing more than an easier comparison. Mexico-related trade disruption, persistent Chilean mortgage stress or renewed corporate credit deterioration would challenge that conclusion. The buyback can amplify per-share progress, but international loan performance can overwhelm that benefit if underwriting deteriorates.",
+        "The strongest falsifier of a cautious valuation view would be sustained returns materially above the latest quarter, supported by recurring fee relationships and book-value growth. The strongest falsifier of the turnaround thesis would be renewed credit deterioration alongside capital pressure and stagnant core income. At the current premium to book, investors should demand proof of the former while keeping explicit room for the latter in scenario valuation."
+      ]
+    }
+  ],
+  "id": "bns"
+}

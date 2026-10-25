@@ -1,0 +1,285 @@
+{
+  "id": "cibc",
+  "slug": "cibc-bank-valuation",
+  "name": "Canadian Imperial Bank of Commerce",
+  "shortName": "CIBC",
+  "ticker": "CM",
+  "title": "CIBC: stronger returns, less room for an easy rerating",
+  "deck": "Improved Canadian profitability and a steadier U.S. business strengthen the franchise. The valuation now requires those returns to persist after tax benefits, transaction charges and provision releases are normalized.",
+  "stance": "Watchlist · earnings durability versus price",
+  "hinge": "Can improved customer earnings and capital discipline outlast favourable markets and credit comparisons?",
+  "actual": {
+    "reportedEPS": 2.47,
+    "adjustedEPS": 2.73,
+    "bvps": 65.14,
+    "roe": 16.8,
+    "cet1": 13.4
+  },
+  "epsBridge": {
+    "annual": 8.61,
+    "priorYtd": 6.4,
+    "currentYtd": 8.03
+  },
+  "market": {
+    "price": 159.59,
+    "date": "2026-10-23",
+    "sourceId": "cm-price"
+  },
+  "dividend": 1.07,
+  "loanProxy": 611415,
+  "loanProxyLabel": "31 July 2026 net loans and acceptances, a period-end balance rather than an average",
+  "ytd": {
+    "revenue": 24774,
+    "expenses": 12918,
+    "pcl": 1737,
+    "pretax": 10119,
+    "tax": 2315,
+    "net": 7804,
+    "common": 7431,
+    "shares": 925.064
+  },
+  "q4": {
+    "revenue": 8300,
+    "expenses": 4430,
+    "pcl": 650,
+    "taxRate": 0.23,
+    "nonCommon": 138,
+    "shares": 912
+  },
+  "forecast": [
+    {
+      "year": 2027,
+      "revenueGrowth": 0.07,
+      "expenseGrowth": 0.06,
+      "pcl": 2700,
+      "taxRate": 0.23,
+      "nonCommon": 550,
+      "shares": 905
+    },
+    {
+      "year": 2028,
+      "revenueGrowth": 0.055,
+      "expenseGrowth": 0.05,
+      "pcl": 2850,
+      "taxRate": 0.23,
+      "nonCommon": 570,
+      "shares": 890
+    }
+  ],
+  "basePE": 13.5,
+  "book": {
+    "roe": 0.16,
+    "cost": 0.1,
+    "growth": 0.035
+  },
+  "longGrowth": 0.065,
+  "cases": [
+    {
+      "name": "Bear",
+      "revenueChange": -0.025,
+      "expenseChange": 0.025,
+      "pcl": 4100,
+      "pe": 11.5,
+      "rationale": "Higher impaired losses and weaker fees pressure the profitability recovery"
+    },
+    {
+      "name": "Base",
+      "revenueChange": 0,
+      "expenseChange": 0,
+      "pcl": 2700,
+      "pe": 13.5,
+      "rationale": "Customer growth supports revenue; provision costs normalize above the latest run rate"
+    },
+    {
+      "name": "Bull",
+      "revenueChange": 0.03,
+      "expenseChange": 0,
+      "pcl": 2200,
+      "pe": 15,
+      "rationale": "Domestic margins and relationships compound while U.S. credit remains controlled"
+    }
+  ],
+  "modelNotes": [
+    "Q4 revenue of C$8.3bn is below Q3, with C$4.43bn adjusted expense and C$650m PCL. That deliberately avoids repeating the performing reserve reversal as a permanent credit subsidy. The forecast contains no repeated Q1 tax benefit or Caribbean disposal addback layered onto already adjusted earnings.",
+    "FY2027 revenue grows 7% and expense 6%; FY2028 slows to 5.5% and 5%. The case requires positive operating leverage while keeping technology and control costs in expenses. It does not treat strong Capital Markets activity or AI-related productivity as an independently guaranteed growth stream.",
+    "A 23% ordinary tax rate, explicit non-common claims and declining diluted shares are our assumptions. Annual PCL rises to C$2.7bn and C$2.85bn. Repurchases require adequate capital, but a complete CET1 or common-book forecast is not supplied by this aggregate earnings model."
+  ],
+  "modelSources": [
+    "cm-report",
+    "cm-q3",
+    "cm-slides",
+    "cm-ncib"
+  ],
+  "valuationSources": [
+    "cm-report",
+    "cm-fy25",
+    "cm-price",
+    "cm-dividend"
+  ],
+  "multipleRationale": "Our 13.5× base P/E recognizes stronger domestic profitability while retaining a through-cycle allowance for credit, funding and market-fee volatility. The 11.5× bear and 15× bull points are explicit judgments about persistence and required return. They are not a verified historical range or a consensus target. A sustained return premium would require evidence that high ROE survives a less supportive environment.",
+  "bookRationale": "A 16% sustainable ROE, 10% cost of equity and 3.5% perpetual growth produce a deliberately demanding test of persistence. Compare that with the latest annualized adjusted 16.8%, not with a guarantee of future returns. The common-book denominator is C$65.14 from the issuer. A standardized provider book figure or total equity per share can differ, so its P/B should not replace this calculation without reconciliation.",
+  "peerView": "CIBC’s improved domestic returns support a more favourable comparison than a label based on past U.S. credit stress alone. The same discipline applies in the other direction: a better current ROE does not eliminate its concentration in Canadian households, commercial credit and market-linked fees. Definitions and persistence matter more than choosing the lowest displayed provider P/E.",
+  "marketNote": "The delayed TSX close is C$159.59. Using the issuer’s 907.935m shares net of treasury at 31 July gives approximately C$144.90bn mixed-date capitalization, rather than a verified October share count. Q3 weighted diluted shares are 919.211m; current common BVPS at that reporting date is C$65.14. Reported TTM EPS is approximately C$10.42, versus adjusted C$10.24 using the disclosed FY/YTD bridge. Provider standardized book values can mix equity definitions; issuer common equity controls this page.",
+  "nextEvent": "3 December 2026 · FY2026 results at 7:30 a.m. ET; 9 December Investor Day at 8:30 a.m. ET.",
+  "sources": [
+    {
+      "id": "cm-q3",
+      "title": "CIBC Q3 2026 earnings release",
+      "url": "https://cibc.mediaroom.com/2026-08-27-CIBC-Announces-Third-Quarter-2026-Results",
+      "published": "2026-08-27",
+      "period": "Quarter and nine months ended 31 July 2026",
+      "location": "Highlights, segment commentary and non-GAAP reconciliations"
+    },
+    {
+      "id": "cm-report",
+      "title": "CIBC Q3 2026 Report to Shareholders",
+      "url": "https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/2026/q326report-en.pdf",
+      "published": "2026-08-27",
+      "period": "31 July 2026",
+      "location": "PDF pp.5,12,15–16,26,38; printed pp.2,9,12–13,23,35"
+    },
+    {
+      "id": "cm-slides",
+      "title": "CIBC Q3 2026 investor presentation",
+      "url": "https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/2026/q326presentation-en.pdf",
+      "published": "2026-08-27",
+      "period": "Q3 FY2026",
+      "location": "PDF pp.22–23,34; slides21–22,33"
+    },
+    {
+      "id": "cm-fy25",
+      "title": "CIBC 2025 financial highlights",
+      "url": "https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/2025/annual-hlts-2025-en.pdf",
+      "published": "2025-12-04",
+      "period": "Year ended 31 October 2025",
+      "location": "PDF p.1"
+    },
+    {
+      "id": "cm-price",
+      "title": "StockAnalysis TSX CM historical price",
+      "url": "https://stockanalysis.com/quote/tsx/CM/history/",
+      "published": "2026-10-23 16:00 EDT",
+      "period": "TSX CAD closing quotation",
+      "location": "23 October 2026 close"
+    },
+    {
+      "id": "cm-dividend",
+      "title": "CIBC declares Q4 2026 dividends",
+      "url": "https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/2026/q326dividend-en.pdf",
+      "published": "2026-08-27",
+      "period": "Quarter ending 31 October 2026",
+      "location": "PDF p.1"
+    },
+    {
+      "id": "cm-ncib",
+      "title": "CIBC receives TSX approval for new NCIB",
+      "url": "https://cibc.mediaroom.com/2026-06-04-CIBC-Receives-TSX-Approval-for-Normal-Course-Issuer-Bid",
+      "published": "2026-06-04",
+      "period": "Bid from 8 June 2026 through no later than 7 June 2027",
+      "location": "Opening paragraphs and bid terms"
+    },
+    {
+      "id": "cm-calendar",
+      "title": "CIBC investor relations and event calendar",
+      "url": "https://www.cibc.com/en/about-cibc/investor-relations.html",
+      "published": "Checked 2026-10-25",
+      "period": "FY2026 results and Investor Day",
+      "location": "Upcoming events: 3 and 9 December 2026"
+    }
+  ],
+  "sections": [
+    {
+      "id": "investment-case",
+      "kicker": "VIEW",
+      "title": "Stronger profitability does not remove the entry-price test",
+      "paragraphs": [
+        "CIBC has earned a more serious profitability discussion. The research question is whether the improved return is sufficiently durable to justify a premium valuation after Canadian margin gains, strong market activity and easier U.S. credit comparisons. A favourable answer on the business still needs a separate answer on the price. At the C$159.59 TSX close on 23 October 2026, investors are paying for continued execution rather than merely the possibility of stabilization.",
+        "Our central distinction is between recurring customer economics and the environment supporting them. Deeper commercial, wealth and household relationships can improve the quality of earnings. A favourable interest-rate mix, strong asset markets or provision reversals can also improve earnings quickly, but provide less evidence about performance through a full credit and market cycle. A reasonable multiple should reflect both kinds of contribution.",
+        "The latest quarter produced 16.8% adjusted annualized ROE. Applying that return indefinitely would already be a meaningful assumption. The valuation diagnostic below asks what sustainable ROE would be required at the current common-book premium under an explicit cost of equity and growth rate. It prevents a high return quarter from becoming an unexamined justification for any share price.",
+        "The upside case needs repeatable pre-provision earnings, disciplined losses and affordable capital distributions to reinforce one another. The downside can be less dramatic than a banking crisis: slower customer revenue, additional credit charges and a lower multiple can impair shareholder returns while CIBC remains profitable. Our stance is a valuation-sensitive watchlist, with the operating evidence determining whether a lower price or higher earnings would improve the case."
+      ],
+      "sourceIds": [
+        "cm-price",
+        "cm-q3"
+      ]
+    },
+    {
+      "id": "earnings-quality",
+      "kicker": "EARN",
+      "title": "Normalize the Caribbean charge and the tax benefit consistently",
+      "paragraphs": [
+        "Q3 reported EPS was C$2.47 compared with C$2.73 adjusted. The reconciliation removes C$232m after tax associated with the announced Caribbean sale and C$7m of acquisition-intangible amortization. Those exclusions help isolate the continuing operating result. They do not restore economic capital already spent or make the transaction irrelevant to shareholders.",
+        "The year-to-date direction is different: reported EPS of C$8.22 exceeds adjusted C$8.03 because an earlier C$422m tax recovery is removed from adjusted earnings alongside the charges. Selecting the higher reported measure in one period and the higher adjusted measure in another would create an inconsistent and flattering earnings history. The trailing bridge uses the issuer-adjusted series throughout.",
+        "Credit normalization is another part of quality, even though it does not appear in the issuer adjustment list. A release of expected-loss allowances is a legitimate accounting outcome. It also reduces the credit burden below a case that assumes no further release. Our operating forecast therefore makes the total annual PCL assumption visible, and the stress tool adds a separate credit charge rather than asserting that the latest credit outcome repeats indefinitely.",
+        "Profitability must also be measured after claims on earnings senior to ordinary common shares. The model deducts preferred and other-equity distributions and non-controlling interests before dividing by weighted diluted shares. This avoids dividing total bank net income by the smaller spot common-share count. The rounding and denominator caveat is explicit because a sum of reported EPS periods is not an exact reconstruction with one common annual share weight."
+      ],
+      "sourceIds": [
+        "cm-q3",
+        "cm-report"
+      ]
+    },
+    {
+      "id": "franchise",
+      "kicker": "OPS",
+      "title": "The domestic relationship bank carries the case; markets amplify it",
+      "paragraphs": [
+        "Canadian Personal and Business Banking generated C$948m reported Q3 income, Canadian Commercial Banking and Wealth C$619m, U.S. Commercial Banking and Wealth C$320m, and Capital Markets C$722m. These are segment net-income amounts before the common-share deductions in the group forecast. They identify the engines without implying that all segment returns have identical capital and ownership definitions.",
+        "The domestic franchise needs to convert improved margins into durable customer value. Better deposit relationships can lower reliance on expensive marginal funding and create opportunities across borrowing, payments and advice. Loan growth alone is less persuasive if it requires concessions on pricing or weaker underwriting. The next results should show whether revenue expands alongside primary relationships and controlled acquisition and servicing costs.",
+        "Commercial banking and wealth add a useful connection between operating businesses, owners and investable assets. That connection can support recurring fees, but market appreciation can enlarge the fee base without equivalent net customer flows. A slowdown in markets can affect wealth and capital markets together. Our model therefore does not treat each business as an independent source of diversification under every stress.",
+        "The U.S. contribution requires special scrutiny because a reduction in commercial-real-estate risk and related allowances can support earnings while the underlying franchise is still rebuilding. A better test is pre-provision revenue after funding and compensation, the persistence of operating deposits, and the loss experience of the remaining loan book. Selling a troubled exposure can improve future risk without proving that the original lending decision created value.",
+        "Technology investment should be judged through service, unit costs and loss control over time. Announced AI initiatives may improve productivity, but the forecast assigns no separate earnings premium to a technology label. A credible efficiency case needs expense discipline after implementation and maintenance costs, together with evidence that customer outcomes and controls remain sound."
+      ],
+      "sourceIds": [
+        "cm-q3"
+      ]
+    },
+    {
+      "id": "credit-capital",
+      "kicker": "CREDIT",
+      "title": "A performing reserve release can mask a higher impaired charge",
+      "paragraphs": [
+        "The Q3 slide reconciliation separates C$612m of impaired provisions from a C$48m reversal on performing loans, leaving C$564m total PCL. The annualized impaired ratio was 40bp, while total PCL was 37bp. These are different measures: quoting the lower total as the impaired loss rate would understate the loss burden on borrowers already in difficulty.",
+        "Impaired provisions increased from C$481m a year earlier. The stock of gross impaired loans reached C$4.024bn, or 0.65% of loans, compared with 0.56% a year earlier. This does not establish a broad credit breakdown, but it does require more caution than a simple story of falling quarterly total provisions. New formations, sales, write-offs, collateral and recoveries need to be read together.",
+        "Capital provides capacity to execute the strategy, not permission to ignore the return on each use. CET1 was 13.4% at July, compared with 13.6% in April. Loan growth, risk migration, market movements and distributions can all affect the ratio. An earnings model cannot by itself determine how much surplus capital is truly distributable because it does not forecast each regulatory exposure or management buffer.",
+        "The adverse path combines slower revenue with more credit costs and less flexibility to repurchase shares. Holding one variable constant can conceal that interaction. The sensitivity section therefore includes a combined downside, and the bear valuation allows the market multiple to fall as earnings weaken. A favourable path would show improving impaired formations without reliance on more generous reserve assumptions, alongside capital generation after funding the continuing business."
+      ],
+      "sourceIds": [
+        "cm-slides",
+        "cm-report"
+      ]
+    },
+    {
+      "id": "distributions",
+      "kicker": "CASH",
+      "title": "A measured dividend plus buybacks still needs an earnings foundation",
+      "paragraphs": [
+        "The declared C$1.07 quarterly dividend is payable 28 October 2026 to holders on the 28 September record date. Four equal future payments would total C$4.28 and yield about 2.68% at the reference close. That annualization is a modeling convention, not a board commitment to future payments. Waiting for a dividend does not create a free investment return because value leaves the company when it is distributed.",
+        "The June NCIB permits up to 30m common shares from 8 June 2026 through no later than 7 June 2027, subject to its terms. The preceding 20m-share bid was completed and terminated. The current authorization is not proof that the new maximum has been executed. Each future reduction in shares must be funded from cash capital and evaluated against lending, investment and resilience needs.",
+        "A repurchase above common book can improve EPS while reducing book per remaining share relative to retaining the cash. That arithmetic does not make it inherently poor allocation. The key question is whether the return offered by the repurchased earnings stream exceeds the return on alternative uses after allowing for risk. A high spot multiple makes that question more demanding.",
+        "Our 12-month valuation uses a flat dividend assumption and the forecast share count already inside EPS. It adds no extra buyback yield to the return. The five-year tool is a separate illustration with editable dividend growth; it does not establish that the bank can maintain that payment path in every credit environment. Monitor common earnings, capital, share count and actual cash spent together."
+      ],
+      "sourceIds": [
+        "cm-dividend",
+        "cm-ncib",
+        "cm-price"
+      ]
+    },
+    {
+      "id": "catalysts-risks",
+      "kicker": "WATCH",
+      "title": "December should test the durability of the improved return",
+      "paragraphs": [
+        "CIBC schedules FY2026 results for 3 December 2026 at 7:30 a.m. ET and an Investor Day for 9 December at 8:30 a.m. ET. These are evidence windows. The most valuable new information would explain the repeatability of margins, customer revenue and efficiency after normalizing markets, taxes and transaction items. A strategic target is a management claim until operating delivery supports it.",
+        "The next quarter should distinguish Canadian credit migration from the effect of U.S. portfolio sales and reserve changes. A lower total provision alone is not a sufficient favourable catalyst if impaired formations worsen. Likewise, a stronger capital-markets quarter can help fund growth while making the annual comparison less representative of a normal environment.",
+        "The cautious valuation view would be challenged by sustained high returns supported by customer activity, positive operating leverage and common-book compounding after distributions. The operating thesis would weaken if consumer or commercial impaired losses continue climbing, deposit competition absorbs the margin gain, or expenses outrun recurring revenue while market-sensitive businesses soften.",
+        "The Caribbean sale remains a transaction-execution and continuing-earnings issue in this analysis. The model excludes the Q3 disposal charge from recurring adjusted earnings, but does not assume a completed sale, add an unsupported capital release, or preserve all earnings indefinitely while claiming a disposal benefit. Before relying on a different closure status, update the official transaction disclosure and the remaining business perimeter.",
+        "These triggers are analytical review rules, not automatic instructions to buy or sell. The share-price response depends on what was already expected and on changes in the required return. A good operating result can earn a modest investment return when the entry price already assumes improvement; a lower quotation is attractive only if the common earning power survives."
+      ],
+      "sourceIds": [
+        "cm-calendar",
+        "cm-q3",
+        "cm-slides"
+      ]
+    }
+  ]
+}

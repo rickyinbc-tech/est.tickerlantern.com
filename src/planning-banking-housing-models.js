@@ -1,11 +1,5 @@
 import { housingSource } from './planning-banking-housing-data.js';
 export const bankingHousingDefinitions={
-  savingsPromotion:{title:'Explore interest before and after a savings promotion ends',fields:[
-    ['initial','Initial savings balance (CAD)',10000,0,500000,1000],['monthly','Equal month-end deposits in both accounts (CAD)',500,0,5000,100],
-    ['introRate','Hypothetical introductory nominal annual rate (%)',5,0,10,.25],['introMonths','Number of introductory months, starting immediately',3,0,12,1],
-    ['ongoingRate','Nominal annual rate after the introduction (%)',1.5,0,10,.25],['comparisonRate','Constant comparison nominal annual rate (%)',3,0,10,.25],
-    ['horizonMonths','Comparison horizon in whole months',12,6,36,1]
-  ]},
   overdraftCalendar:{title:'Explore thirty days of borrowing, transaction fees and daily interest',fields:[
     ['opening','Opening cash in the account (CAD)',500,0,10000,100],['pay','Net amount of each of two pay deposits (CAD)',2200,0,10000,100],
     ['firstSalaryDay','First pay day; second deposit arrives fifteen days later',5,1,15,1],['housing','Housing bill on day one (CAD)',1800,0,6000,100],
@@ -19,17 +13,6 @@ export const bankingHousingDefinitions={
     ['debt','Other required monthly debt payments (CAD)',300,0,5000,50],['saving','Monthly amount assigned to other saving goals (CAD)',500,0,5000,50]
   ]}
 };
-
-export function promotionPath(input,constant=false){
-  let balance=input.initial,contributions=input.initial,interest=0;
-  const rows=[{x:0,balance,contributions,interest,rate:constant?input.comparisonRate:input.introMonths>0?input.introRate:input.ongoingRate}];
-  for(let month=1;month<=input.horizonMonths;month++){
-    const rate=constant?input.comparisonRate:month<=input.introMonths?input.introRate:input.ongoingRate;
-    const earned=balance*rate/1200;interest+=earned;balance+=earned+input.monthly;contributions+=input.monthly;
-    rows.push({x:month,balance,contributions,interest,rate});
-  }
-  return {rows,balance,contributions,interest};
-}
 
 export function overdraftPath(input,perUse=false){
   let balance=input.opening,fees=0,interest=0,chargedDebits=0,negativeDays=0,peak=0;
@@ -58,15 +41,6 @@ export function shelterCash(input){
 const series=(name,rows,key,extra={})=>({name,rows:rows.map(r=>({x:r.x,value:r[key]})),...extra});
 
 export function bankingHousingResult(kind,input){
-  if(kind==='savingsPromotion'){
-    const p=promotionPath(input),c=promotionPath(input,true);
-    return {metrics:[['Interest over the selected horizon · introductory account',p.interest,'money'],['Interest over the same horizon · constant-rate account',c.interest,'money'],['Introductory account minus constant-rate account',p.interest-c.interest,'money']],note:'Hypothetical savings accounts using nominal annual rates divided by twelve, with monthly crediting. At each month-end, interest is credited on the opening balance, then the equal deposit arrives. The introduction begins in month one and ends after the selected whole-month count; zero months means the ongoing rate applies immediately. The comparison uses its constant rate throughout. Rates apply to every modeled dollar with no cap or qualifying condition. No actual offer, daily accrual, transfer gap, fee, withdrawal, tax, bonus eligibility, deposit-insurance assessment or future change in the entered ongoing/comparison rate is modeled. These are nominal rate assumptions, not effective annual yields. All interest is retained and compounds.',charts:[
-      {id:'savings-promo-rate-calendar',type:'line',title:'Annualized rates applied in each modeled month',unit:'percent',unitLabel:'Nominal annual rate applied for that month (%)',xMin:1,xLabel:'Interest-crediting month',series:[{name:'Introductory then ongoing rate',rows:p.rows.slice(1).map(r=>({x:r.x,value:r.rate/100})),step:true},{name:'Constant comparison rate',rows:c.rows.slice(1).map(r=>({x:r.x,value:r.rate/100})),dash:true}],note:'Each point identifies the rate used for that whole month. The higher opening rate is not earned for an entire year unless the selected introductory period actually lasts twelve months. Monthly earned interest uses rate divided by twelve.'},
-      {id:'savings-promo-interest-path',type:'line',title:'Cumulative interest separates account earnings from your own deposits',unit:'money',xLabel:'Months after the initial deposit',series:[series('Introductory account · interest only',p.rows,'interest'),series('Constant account · interest only',c.rows,'interest',{dash:true})],note:'Both accounts receive identical principal and month-end contributions. These curves exclude all deposits. An early interest lead can disappear after the rate switches; there is no automatic account switch or repeat promotion.'},
-      {id:'savings-promo-ending-balances',type:'stackbar',title:'Ending savings contain contributions as well as interest',unit:'money',seriesNames:['Initial balance plus new deposits','Interest retained'],rows:[{label:'Introductory then ongoing account',values:[p.contributions,p.interest]},{label:'Constant comparison account',values:[c.contributions,c.interest]}],note:'The principal contribution total is identical. Adding the annualized headline rate times the entire ending balance would count money before it was deposited and apply the introductory rate outside its selected period.'},
-      {id:'savings-promo-rate-matrix',type:'heatmap',title:'Interest advantage across introductory durations and later rates',unit:'money',signed:true,columns:['0% later','1%','2%','3%'],rows:[0,3,6,12].map(introMonths=>({label:introMonths+' intro mo',values:[0,1,2,3].map(ongoingRate=>promotionPath({...input,introMonths,ongoingRate}).interest-c.interest)})),note:'Rows replace introductory duration and columns replace the later nominal rate. Initial balance, deposits, introductory rate, comparison rate and total horizon stay selected. If a duration exceeds the horizon, only months inside the horizon count. Signed cells show introductory-account interest minus constant-account interest, without probabilities or product recommendations.'}
-    ]};
-  }
   if(kind==='overdraftCalendar'){
     const fixed=overdraftPath(input),use=overdraftPath(input,true);
     return {metrics:[['Flat-fee arrangement · fees plus interest',fixed.cost,'money'],['Per-debit arrangement · fees plus interest',use.cost,'money'],['Per-debit arrangement · fee-triggering debits',use.chargedDebits,'integer']],note:'Hypothetical thirty-day account ledger. Two net pay deposits arrive on the selected first day and fifteen days later; deposits precede all debits on the same day. Separate spending debits occur on the fixed days in the input labels. A zero-dollar debit never triggers a fee. The flat arrangement charges its monthly fee on day 30 even if overdraft was never used. The per-use arrangement charges after every positive debit leaving a negative balance, including a debit that increases an existing overdraft. Fees reduce the account immediately. Daily simple interest is end-of-day debt after transactions and fees times nominal annual rate divided by 365; accrued interest is debited once at the end of day 30. No daily interest-on-interest occurs before that debit. All listed transactions and charges are assumed authorized and funded; the modeled peak debt is not an approved limit. No declined transaction, NSF charge, fee waiver, grace amount, linked-product transfer, actual institution tariff or next-month repayment is calculated.',charts:[

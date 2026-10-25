@@ -20,7 +20,8 @@ test('Chinese, Cantonese, English, partial recollections and spelling variants f
     ['RRSP or TFSA','rrsp-tfsa-tax-timing'],
     ['mortgage renewal','mortgage-renewal-payment-shock'],
     ['mortg','mortgage-renewal-payment-shock'],
-    ['retirment','retirement-income-bridge'],
+    ['retirment','retirement-longevity-planning'],
+    ['retirment income bridge','retirement-income-bridge'],
     ['複利','savings-compounding'],
     ['How do I save for a house?','home-purchase-down-payment-cash'],
     ['加拿大銀行估值','banks'],
@@ -31,6 +32,7 @@ test('Chinese, Cantonese, English, partial recollections and spelling variants f
     assert.ok(found.results.some(d=>d.url.includes(slug)),query+' → '+found.results.map(d=>d.url).join(', '));
   }
   assert.equal(search('供樓').results[0].url,'/research/mortgage-renewal-payment-shock');
+  assert.equal(search('retirment').results[0].url,'/research/retirement-longevity-planning');
   assert.equal(search('信用卡最低還款').results[0].url,'/research/credit-card-minimum-payment-long-tail');
   assert.deepEqual(search('xyzqzzzz').results,[]);
   assert.deepEqual(search('雪糕月球飛船').results,[]);

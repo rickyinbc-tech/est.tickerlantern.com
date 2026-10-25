@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty-six visual planning guides and 264
-charts, with new guides on shrinking credit-card minimum payments, a pay-rise
-saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with sixty-nine visual planning guides and 276
+charts, with new guides on Canadian wealth medians, lump-sum versus staged
+investment and cash-discount versus purchase-financing cash calendars. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -177,3 +177,26 @@ gate remain independent. Study bundles use `/notes-app/assets/`, avoiding the
 index workbench's files. The index snapshot API stays at `/api/indices`; study
 health is `/api/notes/health`. The old notes host is retained only for permanent
 redirects, with its homepage mapped to `/notes/research`.
+
+## Wealth benchmarks and payment choices
+
+`planning-wealth-data.js` preserves fourteen public SFS median observations
+(five age groups and two family-unit groups for 2019 and 2023). Twelve are
+displayed. Both survey years remain in constant 2023 dollars, separate from
+the nominal household example. Reproduce and validate the public extract with:
+
+```sh
+python3 scripts/extract-planning-wealth.py qa/wealth-statcan-table.html
+python3 scripts/extract-planning-wealth.py qa/wealth-statcan-table.html --check
+```
+
+Download the original Table 1 HTML from the attributed Statistics Canada URL
+into ignored `qa/` first. The extractor checks row uniqueness, median-column
+headers, units and the source SHA-256. No private library evidence is used.
+The staged-entry comparison starts with equal capital available immediately,
+invests at the beginning of each scheduled month and retains cash interest
+separately. An invented shock multiplies one month’s trend factor. Purchase
+financing uses equal household budgets and checks payments before month-end
+resources; any negative cash position suppresses the ending economic comparison.
+These models have independent arithmetic and boundary checks in
+`tests/planning-wealth-choice.test.mjs`.

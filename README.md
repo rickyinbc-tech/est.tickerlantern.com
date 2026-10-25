@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 171 visual planning guides and 696 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 172 visual planning guides and 701 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -462,3 +462,12 @@ keeps annual dues payable in zero-use cases, separates a possible assessment,
 and distinguishes nominal cash costs from discounted totals. The reporting
 window does not establish contract termination, resale value or cancellation
 rights. No proceeds from unused rights, exit receipt or property value is added.
+
+The existing `/research/bond-duration-yield-total-return` article has five
+cash-flow figures for a fully specified fictional annual-pay bond. Exact prices
+and derived duration use the same original payments. The separate one-year
+return receives the first coupon and ages the remaining bond before sale;
+year-one maturity redeems principal once and leaves no sale asset. The original
+portfolio table remains a separate first-order example. Public source review
+and independent rational-arithmetic checks are in
+`docs/bond-pricing-visual-upgrade-source-research-2026-10-25.md`.

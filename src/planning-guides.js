@@ -1,4 +1,5 @@
 import { rentalDailyGuides } from './planning-rental-daily-guides.js';
+import { loanFamilyGuides } from './planning-loan-family-guides.js';
 import { accruedInterestGuides } from './planning-accrued-interest-guides.js';
 import { rrspDeductionGuides } from './planning-rrsp-deduction-guides.js';
 import { rentalMoveGuides } from './planning-rental-move-guides.js';
@@ -56,6 +57,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...rentalDailyGuides,
+  ...loanFamilyGuides,
   ...accruedInterestGuides,
   ...rrspDeductionGuides,
   ...rentalMoveGuides,

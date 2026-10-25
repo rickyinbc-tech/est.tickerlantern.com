@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 133 visual planning guides and 538
+charts**. The library now leads with 135 visual planning guides and 546
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -361,3 +361,11 @@ Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML 
 `/research/taxable-interest-after-tax-inflation-purchasing-power` follows fully taxable interest through a simplified annual tax payment from the same accessible savings account, then deflates its balance into starting-date CAD. It separates the before-tax reference, nominal after-tax balance, real balance and required break-even gross rate. No personal tax brackets, product yields or current CPI values are inferred.
 
 `tests/planning-taxable-real.test.mjs` compares the ledger with independent compound and geometric-sum formulas, checks rate/valuation invariants and contribution-free cash reconciliation, and tests supported input limits. `tests/browser_taxable_real.py [origin]` checks real controls, whole-year validation, reset, tables and responsive chart text. CRA and Bank of Canada source context was reviewed on 25 October 2026.
+
+
+### Loan proceeds and family-benefit cash dates
+
+- `/research/loan-upfront-fee-net-advance-effective-cost` separates contract principal from fee-withheld proceeds, reconciles principal and interest, and computes a separately defined effective annual cash-flow rate. It does not calculate statutory disclosed APR or validate an actual loan offer.
+- `/research/child-benefit-2026-payment-calendar-budget-cash` retains the official twelve-date 2026 CCB calendar and two base-tax-year blocks, with independently entered half-year receipt amounts. It models first-of-month bills, other dedicated funding and a calendar-day receipt lag, separating year-end cash from any 2027 collection-only runoff. It does not determine entitlement or low-entitlement lump sums.
+
+`python3 scripts/check-planning-ccb-source.py` validates the bundled dates, base-year mappings and source context against the original public HTML hash; raw source remains ignored in `qa/`. `tests/planning-loan-family.test.mjs` checks discounted payment sums, closed-form debt balances, cash conservation, independent required-buffer formulas, same-day ordering and post-year receipts. `tests/browser_loan_family.py [origin]` checks real inputs, whole-number validation, reset, tables and mobile chart bounds.

@@ -1,3 +1,4 @@
+import { householdScaleGuides } from './planning-household-scale-guides.js';
 import { graduateDebtGuides } from './planning-graduate-debt-guides.js';
 import { paymentShareGuides } from './planning-payment-shares-guides.js';
 import { giftCardGuides } from './planning-gift-card-guides.js';
@@ -185,6 +186,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...householdScaleGuides,
   ...graduateDebtGuides,
   ...paymentShareGuides,
   ...giftCardGuides,

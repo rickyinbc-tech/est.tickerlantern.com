@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 268 visual planning guides and 1106 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 275 visual planning guides and 1134
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -151,6 +152,10 @@ A mean-maturity guide compares two principal calendars with identical face
 totals and face-weighted mean dates. Exact deadline ledgers retain missing
 cash even when later receipts equalize the endpoints. Prices, coupons and
 duration are excluded, so the example does not rank investment returns.
+An exact five-state loss model distinguishes inverse-cumulative value at risk,
+expected shortfall over an exact probability tail and the largest specified
+loss. Boundary probability mass is allocated explicitly, including signed
+quantiles; all outcomes and probabilities are invented.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -726,3 +731,19 @@ Five charts distinguish reported time, overlapping responses and independent pai
 `/research/loan-rate-order-declining-principal-average-interest-cost` reverses two two-year rate blocks while holding four equal annual principal repayments fixed. Five charts show matching simple averages beside different rate/balance pairings, interest totals and cash payments. The model is not level-total-payment amortization or a regulated APR calculation. Tests independently verify balance weights, principal reconciliation, rate-swap symmetry and the closed-form cost difference; the browser companion exercises controls, reset, signed differences and mobile labels.
 
 A time-of-use energy guide holds monthly kWh constant while shifting an entered fraction of peak use. Four interactive charts distinguish consumption weights, variable energy costs, unchanged bill amounts and a full-range timing comparison. All rates and usage are hypothetical; the OEB source supplies bill-component context only.
+
+`planning-fx-cost` reconciles separately dated CAD cost and proceeds with
+a verified USD-change/currency decomposition; see
+`docs/planning-fx-cost-2026-10-25.md`.
+
+## Pay rises, tax and a separate benefit phase-out
+
+Four charts distinguish resource levels and full-increase offsets in an invented monthly tax/benefit system. See
+`docs/planning-taper-2026-10-25.md` for sources and checks.
+
+A vehicle fuel-budget guide adds four charts connecting distance-weighted L/100 km, annual litres and vehicle-specific fuel prices. Original synthetic vehicles have separate consumption and cash crossovers; a signed driving-mix curve and price matrix retain reversals. NRCan HTML supplies label conventions and test-rating limitations, without reproducing vehicle ratings or pump quotes.
+
+Two new contribution and tax-cash companions add eight editable charts on affordable
+regular investing through an income interruption and the cash provision for a
+reinvested fund distribution. All scenarios and tax factors are hypothetical.
+See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).

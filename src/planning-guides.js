@@ -1,3 +1,4 @@
+import { annuityGuaranteeGuides } from './planning-annuity-guarantee-guides.js';
 import { lifeTableGuides } from './planning-life-table-guides.js';
 import { depositMapGuides } from './planning-deposit-map-guides.js';
 import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
@@ -131,6 +132,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...annuityGuaranteeGuides,
   ...lifeTableGuides,
   ...depositMapGuides,
   ...benefitCoordinationGuides,

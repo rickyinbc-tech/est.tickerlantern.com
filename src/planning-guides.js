@@ -1,3 +1,4 @@
+import { retirementAgeGuides } from './planning-retirement-age-guides.js';
 import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
 import { unitCostGuides } from './planning-unit-cost-guides.js';
 import { wealthSharesGuides } from './planning-wealth-shares-guides.js';
@@ -125,6 +126,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...retirementAgeGuides,
   ...buybackDilutionGuides,
   ...unitCostGuides,
   ...wealthSharesGuides,

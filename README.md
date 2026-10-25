@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 203 visual planning guides and 828 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 204 visual planning guides and 831 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -549,3 +549,8 @@ The English guide `inflation-linked-bond-principal-coupon-maturity-cash` uses fo
 `/research/project-loan-staged-draws-idle-borrowed-cash-interest` compares a full time-zero draw with three project-bill draws. Separate debt, project cash and unused-limit paths reconcile to the same ending principal, while an explicit monthly convention traces borrowing interest, fees and separately paid cash interest. The illustration assumes future draws remain available; it does not reproduce daily lender billing or infer project resale value. Independent tranche-period sums and a balance-month identity are checked by `tests/planning-staged-draw.test.mjs`; `tests/browser_staged_draw.py` covers real controls, reset, data tables and mobile labels.
 
 The repair-or-replace guide compares forward cash from one decision date through a common service horizon and exit. Its unrecoverable original-price input changes context only. Current sale proceeds are counted once, final receipts occur only at the exit, and discounted and nominal ledgers reconcile independently. Four responsive charts retain signed receipts, with verified zero-discount and negative-net-cost boundaries.
+
+## Multiple IRRs and later obligations
+
+Three charts retain a later required payment and inspect multiple IRR solutions. See
+`docs/planning-multiple-irr-2026-10-25.md` for sources and checks.

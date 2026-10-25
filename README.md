@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 119 visual planning guides and 481
+charts**. The library now leads with 121 visual planning guides and 489
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -65,6 +65,10 @@ explicit 365-day short-term return annualisations and balloon-payment funding.
 Survey medians remain fixed while an independent cash budget changes. Verify
 the extract with `python3 scripts/check-planning-income-source.py <source-table.zip>`.
 Balloon required saving rounds up to cents; the debt graph ends before the balloon.
+Return-reading guides reconcile per-unit distributions, retained cash and
+reinvested resources, then compare time-weighted and money-weighted returns
+using one dated contribution. Payout schedules and external contributions are
+kept separate from investment profit; all return paths are hypothetical.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

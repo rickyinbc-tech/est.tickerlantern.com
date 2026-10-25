@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with forty-two visual planning guides and 163
+charts**. The library now leads with forty-five visual planning guides and 175
 charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -22,7 +22,9 @@ shared-budget goal deadlines, ordinary RRIF withdrawals versus spending,
 TFSA recontribution calendars, RESP withdrawal sources and mortgage prepayments
 versus liquid savings, tuition benchmarks and student budgets, promotional
 balance transfers, insurance reimbursement timing, home-purchase cash requirements,
-shared household bill assignments and interest-free student-loan repayment.
+shared household bill assignments, interest-free student-loan repayment,
+self-employed cash ledgers, recurring home-replacement reserves and charitable
+giving cash schedules.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -72,6 +74,11 @@ preliminary/weighting status; the raw source stays ignored. Official tuition
 charts remain fixed while the student-budget assumptions change. Card promotions
 use one hypothetical rate bucket; claim cash needs include bills before month-end
 resources, not only ending balances.
+The self-employment ledger distinguishes invoice-based profit from collected and
+uncommitted cash using a hypothetical held tax earmark. The home reserve repeats
+component replacements over twelve years and funds every event date; routine
+upkeep is paid separately. Giving schedules receive one independently entered
+usable first-year tax saving in year two, without calculating a tax credit.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

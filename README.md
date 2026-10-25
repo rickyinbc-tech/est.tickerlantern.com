@@ -622,3 +622,7 @@ The collateral guide uses a fictional loan-to-value covenant to separate positiv
 
 Four charts group client-name eligible deposits by issuing member and category. See
 `docs/planning-deposit-map-2026-10-25.md` for sources and checks.
+
+### Elapsed unemployment and future reserve horizons
+
+`/research/unemployment-duration-elapsed-weeks-future-cash-reserve` retains eight disjoint 2025 LFS duration categories, the separate long-duration aggregate and two 2015–2025 mean series with their original top-code definitions. It distinguishes annual-average stocks, unknown duration and elapsed weeks from an independently selected future household funding horizon. Public observations retain units, flags, coordinates, vectors and ZIP hash; no confidence bounds are invented. Reproduce with `python3 scripts/extract-unemployment-duration.py <14100057-eng.zip>`. Financial and source tests cover the national controls, category reconciliation, fixed-source behavior and zero-deficit boundary; the browser companion covers real controls, tables and mobile labels.

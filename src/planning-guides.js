@@ -1,4 +1,5 @@
 import { gisWithdrawalGuides } from './planning-gis-withdrawal-guides.js';
+import { cppPrbGuides } from './planning-cpp-prb-guides.js';
 import { respAipGuides } from './planning-resp-aip-guides.js';
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
 import { jointOwnerGuides } from './planning-joint-owner-guides.js';
@@ -205,6 +206,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...gisWithdrawalGuides,
+  ...cppPrbGuides,
   ...respAipGuides,
   ...paymentPerceptionGuides,
   ...jointOwnerGuides,

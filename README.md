@@ -9,8 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty visual planning guides and 240
-charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with sixty-three visual planning guides and 252
+charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned

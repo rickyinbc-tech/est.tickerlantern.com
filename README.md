@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 168 visual planning guides and 683 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 170 visual planning guides and 691 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -101,6 +101,10 @@ separate declining debt, flat assumed premiums and conditional claim destination
 See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
 New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
 retain their existing dates rather than being redated at every build.
+An RDSP guide separates a hypothetical permitted gross beneficiary payment
+from ordinary assistance repayment and the remaining plan value. It uses an
+entered issuer-confirmed AHA, excludes exceptional cases and payment eligibility,
+and keeps plan outflow separate from combined household resources.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

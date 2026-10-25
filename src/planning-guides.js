@@ -1,3 +1,4 @@
+import { feeWaiverGuides } from './planning-fee-waiver-guides.js';
 import { leaseDistanceGuides } from './planning-lease-distance-guides.js';
 import { rrspRoomGuides } from './planning-rrsp-room-guides.js';
 import { premiumBondGuides } from './planning-premium-bond-guides.js';
@@ -138,6 +139,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...feeWaiverGuides,
   ...leaseDistanceGuides,
   ...rrspRoomGuides,
   ...premiumBondGuides,

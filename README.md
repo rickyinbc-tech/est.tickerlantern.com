@@ -19,14 +19,9 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 231 visual planning guides and 943
+charts**. The library now leads with 232 visual planning guides and 947
 charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
-charts, with editable assumptions and inspectable data tables.
-charts, with new guides on job-offer cash and commuting costs, losses before a
+New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -643,3 +638,7 @@ Four charts compare consistent nominal/real valuation with deliberate basis mism
 `docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.
+
+`planning-fee-waiver` compares equal starting funds and outside monthly budgets,
+with saved waived fees and the opportunity cost of an additional balance; see
+`docs/planning-fee-waiver-2026-10-25.md`.

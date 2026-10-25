@@ -657,3 +657,7 @@ with saved waived fees and the opportunity cost of an additional balance; see
 
 Five charts preserve official survey medians and independent household price assumptions. See
 `docs/planning-expectations-2026-10-25.md` for sources and checks.
+
+## Progressive fee slices and whole-balance bands
+
+Four charts explain annual fee allocation, minimums, fixed charges and threshold repricing. See `docs/planning-fee-slices-2026-10-25.md` for sources and checks.

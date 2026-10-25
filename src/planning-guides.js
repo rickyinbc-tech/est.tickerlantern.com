@@ -1,4 +1,5 @@
 import { rentalMoveGuides } from './planning-rental-move-guides.js';
+import { premiumFinancingGuides } from './planning-premium-financing-guides.js';
 import { reverseEquityGuides } from './planning-reverse-equity-guides.js';
 import { tradingEquityGuides } from './planning-trading-equity-guides.js';
 import { taxableRealGuides } from './planning-taxable-real-guides.js';
@@ -52,6 +53,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...rentalMoveGuides,
+  ...premiumFinancingGuides,
   ...reverseEquityGuides,
   ...tradingEquityGuides,
   ...taxableRealGuides,

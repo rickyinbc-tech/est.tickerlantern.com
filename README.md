@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 129 visual planning guides and 522
+charts**. The library now leads with 130 visual planning guides and 526
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -73,6 +73,10 @@ Trading-and-equity guides reconcile ETF spreads and flat commissions against
 executed cash, then track capitalized-interest borrowing and a signed future
 home-sale residual. All quotes, loan rates, draws and property paths are
 hypothetical; neither fills nor lending availability are predicted.
+A mortgage-premium guide combines three checked CMHC premium-on-total-loan
+bands with financed-principal interest and closing-cash ledgers. It does not
+assess loan eligibility or provincial tax. Verify the source HTML with
+`python3 scripts/check-planning-premium-source.py <source-page.html>`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

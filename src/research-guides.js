@@ -74,42 +74,5 @@ export const guides = [
         <p>Track the answers over several reporting periods. A disciplined program can reduce purchases when valuation is demanding and increase them when cash is truly surplus and the price is attractive. The useful evidence is the realized allocation record and its effect on continuing owners, assessed alongside the business’s investment needs.</p>` }
     ],
     sources: [{ title: 'SEC · Beginners’ Guide to Financial Statement', url: 'https://www.sec.gov/investor/pubs/begfinstmtguide.htm', note: 'EPS, financial-statement relationships, financing cash flows, and stock-option footnotes. All repurchase scenarios and valuations on this page are original hypothetical calculations.' }]
-  },
-  {
-    slug: 'bond-duration-yield-total-return', category: 'Fixed income',
-    title: 'Bond duration: why yield is only part of the return',
-    description: 'Estimate a bond portfolio’s response to yield changes, distinguish duration from maturity, and separate coupon income from an actual holding-period return.',
-    takeaway: 'A quoted yield describes a set of cash flows and pricing assumptions. Your realized return also depends on price changes, reinvestment, credit and the date you sell.',
-    related: ['currency-cad-hedging', 'portfolio-concentration-overlap'],
-    sections: [
-      { id: 'definitions', title: 'Name the yield before comparing it', html: `
-        <p>A bond with a 4% coupon pays 4 per year on 100 of face value under an annual-payment convention. If its market price is 95, its current yield is 4 ÷ 95 = 4.21%. That ratio describes coupon income relative to price. It leaves out the difference between the purchase price and the eventual repayment amount.</p>
-        <p>Yield to maturity is the discount rate that equates price with promised coupons and principal. Realizing that annualized compound rate requires the relevant payment and reinvestment assumptions, including no default. A fund’s distribution yield, portfolio yield to maturity, and historical total return answer different questions.</p>
-        <p>When reviewing two funds, write down the yield definition, observation date, currency, fee treatment, credit mix, and duration. A higher number can reflect a different calculation or more risk. It is not a sufficient basis for choosing the holding.</p>` },
-      { id: 'duration', title: 'Translate a yield shock into a price estimate', html: `
-        <p>For a small parallel change in yield, a common first-order estimate uses modified duration:</p>
-        <div class="guide-formula">Approximate price return = −modified duration × change in yield</div>
-        <p>Write the yield change as a decimal. A rise of one percentage point is 0.01; a rise from 4% to 5% is not entered as 25%. A portfolio with duration 6 would have an estimated price change of −6 × 0.01 = −6%.</p>
-        <p><a href="https://www.fidelity.com/learning-center/investment-products/fixed-income-bonds/duration">Fidelity’s duration guide</a> explains interest-rate sensitivity and why the estimate becomes less accurate for larger changes. Effective duration is commonly used when embedded options affect cash flows; read which measure a fund reports. Duration is not a maturity date or a guarantee of recovery by a particular year.</p>` },
-      { id: 'scenario', title: 'Work through income and price separately', html: `
-        <p>Assume a hypothetical portfolio worth 10,000, modified duration of 6, and cash income of 400 over the next year. Hold duration fixed, apply one parallel yield shock, and ignore convexity, defaults, fees, reinvestment, currency, and all other price effects. These are mechanical illustrations, not bond-fund forecasts.</p>
-        <div class="guide-table" role="region" aria-label="Illustrative bond duration scenarios" tabindex="0"><table><caption>First-order price shock plus assumed cash income</caption><thead><tr><th scope="col">Yield change</th><th scope="col">Price effect</th><th scope="col">Cash income</th><th scope="col">Simplified total</th></tr></thead><tbody><tr><th scope="row">−1 percentage point</th><td>+600</td><td>+400</td><td>+1,000 / +10%</td></tr><tr><th scope="row">No change</th><td>0</td><td>+400</td><td>+400 / +4%</td></tr><tr><th scope="row">+1 percentage point</th><td>−600</td><td>+400</td><td>−200 / −2%</td></tr><tr><th scope="row">+2 percentage points</th><td>−1,200</td><td>+400</td><td>−800 / −8%</td></tr></tbody></table></div>
-        <p>The last row deliberately stretches a linear approximation. A proper repricing would discount each cash flow at the new curve and account for changing duration and convexity. The table shows why income does not eliminate mark-to-market losses; it cannot tell you the exact year-end value of a real fund.</p>` },
-      { id: 'maturity', title: 'Distinguish an individual bond from a rolling portfolio', html: `
-        <p>An individual noncallable bond has a specified principal repayment date, subject to the issuer meeting its obligations. A conventional open-ended bond fund typically replaces maturing or sold holdings. Its duration exposure can remain substantial even after you have held the fund for several years.</p>
-        <p>For a spending goal on a known date, compare the cash-flow schedule with the liability rather than assuming the word “bond” supplies a maturity match. A target-maturity fund has its own termination and distribution terms, which require separate inspection.</p>
-        <p>Holding an individual bond to maturity does not make its interim economic value stable. It can remove the need to realize a market loss through sale if the cash flows meet your needs and the issuer pays. It does not remove default, inflation, reinvestment, or opportunity-cost risk.</p>` },
-      { id: 'other-risks', title: 'Separate government yields from credit spreads', html: `
-        <p>A corporate bond’s yield can rise because the government yield curve rises, because its credit spread widens, or both. A single duration number cannot explain the cause. Credit deterioration can hurt a corporate portfolio even while government yields fall.</p>
-        <p>As an additional hypothetical stress, a spread duration of 4 and a 0.50-percentage-point spread widening imply approximately −2% from that spread move, before interactions and other effects. Do not add this to an all-in yield shock if the all-in shock already includes the same widening.</p>
-        <p>The <a href="https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds">Investor.gov bond overview</a> identifies credit, interest-rate, inflation, liquidity, and call risks. In practice, ask which of these risks the holding is meant to carry and which could interfere with its role in the portfolio.</p>` },
-      { id: 'review', title: 'A useful bond-fund review', html: `
-        <ol><li>Record the fund’s role: near-term spending, diversification, income, or a deliberate rate exposure.</li><li>Match yield definitions and check whether fees have already been deducted.</li><li>Inspect duration, maturity distribution, credit quality, sector weights, and currency policy.</li><li>Stress parallel yields, curve shape, spreads, and liquidity separately.</li><li>Compare the resulting drawdown with the date and flexibility of the spending need.</li></ol>
-        <p>Higher reinvestment yields may help over time after rates rise, while lower reinvestment yields can reduce future income after rates fall. The realized path depends on when the moves occur and how the portfolio changes. A duration-only stress is an exposure estimate, not a complete reinvestment model or a promise about long-term recovery.</p>` }
-    ],
-    sources: [
-      { title: 'Fidelity · Duration: Understanding the relationship between bond prices and interest rates', url: 'https://www.fidelity.com/learning-center/investment-products/fixed-income-bonds/duration', note: 'Duration, maturity, and limits of the linear approximation. Article dated 26 November 2025.' },
-      { title: 'Investor.gov · Bonds', url: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds', note: 'Overview of bond cash flows and principal risk categories.' }
-    ]
   }
 ];

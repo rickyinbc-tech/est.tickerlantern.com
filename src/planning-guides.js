@@ -1,4 +1,6 @@
 import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
+import { bondPricingGuides } from './planning-bond-pricing-guides.js';
+import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
 import { adviceCostGuides } from './planning-advice-cost-guides.js';
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
 import { renewalSupplementTimeGuides } from './planning-renewal-supplement-time-guides.js';
@@ -86,6 +88,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...assetResilienceGuides,
+  ...bondPricingGuides,
+  ...bondReinvestmentGuides,
   ...adviceCostGuides,
   ...rppStatisticsGuides,
   ...renewalSupplementTimeGuides,

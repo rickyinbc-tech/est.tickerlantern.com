@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 184 visual planning guides and 749 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 190 visual planning guides and 775 charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -110,6 +111,11 @@ A fund-cost guide reconciles reinvested distributions, positive cash return
 of capital and the adjusted cost base before an all-unit sale. Units, NAV,
 retained cash and gain are separate records; no personal tax or inclusion rate
 is calculated. Fractional units keep full precision until display.
+Advice-fee, refundable-booking and renewing-GIC-income guides add twelve
+interactive charts. Eight checked FCAC advice-source observations stay fixed
+while independent fee schedules change. The other models separate conditional
+refunds from weighted costs, and renewed principal from spendable interest.
+Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -498,3 +504,13 @@ The two-income household guide adds an exact four-state probability grid, cash-s
 `/research/asset-resilience-statistics-household-emergency-target` pairs two fixed Statistics Canada interval charts with two separate hypothetical household cash-target charts. The selected national person-based observations retain reference years, supplied 95% bounds, source units/precision, vectors, coordinates, flags and the public download hash. Ten-province coverage excludes the territories. The invented benchmark is not an official current LIM or a classification of the reader.
 
 Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py <11100082-eng.zip>` using the official CSV ZIP identified in the data module. The extractor rejects duplicate/missing grains, changed latest-year coverage, flagged observations, invalid units and unordered intervals. Tests verify the independent hub controls, household reconciliation and fixed-source behavior; `tests/browser_asset_resilience.py` exercises real controls, invalid-input retention, reset, data tables and mobile SVG labels.
+
+## Card purchases and household bookkeeping
+
+Five charts reconcile purchases, card repayments and internal savings transfers. See
+`docs/planning-card-ledger-2026-10-25.md` for sources and checks.
+
+`planning-illness-cash` adds independent benefit cash calendars; see
+`docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+The extended-warranty guide separates whole-window repair probability, conditional eligibility and the capped provider payment in five interactive charts. All probabilities and contract terms are hypothetical. The model counts the upfront price once in every state, distinguishes expected cost from an actual repair reserve, and handles infeasible cost-equality thresholds explicitly. State arithmetic, boundary cases and mobile chart layout are verified.

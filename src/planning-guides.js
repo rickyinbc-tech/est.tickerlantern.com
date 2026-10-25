@@ -1,4 +1,10 @@
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
+import { warrantyGuides } from './planning-warranty-guides.js';
+import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
+import { bookingRefundGuides } from './planning-booking-refund-guides.js';
+import { adviceFeeCashGuides } from './planning-advice-fee-cash-guides.js';
+import { illnessCashGuides } from './planning-illness-cash-guides.js';
+import { cardLedgerGuides } from './planning-card-ledger-guides.js';
 import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
 import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
@@ -92,6 +98,12 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...deferredCashGuides,
+  ...warrantyGuides,
+  ...ladderRenewalGuides,
+  ...bookingRefundGuides,
+  ...adviceFeeCashGuides,
+  ...illnessCashGuides,
+  ...cardLedgerGuides,
   ...assetResilienceGuides,
   ...jointIncomeGuides,
   ...fundCostBaseGuides,

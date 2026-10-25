@@ -1,6 +1,7 @@
 import { enrichStudyHTML, studyPages } from './seo.js';
 import { validateFeed } from './index-data.js';
 import { isNotesResearchPath, handleNotesResearch } from './notes-research.js';
+import { enrichSearchNavigation } from './search-navigation.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
 const MAX_BYTES = 2_000_000;
 async function verified(response, { githubRaw = false } = {}) {
@@ -36,9 +37,13 @@ export default {
       url.pathname = url.pathname.slice(0, -1);
       return Response.redirect(url.href, 308);
     }
+    if (url.pathname === '/search/' || url.pathname === '/search.html') {
+      url.pathname = '/search';
+      return Response.redirect(url.href, 308);
+    }
     if (isNotesResearchPath(url.pathname)) {
       const response = await handleNotesResearch(request, env);
-      return enrichStudyHTML(response, url.pathname);
+      return enrichSearchNavigation(enrichStudyHTML(response, url.pathname));
     }
     if (url.pathname !== '/api/indices') return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });

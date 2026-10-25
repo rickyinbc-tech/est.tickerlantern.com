@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 120 visual planning guides and 486
+charts**. The library now leads with 126 visual planning guides and 510
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -65,6 +65,10 @@ explicit 365-day short-term return annualisations and balloon-payment funding.
 Survey medians remain fixed while an independent cash budget changes. Verify
 the extract with `python3 scripts/check-planning-income-source.py <source-table.zip>`.
 Balloon required saving rounds up to cents; the debt graph ends before the balloon.
+Return-reading guides reconcile per-unit distributions, retained cash and
+reinvested resources, then compare time-weighted and money-weighted returns
+using one dated contribution. Payout schedules and external contributions are
+kept separate from investment profit; all return paths are hypothetical.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -330,3 +334,18 @@ input, table and responsive checks.
 - `/research/investment-loss-recovery-purchasing-power-deposits` compares nominal and inflation-adjusted recovery requirements after an immediate loss, with a separate contribution ledger and surplus/shortfall matrix. All paths are deterministic illustrations.
 
 Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML snapshots remain ignored in `qa/`; `python3 scripts/check-planning-emergency-source.py` checks their hashes, published table cells and methodology against the bundle. The build requires no source fetch. Model tests use closed-form compound sums, contribution-timing checks and cash conservation; `tests/browser_emergency_recovery.py [origin]` checks real controls, reset, accessible tables and responsive chart text.
+
+
+### Income-group spending shares and utility settlements
+
+- `/research/household-spending-income-quintiles-consumption-shares` compares dated 2023 SHS consumption shares and annual means for the lowest and highest income quintiles, with an independent monthly cash model. The consumption and income denominators remain separate; a ratio can rise while the cash remainder improves.
+- `/research/utility-equal-payments-annual-settlement-reserve` distinguishes a generic twelve-instalment payment plan, authored seasonal cost allocation, provider balance and a separate household settlement reserve. Provider credits never become assumed cash refunds. It does not replicate BC Hydro tariff or review mechanics.
+
+`scripts/check-planning-spending-utility-sources.py` verifies six quintile shares, two annual means, release context and utility-plan context against the original public HTML snapshots and their hashes. Raw snapshots remain ignored in `qa/`. `tests/planning-spending-utility.test.mjs` checks cash conservation, zero denominators, denominator effects, annual allocation, settlement identities and credit treatment. `tests/browser_spending_utility.py [origin]` checks real inputs, reset, tables and responsive chart bounds.
+
+
+### Taxable interest and purchasing power
+
+`/research/taxable-interest-after-tax-inflation-purchasing-power` follows fully taxable interest through a simplified annual tax payment from the same accessible savings account, then deflates its balance into starting-date CAD. It separates the before-tax reference, nominal after-tax balance, real balance and required break-even gross rate. No personal tax brackets, product yields or current CPI values are inferred.
+
+`tests/planning-taxable-real.test.mjs` compares the ledger with independent compound and geometric-sum formulas, checks rate/valuation invariants and contribution-free cash reconciliation, and tests supported input limits. `tests/browser_taxable_real.py [origin]` checks real controls, whole-year validation, reset, tables and responsive chart text. CRA and Bank of Canada source context was reviewed on 25 October 2026.

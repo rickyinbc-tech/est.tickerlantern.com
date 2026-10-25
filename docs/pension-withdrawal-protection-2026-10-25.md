@@ -1,5 +1,10 @@
 # Temporary pension expiry, withdrawal allocation and debt protection
 
+The federal pension article is explicitly titled as a monthly CPP reserve calendar
+and links to the broader annual pension-bridge guide added concurrently. Its
+income amounts stay flat while spending growth is separate; the annual guide
+uses a common increase. This preserves a clear scope for each page.
+
 Three English articles add twelve interactive figures with accessible data
 tables. All numerical cases are hypothetical. Public rules explain the
 mechanics; the figures do not reproduce a household record or a product quote.

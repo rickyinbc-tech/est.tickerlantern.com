@@ -9,8 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty visual planning guides and 240
-charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 72 visual planning guides and 288
+charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -31,11 +32,21 @@ separate cash budgets for a household separation, incremental energy-upgrade
 payback, lease-return versus buy-and-sell car costs and retirement survivor
 income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
-basic CESG catch-up and HBP repayment obligations.
+basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
+principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
+
+The latest three guides compare annual versus monthly insurance payments,
+lump-sum versus phased investment timing and renovation payment calendars.
+Each has four interactive graphics with explicit cash ledgers and accessible
+data tables. Payment percentages, returns and overruns are hypothetical;
+source notes identify the public mechanics reviewed. The premium equivalent
+rate is a mathematical IRR comparison, not a disclosed APR. Phased investment
+values include retained cash interest, and renovation gaps use the lowest
+balance rather than the final balance alone.
 
 `src/planning-guides.js` composes the article modules named
 `planning-*-guides.js`. `planning-models.js` composes the topic models, whose
@@ -175,3 +186,19 @@ gate remain independent. Study bundles use `/notes-app/assets/`, avoiding the
 index workbench's files. The index snapshot API stays at `/api/indices`; study
 health is `/api/notes/health`. The old notes host is retained only for permanent
 redirects, with its homepage mapped to `/notes/research`.
+
+## Job-loss, retirement-category and event-payment guides
+
+Three additional English guides and twelve interactive charts explain a job-loss
+cash runway, retirement spending phases and a wedding/event payment calendar.
+`planning-runway-spending-models.js` owns the original hypothetical arithmetic.
+The job-loss ledger receives independent net cash amounts and does not assess EI.
+Care prices inflate from retirement start, including before care begins; summed
+annual funding gaps are not a required starting portfolio. The event deposit is
+paid at time zero, and saving transfers end before the event-month opening bill.
+Each article includes six explanation sections, dated official reference links,
+visible assumptions and a data table for every chart.
+
+Run `node --test tests/planning-runway-spending.test.mjs` for the independent
+financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
+input, invalid-input retention, reset, table, responsive and runtime checks.

@@ -452,3 +452,10 @@ withdrawals and on nominal versus effective annual rate conventions. See
 - `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
 
 `tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.
+
+## Advice sources and service-fee budgets
+
+An English guide pairs selected official 2024 FCAC survey observations with
+independent hypothetical project/review and annual-retainer fee calendars.
+See `docs/planning-advice-cost-2026-10-25.md` for source dates, payment timing
+and verification. Survey popularity and modeled price do not measure quality.

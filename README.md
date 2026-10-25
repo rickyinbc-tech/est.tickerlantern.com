@@ -531,3 +531,7 @@ Four charts separate expected repair costs from the cash required in each outcom
 ### Upfront receipts and dated payment value
 
 `/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.
+
+### Project draw timing and borrowed cash
+
+`/research/project-loan-staged-draws-idle-borrowed-cash-interest` compares a full time-zero draw with three project-bill draws. Separate debt, project cash and unused-limit paths reconcile to the same ending principal, while an explicit monthly convention traces borrowing interest, fees and separately paid cash interest. The illustration assumes future draws remain available; it does not reproduce daily lender billing or infer project resale value. Independent tranche-period sums and a balance-month identity are checked by `tests/planning-staged-draw.test.mjs`; `tests/browser_staged_draw.py` covers real controls, reset, data tables and mobile labels.

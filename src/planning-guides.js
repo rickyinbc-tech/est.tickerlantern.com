@@ -1,3 +1,4 @@
+import { stagedDrawGuides } from './planning-staged-draw-guides.js';
 import { gainTimingGuides } from './planning-gain-timing-guides.js';
 import { settlementCashGuides } from './planning-settlement-cash-guides.js';
 import { paymentValueGuides } from './planning-payment-value-guides.js';
@@ -103,6 +104,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...stagedDrawGuides,
   ...gainTimingGuides,
   ...settlementCashGuides,
   ...paymentValueGuides,

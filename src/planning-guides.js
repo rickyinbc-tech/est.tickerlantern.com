@@ -1,4 +1,5 @@
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
+import { fxCostGuides } from './planning-fx-cost-guides.js';
 import { energyTimingGuides } from './planning-energy-timing-guides.js';
 import { loanRateOrderGuides } from './planning-loan-rate-order-guides.js';
 import { incomeTransitionGuides } from './planning-income-transition-guides.js';
@@ -175,6 +176,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...bondConvexityGuides,
+  ...fxCostGuides,
   ...energyTimingGuides,
   ...loanRateOrderGuides,
   ...incomeTransitionGuides,

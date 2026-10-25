@@ -72,7 +72,8 @@ function barPlot(spec,width) {
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
   let body='';
-  for(let i=0;i<=4;i++){const v=max*i/4;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
+  const tickCount=spec.axisTicks??4;
+  for(let i=0;i<=tickCount;i++){const v=max*i/tickCount;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
   spec.rows.forEach((r,index)=>{
     const y=top+index*rowHeight;
     let label=r.label;

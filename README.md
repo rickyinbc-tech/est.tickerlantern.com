@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 161 visual planning guides and 653
+charts**. The library now leads with 162 visual planning guides and 657
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -438,3 +438,9 @@ or policy eligibility is calculated.
 cash, temporary pension bridge endings and hypothetical rebuilding coverage
 gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
 explicit contract assumptions and validation.
+
+`planning-rpp-statistics` adds four source-backed count charts from Statistics
+Canada Table 11-10-0099-01, with reference-year filtering and explicit date/unit
+boundaries. Reproduce the forty observations with
+`scripts/extract-planning-rpp-statistics.py`; see
+`docs/planning-rpp-statistics-2026-10-25.md` for scope and verification.

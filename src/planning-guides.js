@@ -1,4 +1,5 @@
 import { arrearsCountGuides } from './planning-arrears-count-guides.js';
+import { dailyResetGuides } from './planning-daily-reset-guides.js';
 import { disabilityCapGuides } from './planning-disability-cap-guides.js';
 import { vacancyBandGuides } from './planning-vacancy-band-guides.js';
 import { giftCreditGuides } from './planning-gift-credit-guides.js';
@@ -198,6 +199,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...arrearsCountGuides,
+  ...dailyResetGuides,
   ...disabilityCapGuides,
   ...vacancyBandGuides,
   ...giftCreditGuides,

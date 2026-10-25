@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 292 visual planning guides and 1207 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 293 visual planning guides and 1211 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -783,3 +783,5 @@ A self-employed pricing guide adds four charts separating revenue growth from un
 ### Gift-credit bonuses, redemption and matched cash prices
 
 `/research/gift-card-bonus-redemption-cash-price-comparison` separates bonus-on-cash percentages, conditional full-basket discounts, unspent restricted credit and cumulative cash outlays in five original hypothetical charts. The comparison does not write off unused credit or label its outlay gap as an investment loss. Paid and bonus credit share one explicitly assumed noncash pool, with actual terms outside the model. Tests check denominator identities, partial and full use, cash catch-up thresholds, monthly timing and finite boundaries; the browser companion also checks small negative/zero axis-label separation on mobile.
+
+A daily-reset compounding guide adds four charts using two original synthetic benchmark paths with an identical endpoint. Ideal daily-multiple accounts remain separate from a multiple-of-full-period arithmetic reference. Tests verify daily identities, exact paired round trips, positive-trend outperformance of the reference and endpoint invariance when an unchanged return set is reordered. No real ETF, historical price or return forecast is used.

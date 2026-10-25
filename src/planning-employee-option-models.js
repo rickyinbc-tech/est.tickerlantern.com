@@ -1,0 +1,39 @@
+export const employeeOptionDefinitions={
+  employeeOptionCash:{title:'Explore a fixed, authored 48-month option schedule with a 12-month cliff',fields:[
+    ['optionGrant','Granted option units; one unit buys one share',1200,0,50000,100],
+    ['optionServiceMonths','Completed whole months of service in this illustration',18,0,48,1],
+    ['optionStrike','Fixed exercise price per share (CAD)',50,0,500,5],
+    ['optionSharePrice','Hypothetical share price for the comparison (CAD)',60,0,1000,5],
+    ['optionExerciseCash','Uncommitted cash available for exercise and hold (CAD)',5000,0,1000000,1000]
+  ]}
+};
+
+export function employeeVestedUnits(grant,months){
+  if(months<12)return 0;
+  if(months>=48)return grant;
+  // The authored cliff catches up all completed service; later months vest cumulatively.
+  return Math.floor(grant*months/48);
+}
+export function employeeOptionLedger(input){
+  const vested=employeeVestedUnits(input.optionGrant,input.optionServiceMonths),unvested=input.optionGrant-vested;
+  const strikeCash=vested*input.optionStrike,spreadPerUnit=Math.max(0,input.optionSharePrice-input.optionStrike),intrinsicSpread=vested*spreadPerUnit;
+  const fundingGap=Math.max(0,strikeCash-input.optionExerciseCash);
+  const illustrativeExerciseUnits=input.optionSharePrice>input.optionStrike?vested:0;
+  const saleGross=illustrativeExerciseUnits*input.optionSharePrice,saleStrikeCost=illustrativeExerciseUnits*input.optionStrike;
+  const months=[...new Set([0,11,12,24,36,48,input.optionServiceMonths])].sort((a,b)=>a-b);
+  const milestones=months.map(month=>({month,vested:employeeVestedUnits(input.optionGrant,month),unvested:input.optionGrant-employeeVestedUnits(input.optionGrant,month)}));
+  const maxPrice=Math.max(100,input.optionStrike*2,input.optionSharePrice*1.25);
+  const prices=[...new Set([...Array.from({length:21},(_,i)=>maxPrice*i/20),input.optionStrike,input.optionSharePrice])].sort((a,b)=>a-b);
+  return {vested,unvested,strikeCash,spreadPerUnit,intrinsicSpread,fundingGap,illustrativeExerciseUnits,saleGross,saleStrikeCost,saleSpread:saleGross-saleStrikeCost,milestones,payoff:prices.map(x=>({x,value:vested*Math.max(0,x-input.optionStrike)}))};
+}
+
+export function employeeOptionResult(kind,input){
+  if(kind!=='employeeOptionCash')throw Error('Unknown employee-option topic.');
+  const p=employeeOptionLedger(input);
+  return {metrics:[['Vested option units under the authored schedule',p.vested,'count'],['Intrinsic spread on vested units, before tax and fees · CAD',p.intrinsicSpread,'money'],['Exercise-and-hold strike-cash shortfall, before tax and fees · CAD',p.fundingGap,'money']],note:'Original CAD illustration, not an actual employee award, option valuation, tax estimate or recommendation to exercise. Each option unit buys one share at the entered strike price. The fixed authored schedule vests nothing through month 11, catches up completed service at month 12, then vests cumulatively each completed month through month 48. Cumulative units are rounded down to whole units; all remaining units vest at month 48. Continued service and an open exercise window are assumed at the chosen checkpoint; no expiry date, forfeiture, prior exercise, rolling grant, performance condition or blackout is modeled. All units remain unexercised when the snapshot is taken. Intrinsic spread is vested units times max(share price minus strike, zero); it is not full option fair value, owned stock or money already received. The exercise-and-sale waterfall assumes a permitted immediate sale at the same selected price, with no change between exercise and sale. It shows zero transaction flows at or below strike, a plotting convention rather than an exercise policy. The separate cash comparison concerns exercise and hold, which receives shares rather than sale cash. Uncommitted cash is not spent in the model. Taxes, withholding, fees, trading restrictions, settlement, borrowing and subsequent price changes are excluded; actual terms and cash requirements can differ.',charts:[
+    {id:'employee-option-vesting-milestones',type:'stackbar',title:'A grant count can include units that have not vested',unit:'count',unitLabel:'Option units · fixed authored schedule, not an employer’s terms',tableUnit:'Option units; one unit represents a right to buy one share',seriesNames:['Vested units','Unvested units'],rows:p.milestones.map(r=>({label:'Month '+r.month+(r.month===input.optionServiceMonths?' · selected checkpoint':''),values:[r.vested,r.unvested]})),note:'These are independent snapshots of the same untouched grant, not additional monthly grants to add together. Each bar totals the entered grant count. Nothing vests before the 12-month cliff; at month 12 the schedule catches up one quarter of the 48-month service period, rounded down to whole units. Subsequent completed months use cumulative grant × months ÷ 48, rounded down. The selected checkpoint is inserted in time order. No exercise or cancellation reduces the plotted grant.'},
+    {id:'employee-option-intrinsic-price',type:'line',title:'A share-price quote must clear the strike before there is positive intrinsic spread',unit:'money',unitLabel:'Intrinsic spread on vested units (CAD) · not full option fair value',tableUnit:'Intrinsic spread (CAD)',xLabel:'Hypothetical share price (CAD)',xUnit:'money',series:[{name:'Vested units × positive price–strike difference',rows:p.payoff}],note:'The horizontal axis is a hypothetical share price, not time. Vested units and strike stay selected. The curve includes the exact strike and selected share price. Spread is zero at or below strike and increases by the vested unit count for each CAD 1 above strike. Zero intrinsic spread does not establish that an unexpired option has no economic value. No price probabilities, volatility, future service, tax treatment or exercise recommendation is estimated.'},
+    {id:'employee-option-sale-reconciliation',type:'waterfall',title:'An assumed sale’s gross proceeds include the amount needed to pay the strike',unit:'money',unitLabel:'Hypothetical exercise-and-immediate-sale cash components (CAD)',rows:[{label:'Gross proceeds of the assumed share sale',value:p.saleGross},{label:'Exercise cost of those same units',value:-p.saleStrikeCost}],totalLabel:'Remaining price–strike cash before tax and fees',note:'Only vested units enter this comparison, and exercise and immediate sale are explicitly assumed permitted. The same entered share price applies throughout. If price is at or below strike, the illustration assumes no transaction and shows zero flows. These components reconcile a hypothetical sale; their order is not an execution or settlement timetable. Sale-funded exercise may avoid a separate strike-cash advance only if the actual arrangement permits it. Gross share-sale proceeds are not the option spread, and the endpoint is not take-home cash after deductions.'},
+    {id:'employee-option-hold-funding',type:'bar',axisRight:30,title:'Exercise and hold requires funding even when the intrinsic spread is positive',unit:'money',unitLabel:'Exercise-and-hold strike funding comparison (CAD) · no sale assumed',rows:[{label:'Entered uncommitted cash',value:input.optionExerciseCash},{label:'Strike cost if all vested units are exercised',value:p.strikeCash},{label:'Strike-cash shortfall before tax and fees',value:p.fundingGap}],note:'The strike cost equals vested units times the entered exercise price, independently of the current share quote. The shortfall is max(strike cost minus entered uncommitted cash, zero). These bars are comparisons, not parts to add together. This alternative assumes shares would be retained; no sale proceeds fund the exercise. Zero strike-cash shortfall does not establish total affordability because taxes, withholding and fees are excluded. Cash promised to bills or other goals should not also be treated as uncommitted exercise cash.'}
+  ]};
+}

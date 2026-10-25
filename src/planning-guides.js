@@ -1,3 +1,4 @@
+import { employeeOptionGuides } from './planning-employee-option-guides.js';
 import { repairReplaceGuides } from './planning-repair-replace-guides.js';
 import { stagedDrawGuides } from './planning-staged-draw-guides.js';
 import { indexedBondGuides } from './planning-indexed-bond-guides.js';
@@ -109,6 +110,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...employeeOptionGuides,
   ...repairReplaceGuides,
   ...stagedDrawGuides,
   ...indexedBondGuides,

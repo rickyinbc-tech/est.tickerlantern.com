@@ -1,3 +1,4 @@
+import { wealthSharesGuides } from './planning-wealth-shares-guides.js';
 import { sensitivityGuides } from './planning-sensitivity-guides.js';
 import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
 import { tailShapeGuides } from './planning-tail-shape-guides.js';
@@ -115,6 +116,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...wealthSharesGuides,
   ...sensitivityGuides,
   ...tuitionCreditCapacityGuides,
   ...tailShapeGuides,

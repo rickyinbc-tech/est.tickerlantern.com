@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 208 visual planning guides and 847
+charts**. The library now leads with 209 visual planning guides and 851
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -578,3 +578,5 @@ Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflo
 reference, not financial evidence or a market-data source.
 
 The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.
+
+The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group means and rounded changes. Approximate wealth shares use explicit 40/20/20/20 household weights and normalise the rounded weighted sum, disclosing the Q4 2025 20-cent reconciliation difference. Its cumulative chart contains only the published group boundaries, without inventing a lowest-quintile point, within-group Lorenz detail, Gini coefficient or confidence bounds. Source-year switching and mobile layout are verified.

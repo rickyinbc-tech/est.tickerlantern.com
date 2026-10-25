@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 279 visual planning guides and 1151
+charts**. The library now leads with 280 visual planning guides and 1155
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -759,3 +759,5 @@ Four charts separate actual days, fixed denominators and a calendar-year example
 The English guide `life-insurance-surrender-death-quote-policy-loan` separates a fictional dated surrender quote, total conditional death quote and existing insurer policy loan including accrued interest. Four interactive CAD charts show alternative recipients/events, a surrender waterfall, a same-date loan sensitivity and a quotation matrix. Each alternative debits the loan once; full surrender ends this example's coverage, and the two residual amounts are not added. No future policy valuation, loan approval, dividend, tax, lapse or replacement is estimated. Optional definition-level inputIssue validation rejects unsupported quote combinations, gives a specific accessible explanation and preserves the last accepted results; legacy validation retains its existing range and whole-number behavior.
 
 A discounted retailer gift-card guide tracks matched purchases through four interactive figures. Upfront card cash, later top-ups, actual redemptions and unused nominal purchasing credit stay separate. The original example distinguishes the shopping-stop month from expiry and reconciles cash catch-up without treating unused credit as a refund. FCAC supplies general mechanics only.
+
+A percentage-deductible guide adds four charts comparing insured-value, loss-based and flat-dollar teaching formulas. Its single accepted loss is split between household and insurer, and assigned reserve use is capped at the final household share. The declared-base matrix retains the loss cap. NAIC HTML provides U.S. context only; no real policy trigger or Canadian rule is implemented.

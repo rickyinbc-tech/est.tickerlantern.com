@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 105 visual planning guides and 421
+charts**. The library now leads with 108 visual planning guides and 433
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -285,3 +285,19 @@ Run `node --test tests/planning-banking-housing.test.mjs` and
 `python3 tests/browser_banking_housing.py <origin>` for mathematical and rendered
 checks. The existing savings-promotion guide is retained as the single article
 on that topic.
+
+## Benefit caps, credit snapshots and paired-return compounding
+
+Three further English guides add twelve interactive figures on annual insurer
+benefit caps and reimbursement receipts, dated credit-utilization ratios, and
+arithmetic versus compound return. The benefit cap uses service-year benefit
+dollars, with a separate receipt lag and pre-receipt funding check. Credit
+snapshots use an independently assumed day and never estimate a credit score.
+The paired-return example holds the arithmetic mean fixed over complete
+two-year pairs, with no later contributions or withdrawals. A native signed-bar
+figure preserves negative returns to the left of a visible zero axis.
+
+Run `node --test tests/planning-benefits-credit-growth.test.mjs` for independent
+financial identities, boundary cases and signed-bar geometry. Run
+`python3 tests/browser_benefits_credit_growth.py <origin>` for real interactions
+and normal/narrow rendered checks. All amounts and paths are hypothetical.

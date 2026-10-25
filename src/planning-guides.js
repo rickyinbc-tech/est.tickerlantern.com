@@ -1,4 +1,5 @@
 import { balancedTimingGuides } from './planning-balanced-timing-guides.js';
+import { rewardRedemptionGuides } from './planning-reward-redemption-guides.js';
 import { shareSplitGuides } from './planning-share-split-guides.js';
 import { flatLoanGuides } from './planning-flat-loan-guides.js';
 import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
@@ -162,6 +163,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...balancedTimingGuides,
+  ...rewardRedemptionGuides,
   ...shareSplitGuides,
   ...flatLoanGuides,
   ...cppAmountsGuides,

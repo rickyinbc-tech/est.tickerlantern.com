@@ -43,7 +43,7 @@ test('the reference quote produces the same starting funding ratio for all alloc
 test('continuous and grid scenarios preserve quote units and distinguish allocation from the share of the bill funded',()=>{
  const d=defaults('currencyMatch'),r=planningResult('currencyMatch');
  for(let s=0;s<3;s++)for(const row of r.charts[2].series[s].rows)near(row.value,currencyMatchFunding(d,[0,d.foreignAllocation,100][s],row.x).gapFCU/d.billFCU);
- for(let row=0;row<4;row++)for(let col=0;col<4;col++)near(r.charts[3].rows[row].values[col],currencyMatchFunding(d,[0,25,50,100][row],[1,1.25,1.5,1.75][col]).ratio);
+ assert.equal(r.charts[3].columns.length,3);for(let row=0;row<4;row++)for(let col=0;col<3;col++)near(r.charts[3].rows[row].values[col],currencyMatchFunding(d,[0,25,50,100][row],[1,1.5,2][col]).ratio);
  const short=planningResult('currencyMatch',{...d,budgetCAD:24300});assert.ok(short.charts[3].rows[3].values.every(x=>Math.abs(x-.9)<1e-10));
 });
 test('zero budget and all field boundaries produce four finite graphs and data tables',()=>{

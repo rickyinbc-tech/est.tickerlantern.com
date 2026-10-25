@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 84 visual planning guides and 336
-charts, with new guides on shrinking credit-card minimum payments, a pay-rise
-saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 87 visual planning guides and 348
+charts, with new guides on job-offer cash and commuting costs, losses before a
+fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -68,6 +68,12 @@ constraints. HBP projections start from a separately confirmed required year;
 income inclusions reduce the HBP ledger without restoring an RRSP contribution.
 The HBP tax percentage is a budget allowance, not a tax-return calculation.
 The homepage and library derive article and chart counts from the content.
+Job comparisons use independently entered take-home pay and show commuting
+hours without assigning them a cash value. Goal stress tests apply one loss
+before the selected month’s deposit; the contribution solver also stresses
+earlier deposits. Retirement rules keep all dollars and returns real, apply
+one persistent flexible-spending cut per triggered annual review, and retain
+unpaid essentials separately from deliberately forgone consumption.
 The federal bracket illustration is explicitly fixed to 2026 and excludes
 credits and other taxes. The FHSA calendar models an ordinary new-account
 case only; it does not determine personal eligibility or current account room.

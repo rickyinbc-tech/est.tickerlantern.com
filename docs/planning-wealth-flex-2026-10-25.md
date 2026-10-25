@@ -44,7 +44,7 @@ The focused suite checks source transcription, source/scenario isolation,
 hand-worked calculations, cash conservation, essential-floor behavior, strict
 relative triggers, zero cuts/gifts, depletion, partial gifts, dates beyond the
 horizon, input validation and finite rendering at every field boundary.
-The complete JavaScript suite passed 406 tests and the Python suite passed 122.
+The complete JavaScript suite passed 415 tests and the Python suite passed 122.
 `npm run build` succeeded; the browser module dependency graph, canonical paths
 and sitemap entries were checked against the local build.
 

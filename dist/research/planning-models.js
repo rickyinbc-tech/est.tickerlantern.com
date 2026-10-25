@@ -1,4 +1,5 @@
 import { wealthFlexDefinitions, wealthFlexResult } from './planning-wealth-flex-models.js';
+import { calendarRiskDefinitions, calendarRiskResult } from './planning-calendar-risk-models.js';
 import { savingsProjectDefinitions, savingsProjectResult } from './planning-savings-projects-models.js';
 import { budgetExposureDefinitions, budgetExposureResult } from './planning-budget-exposure-models.js';
 import { commitmentDefinitions, commitmentResult } from './planning-commitments-models.js';
@@ -58,8 +59,8 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...savingsProjectDefinitions,...budgetExposureDefinitions,...coreDefinitions,...wealthFlexDefinitions,...commitmentDefinitions,...wealthCareerDefinitions,...runwaySpendingDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
-export const wholeInputKeys=['phaseMonths','takeoverMonth','useMonths','paymentYears','settlementMonth','supportDelay','supportMonths','jobMonth','careYear','guests','eventMonth','changeAfter','firstPayday','billDay','years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','giftYear','shockMonthA','shockMonthB','firstPayDay','savingDay'];
+export const definitions = {...calendarRiskDefinitions,...savingsProjectDefinitions,...budgetExposureDefinitions,...coreDefinitions,...wealthFlexDefinitions,...commitmentDefinitions,...wealthCareerDefinitions,...runwaySpendingDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
+export const wholeInputKeys=['shockMonth','workDaysA','workDaysB','workWeeks','phaseMonths','takeoverMonth','useMonths','paymentYears','settlementMonth','supportDelay','supportMonths','jobMonth','careYear','guests','eventMonth','changeAfter','firstPayday','billDay','years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','giftYear','shockMonthA','shockMonthB','firstPayDay','savingDay'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
   return definitions[kind].fields.every(([key,,,min,max])=> Number.isFinite(input[key]) && input[key]>=min && input[key]<=max && (!wholeInputKeys.includes(key)||Number.isInteger(input[key])));
@@ -111,6 +112,7 @@ export function planningResult(kind,input=defaults(kind)) {
   if(runwaySpendingDefinitions[kind])return runwaySpendingResult(kind,input);
   if(incomeTimingDefinitions[kind])return incomeTimingResult(kind,input);
   if(commitmentDefinitions[kind])return commitmentResult(kind,input);
+  if(calendarRiskDefinitions[kind])return calendarRiskResult(kind,input);
   if(habitsRecoveryDefinitions[kind])return habitsRecoveryResult(kind,input);
   if(wealthFlexDefinitions[kind])return wealthFlexResult(kind,input);
   if(additionalDefinitions[kind])return additionalResult(kind,input);

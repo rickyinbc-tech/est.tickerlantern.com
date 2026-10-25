@@ -479,3 +479,10 @@ see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.
 An English guide pairs selected official 2024 FCAC survey observations with
 independent hypothetical project/review and annual-retainer fee calendars. See
 `docs/planning-advice-cost-2026-10-25.md` for sources and checks.
+
+## Card purchases and household bookkeeping
+
+Five charts reconcile purchases, later card repayments, internal savings
+transfers and a final settlement-only event. The two bank accounts and card
+liability stay in one conserved ledger. See
+`docs/planning-card-ledger-2026-10-25.md` for assumptions and verification.

@@ -6,7 +6,9 @@ import { incomeCreditGuides } from './planning-income-credit-guides.js';
 import { taxHomeGuides } from './planning-tax-home-guides.js';
 import { transitionGuides } from './planning-transitions-guides.js';
 import { fundingChoiceGuides } from './planning-funding-choices-guides.js';
+import { priorityGuides } from './planning-priorities-guides.js';
 export const planningGuides = [
+  ...priorityGuides,
   ...fundingChoiceGuides,
   ...transitionGuides,
   ...taxHomeGuides,

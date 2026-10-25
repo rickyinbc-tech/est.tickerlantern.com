@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with thirty visual planning guides and 115
+charts**. The library now leads with thirty-three visual planning guides and 127
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -17,7 +17,8 @@ periodic-bill calendars, car ownership, insurance deductibles and planned
 work breaks, employer matching, consolidation, variable income, federal tax
 brackets, an ordinary-case FHSA calendar, moving-home cash release, retirement
 income bridges, caregiving cash needs, estate liquidity timing, disability-income
-schedules, foreign-currency goals and annuity cash-flow trade-offs.
+schedules, foreign-currency goals, annuity cash-flow trade-offs, repayment order,
+shared-budget goal deadlines and ordinary RRIF withdrawals versus spending.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -48,6 +49,12 @@ Disability benefits are entered net of taxes and coordination, without claim
 assessment. The currency-goal tool uses hypothetical CAD-per-FCU rates and one
 terminal conversion. The annuity tool uses hypothetical gross payments,
 conditional on survival, and does not equate payout ratios with investment yield.
+Debt-order schedules hold total budget fixed and stop at repayment or 120 months;
+partial interest is labelled separately. Multiple-goal rules freeze funding at
+each goal’s deadline. The RRIF tool is a one-year All other RRIFs illustration;
+its tax allowance is not actual withholding or final tax. Validate its public
+factor snapshot with `python3 scripts/check-planning-rrif-source.py` followed by
+the saved CRA and Justice Canada HTML source paths under ignored `qa/`.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

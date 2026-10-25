@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 182 visual planning guides and 741 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 184 visual planning guides and 750 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -498,3 +498,5 @@ The two-income household guide adds an exact four-state probability grid, cash-s
 `/research/asset-resilience-statistics-household-emergency-target` pairs two fixed Statistics Canada interval charts with two separate hypothetical household cash-target charts. The selected national person-based observations retain reference years, supplied 95% bounds, source units/precision, vectors, coordinates, flags and the public download hash. Ten-province coverage excludes the territories. The invented benchmark is not an official current LIM or a classification of the reader.
 
 Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py <11100082-eng.zip>` using the official CSV ZIP identified in the data module. The extractor rejects duplicate/missing grains, changed latest-year coverage, flagged observations, invalid units and unordered intervals. Tests verify the independent hub controls, household reconciliation and fixed-source behavior; `tests/browser_asset_resilience.py` exercises real controls, invalid-input retention, reset, data tables and mobile SVG labels.
+
+The extended-warranty guide separates whole-window repair probability, conditional eligibility and the capped provider payment in five interactive charts. All probabilities and contract terms are hypothetical. The model counts the upfront price once in every state, distinguishes expected cost from an actual repair reserve, and handles infeasible cost-equality thresholds explicitly. State arithmetic, boundary cases and mobile chart layout are verified.

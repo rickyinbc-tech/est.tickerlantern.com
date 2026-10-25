@@ -708,3 +708,8 @@ See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.
 
 Four charts separate repeated-event probabilities, average costs and reserve shortfalls. See
 `docs/planning-repeat-risk-2026-10-25.md` for sources and checks.
+
+
+### Life-insurance quotation reconciliation
+
+The English guide `life-insurance-surrender-death-quote-policy-loan` separates a fictional dated surrender quote, total conditional death quote and existing insurer policy loan including accrued interest. Four interactive CAD charts show alternative recipients/events, a surrender waterfall, a same-date loan sensitivity and a quotation matrix. Each alternative debits the loan once; full surrender ends this example's coverage, and the two residual amounts are not added. No future policy valuation, loan approval, dividend, tax, lapse or replacement is estimated. Optional definition-level inputIssue validation rejects unsupported quote combinations, gives a specific accessible explanation and preserves the last accepted results; legacy validation retains its existing range and whole-number behavior.

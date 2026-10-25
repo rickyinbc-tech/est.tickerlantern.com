@@ -1,3 +1,4 @@
+import { policySettlementGuides } from './planning-policy-settlement-guides.js';
 import { repeatedRiskGuides } from './planning-repeated-risk-guides.js';
 import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
 import { repeatRiskGuides } from './planning-repeat-risk-guides.js';
@@ -165,6 +166,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...policySettlementGuides,
   ...repeatedRiskGuides,
   ...wholeReinvestGuides,
   ...repeatRiskGuides,

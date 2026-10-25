@@ -1,0 +1,29 @@
+// Snapshot arithmetic for independently verified eligible deposits in client name.
+export const depositMapCap=100000;
+export const depositMapDefinitions={depositMap:{title:'Group eligible balances by issuing member and coverage category',fields:[
+ ['depositAOneDirect','Member A · one-name category · directly held eligible deposits (CAD)',60000,0,250000,5000],
+ ['depositAOneBroker','Member A · one-name category · client-name brokered eligible deposits (CAD)',50000,0,250000,5000],
+ ['depositATfsaDirect','Member A · TFSA category · directly held eligible deposits (CAD)',40000,0,250000,5000],
+ ['depositATfsaBroker','Member A · TFSA category · client-name brokered eligible deposits (CAD)',70000,0,250000,5000],
+ ['depositBOneDirect','Member B · one-name category · directly held eligible deposits (CAD)',30000,0,250000,5000],
+ ['depositBOneBroker','Member B · one-name category · client-name brokered eligible deposits (CAD)',60000,0,250000,5000],
+ ['depositBTfsaDirect','Member B · TFSA category · directly held eligible deposits (CAD)',10000,0,250000,5000],
+ ['depositBTfsaBroker','Member B · TFSA category · client-name brokered eligible deposits (CAD)',20000,0,250000,5000]
+]}};
+export function depositCoverageMap(i){
+ const cells=[['A','One-name','depositAOneDirect','depositAOneBroker'],['A','TFSA','depositATfsaDirect','depositATfsaBroker'],['B','One-name','depositBOneDirect','depositBOneBroker'],['B','TFSA','depositBTfsaDirect','depositBTfsaBroker']].map(([member,category,d,b])=>{
+  const direct=i[d],broker=i[b],total=direct+broker;
+  return {member,category,direct,broker,total,within:Math.min(depositMapCap,total),excess:Math.max(0,total-depositMapCap),headroom:depositMapCap-total};
+ });
+ return {cells,total:cells.reduce((s,c)=>s+c.total,0),within:cells.reduce((s,c)=>s+c.within,0),excess:cells.reduce((s,c)=>s+c.excess,0)};
+}
+export function depositMapResult(kind,i){
+ if(kind!=='depositMap')throw Error('Unknown deposit-map topic.');
+ const p=depositCoverageMap(i),label=c=>'Member '+c.member+' · '+c.category;
+ return {metrics:[['Entered eligible deposit balances',p.total,'money'],['Within the four assumed coverage-bucket limits',p.within,'money'],['Above the individual bucket limits',p.excess,'money']],note:'Original same-date snapshot, using CDIC public guidance reviewed 25 October 2026 and a CAD 100,000 principal-plus-interest limit for each included qualifying category at each member. A and B are hypothetical and assumed to be genuinely distinct CDIC member institutions. One depositor owns all modeled balances. Only the one-name non-registered category and the separate TFSA eligible-deposit category are included. Every input is independently assumed to be an eligible deposit, includes interest accrued to the common observation date, and is held in client name. Direct and client-name brokered deposits in the same member/category are combined before applying the cap. Nominee-name deposits, trusts, joint accounts, other registered categories, foreign-currency conversion and provincial insurance schemes require their own rules and are excluded. A statement, platform, broker, branch, product name or account count does not establish a separate issuing member. No actual product eligibility or ownership record is verified. This is not a contribution-room calculation, transfer instruction, payout forecast, credit-risk estimate or maturity/access calendar. Future interest and balance movements are not projected. An amount above a modeled cap is not a predicted loss.',charts:[
+  {id:'deposit-map-channel-aggregation',type:'stackbar',title:'Combine the two purchase channels inside each member-and-category bucket',unit:'money',seriesNames:['Directly held eligible deposits','Client-name brokered eligible deposits'],rows:p.cells.map(c=>({label:label(c),values:[c.direct,c.broker]})),note:'The source of an account statement is a channel, not an extra insurance category. These parts sum to the eligible balance in each bucket. The model assumes the brokered deposits are placed in the depositor’s own name; it does not apply these client-name rules to nominee or trust holdings.'},
+  {id:'deposit-map-covered-excess',type:'stackbar',title:'Apply the cap to each combined bucket before adding coverage',unit:'money',seriesNames:['Within that bucket’s cap','Above that bucket’s cap'],rows:p.cells.map(c=>({label:label(c),values:[c.within,c.excess]})),note:'Each row uses a separate assumed CAD 100,000 cap. No unused limit is moved from another row. The within-limit amount is a conditional illustration assuming the stated eligibility, member and ownership records, not a confirmation of a real depositor’s coverage.'},
+  {id:'deposit-map-headroom',type:'heatmap',title:'Unused headroom in one cell cannot offset an excess in another',unit:'money',signed:true,columns:['One-name','TFSA'],rows:['A','B'].map(member=>({label:'Member '+member,values:p.cells.filter(c=>c.member===member).map(c=>c.headroom)})),note:'Each cell is CAD 100,000 minus that member/category’s combined eligible balance. Positive is unused headroom and negative is an above-cap amount. These signed values are not a pooled household allowance. The displayed TFSA category does not establish that a contribution or transfer is permitted.'},
+  {id:'deposit-map-total-bridge',type:'waterfall',title:'Reconcile all eligible balances with the amount within the modeled limits',unit:'money',totalLabel:'Within the modeled bucket limits',rows:[{label:'All entered eligible deposits',value:p.total},...p.cells.map(c=>({label:label(c)+' · excess',value:-c.excess}))],note:'Subtract each bucket’s excess separately from the eligible total. Do not apply one cap to the entire household or multiply a cap by the number of account statements. This arithmetic does not make an insured term deposit available before its contractual payment date.'}
+ ]};
+}

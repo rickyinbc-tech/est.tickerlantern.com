@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 218 visual planning guides and 887
+charts**. The library now leads with 224 visual planning guides and 913
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -135,6 +136,10 @@ A purchase-average guide follows equal monthly cash through fractional units,
 security spending and fixed fees. Arithmetic quoted-price averages remain
 separate from harmonic purchase-price averages and all-in household cash per
 unit. A separate valuation and signed matrix keep losses visible.
+A homeownership-age guide retains twelve dated household rates from the
+2022 Statistics Canada release. A separate cash accumulation model uses no
+ownership rates as probabilities or personal deadlines. Verify the twelve
+cells with `python3 scripts/check-planning-homeownership-age-source.py <source.csv>`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -608,7 +613,13 @@ The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group mean
 Four charts connect equal cash purchases with units, weighted cost and marked value. See
 `docs/planning-unit-cost-2026-10-25.md` for sources and checks.
 
-`planning-life-table` separates period mean uncertainty, conditional survival
-and an authored cash horizon. Reproduce 294 observations with
-`scripts/extract-planning-life-table.py`; see
-`docs/planning-life-table-2026-10-25.md` for scope and validation.
+### Collateral-ratio adjustments and outside funding
+
+`/research/collateral-equity-ratio-cash-loan-repayment-asset-sale` compares three invented balance-sheet treatments in five charts. Direct loan repayment, extra held collateral and asset-sale repayment use different denominators; subtracting new outside cash preserves the original post-price equity. The held-cash arrangement and required ratio are explicit hypothetical assumptions, not broker procedures or Canadian regulatory requirements. Sale-only repair is unavailable for a remaining funded account with nonpositive equity. Independent ratio equations, negative equity and near-zero numerical stability are checked in `tests/planning-collateral-repair.test.mjs`; the browser companion verifies controls, tables and mobile labels.
+
+The collateral guide uses a fictional loan-to-value covenant to separate positive equity from a funding test. It calculates outside debt repayment, fully eligible collateral additions and internal sales using distinct equations, with an explicit no-partial-sale boundary when debt reaches collateral value. No lender or regulatory margin rule is implemented. Transfer accounting, signed equity, exact-limit and zero-debt cases, and mobile controls are verified.
+
+## Client-name deposits across channels
+
+Four charts group client-name eligible deposits by issuing member and category. See
+`docs/planning-deposit-map-2026-10-25.md` for sources and checks.

@@ -48,7 +48,7 @@ invalid whole ages and editorial scope. Default both-sexes ex at 65 is 20.85,
 with a 20.83–20.87 mean interval; conditional survival to 95 is 13600/88760.
 Default constant cash to 95 is CAD 1,200,000 from age 65 at CAD 40,000/year.
 
-Full JavaScript suite: 1077 passed. Python suite: 122 passed.
+Full JavaScript suite: 1114 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/tables, exact
 confidence bounds, independent cash edits, age conditioning, invalid fractional
 age retention, reset and data disclosure. All four mobile figures are visually

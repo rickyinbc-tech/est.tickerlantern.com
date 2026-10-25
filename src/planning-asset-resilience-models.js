@@ -1,0 +1,28 @@
+import {assetResilienceData as evidence} from './planning-asset-resilience-data.js';
+
+export const assetResilienceDefinitions={
+ assetBufferDefinition:{title:'Compare three independently entered household benchmarks',fields:[
+  ['bufferMonths','Whole months of expenses to illustrate',3,1,12,1],
+  ['accessibleCash','Cash available after withdrawal costs and tax (CAD)',10000,0,500000,500],
+  ['annualBenchmark','Invented annual low-income-style benchmark (CAD)',30000,0,200000,1000],
+  ['annualNetIncome','Entered annual household income after tax (CAD)',72000,0,500000,1000],
+  ['monthlyEssentials','Entered monthly essential cash expenses (CAD)',4500,0,30000,100]
+ ]}
+};
+
+export function assetBufferTargets(d){
+ const benchmark=d.annualBenchmark*d.bufferMonths/12,income=d.annualNetIncome*d.bufferMonths/12,expenses=d.monthlyEssentials*d.bufferMonths;
+ return {benchmark,income,expenses,extraCash:Math.max(0,expenses-d.accessibleCash),runway:d.monthlyEssentials>0?d.accessibleCash/d.monthlyEssentials:null};
+}
+
+export function assetResilienceResult(kind,d){
+ if(kind!=='assetBufferDefinition')throw Error('Unknown asset-resilience scenario.');
+ const p=assetBufferTargets(d),source={source:evidence.url,sourceLabel:'Statistics Canada · Table 11-10-0082-01 · reference years through 2023',evidence:'Official survey estimates · published 95% confidence intervals'};
+ return {metrics:[['Selected essential-expense target',p.expenses,'money'],['Additional cash needed for that target',p.extraCash,'money'],['Essential-expense months funded by entered cash',p.runway,'decimal']],
+ note:'The first two figures contain fixed official Survey of Financial Security estimates for persons of all ages and all family types in the ten provinces; the three territories are excluded. They are percentages of persons, not household counts or probabilities of job loss. Reference years end in 2023; the table was released 29 October 2024 and reviewed 25 October 2026. Whiskers retain the published 95% confidence bounds. The remaining figures and all metrics are separate hypothetical arithmetic. The entered annual benchmark is invented, not an official current LIM threshold or a survey classification. Entered cash is an after-cost, after-tax amount assumed available when required; the survey asset definition includes a broader set of holdings. The model does not infer household eligibility, portfolio liquidity or a recommended reserve. With zero essential expenses the expense target is zero and the expense-month ratio is unavailable.',charts:[
+  {id:'asset-resilience-six-waves',type:'intervalbar',title:'The published three-month LIM measure across six survey years',unit:'percent',unitLabel:'Share of persons · national after-tax LIM basis · supplied 95% confidence intervals',rows:evidence.trend.map(r=>({label:String(r.year),value:r.value,lower:r.lower,upper:r.upper})),...source,note:'Each bar is a separate survey-year estimate, not an annual observation or a path followed by one group of households. The asset threshold uses the national after-tax low-income measure, adjusted for household size. The 1999–2023 difference is descriptive; no paired significance test or causal explanation is calculated.'},
+  {id:'asset-resilience-duration-basis',type:'intervalbar',title:'Changing the duration or income basis changes the reported 2023 share',unit:'percent',unitLabel:'2023 share of persons · two threshold bases · supplied 95% confidence intervals',rows:evidence.duration.map(r=>({label:r.months+' month'+(r.months===1?'':'s')+' · '+(r.measure==='lim'?'LIM-AT basis':'household income basis'),value:r.value,lower:r.lower,upper:r.upper})),...source,note:'LIM-AT uses an adjusted national low-income threshold. The other published series uses after-tax household income, excluding capital gains. These overlapping classifications must not be added. Confidence bounds concern survey estimates, not minimum and maximum individual reserve sizes.'},
+  {id:'asset-buffer-three-targets',type:'groupbar',title:'One cash balance can exceed one illustrative target and fall below another',unit:'money',unitLabel:'Independent hypothetical targets and the same entered available cash · CAD',seriesNames:['Target for selected months','Same available cash shown for comparison'],rows:[{label:'Invented annual benchmark × mo ÷ 12',values:[p.benchmark,d.accessibleCash]},{label:'Annual net income ÷ 12 × months',values:[p.income,d.accessibleCash]},{label:'Monthly essential expenses × months',values:[p.expenses,d.accessibleCash]}],note:'The cash bar repeats the same balance three times for comparison; it is not three separate reserves. The first benchmark is an invented input rather than an actual household-size-adjusted LIM. The chart does not reproduce the official survey classification. No returns, replacement income or emergency credit are assumed.'},
+  {id:'asset-buffer-expense-shortfall',type:'heatmap',title:'Extra cash needed depends on both monthly essentials and the chosen duration',unit:'money',unitLabel:'Additional cash needed above entered available cash · CAD',columns:['1 mo','3 mo','6 mo','9 mo'],rows:[3000,4500,6000,7500].map(expense=>({label:'$'+expense.toLocaleString('en-CA')+'/mo',values:[1,3,6,9].map(months=>Math.max(0,expense*months-d.accessibleCash))})),note:'Every cell is a separate hypothetical essential-expense budget and duration. Only available cash is held at the selected input; the other controls do not determine these fixed row and column scenarios. Zero means no additional cash is needed for that cell, not that the household has no financial risk. This is a sensitivity grid, not a distribution or a probability forecast.'}
+ ]};
+}

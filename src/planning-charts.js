@@ -11,7 +11,13 @@ export function format(value,unit,compact=false) {
   }
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
   if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
+  if(unit==='cents')return value.toFixed(compact?1:2)+'¢';
   if(unit==='decimal')return value.toFixed(1);
+  if(unit==='shares') {
+    if(compact&&Math.abs(value)>=1000000)return Number((value/1000000).toFixed(2)).toLocaleString('en-CA')+'m';
+    if(compact&&Math.abs(value)>=1000)return Number((value/1000).toFixed(2)).toLocaleString('en-CA')+'k';
+    return value.toLocaleString('en-CA',{maximumFractionDigits:compact?2:6});
+  }
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
   if(unit==='money') {
@@ -92,7 +98,7 @@ function linePlot(spec,width) {
   const x=v=>left+(v-xmin)/(xmax-xmin)*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
   let body='';
   const yticks=[...new Set([...Array.from({length:5},(_,i)=>ymin+(ymax-ymin)*i/4),...(ymin<0?[0]:[])])];
-  for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
+  for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,spec.compactYTicks!==false),'end');}
   const count=width<500?2:4;
   const ticks=spec.xTicks??[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))].map(value=>({value,label:spec.xUnit?format(value,spec.xUnit,true):value}));
   ticks.forEach(t=>{body+=txt(x(t.value),height-bottom+24,t.label,'middle');});

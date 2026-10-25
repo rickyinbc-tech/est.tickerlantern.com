@@ -523,3 +523,10 @@ Four charts separate expected repair costs from the cash required in each outcom
 
 `planning-billable-capacity` adds billable hours and annual cash allocation; see
 `docs/planning-billable-capacity-2026-10-25.md` for scope and validation.
+
+## Fraud-reporting statistics
+
+Three charts separate CAFC's 2025 category loss amounts, report/victim counts
+and a derived loss-per-listed-victim ratio. The display control preserves the
+underlying observations. See `docs/planning-fraud-2026-10-25.md` for source
+grain, rounding, unavailable values and verification.

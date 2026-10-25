@@ -105,7 +105,7 @@ function linePlot(spec,width) {
   return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
-  const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
+  const left=52,right=spec.axisRight??(spec.unit==='percent'?30:18),top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
   const interval=spec.type==='intervalbar';
   const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:interval?86:62, height=top+spec.rows.length*rowHeight+40;
   const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):interval?Math.max(r.value,r.upper):r.value??0;

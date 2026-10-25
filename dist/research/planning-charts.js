@@ -149,7 +149,8 @@ function signedBarPlot(spec,width) {
   const lo=min<0?-niceMax(-min):0,hi=max>0?niceMax(max):lo<0?0:1;
   const x=value=>left+(value-lo)/(hi-lo)*(width-left-right);
   let body='';
-  const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4),0])].sort((a,b)=>a-b);
+  const ticks=[...new Set([...(spec.axisTicks??Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4)),0])].sort((a,b)=>a-b);
+  if(spec.axisTicks?.some(v=>!Number.isFinite(v)||v<lo||v>hi))throw Error('Signed-bar ticks must be finite and within the value axis.');
   for(const v of ticks){
     if(v!==0&&Math.abs(x(v)-x(0))<34)continue;
     const label=spec.axisDecimals==null?format(v,spec.unit,true):Number(v.toFixed(spec.axisDecimals)).toLocaleString('en-CA',{useGrouping:false});

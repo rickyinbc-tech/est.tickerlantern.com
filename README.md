@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 126 visual planning guides and 510
+charts**. The library now leads with 128 visual planning guides and 518
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -69,6 +69,10 @@ Return-reading guides reconcile per-unit distributions, retained cash and
 reinvested resources, then compare time-weighted and money-weighted returns
 using one dated contribution. Payout schedules and external contributions are
 kept separate from investment profit; all return paths are hypothetical.
+Trading-and-equity guides reconcile ETF spreads and flat commissions against
+executed cash, then track capitalized-interest borrowing and a signed future
+home-sale residual. All quotes, loan rates, draws and property paths are
+hypothetical; neither fills nor lending availability are predicted.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

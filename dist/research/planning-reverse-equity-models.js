@@ -1,5 +1,5 @@
 export const reverseEquityDefinitions={
-  reverseEquity:{title:'Follow an upfront advance, accumulated interest and a separate property scenario',fields:[
+  reverseCashBridge:{title:'Follow an upfront advance, accumulated interest and a separate property scenario',fields:[
     ['reverseHome','Starting home value in the hypothetical scenario (CAD)',750000,100000,3000000,25000],
     ['reverseAdvance','Gross initial loan advance before the entered fees (CAD)',200000,0,1000000,10000],
     ['reverseFees','Upfront costs deducted from that gross advance (CAD)',4000,0,20000,500],
@@ -16,7 +16,7 @@ export function reverseEquityPath(input,years=input.reverseYears){
   return {rows,end,netCash:input.reverseAdvance-input.reverseFees-input.reverseOldDebt,capitalizedInterest:end.debt-input.reverseAdvance,selling,netProperty,rawRemainder:netProperty-end.debt};
 }
 export function reverseEquityResult(kind,input){
-  if(kind!=='reverseEquity')throw Error('Unknown retirement home-equity topic.');
+  if(kind!=='reverseCashBridge')throw Error('Unknown retirement home-equity topic.');
   const p=reverseEquityPath(input);
   return {metrics:[['Advance less fees and old-debt settlement',p.netCash,'money'],['Modeled loan balance before contract protections',p.end.debt,'money'],['Sale remainder before contract protections',p.rawRemainder,'money']],note:'Hypothetical arithmetic, not a reverse-mortgage offer, approval, property appraisal or actual payout quote. One initial gross advance is borrowed; entered upfront costs and the listed old-debt payout are deducted from its proceeds and are not added to the new debt again. No further borrowing or regular repayments occur. The constant nominal annual rate is divided by 12 and interest capitalizes monthly; actual contract rates and compounding may differ. Home value changes at an independent assumed annual rate, and selling costs are a percentage of the modeled sale value. The debt balance is deliberately uncapped. A negative raw property remainder is an arithmetic gap before contractual protections, not a finding of personal or estate liability. No lender guarantee is calculated. Taxes, property upkeep, insurance, accrued post-due interest, other liens and the use of the cash advance are excluded.',charts:[
     {id:'reverse-equity-upfront-cash',type:'waterfall',title:'Reconcile the cash available from the initial advance',unit:'money',unitLabel:'CAD at the hypothetical starting date',rows:[{label:'Gross amount initially borrowed',value:input.reverseAdvance},{label:'Entered upfront costs deducted',value:-input.reverseFees},{label:'Existing secured debt settled',value:-input.reverseOldDebt}],totalLabel:'Net proceeds / cash needed',note:'Fees and the entered existing-debt payout are funded from the gross advance in this example. Debt starts at the gross amount, not the net proceeds. If the entered costs and old-debt payout exceed the advance, the negative endpoint is cash needed from another source. This does not verify fees, permitted borrowing or the net cash a lender would provide.'},

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 185 visual planning guides and 754
+charts**. The library now leads with 186 visual planning guides and 758
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
@@ -507,3 +507,8 @@ Five charts reconcile purchases, card repayments and internal savings transfers.
 
 `planning-illness-cash` adds independent benefit cash calendars; see
 `docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+`planning-billable-capacity` connects billable hours, unpaid work, fixed cash
+costs and an annual personal provision. The rate solver targets pre-personal-tax
+cash, with no legal status or salary comparison. See
+`docs/planning-billable-capacity-2026-10-25.md` for scope and validation.

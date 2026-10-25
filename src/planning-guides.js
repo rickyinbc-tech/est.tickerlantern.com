@@ -1,3 +1,4 @@
+import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
 import { illnessCashGuides } from './planning-illness-cash-guides.js';
 import { cardLedgerGuides } from './planning-card-ledger-guides.js';
 import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
@@ -92,6 +93,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...billableCapacityGuides,
   ...illnessCashGuides,
   ...cardLedgerGuides,
   ...assetResilienceGuides,

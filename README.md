@@ -479,3 +479,9 @@ see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.
 An English guide pairs selected official 2024 FCAC survey observations with
 independent hypothetical project/review and annual-retainer fee calendars. See
 `docs/planning-advice-cost-2026-10-25.md` for sources and checks.
+
+### Asset-resilience definitions and essential-expense targets
+
+`/research/asset-resilience-statistics-household-emergency-target` pairs two fixed Statistics Canada interval charts with two separate hypothetical household cash-target charts. The selected national person-based observations retain reference years, supplied 95% bounds, source units/precision, vectors, coordinates, flags and the public download hash. Ten-province coverage excludes the territories. The invented benchmark is not an official current LIM or a classification of the reader.
+
+Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py <11100082-eng.zip>` using the official CSV ZIP identified in the data module. The extractor rejects duplicate/missing grains, changed latest-year coverage, flagged observations, invalid units and unordered intervals. Tests verify the independent hub controls, household reconciliation and fixed-source behavior; `tests/browser_asset_resilience.py` exercises real controls, invalid-input retention, reset, data tables and mobile SVG labels.

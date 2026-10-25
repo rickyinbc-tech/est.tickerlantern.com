@@ -361,3 +361,10 @@ Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML 
 `/research/taxable-interest-after-tax-inflation-purchasing-power` follows fully taxable interest through a simplified annual tax payment from the same accessible savings account, then deflates its balance into starting-date CAD. It separates the before-tax reference, nominal after-tax balance, real balance and required break-even gross rate. No personal tax brackets, product yields or current CPI values are inferred.
 
 `tests/planning-taxable-real.test.mjs` compares the ledger with independent compound and geometric-sum formulas, checks rate/valuation invariants and contribution-free cash reconciliation, and tests supported input limits. `tests/browser_taxable_real.py [origin]` checks real controls, whole-year validation, reset, tables and responsive chart text. CRA and Bank of Canada source context was reviewed on 25 October 2026.
+
+## Everyday capital planning
+
+`planning-everyday-capital-*` adds owner-level assessment cash calendars, fixed
+debt in nominal and real units, and weekly versus batched investing with fixed
+transaction fees. See `docs/planning-everyday-capital-2026-10-25.md` for source
+scope, timing conventions and the passing arithmetic and browser checks.

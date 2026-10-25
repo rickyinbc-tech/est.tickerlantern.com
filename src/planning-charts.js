@@ -66,6 +66,26 @@ function barPlot(spec,width) {
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
   return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
 }
+function signedBarPlot(spec,width) {
+  const left=64,right=30,top=12,rowHeight=70,height=top+spec.rows.length*rowHeight+42;
+  const values=spec.rows.map(r=>r.value),min=Math.min(0,...values),max=Math.max(0,...values);
+  const lo=min<0?-niceMax(-min):0,hi=max>0?niceMax(max):lo<0?0:1;
+  const x=value=>left+(value-lo)/(hi-lo)*(width-left-right);
+  let body='';
+  const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4),0])].sort((a,b)=>a-b);
+  for(const v of ticks){
+    if(v!==0&&v!==lo&&v!==hi&&Math.abs(x(v)-x(0))<34)continue;
+    body+=line(x(v),top+18,x(v),height-32,v===0?'plot-axis':'plot-grid')+txt(x(v),height-10,format(v,spec.unit,true),'middle');
+  }
+  spec.rows.forEach((row,index)=>{
+    const y=top+index*rowHeight,maxLabel=width<500?32:65,label=row.label.length>maxLabel?row.label.slice(0,maxLabel-1)+'…':row.label;
+    body+=txt(left,y+12,label);
+    body+=`<rect x="${Math.min(x(row.value),x(0))}" y="${y+24}" width="${Math.abs(x(row.value)-x(0))}" height="18" fill="${row.value<0?colors[2]:colors[0]}"/>`;
+    body+=txt(left,y+57,format(row.value,spec.unit),'start','class="plot-value"');
+  });
+  body+=line(left,height-32,width-right,height-32,'plot-axis');
+  return svgShell(spec,width,height,body,'Horizontal signed bars around an explicit zero axis. Negative values extend left of zero, and positive values extend right. Signs and exact values are included in labels and the data table.');
+}
 function heatPlot(spec,width) {
   const left=width<450?77:110,right=10,top=43,cellHeight=56;
   const cellWidth=(width-left-right)/spec.columns.length,height=top+spec.rows.length*cellHeight+13;
@@ -150,7 +170,7 @@ function chartTable(spec) {
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
-  const chart=spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):barPlot(spec,width);
+  const chart=spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
   return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {

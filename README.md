@@ -737,3 +737,7 @@ Four charts distinguish resource levels and full-increase offsets in an invented
 `docs/planning-taper-2026-10-25.md` for sources and checks.
 
 A vehicle fuel-budget guide adds four charts connecting distance-weighted L/100 km, annual litres and vehicle-specific fuel prices. Original synthetic vehicles have separate consumption and cash crossovers; a signed driving-mix curve and price matrix retain reversals. NRCan HTML supplies label conventions and test-rating limitations, without reproducing vehicle ratings or pump quotes.
+
+## Actual dates and annual interest denominators
+
+Four charts separate actual accrued days, fixed annual denominators and an explicitly defined calendar-year example. See `docs/planning-day-basis-2026-10-25.md` for sources and checks.

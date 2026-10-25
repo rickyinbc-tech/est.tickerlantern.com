@@ -1,6 +1,13 @@
 import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
 import { bookingRefundGuides } from './planning-booking-refund-guides.js';
 import { adviceFeeCashGuides } from './planning-advice-fee-cash-guides.js';
+import { illnessCashGuides } from './planning-illness-cash-guides.js';
+import { cardLedgerGuides } from './planning-card-ledger-guides.js';
+import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
+import { jointIncomeGuides } from './planning-joint-income-guides.js';
+import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
+import { charitableGuides } from './planning-charitable-guides.js';
+import { bondPricingGuides } from './planning-bond-pricing-guides.js';
 import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
 import { adviceCostGuides } from './planning-advice-cost-guides.js';
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
@@ -91,6 +98,13 @@ export const planningGuides = [
   ...ladderRenewalGuides,
   ...bookingRefundGuides,
   ...adviceFeeCashGuides,
+  ...illnessCashGuides,
+  ...cardLedgerGuides,
+  ...assetResilienceGuides,
+  ...jointIncomeGuides,
+  ...fundCostBaseGuides,
+  ...charitableGuides,
+  ...bondPricingGuides,
   ...bondReinvestmentGuides,
   ...adviceCostGuides,
   ...rppStatisticsGuides,

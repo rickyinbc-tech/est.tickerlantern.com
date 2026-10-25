@@ -1,3 +1,4 @@
+import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
 import { settlementCashGuides } from './planning-settlement-cash-guides.js';
 import { paymentValueGuides } from './planning-payment-value-guides.js';
 import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
@@ -102,6 +103,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...tuitionCreditCapacityGuides,
   ...settlementCashGuides,
   ...paymentValueGuides,
   ...billableCapacityGuides,

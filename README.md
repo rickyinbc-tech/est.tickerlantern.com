@@ -117,6 +117,10 @@ interactive charts. Eight checked FCAC advice-source observations stay fixed
 while independent fee schedules change. The other models separate conditional
 refunds from weighted costs, and renewed principal from spendable interest.
 Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
+A tuition-credit guide adds four graphics separating eligible tuition, baseline
+credit value, tax capacity and matched prepayment refunds. It excludes complete
+return calculations, top-up rules, transfers and carryforward balances; its
+source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

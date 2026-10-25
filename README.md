@@ -622,3 +622,10 @@ The collateral guide uses a fictional loan-to-value covenant to separate positiv
 
 Four charts group client-name eligible deposits by issuing member and category. See
 `docs/planning-deposit-map-2026-10-25.md` for sources and checks.
+
+## Matching real and nominal valuation bases
+
+Four charts value one constant-purchasing-power spending plan using two
+consistent routes and two deliberate basis mismatches. Exact annual growth
+factors preserve equality, including negative real discount rates. See
+`docs/planning-discount-basis-2026-10-25.md` for sources and checks.

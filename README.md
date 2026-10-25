@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 259 visual planning guides and 1066 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 260 visual planning guides and 1070 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -148,6 +148,10 @@ A coupon-accrual guide separates clean quote, purchased accrued coupon and
 fees in settlement cash. A before/after coupon transfer preserves combined
 value, and an independent sale-plus-coupon ledger reconciles the final cash
 result. The invented 180-day period is not a market day-count implementation.
+A mean-maturity guide compares two principal calendars with identical face
+totals and face-weighted mean dates. Exact deadline ledgers retain missing
+cash even when later receipts equalize the endpoints. Prices, coupons and
+duration are excluded, so the example does not rank investment returns.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

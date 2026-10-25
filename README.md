@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 281 visual planning guides and 1161 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 283 visual planning guides and 1169 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -156,6 +156,10 @@ An exact five-state loss model distinguishes inverse-cumulative value at risk,
 expected shortfall over an exact probability tail and the largest specified
 loss. Boundary probability mass is allocated explicitly, including signed
 quantiles; all outcomes and probabilities are invented.
+A commuting guide retains six May 2025 source figures with their commuter
+denominator. An independent attendance model separates committed pass cash,
+per-use fares, avoidable car cash and travel hours. It does not treat group
+means as personal routes or continuing ownership costs as cash savings.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -759,3 +763,5 @@ Four charts separate actual days, fixed denominators and a calendar-year example
 The English guide `life-insurance-surrender-death-quote-policy-loan` separates a fictional dated surrender quote, total conditional death quote and existing insurer policy loan including accrued interest. Four interactive CAD charts show alternative recipients/events, a surrender waterfall, a same-date loan sensitivity and a quotation matrix. Each alternative debits the loan once; full surrender ends this example's coverage, and the two residual amounts are not added. No future policy valuation, loan approval, dividend, tax, lapse or replacement is estimated. Optional definition-level inputIssue validation rejects unsupported quote combinations, gives a specific accessible explanation and preserves the last accepted results; legacy validation retains its existing range and whole-number behavior.
 
 A discounted retailer gift-card guide tracks matched purchases through four interactive figures. Upfront card cash, later top-ups, actual redemptions and unused nominal purchasing credit stay separate. The original example distinguishes the shopping-stop month from expiry and reconciles cash catch-up without treating unused credit as a refund. FCAC supplies general mechanics only.
+
+A percentage-deductible guide adds four charts comparing insured-value, loss-based and flat-dollar teaching formulas. Its single accepted loss is split between household and insurer, and assigned reserve use is capped at the final household share. The declared-base matrix retains the loss cap. NAIC HTML provides U.S. context only; no real policy trigger or Canadian rule is implemented.

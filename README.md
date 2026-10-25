@@ -8,6 +8,15 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
+The public research library at `/research/` adds six educational guides on
+earnings quality, buybacks and dilution, bond duration, ETF implementation,
+CAD currency returns, and portfolio concentration. Original hypothetical
+examples are distinguished from public source evidence. Article content and
+source notes live in `src/research-guides.js`; `scripts/build-research.mjs`
+renders the hub and article pages with `src/research-guides.css`. The normal
+build links the guides from the homepage and includes their canonical paths in
+the sitemap. The restored Royal Bank research remains hash-verified separately.
+
 Node.js 20+ and Python 3 are sufficient for the static report:
 
 ```sh

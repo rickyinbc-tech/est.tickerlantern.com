@@ -1,3 +1,4 @@
+import { paymentWorkDefinitions, paymentWorkResult } from './planning-payments-work-models.js';
 import { longerBudgetDefinitions, longerBudgetResult } from './planning-longer-budgets-models.js';
 import { householdStepDefinitions, householdStepResult } from './planning-household-steps-models.js';
 import { additionalDefinitions, additionalResult } from './planning-more-models.js';
@@ -45,7 +46,7 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions};
+export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions};
 export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
@@ -107,6 +108,7 @@ export function planningResult(kind,input=defaults(kind)) {
   if(costTimingDefinitions[kind])return costTimingResult(kind,input);
   if(householdStepDefinitions[kind])return householdStepResult(kind,input);
   if(longerBudgetDefinitions[kind])return longerBudgetResult(kind,input);
+  if(paymentWorkDefinitions[kind])return paymentWorkResult(kind,input);
   if(kind==='savings') {
     const path=savingsPath(input), end=path.at(-1);
     return {metrics:[['Ending savings',end.value,'money'],['Contributed',end.contributions,'money'],['Modeled growth',end.value-end.contributions,'money']], note:'Hypothetical constant effective annual return, converted to an equivalent monthly rate. Contributions arrive at month-end; starting savings are invested immediately. Nominal CAD before fees, tax and inflation. No probabilities are assigned.', charts:[

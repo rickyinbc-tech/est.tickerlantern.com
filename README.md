@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with forty-five visual planning guides and 175
+charts**. The library now leads with forty-eight visual planning guides and 188
 charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -24,7 +24,8 @@ versus liquid savings, tuition benchmarks and student budgets, promotional
 balance transfers, insurance reimbursement timing, home-purchase cash requirements,
 shared household bill assignments, interest-free student-loan repayment,
 self-employed cash ledgers, recurring home-replacement reserves and charitable
-giving cash schedules.
+giving cash schedules, RRSP withholding versus final tax, a dated OAS recovery
+calendar and return-to-work cash budgets beside child-care expense observations.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -79,6 +80,14 @@ uncommitted cash using a hypothetical held tax earmark. The home reserve repeats
 component replacements over twelve years and funds every event date; routine
 upkeep is paid separately. Giving schedules receive one independently entered
 usable first-year tax saving in year two, without calculating a tax credit.
+RRSP cash assumes one ordinary request outside Quebec and keeps withholding
+separate from the independent incremental final-tax assumption. The OAS
+illustration fixes 2025 income and separately labels later monthly deductions.
+`planning-childcare-data.js` preserves 3 national and 13 regional public
+observations from the 21 October 2025 release. Reproduce it with
+`python3 scripts/extract-planning-childcare.py --release qa/childcare-2025-release.html --chart qa/childcare-2025-chart.csv`.
+The extract excludes 2022 territory footnote cells from dollar observations.
+Two dated observation graphics stay fixed while the return-to-work budget changes.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

@@ -30,8 +30,8 @@ function linePlot(spec,width) {
   const yticks=[...new Set([...Array.from({length:5},(_,i)=>ymin+(ymax-ymin)*i/4),...(ymin<0?[0]:[])])];
   for(const v of yticks) {body+=line(left,y(v),width-right,y(v));if(v===0||ymin===0||Math.abs(y(v)-y(0))>=18)body+=txt(left-9,y(v)+4,format(v,spec.unit,true),'end');}
   const count=width<500?2:4;
-  const ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))];
-  ticks.forEach(v=>{body+=txt(x(v),height-bottom+24,spec.xUnit?format(v,spec.xUnit,true):v,'middle');});
+  const ticks=spec.xTicks??[...new Set(Array.from({length:count+1},(_,i)=>Math.round(xmin+(xmax-xmin)*i/count)))].map(value=>({value,label:spec.xUnit?format(value,spec.xUnit,true):value}));
+  ticks.forEach(t=>{body+=txt(x(t.value),height-bottom+24,t.label,'middle');});
   body+=line(left,top,left,height-bottom,'plot-axis')+line(left,height-bottom,width-right,height-bottom,'plot-axis');
   if(ymin<0)body+=line(left,y(0),width-right,y(0),'plot-axis');
   body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');

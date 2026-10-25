@@ -1,3 +1,4 @@
+import { paymentWorkGuides } from './planning-payments-work-guides.js';
 import { longerBudgetGuides } from './planning-longer-budgets-guides.js';
 import { householdStepGuides } from './planning-household-steps-guides.js';
 import { additionalPlanningGuides } from './planning-more-guides.js';
@@ -12,6 +13,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...paymentWorkGuides,
   ...longerBudgetGuides,
   ...householdStepGuides,
   ...costTimingGuides,

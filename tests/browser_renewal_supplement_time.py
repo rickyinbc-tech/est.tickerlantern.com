@@ -34,7 +34,7 @@ def metric():
 
 pages = [
     ('gic-one-year-renewal-rate-five-year-comparison', 'firstRate', '6', None),
-    ('temporary-pension-bridge-ending-income-calendar', 'laterIncome', '15000', 'bridgeEnd'),
+    ('pension-quote-future-dollars-income-price-year', 'laterIncome', '15000', 'bridgeEnd'),
     ('diy-hired-task-cash-cost-personal-time', 'hours', '100', None),
 ]
 for slug, key, replacement, whole in pages:

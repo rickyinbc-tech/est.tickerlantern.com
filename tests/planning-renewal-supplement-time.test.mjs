@@ -25,7 +25,7 @@ test('temporary income ends independently of later income and the boundary bridg
  const d=defaults('temporaryPension'),p=temporaryPensionPath(d),before=p.before,after=p.boundary;
  near(before.total,38967.55776);near(before.temporary,12989.18592);near(after.total,26497.9392768);near(after.temporary,0);near(after.later,0);near(after.gap,13248.9696384);
  near(before.total+(after.lifetime-before.lifetime)+(after.temporary-before.temporary)+(after.later-before.later),after.total);
- near(p.largestGap,13513.949031168);near(p.annualGapSum,172308.04528740112);
+ near(p.quoteReal,9000/1.02**7);near(p.largestGap,13513.949031168);near(p.annualGapSum,172308.04528740112);
  assert.equal(p.rows[0].x,60);assert.equal(p.rows.at(-1).x,90);assert.equal(p.rows.length,31);
 });
 test('later benefits are independent cash inputs rather than an automatic replacement of the lost supplement',()=>{

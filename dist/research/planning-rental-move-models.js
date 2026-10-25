@@ -1,37 +1,34 @@
 export const rentalMoveDefinitions={
-  rentalMoveBridge:{title:'Put the rental move and the assumed refund on a cash calendar',fields:[
-    ['moveCash','Cash allocated before model day 1 (CAD)',4000,0,30000,500],
-    ['movePay','Each net pay deposit on days 10, 25, 40 and 55 (CAD)',2000,0,10000,100],
-    ['oldRentCash','Final old-home rent paid on day 1 (CAD)',1800,0,6000,100],
-    ['newRentCash','Each new-home rent paid on days 15 and 45 (CAD)',2000,0,6000,100],
-    ['newDepositCash','New-home deposit cash paid on day 1 (CAD)',1000,0,6000,100],
-    ['moveCostCash','Moving cost paid on day 14 (CAD)',600,0,10000,100],
-    ['moveLiving','Each living-cost payment on days 7, 22, 37 and 52 (CAD)',900,0,5000,100],
-    ['oldRefundCash','Assumed old-home deposit refund actually received (CAD)',900,0,6000,100],
-    ['refundArrival','Assumed refund arrival day; days 61–90 are outside the window',35,1,90,1]
+  rentalMove:{title:'Explore a hypothetical six-month rental move',fields:[
+    ['reserve','Cash already set aside for this move (CAD)',2500,0,30000,100],
+    ['monthly','Monthly cash available after the regular household budget (CAD)',400,0,3000,100],
+    ['newDeposit','New rental deposit paid at the start of month 1 (CAD)',1200,0,6000,100],
+    ['overlap','Extra overlap rent paid at the start of month 2 (CAD)',2000,0,10000,100],
+    ['moving','Moving and setup costs paid at the start of month 2 (CAD)',1500,0,10000,100],
+    ['oldRefund','Assumed old-deposit cash refund (CAD)',1000,0,10000,100],
+    ['refundMonth','Refund at month-end: 3–6; enter 7 for after this window',3,3,7,1],
+    ['floor','Selected cash buffer to preserve during the move (CAD)',500,0,20000,100]
   ]}
 };
-export function rentalMoveCalendar(input){
-  let cumulative=0,receipts=0,outflows=0,refundReceived=0;
-  const rows=[{x:0,cumulative:0,balance:input.moveCash,receipt:0,outflow:0}],periods=[{label:'Days 1–30',receipt:0,outflow:0},{label:'Days 31–60',receipt:0,outflow:0}];
-  for(let day=1;day<=60;day++){
-    const pay=[10,25,40,55].includes(day)?input.movePay:0,refund=day===input.refundArrival?input.oldRefundCash:0;
-    const oldRent=day===1?input.oldRentCash:0,newRent=[15,45].includes(day)?input.newRentCash:0;
-    const deposit=day===1?input.newDepositCash:0,moving=day===14?input.moveCostCash:0,living=[7,22,37,52].includes(day)?input.moveLiving:0;
-    const receipt=pay+refund,outflow=oldRent+newRent+deposit+moving+living;cumulative+=receipt-outflow;receipts+=receipt;outflows+=outflow;refundReceived+=refund;
-    const period=periods[day<=30?0:1];period.receipt+=receipt;period.outflow+=outflow;
-    rows.push({x:day,cumulative,balance:input.moveCash+cumulative,receipt,outflow});
+export function rentalMovePath(input){
+  let balance=input.reserve,refundReceived=0;
+  const rows=[{x:0,before:balance,value:balance,bills:0,refund:0}];
+  for(let month=1;month<=6;month++){
+    const bills=month===1?input.newDeposit:month===2?input.overlap+input.moving:0;
+    const before=balance-bills,refund=month===input.refundMonth?input.oldRefund:0;
+    balance=before+input.monthly+refund;refundReceived+=refund;
+    rows.push({x:month,before,value:balance,bills,refund});
   }
-  const required=Math.max(0,-Math.min(...rows.map(r=>r.cumulative))),additional=Math.max(0,required-input.moveCash);
-  return {rows,periods,receipts,outflows,refundReceived,pendingRefund:input.oldRefundCash-refundReceived,required,additional,minimum:Math.min(...rows.map(r=>r.balance)),ending:rows.at(-1).balance};
+  const lowest=Math.min(...rows.map(r=>r.before));
+  return {rows,lowest,ending:balance,refundReceived,extra:Math.max(0,input.floor-lowest),monthsBelow:rows.slice(1).filter(r=>r.before<input.floor).length};
 }
 export function rentalMoveResult(kind,input){
-  if(kind!=='rentalMoveBridge')throw Error('Unknown rental-move cash topic.');
-  const p=rentalMoveCalendar(input);
-  return {metrics:[['Cash required before day 1 to fund every modeled day',p.required,'money'],['Additional opening cash needed beyond the allocation',p.additional,'money'],['Allocated cash balance at day 60',p.ending,'money']],note:'A fictional 60-day cash calendar, not a rent-proration calculation, lawful-deposit test or refund entitlement decision. Receipts are available before outflows on the same day. Four pay deposits, four living-cost payments and the stated rent/deposit/moving dates are fixed teaching assumptions. Rent payments can cover occupancy beyond this window; the charts measure cash paid, not accrued housing expense. The old refund is counted only on its entered arrival day; days 61–90 mean it has not arrived within the window. No interest, borrowing, deposit interest, disputed deductions, tax or unlisted bills are calculated. A negative bank balance is unfunded cash need, not approved credit. The fully funded line requires the identified opening cash to come from a separate source.',charts:[
-    {id:'rental-move-daily-cash',type:'line',title:'Later receipts cannot fund earlier moving-day obligations',unit:'money',unitLabel:'CAD cash balance after the modeled events on each day',xLabel:'Day in the hypothetical 60-day window',series:[{name:'Currently allocated opening cash',step:true,rows:p.rows.map(r=>({x:r.x,value:r.balance}))},{name:'Opening cash sufficient for every listed day',dash:true,step:true,rows:p.rows.map(r=>({x:r.x,value:p.required+r.cumulative}))}],note:'The second line changes only opening cash; every receipt and payment date remains the same. Negative values on the allocated line identify a funding gap before a later pay or refund arrives. The assumed refund date is not derived from a legal deadline or guaranteed bank processing.'},
-    {id:'rental-move-period-cash',type:'groupbar',title:'Thirty-day summaries do not reveal every daily low point',unit:'money',unitLabel:'CAD cash received and paid in each stated window',seriesNames:['Pay and refund actually received','Rent, deposits, moving and living paid'],rows:p.periods.map(r=>({label:r.label,values:[r.receipt,r.outflow]})),note:'Opening cash is excluded from these receipt/outflow bars and included in the balance line. A thirty-day endpoint can remain positive even if a bill within that period was unfunded. The refund appears only in the period in which the model assumes it is actually received.'},
-    {id:'rental-move-cash-bridge',type:'waterfall',title:'Reconcile day-60 cash without spending a pending refund',unit:'money',unitLabel:'CAD over the 60-day cash window',rows:[{label:'Cash allocated before day 1',value:input.moveCash},{label:'Four net pay deposits',value:input.movePay*4},{label:'Old deposit refund received',value:p.refundReceived},{label:'Old and new rent paid',value:-input.oldRentCash-input.newRentCash*2},{label:'New deposit cash paid',value:-input.newDepositCash},{label:'Moving cost paid',value:-input.moveCostCash},{label:'Four living-cost payments',value:-input.moveLiving*4}],totalLabel:'Day-60 cash / unfunded gap',note:'The new deposit is a cash outflow; it is not automatically a permanently lost expense. An expected old refund that has not arrived is excluded from cash. The bridge does not value deposit claims, determine deductions or add them to liquid funds. The day-60 endpoint does not replace the daily funding check.'},
-    {id:'rental-move-refund-buffer-grid',type:'heatmap',title:'Opening cash and assumed refund arrival change the additional fund',unit:'money',unitLabel:'Columns: refund arrival. Rows: opening cash. Cells: extra opening cash required (CAD)',columns:['Day 10','Day 20','Day 35','Day 61'],rows:[0,2000,4000,6000].map(moveCash=>({label:moveCash?'$'+moveCash/1000+'k cash':'No cash',values:[10,20,35,61].map(refundArrival=>rentalMoveCalendar({...input,moveCash,refundArrival}).additional)})),note:'Each cell reruns the daily ledger with a different opening allocation and assumed arrival of the same entered refund. Day 61 means no refund during the 60-day window. These are funding scenarios, not probabilities, statutory payment dates or an assumption that a disputed refund must arrive.'}
+  if(kind!=='rentalMove')throw Error('Unknown rental-move topic.');
+  const p=rentalMovePath(input);
+  return {metrics:[['Additional initial cash to preserve the selected buffer',p.extra,'money'],['Lowest funding position before month-end receipts',p.lowest,'money'],['Funding position after month 6, before adding extra cash',p.ending,'money']],note:'Original hypothetical six-month cash-timing model in nominal CAD. Regular rent and living costs are already covered outside this ledger; the monthly amount is the surplus available afterward. The new deposit is paid at the start of month 1; extra overlap rent and moving/setup costs at the start of month 2. Monthly surplus and any assumed old-deposit refund arrive at month-end. Negative positions identify an unfunded need using the entered resources, not an actual overdraft or an assumed loan. The solved additional initial cash is shown separately and is not silently added to the charts. The refund amount and month are independent assumptions, not a legal entitlement or deadline. Month 7 means no refund within these six months. The new deposit is not returned within the window. No interest, borrowing, tax, deposit eligibility or dispute outcome is calculated. The selected buffer is a personal scenario input, not a recommended minimum.',charts:[
+    {id:'rental-move-timing',type:'line',title:'Read the position before the month-end money arrives',unit:'money',unitLabel:'Move funding position using entered resources (CAD)',xLabel:'Model month',series:[{name:'After bills, before receipts',rows:p.rows.map(r=>({x:r.x,value:r.before}))},{name:'After month-end surplus and refund',rows:p.rows.map(r=>({x:r.x,value:r.value})),dash:true},{name:'Selected buffer',rows:[{x:0,value:input.floor},{x:6,value:input.floor}]}],note:'These are two observations of the same ledger within each month. Month 0 is the opening cash. Straight line segments connect monthly observations and do not imply daily payments. The before-receipt points expose a need that later receipts cannot fund retroactively. No solved extra initial cash has been added.'},
+    {id:'rental-move-upfront',type:'stackbar',title:'A deposit and consumed moving costs both need upfront cash',unit:'money',unitLabel:'Scheduled payments from the move cash pool (CAD)',seriesNames:['New deposit','Extra overlap rent','Moving and setup'],rows:[{label:'Start of month 1',values:[input.newDeposit,0,0]},{label:'Start of month 2',values:[0,input.overlap,input.moving]}],note:'The new deposit may represent a recoverable amount under the applicable agreement and law, but it still removes spendable cash now. Overlap rent is only the additional rent beyond the regular household budget. Moving/setup is a separate assumed non-refundable cost total. Neither regular rent nor a future return of the new deposit is added here.'},
+    {id:'rental-move-reconcile',type:'waterfall',title:'Reconcile the six-month endpoint without hiding the earlier gap',unit:'money',rows:[{label:'Opening move cash',value:input.reserve},{label:'Six monthly surplus transfers',value:6*input.monthly},{label:'Old refund received in this window',value:p.refundReceived},{label:'New deposit paid',value:-input.newDeposit},{label:'Extra overlap rent',value:-input.overlap},{label:'Moving and setup',value:-input.moving}],totalLabel:'Funding position after month 6',note:'The endpoint is opening cash plus receipts less payments. It does not establish that the schedule was fundable at every earlier date. The buffer is a target, not a payment, and is not deducted. An old-deposit refund returns previously tied-up money; it is not pay from work. A refund after month 6 is excluded from this endpoint rather than treated as permanently lost.'},
+    {id:'rental-move-delay-grid',type:'heatmap',title:'Compare the duration below your chosen buffer',unit:'integer',unitLabel:'Months 1–6 below buffer; rows: monthly surplus (CAD)',columns:['Month 3','Month 4','Month 5','Later'],rows:[0,400,800,1200].map(monthly=>({label:monthly.toLocaleString('en-CA')+'/mo',values:[3,4,5,7].map(refundMonth=>rentalMovePath({...input,monthly,refundMonth}).monthsBelow)})),note:'Rows replace the monthly surplus; columns replace the old-refund receipt month. Later means after month 6. All other entered amounts stay fixed. Each cell counts before-receipt points strictly below the selected buffer, excluding month 0. It is a duration count, not dollars owed, interest expense or a probability. A month can be counted even when its month-end position recovers.'}
   ]};
 }

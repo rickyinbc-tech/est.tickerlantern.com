@@ -1,4 +1,8 @@
+import { rentalDailyGuides } from './planning-rental-daily-guides.js';
+import { accruedInterestGuides } from './planning-accrued-interest-guides.js';
+import { rrspDeductionGuides } from './planning-rrsp-deduction-guides.js';
 import { rentalMoveGuides } from './planning-rental-move-guides.js';
+import { premiumFinancingGuides } from './planning-premium-financing-guides.js';
 import { reverseEquityGuides } from './planning-reverse-equity-guides.js';
 import { tradingEquityGuides } from './planning-trading-equity-guides.js';
 import { taxableRealGuides } from './planning-taxable-real-guides.js';
@@ -51,7 +55,11 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rentalDailyGuides,
+  ...accruedInterestGuides,
+  ...rrspDeductionGuides,
   ...rentalMoveGuides,
+  ...premiumFinancingGuides,
   ...reverseEquityGuides,
   ...tradingEquityGuides,
   ...taxableRealGuides,

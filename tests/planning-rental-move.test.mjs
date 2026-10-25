@@ -1,42 +1,56 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { defaults,definitions,planningResult,validInputs } from '../src/planning-models.js';
-import { rentalMoveCalendar } from '../src/planning-rental-move-models.js';
-import { renderResult } from '../src/planning-charts.js';
-const near=(a,b)=>assert.ok(Math.abs(a-b)<Math.max(1,Math.abs(b))*1e-9,`${a} != ${b}`);
+import {defaults,definitions,planningResult,validInputs} from '../src/planning-models.js';
+import {rentalMovePath} from '../src/planning-rental-move-models.js';
+import {renderResult} from '../src/planning-charts.js';
 
-test('daily move ledger identifies the early shortfall despite a positive final balance',()=>{
-  const d=defaults('rentalMoveBridge'),p=rentalMoveCalendar(d);assert.equal(p.rows.length,61);near(p.required,5200);near(p.additional,1200);near(p.minimum,-1200);near(p.ending,1900);near(p.rows[15].balance,-300);near(p.rows[22].balance,-1200);
-  for(let day=1;day<=60;day++)near(p.rows[day].balance,p.rows[day-1].balance+p.rows[day].receipt-p.rows[day].outflow);
-  const funded=rentalMoveCalendar({...d,moveCash:p.required});near(funded.minimum,0);near(funded.additional,0);assert.ok(funded.rows.every(r=>r.balance>=0));
+test('rental move tracks payment dates before month-end surplus and the old-deposit refund',()=>{
+  const p=rentalMovePath(defaults('rentalMove'));
+  assert.deepEqual(p.rows.map(r=>r.before),[2500,1300,-1800,-1400,0,400,800]);
+  assert.deepEqual(p.rows.map(r=>r.value),[2500,1700,-1400,0,400,800,1200]);
+  assert.equal(p.lowest,-1800);assert.equal(p.extra,2300);assert.equal(p.ending,1200);assert.equal(p.monthsBelow,4);
 });
-test('period totals and closing bridge reconcile without masking the daily low point',()=>{
-  const p=rentalMoveCalendar(defaults('rentalMoveBridge'));assert.deepEqual(p.periods,[{label:'Days 1–30',receipt:4000,outflow:7200},{label:'Days 31–60',receipt:4900,outflow:3800}]);
-  near(p.rows[30].balance,800);assert.ok(p.rows.slice(0,31).some(r=>r.balance<0));near(p.receipts,8900);near(p.outflows,11000);
-  near(planningResult('rentalMoveBridge').charts[2].rows.reduce((n,r)=>n+r.value,0),p.ending);
+test('the six-month endpoint conserves entered receipts and payments, excluding a later refund',()=>{
+  const d=defaults('rentalMove');
+  for(const refundMonth of [3,4,5,6,7])for(const monthly of [0,400,1200]){
+    const input={...d,monthly,refundMonth},p=rentalMovePath(input),refund=refundMonth<=6?input.oldRefund:0;
+    assert.equal(p.ending,input.reserve+6*monthly+refund-input.newDeposit-input.overlap-input.moving);
+    assert.equal(p.refundReceived,refund);assert.equal(p.rows.reduce((sum,r)=>sum+r.refund,0),refund);
+  }
+  assert.equal(rentalMovePath({...d,refundMonth:7}).ending,200);
 });
-test('a refund outside the window remains pending and is never counted as bank cash',()=>{
-  const d=defaults('rentalMoveBridge'),base=rentalMoveCalendar(d),late=rentalMoveCalendar({...d,refundArrival:61}),later=rentalMoveCalendar({...d,refundArrival:90}),none=rentalMoveCalendar({...d,oldRefundCash:0});
-  near(base.refundReceived,900);near(base.pendingRefund,0);near(late.refundReceived,0);near(late.pendingRefund,900);near(late.ending,1000);near(late.ending,base.ending-900);
-  assert.deepEqual(late.rows,later.rows);assert.deepEqual(late.rows,none.rows);near(late.required,base.required);
+test('extra cash shifts the full path to the buffer without assuming any credit facility',()=>{
+  const d=defaults('rentalMove'),base=rentalMovePath(d),funded=rentalMovePath({...d,reserve:d.reserve+base.extra});
+  assert.equal(funded.lowest,d.floor);assert.equal(funded.extra,0);
+  for(let i=0;i<base.rows.length;i++){assert.equal(funded.rows[i].before-base.rows[i].before,base.extra);assert.equal(funded.rows[i].value-base.rows[i].value,base.extra);}
+  assert.equal(rentalMovePath({...d,reserve:20000}).extra,0);
 });
-test('an earlier receipt can change the needed fund while later delays need not increase its peak',()=>{
-  const d=defaults('rentalMoveBridge');for(const refundArrival of [10,20]){const p=rentalMoveCalendar({...d,refundArrival});near(p.required,4300);near(p.additional,300);near(p.ending,1900);}
-  const before=rentalMoveCalendar({...d,refundArrival:35}),after=rentalMoveCalendar({...d,refundArrival:61});near(before.required,after.required);assert.notEqual(before.ending,after.ending);
-  const grid=planningResult('rentalMoveBridge').charts[3];near(grid.rows[2].values[0],300);near(grid.rows[2].values[1],300);near(grid.rows[2].values[2],1200);near(grid.rows[2].values[3],1200);
+test('a refund at month-end cannot pay an earlier bill and the duration count uses before-receipt points',()=>{
+  const d=defaults('rentalMove'),early=rentalMovePath(d),later=rentalMovePath({...d,refundMonth:6}),none=rentalMovePath({...d,oldRefund:0});
+  assert.equal(early.rows[2].before,later.rows[2].before);assert.equal(early.lowest,none.lowest);
+  assert.equal(early.rows[3].before,-1400);assert.equal(early.rows[3].value,0);
+  const result=planningResult('rentalMove');
+  for(let r=0;r<4;r++)for(let c=0;c<4;c++){
+    const input={...d,monthly:[0,400,800,1200][r],refundMonth:[3,4,5,7][c]};
+    let cash=input.reserve,count=0;
+    for(let month=1;month<=6;month++){
+      cash-=month===1?input.newDeposit:month===2?input.overlap+input.moving:0;
+      if(cash<input.floor)count++;
+      cash+=input.monthly+(month===input.refundMonth?input.oldRefund:0);
+    }
+    assert.equal(result.charts[3].rows[r].values[c],count);
+  }
 });
-test('same-day receipts are netted before payments under the stated availability convention',()=>{
-  const d=defaults('rentalMoveBridge'),p=rentalMoveCalendar({...d,refundArrival:1,oldRefundCash:5000});near(p.rows[1].receipt,5000);near(p.rows[1].outflow,2800);near(p.rows[1].balance,6200);
-  const onPayday=rentalMoveCalendar({...d,refundArrival:10});near(onPayday.rows[10].receipt,2900);near(onPayday.refundReceived,900);
+test('only the selected cash buffer changes the funding target, not the cash reconciliation',()=>{
+  const d=defaults('rentalMove'),base=planningResult('rentalMove'),edited=planningResult('rentalMove',{...d,floor:1000});
+  assert.equal(edited.metrics[0][1]-base.metrics[0][1],500);assert.equal(edited.metrics[2][1],base.metrics[2][1]);
+  assert.deepEqual(edited.charts[2],base.charts[2]);
+  assert.match(base.note,/not an actual overdraft/);assert.match(base.note,/not a legal entitlement or deadline/);
 });
-test('new deposit cash is counted once while the old refund stays separate from opening cash',()=>{
-  const d=defaults('rentalMoveBridge'),base=rentalMoveCalendar(d),more=rentalMoveCalendar({...d,newDepositCash:1500});near(base.ending-more.ending,500);near(more.required-base.required,500);near(more.refundReceived,base.refundReceived);
-  near(base.ending,d.moveCash+4*d.movePay+base.refundReceived-d.oldRentCash-2*d.newRentCash-d.newDepositCash-d.moveCostCash-4*d.moveLiving);
-});
-test('whole arrival days and supported boundary values retain four finite accessible charts',()=>{
-  const kind='rentalMoveBridge',d=defaults(kind),fields=definitions[kind].fields;assert.equal(validInputs(kind,{...d,refundArrival:35.5}),false);
+test('whole refund month and boundary inputs render four finite charts with data tables',()=>{
+  const d=defaults('rentalMove'),fields=definitions.rentalMove.fields;
+  assert.equal(validInputs('rentalMove',{...d,refundMonth:3.5}),false);
   const inputs=[d,...fields.flatMap(([key,,,min,max])=>[{...d,[key]:min},{...d,[key]:max}]),Object.fromEntries(fields.map(([key,,,min])=>[key,min])),Object.fromEntries(fields.map(([key,,,,max])=>[key,max]))];
-  const finite=v=>{if(typeof v==='number')assert.ok(Number.isFinite(v));else if(Array.isArray(v))v.forEach(finite);else if(v&&typeof v==='object')Object.values(v).forEach(finite);};
-  for(const input of inputs){const result=planningResult(kind,input);finite(result);assert.equal(result.charts.length,4);
+  for(const input of inputs){const result=planningResult('rentalMove',input);assert.equal(result.charts.length,4);
     for(const width of [300,760]){const html=renderResult(result,width);assert.doesNotMatch(html,/NaN|Infinity|>undefined<|="undefined"/);assert.equal((html.match(/<svg /g)||[]).length,4);assert.equal((html.match(/<caption>/g)||[]).length,4);}}
 });

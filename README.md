@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 198 visual planning guides and 808
+charts**. The library now leads with 204 visual planning guides and 830 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -533,3 +533,24 @@ Four charts separate expected repair costs from the cash required in each outcom
 `/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.
 
 The disability-prevalence guide uses a dated Statistics Canada all-gender extract with the exact published 2017/2022 estimates and asymmetric 95% confidence limits. Its separate invented age-mix illustration preserves fixed subgroup rates, excludes youth explicitly, and does not infer aggregate intervals, individual transition risks or insurance-claim probabilities. Source units, percentage-point differences, weighted arithmetic and mobile controls are verified.
+
+## Fraud-reporting statistics
+
+Three charts separate CAFC reported losses, counts and derived category ratios. See
+`docs/planning-fraud-2026-10-25.md` for sources and checks.
+
+
+### Inflation-indexed bond cash flows
+
+The English guide `inflation-linked-bond-principal-coupon-maturity-cash` uses four original interactive USD figures to separate adjusted principal, semiannual coupon receipts, redemption and purchase outlay. A hypothetical smooth index permits inflation and deflation; the original-face floor applies only to maturity principal, while coupons continue to use adjusted principal. A principal-only matrix keeps purchase premiums separate from total cash returns. TreasuryDirect sources explain the real TIPS mechanism; no actual security, CPI observation, yield quote, tax result or CAD hedge is modeled. Data tables and accessible chart descriptions identify USD explicitly.
+
+### Project draw timing and borrowed cash
+
+`/research/project-loan-staged-draws-idle-borrowed-cash-interest` compares a full time-zero draw with three project-bill draws. Separate debt, project cash and unused-limit paths reconcile to the same ending principal, while an explicit monthly convention traces borrowing interest, fees and separately paid cash interest. The illustration assumes future draws remain available; it does not reproduce daily lender billing or infer project resale value. Independent tranche-period sums and a balance-month identity are checked by `tests/planning-staged-draw.test.mjs`; `tests/browser_staged_draw.py` covers real controls, reset, data tables and mobile labels.
+
+The repair-or-replace guide compares forward cash from one decision date through a common service horizon and exit. Its unrecoverable original-price input changes context only. Current sale proceeds are counted once, final receipts occur only at the exit, and discounted and nominal ledgers reconcile independently. Four responsive charts retain signed receipts, with verified zero-discount and negative-net-cost boundaries.
+
+## Multiple IRRs and later obligations
+
+Three charts retain a later required payment and inspect multiple IRR solutions. See
+`docs/planning-multiple-irr-2026-10-25.md` for sources and checks.

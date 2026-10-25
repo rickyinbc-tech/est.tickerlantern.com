@@ -1,3 +1,4 @@
+import { savingObligationDefinitions, savingObligationResult } from './planning-saving-obligations-models.js';
 import { choicesCashDefinitions, choicesCashResult } from './planning-choices-cash-models.js';
 import { homeCarSurvivorDefinitions, homeCarSurvivorResult } from './planning-home-car-survivor-models.js';
 import { protectionTransitionDefinitions, protectionTransitionResult } from './planning-protection-transition-models.js';
@@ -49,8 +50,8 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions};
-export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks'];
+export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
+export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
   return definitions[kind].fields.every(([key,,,min,max])=> Number.isFinite(input[key]) && input[key]>=min && input[key]<=max && (!wholeInputKeys.includes(key)||Number.isInteger(input[key])));
@@ -115,6 +116,7 @@ export function planningResult(kind,input=defaults(kind)) {
   if(protectionTransitionDefinitions[kind])return protectionTransitionResult(kind,input);
   if(homeCarSurvivorDefinitions[kind])return homeCarSurvivorResult(kind,input);
   if(choicesCashDefinitions[kind])return choicesCashResult(kind,input);
+  if(savingObligationDefinitions[kind])return savingObligationResult(kind,input);
   if(kind==='savings') {
     const path=savingsPath(input), end=path.at(-1);
     return {metrics:[['Ending savings',end.value,'money'],['Contributed',end.contributions,'money'],['Modeled growth',end.value-end.contributions,'money']], note:'Hypothetical constant effective annual return, converted to an equivalent monthly rate. Contributions arrive at month-end; starting savings are invested immediately. Nominal CAD before fees, tax and inflation. No probabilities are assigned.', charts:[

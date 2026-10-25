@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with fifty-seven visual planning guides and 227
+charts**. The library now leads with sixty visual planning guides and 240
 charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -30,7 +30,8 @@ one-name deposit coverage with retained interest, refinancing cost recovery and
 separate cash budgets for a household separation, incremental energy-upgrade
 payback, lease-return versus buy-and-sell car costs and retirement survivor
 income receipt gaps, overlapping instalment purchases, new-money allocation
-maintenance and parental-leave household cash comparisons.
+maintenance and parental-leave household cash comparisons, GIC maturity calendars,
+basic CESG catch-up and HBP repayment obligations.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -42,6 +43,12 @@ files are named `planning-*-models.js`, and owns the dated Statistics Canada
 spending rows. `planning-charts.js` renders the figures on the server and in
 the browser. `planning-ui.js` handles edits, validation and responsive sizing.
 Financial arithmetic is checked independently in `tests/planning*.test.mjs`.
+The maturity model is a run-off schedule with bills after annual maturities,
+not a renewing ladder or an offered rate. Basic CESG projections construct an
+explicit earlier contribution history and apply annual, lifetime and age-16/17
+constraints. HBP projections start from a separately confirmed required year;
+income inclusions reduce the HBP ledger without restoring an RRSP contribution.
+The HBP tax percentage is a budget allowance, not a tax-return calculation.
 The homepage and library derive article and chart counts from the content.
 The federal bracket illustration is explicitly fixed to 2026 and excludes
 credits and other taxes. The FHSA calendar models an ordinary new-account

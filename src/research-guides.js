@@ -188,43 +188,5 @@ export const guides = [
       { title: 'Vanguard · Hedging in ETFs', url: 'https://www.vanguard.com.au/personal/learn/smart-investing/etfs/hedging-in-etfs', note: 'General explanation of offsetting currency exposures and forward contracts, in an Australian context. Article dated February 2020. Use the actual Canadian fund’s current documents for product-specific terms.' },
       { title: 'CME Group · The Importance of FX Futures Pricing and Basis', url: 'https://www.cmegroup.com/education/courses/introduction-to-fx/importance-of-fx-futures-pricing-and-basis', note: 'Relationship between spot rates, interest-rate differences, and forward or futures pricing. No historical rate example from that lesson is used as a current quote here.' }
     ]
-  },
-  {
-    slug: 'portfolio-concentration-overlap', category: 'Portfolio construction',
-    title: 'Portfolio concentration: count exposures, not fund names',
-    description: 'Look through overlapping funds, calculate combined issuer weights, test a common shock, and build a repeatable review of portfolio concentration.',
-    takeaway: 'Several holdings can carry the same underlying risk. A useful diversification review follows the assets and economic drivers through every wrapper.',
-    related: ['etf-tracking-difference-costs', 'buybacks-dilution-per-share-value'],
-    sections: [
-      { id: 'problem', title: 'A long holdings list can hide a short risk list', html: `
-        <p>Imagine a portfolio with a global equity ETF, a US large-company ETF, a technology fund, and direct shares in a familiar platform company. It has four line items, but the same company may appear in all four. Different fund names do not establish independent exposures.</p>
-        <p><a href="https://www.finra.org/investors/insights/concentration-risk">FINRA’s concentration-risk overview</a> describes concentration through correlated assets, employer stock, performance drift, and overlapping funds. Use that as a prompt to inspect what you own underneath each wrapper.</p>
-        <p>The purpose of a look-through analysis is to identify the risk being taken deliberately. Concentration is not automatically a mistake, and broad diversification cannot prevent every loss. The useful question is whether one adverse event could damage several holdings and the spending plan at the same time.</p>` },
-      { id: 'look-through', title: 'Calculate a combined issuer exposure', html: `
-        <p>Suppose a hypothetical portfolio holds 50% in Fund A, 30% in Fund B, and 20% in direct shares of Company X. Fund A has 6% in X and Fund B has 12%. Assume cash-free, unlevered funds and aligned holdings dates.</p>
-        <div class="guide-formula">Look-through issuer weight = direct weight + Σ (fund portfolio weight × issuer weight inside fund)</div>
-        <div class="guide-table" role="region" aria-label="Hypothetical portfolio look-through exposure" tabindex="0"><table><caption>Company X exposure across three holdings</caption><thead><tr><th scope="col">Holding</th><th scope="col">Portfolio weight</th><th scope="col">X inside holding</th><th scope="col">Contribution</th></tr></thead><tbody><tr><th scope="row">Fund A</th><td>50%</td><td>6%</td><td>3.0%</td></tr><tr><th scope="row">Fund B</th><td>30%</td><td>12%</td><td>3.6%</td></tr><tr><th scope="row">Direct X shares</th><td>20%</td><td>100%</td><td>20.0%</td></tr><tr><th scope="row">Combined</th><td>100%</td><td>—</td><td><strong>26.6%</strong></td></tr></tbody></table></div>
-        <p>The direct position understates total issuer exposure by 6.6 percentage points. On a 100,000 portfolio, the combined economic allocation is 26,600. Adding the full value of the funds to this look-through position would double-count the wrappers; each portfolio dollar should be allocated only once at the selected analysis level.</p>` },
-      { id: 'stress', title: 'Translate exposure into a conditional loss', html: `
-        <p>If Company X falls 40% while every other underlying holding is unchanged, the first-order portfolio effect is 26.6% × −40% = −10.64%. For the 100,000 example, that is a loss of 10,640. This isolates issuer exposure and assumes no rebalancing, derivatives, distributions, or spillovers.</p>
-        <p>A more demanding scenario allows other companies with shared customers, financing needs, or valuation sensitivities to fall too. Assign shocks to mutually exclusive groups of underlying assets. Do not apply a sector loss and then add the same issuer loss again if that issuer was already included in the sector.</p>
-        <p>Scenarios reveal sensitivity; they do not supply probabilities. A precise-looking loss estimate remains conditional on the shocks selected. Record the assumptions and test several narratives rather than presenting one stress as the expected outcome.</p>` },
-      { id: 'drivers', title: 'Map common drivers beyond the largest stock', html: `
-        <p>Issuer weights are only one view. Add separate maps for sector, geography, currency, credit quality, interest-rate exposure, and liquidity. These maps answer different questions, so their totals should not be added together into one exposure percentage.</p>
-        <p>For example, holdings in several industries might all depend on inexpensive refinancing. A rise in borrowing costs can affect their earnings or valuations together. Equally, a domestic listing does not prove that revenue and costs are domestic. Label listing-based classifications separately from economic estimates.</p>
-        <p>Employer shares deserve a household view: employment income, future bonuses, and invested wealth may all depend on the same company. A real-estate-heavy household may also carry local economic exposure outside its brokerage account. These observations broaden the analysis without pretending that every household asset has a continuously observable market price.</p>` },
-      { id: 'data', title: 'Preserve the limits of the holdings data', html: `
-        <p>Use a dated holdings file for each fund and record whether it is complete. A top-ten list can establish some overlap but cannot establish the absence of other overlap. A fund-of-funds structure requires another look-through layer; align identifiers and avoid counting the intermediate wrapper as an additional asset.</p>
-        <p>For derivatives, short positions, or leveraged products, simple market-value weights may be misleading. Exposure may require notional, delta, or another measure suited to the contract. Keep those measures labelled and separate from ordinary unlevered cash-equity weights.</p>
-        <p>If one fund reports month-end holdings and another is daily, disclose the mismatch. Missing coverage should remain “unknown.” Filling it with an assumed zero can make a portfolio appear more diversified precisely where the evidence is weakest.</p>` },
-      { id: 'policy', title: 'Turn a snapshot into a repeatable policy', html: `
-        <ol><li>Define the portfolio and household assets included in the review.</li><li>Record dated values and look through funds using the best available holdings.</li><li>Calculate issuer and sector exposures, retaining unknown coverage.</li><li>Stress common drivers and compare losses with the capacity to meet planned spending.</li><li>Set review dates and explicit triggers for reassessing concentration.</li></ol>
-        <p>A trigger can lead to a review rather than an automatic sale. Taxes, transaction costs, liquidity, restrictions, and the purpose of the investment all affect the implementation. New contributions or staged changes may alter the exposure differently from a single trade.</p>
-        <p>The finished review should state the largest known exposures, the missing data, the tested scenarios, and the reason for any concentration retained. That record makes a later decision easier to evaluate when prices and portfolio weights change.</p>` }
-    ],
-    sources: [
-      { title: 'FINRA · Concentrate on Concentration Risk', url: 'https://www.finra.org/investors/insights/concentration-risk', note: 'Overlapping funds, correlated assets, employer concentration, and reviewing exposures. Published 15 June 2022.' },
-      { title: 'Investor.gov · Asset Allocation and Diversification', url: 'https://www.investor.gov/introduction-investing/getting-started/asset-allocation', note: 'General relationship between goals, time horizon, risk tolerance, asset allocation, and diversification.' }
-    ]
   }
 ];

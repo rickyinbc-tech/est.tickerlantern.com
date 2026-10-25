@@ -1,5 +1,6 @@
 import { additionalDefinitions, additionalResult } from './planning-more-models.js';
 import { decisionDefinitions, decisionResult } from './planning-decisions-models.js';
+import { resilienceDefinitions, resilienceResult } from './planning-resilience-models.js';
 // Educational scenarios, not forecasts. CAD throughout. Source observations are kept separate.
 export const spendingSource = {
   publisher: 'Statistics Canada', period: '2021 and 2023', released: '2025-05-21', reviewed: '2026-10-25',
@@ -34,7 +35,7 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions};
+export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions};
 export const wholeInputKeys=['years','months','study','age'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
@@ -85,6 +86,7 @@ export function planningResult(kind,input=defaults(kind)) {
   if(!validInputs(kind,input))throw Error('Inputs are outside the supported scenario range.');
   if(additionalDefinitions[kind])return additionalResult(kind,input);
   if(decisionDefinitions[kind])return decisionResult(kind,input);
+  if(resilienceDefinitions[kind])return resilienceResult(kind,input);
   if(kind==='savings') {
     const path=savingsPath(input), end=path.at(-1);
     return {metrics:[['Ending savings',end.value,'money'],['Contributed',end.contributions,'money'],['Modeled growth',end.value-end.contributions,'money']], note:'Hypothetical constant effective annual return, converted to an equivalent monthly rate. Contributions arrive at month-end; starting savings are invested immediately. Nominal CAD before fees, tax and inflation. No probabilities are assigned.', charts:[

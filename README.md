@@ -9,23 +9,30 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with twelve visual planning guides and 43
+charts**. The library now leads with fifteen visual planning guides and 55
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
-tax timing, CPP start ages and renting versus buying.
+tax timing, CPP start ages, renting versus buying, longevity, recurring fees
+and periodic-bill calendars.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
 
 `src/planning-guides.js`, `planning-more-guides.js` and
-`planning-decisions-guides.js` contain the articles. `planning-models.js`,
-`planning-more-models.js` and `planning-decisions-models.js` own the
+`planning-decisions-guides.js` and `planning-resilience-guides.js` contain the articles. `planning-models.js`,
+`planning-more-models.js`, `planning-decisions-models.js` and
+`planning-resilience-models.js` own the
 explicit cash-flow conventions and the dated Statistics Canada spending rows;
 `planning-charts.js` renders the figures on the server and in the browser.
 `planning-ui.js` handles edits, validation and responsive chart sizing. The
 financial arithmetic is checked independently in `tests/planning*.test.mjs`.
 The homepage and library derive article and chart counts from the content.
+`planning-life-data.js` holds a small attributed public Statistics Canada snapshot
+(preliminary 2022–2024, Canada). Reproduce it with
+`python3 scripts/extract-planning-life-table.py --archive qa/statcan-life-table.zip`.
+The extraction checks dimensions, units, missingness, duplicates and monotonicity;
+raw public downloads remain ignored under `qa/`.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

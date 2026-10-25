@@ -43,7 +43,7 @@ function linePlot(spec,width) {
   return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)))+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.');
 }
 function barPlot(spec,width) {
-  const left=52,right=18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
+  const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
   const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:62, height=top+spec.rows.length*rowHeight+40;
   const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):r.value??0;
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
@@ -150,7 +150,7 @@ function chartTable(spec) {
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
   const chart=spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):barPlot(spec,width);
-  return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${spec.source?'Official statistics':'Hypothetical scenario'}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${spec.source}">Statistics Canada · original source ↗</a></p>`:''}${chartTable(spec)}</figure>`;
+  return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${spec.source}">Statistics Canada · original source ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {
   return `<div class="planning-metrics" aria-live="polite">${result.metrics.map(([label,value,unit,custom])=>`<div><span>${escapeHTML(label)}</span><strong>${escapeHTML(custom??(unit==='months'&&value==null?'Not repaid':format(value,unit)))}</strong></div>`).join('')}</div><p class="planning-assumptions">${escapeHTML(result.note)}</p><div class="planning-figures">${result.charts.map(c=>renderFigure(c,width)).join('')}</div>`;

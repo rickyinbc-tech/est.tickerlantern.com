@@ -643,3 +643,7 @@ Four charts compare consistent nominal/real valuation with deliberate basis mism
 `docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.
+
+### Performance fees and loss recovery
+
+`/research/performance-fee-high-water-mark-loss-recovery-cash` compares two invented annual fee bases across the same four gross returns. The mark rule retains the prior highest post-fee annual balance; the annual-reset rule carries no loss forward. Five charts trace returns, net balances, actual charges and the subsequent-return effect on deducted fees. Tests independently compound each actual fee through its remaining periods, including later negative returns, and check zero-rate, no-capital and all-loss cases. The browser companion verifies real controls, reset, fee tables and mobile SVG labels. No fund contract, eligibility rule, actual performance or fee quote is applied.

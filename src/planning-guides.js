@@ -1,3 +1,4 @@
+import { paymentValueGuides } from './planning-payment-value-guides.js';
 import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
 import { bookingRefundGuides } from './planning-booking-refund-guides.js';
 import { adviceFeeCashGuides } from './planning-advice-fee-cash-guides.js';
@@ -95,6 +96,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...paymentValueGuides,
   ...ladderRenewalGuides,
   ...bookingRefundGuides,
   ...adviceFeeCashGuides,

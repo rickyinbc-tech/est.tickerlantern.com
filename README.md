@@ -512,3 +512,7 @@ Five charts reconcile purchases, card repayments and internal savings transfers.
 
 `planning-illness-cash` adds independent benefit cash calendars; see
 `docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+### Upfront receipts and dated payment value
+
+`/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.

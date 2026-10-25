@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 97 visual planning guides and 388
+charts**. The library now leads with 99 visual planning guides and 396
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -263,3 +263,21 @@ See `docs/planning-wealth-choice-2026-10-25.md` for assumptions and verification
 `/research/banks` links the restored RBC note and four new senior analyses for TD, BMO, Scotiabank and CIBC (25 October 2026). The new pages use 23 October TSX CAD closes and July-quarter issuer actuals, plus explicit original assumptions. `src/banks/*.json` owns public-source facts, prose and assumptions; `model.js` owns the linked FY2026–FY2028 earnings model, scenario returns, credit stress, steady-state book diagnostic and separate five-year cash-flow model. `scripts/build-bank-research.mjs` renders the articles, comparison hub, source/input JSON and forecast CSVs.
 
 The base valuation horizon is October 2027 using FY2027 modeled EPS. The five-year illustration starts separately from adjusted trailing EPS. TD insurance service expenses are deducted explicitly. Scotiabank's announced Chile tax-asset charge reduces modeled Q4/FY2026 adjusted earnings once, after tax. Source-specific non-GAAP definitions and distinct share-count dates remain visible. The aggregate model does not supply a full CET1, OCI or common-book bridge. No private files or downloaded issuer PDFs are part of the build.
+
+## Overdraft ledgers and housing statistics
+
+Two English guides add eight interactive charts on overdraft fees and daily
+borrowing, and housing-affordability statistics versus household cash budgets.
+The thirty-day overdraft ledger charges each arrangement’s own fees into its
+daily balance, accrues simple daily interest and posts it at month-end. All
+amounts and rates are hypothetical. The housing module preserves 28 official
+Canadian Housing Survey percentages across seven rows and four cycles, with
+source hashes and explicit conditional denominators. Its editable budget stays
+separate from the fixed observations.
+
+Run `python3 scripts/check-planning-housing-source.py` with the original CSV and
+release HTML retained under ignored `qa/` to verify all source values and notes.
+Run `node --test tests/planning-banking-housing.test.mjs` and
+`python3 tests/browser_banking_housing.py <origin>` for mathematical and rendered
+checks. The existing savings-promotion guide is retained as the single article
+on that topic.

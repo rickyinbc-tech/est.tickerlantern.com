@@ -643,3 +643,7 @@ Four charts compare consistent nominal/real valuation with deliberate basis mism
 `docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.
+
+## Consumer expectations and separate household price scenarios
+
+Five charts preserve Bank of Canada interpolated medians through 2026 Q3 and keep household assumptions independent. See `docs/planning-expectations-2026-10-25.md` for the bounded source checks and validation.

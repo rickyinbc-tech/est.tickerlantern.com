@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 217 visual planning guides and 883
+charts**. The library now leads with 220 visual planning guides and 897
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -602,5 +602,14 @@ The English guide `employee-stock-options-vesting-exercise-cash-spread` separate
 `docs/planning-rrif-kind-2026-10-25.md` for scope and validation.
 
 The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group means and rounded changes. Approximate wealth shares use explicit 40/20/20/20 household weights and normalise the rounded weighted sum, disclosing the Q4 2025 20-cent reconciliation difference. Its cumulative chart contains only the published group boundaries, without inventing a lowest-quintile point, within-group Lorenz detail, Gini coefficient or confidence bounds. Source-year switching and mobile layout are verified.
+
+## Equal cash, different unit quantities
+
+Four charts connect equal cash purchases with units, weighted cost and marked value. See
+`docs/planning-unit-cost-2026-10-25.md` for sources and checks.
+
+### Collateral-ratio adjustments and outside funding
+
+`/research/collateral-equity-ratio-cash-loan-repayment-asset-sale` compares three invented balance-sheet treatments in five charts. Direct loan repayment, extra held collateral and asset-sale repayment use different denominators; subtracting new outside cash preserves the original post-price equity. The held-cash arrangement and required ratio are explicit hypothetical assumptions, not broker procedures or Canadian regulatory requirements. Sale-only repair is unavailable for a remaining funded account with nonpositive equity. Independent ratio equations, negative equity and near-zero numerical stability are checked in `tests/planning-collateral-repair.test.mjs`; the browser companion verifies controls, tables and mobile labels.
 
 The collateral guide uses a fictional loan-to-value covenant to separate positive equity from a funding test. It calculates outside debt repayment, fully eligible collateral additions and internal sales using distinct equations, with an explicit no-partial-sale boundary when debt reaches collateral value. No lender or regulatory margin rule is implemented. Transfer accounting, signed equity, exact-limit and zero-debt cases, and mobile controls are verified.

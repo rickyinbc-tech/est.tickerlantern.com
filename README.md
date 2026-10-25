@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 234 visual planning guides and 957
+charts**. The library now leads with 236 visual planning guides and 966
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -647,3 +647,9 @@ Four charts compare consistent nominal/real valuation with deliberate basis mism
 `docs/planning-discount-basis-2026-10-25.md` for sources and checks.
 
 The lease-distance guide compares hypothetical full-term kilometre allowances, distinct excess-distance rates and an additional monthly payment. Five charts retain exact allowance breakpoints, separate cash dates and show a signed cost-difference curve so both default crossovers are legible on mobile. Published manufacturer prices are not used. The two equality points, full-term allowance convention, final charge counting and zero-rate cases are verified.
+
+### Performance fees and loss recovery
+
+`/research/performance-fee-high-water-mark-loss-recovery-cash` compares two invented annual fee bases across the same four gross returns. The mark rule retains the prior highest post-fee annual balance; the annual-reset rule carries no loss forward. Five charts trace returns, net balances, actual charges and the subsequent-return effect on deducted fees. Tests independently compound each actual fee through its remaining periods, including later negative returns, and check zero-rate, no-capital and all-loss cases. The browser companion verifies real controls, reset, fee tables and mobile SVG labels. No fund contract, eligibility rule, actual performance or fee quote is applied.
+
+The family-loan guide separates accessible lender cash from an unpaid-principal record, comparing on-schedule and shifted receipts against the lender’s own bill. Negative ledger dates represent unfunded amounts rather than automatic borrowing; later receipts do not erase an earlier funding need. Capped final repayments, zero repayment, events beyond the reporting window, underlying deficits and the independent receipt-count reconciliation are verified, alongside mobile controls.

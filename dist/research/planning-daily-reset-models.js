@@ -1,0 +1,35 @@
+export const dailyResetDefinitions={
+ dailyReset:{title:'Compare ideal daily-multiple compounding on two synthetic paths with the same index endpoint',fields:[
+  ['resetCapital','Starting hypothetical account capital (CAD)',10000,1000,1000000,1000],
+  ['dailyMultiple','Ideal positive daily return multiple (whole-number x)',2,1,3,1],
+  ['cyclePairs','Number of two-day pairs (whole pairs)',10,1,30,1],
+  ['terminalMove','Same index return over the complete numbered window (%)',0,-20,20,1],
+  ['pairedSwing','Paired multiplicative swing parameter, not annual volatility (%)',10,0,20,1]
+ ]}
+};
+export function compoundDailyReturns(returns,initial,multiple) {
+ const rows=[{x:0,value:initial}];let value=initial;
+ for(let i=0;i<returns.length;i++){
+  const factor=1+multiple*returns[i];if(!(factor>0))throw Error('A daily account factor must remain positive in this teaching range.');
+  value*=factor;rows.push({x:i+1,value});
+ }
+ return rows;
+}
+export function dailyResetPaths(input) {
+ const days=2*input.cyclePairs,baseLog=Math.log1p(input.terminalMove/100)/days,swingLog=Math.log1p(input.pairedSwing/100);
+ const smoothReturns=Array(days).fill(Math.expm1(baseLog)),pairedReturns=Array.from({length:days},(_,i)=>Math.expm1(baseLog+(i%2===0?swingLog:-swingLog)));
+ const smoothIndex=compoundDailyReturns(smoothReturns,100,1),pairedIndex=compoundDailyReturns(pairedReturns,100,1),smoothAccount=compoundDailyReturns(smoothReturns,input.resetCapital,input.dailyMultiple),pairedAccount=compoundDailyReturns(pairedReturns,input.resetCapital,input.dailyMultiple);
+ const reference=input.resetCapital*(1+input.dailyMultiple*input.terminalMove/100),smoothEnd=smoothAccount.at(-1).value,pairedEnd=pairedAccount.at(-1).value;
+ const rawGap=pairedEnd-reference,gap=Math.abs(rawGap)<input.resetCapital*1e-10?0:rawGap;
+ return {days,smoothReturns,pairedReturns,smoothIndex,pairedIndex,smoothAccount,pairedAccount,reference,smoothEnd,pairedEnd,gap};
+}
+export function dailyResetResult(kind,input) {
+ if(kind!=='dailyReset')throw Error('Unknown daily-reset topic.');
+ const p=dailyResetPaths(input);
+ return {metrics:[['Ideal daily-multiple account: smooth-path final capital',p.smoothEnd,'money'],['Ideal daily-multiple account: paired-swing final capital',p.pairedEnd,'money'],['Paired-swing capital minus the full-period arithmetic reference',p.gap,'money']],note:'Original deterministic compounding illustration, not a real index, ETF, backtest, simulation of likely prices or investment recommendation. Both synthetic benchmark paths start at 100 and finish at '+(100+input.terminalMove).toFixed(2)+' after '+p.days+' numbered trading days. Each account starts with the same CAD capital and is assumed to deliver exactly the entered multiple of each benchmark’s simple daily return, compounded on its own changing capital. The smooth path has a constant daily log return; the other adds and subtracts log(1 + swing parameter) in each two-day pair, so both benchmark endpoints match. The swing parameter is neither an annualized volatility estimate nor symmetric plus/minus simple returns. All permitted daily account factors remain positive. The full-period arithmetic reference is starting capital × (1 + multiple × complete-window index return); it is not a product return promise or modeled investable portfolio. Fees, financing, tracking error, tax, distributions, trading spreads, intraday purchase timing and external cash flows are excluded. Reordering the same set of daily returns changes intermediate values but not either final product in this cash-flow-free model. Different paired-swing settings change the return set rather than merely reorder it.',charts:[
+  {id:'daily-reset-matched-index-paths',type:'line',title:'Two synthetic benchmarks share a final level despite different daily moves',unit:'decimal',unitLabel:'Rebased benchmark points · both start at 100',valueUnitLabel:'rebased benchmark points',tableUnit:'benchmark points',xLabel:'Numbered hypothetical trading days',series:[{name:'Smooth benchmark path',rows:p.smoothIndex},{name:'Paired-swing benchmark path',rows:p.pairedIndex,dash:true}],evidence:'Original synthetic benchmark paths',note:'The paths have the same number of observations and the same full-window index return. The paired path alternates multiplicative up/down adjustments around the same underlying log trend. At the default zero trend and 10% swing, each pair is +10% then approximately −9.0909%, returning the benchmark to its prior pair-end level. It is not +10% followed by −10%. No path is historical, probable or a forecast.'},
+  {id:'daily-reset-account-paths',type:'line',title:'Daily multiples compound on the account’s own changing capital',unit:'money',xLabel:'Numbered hypothetical trading days',series:[{name:'Ideal daily multiple on the smooth path',rows:p.smoothAccount},{name:'Ideal daily multiple on the paired-swing path',rows:p.pairedAccount,dash:true}],evidence:'Ideal daily-return multiplication · no costs',note:'For each day, next account capital = current account capital × (1 + multiple × that day’s simple benchmark return). This rule applies the daily objective exactly before all excluded costs. It does not multiply the benchmark’s complete-window return after the fact. Neither line is an ETF quotation, an actual net asset value series or an achievable return guarantee.'},
+  {id:'daily-reset-endpoint-comparison',type:'bar',title:'An ideal daily objective and a multiple of the full-period return are different calculations',unit:'money',rows:[{label:'Daily reset: smooth path',value:p.smoothEnd},{label:'Daily reset: paired-swing path',value:p.pairedEnd},{label:'Full-period arithmetic reference',value:p.reference}],evidence:'Original same-endpoint calculation comparison',note:'The reference applies the selected multiple once to the common full-window benchmark percentage return, then adds starting capital. It is an arithmetic comparison only. The first two bars compound daily multiples along different daily-return sets. All bars start from the same hypothetical capital; the reference is not presented as a buyable alternative portfolio or a promise about a fund.'},
+  {id:'daily-reset-swing-multiple-matrix',type:'heatmap',title:'The difference from the arithmetic reference depends on the daily multiple and paired swing',unit:'money',signed:true,compactValues:false,columns:[0,5,10,20].map(v=>v+'% swing'),rows:[1,2,3].map(dailyMultiple=>({label:dailyMultiple+'x daily',values:[0,5,10,20].map(pairedSwing=>dailyResetPaths({...input,dailyMultiple,pairedSwing}).gap)})),evidence:'Original unweighted compounding cases',note:'Rows replace the positive daily multiple and columns replace the paired swing parameter. Starting capital, pair count and complete-window benchmark return remain selected inputs. Each cell is paired-path final capital minus the corresponding multiple-of-full-period arithmetic reference. This is not a probability grid, an annual volatility forecast or a fee estimate. At 1x, the ideal account matches the benchmark’s cumulative return, up to floating-point precision.'}
+ ]};
+}

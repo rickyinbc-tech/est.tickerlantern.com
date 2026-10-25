@@ -1,3 +1,4 @@
+import { dailyResetGuides } from './planning-daily-reset-guides.js';
 import { giftCreditGuides } from './planning-gift-credit-guides.js';
 import { survivorRecordGuides } from './planning-survivor-records-guides.js';
 import { priceCutGuides } from './planning-price-cut-guides.js';
@@ -194,6 +195,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...dailyResetGuides,
   ...giftCreditGuides,
   ...survivorRecordGuides,
   ...priceCutGuides,

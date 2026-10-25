@@ -3,6 +3,12 @@ export const escapeHTML = value => String(value).replace(/[&<>"']/g,c=>({'&':'&a
 const colors=['#087f76','#102f50','#b8822e'];
 export function format(value,unit,compact=false) {
   if(value==null)return unit==='months'?'NR':'Unavailable';
+  if(unit==='count') {
+    const amount=Math.abs(value);
+    if(compact&&amount>=1000000)return Number((value/1000000).toFixed(1)).toLocaleString('en-CA')+'m';
+    if(compact&&amount>=1000)return Number((value/1000).toFixed(1)).toLocaleString('en-CA')+'k';
+    return Math.round(value).toLocaleString('en-CA');
+  }
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
   if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
   if(unit==='decimal')return value.toFixed(1);
@@ -10,6 +16,7 @@ export function format(value,unit,compact=false) {
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
   if(unit==='money') {
     const prefix=(value<0?'-':'')+'$',amount=Math.abs(value);
+    if(compact&&amount>=1000000000)return prefix+Number((amount/1000000000).toFixed(1)).toLocaleString('en-CA')+'b';
     if(compact&&amount>=1000000)return prefix+(amount/1000000).toFixed(1)+'m';
     if(compact&&amount>=1000)return prefix+Number((amount/1000).toFixed(amount>=100000?0:1)).toLocaleString('en-CA')+'k';
     return prefix+amount.toLocaleString('en-CA',{maximumFractionDigits:compact?(amount<1?2:Number.isInteger(amount)?0:1):2,minimumFractionDigits:0});
@@ -19,7 +26,7 @@ export function format(value,unit,compact=false) {
 const txt=(x,y,value,anchor='start',extra='')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" ${extra}>${escapeHTML(value)}</text>`;
 const line=(x1,y1,x2,y2,cls='plot-grid')=>`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
 const niceMax=value=>{if(value<=0)return 1;const p=10**Math.floor(Math.log10(value));const n=value/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;};
-const legend=(names,fill=false)=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}${fill?' plot-key-fill':''}" aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
+const legend=(names,fill=false,series=null)=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}${fill?' plot-key-fill':''}"${series&&!fill?` style="border-color:${colors[i%colors.length]};border-top-style:${series[i].dash?'dashed':'solid'}"`:''} aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
 function svgShell(spec,width,height,inner,description) {
   return `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="${spec.id}-title ${spec.id}-desc"><title id="${spec.id}-title">${escapeHTML(spec.title)}</title><desc id="${spec.id}-desc">${escapeHTML(description)} Exact values are available in the chart data table below.</desc>${inner}</svg>`;
 }
@@ -95,7 +102,7 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)))+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
   const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
@@ -243,5 +250,6 @@ export function renderResult(result,width=1000) {
 }
 export function renderPlanningExplorer(kind) {
   const def=definitions[kind];
-  return `<section class="planning-explorer guide-width" data-planning-app="${kind}" aria-labelledby="explorer-title"><div class="planning-explorer-heading"><div><p class="guide-kicker">Change an assumption. Follow the result.</p><h2 id="explorer-title">${def.title}</h2></div><span class="planning-label">Interactive planning lab</span></div><form class="planning-controls" novalidate>${def.fields.map(([key,label,value,min,max,step])=>`<label for="planning-${key}">${escapeHTML(label)}<input type="number" inputmode="decimal" id="planning-${key}" name="${key}" value="${value}" min="${min}" max="${max}" step="${step}" aria-describedby="help-${key}"><small id="help-${key}">Range ${min.toLocaleString('en-CA')} to ${max.toLocaleString('en-CA')}</small></label>`).join('')}<button type="button" class="planning-reset">Restore example</button></form><p class="planning-error" role="alert" hidden></p><noscript><p>The example charts below work without JavaScript. Enable JavaScript to change assumptions.</p></noscript><div class="planning-results">${renderResult(planningResult(kind,defaults(kind)))}</div></section>`;
+  const sourceData=def.mode==='statistics';
+  return `<section class="planning-explorer guide-width" data-planning-app="${kind}" aria-labelledby="explorer-title"><div class="planning-explorer-heading"><div><p class="guide-kicker">${sourceData?'Choose a source year. Compare the measures.':'Change an assumption. Follow the result.'}</p><h2 id="explorer-title">${def.title}</h2></div><span class="planning-label">${sourceData?'Interactive data explorer':'Interactive planning lab'}</span></div><form class="planning-controls" novalidate>${def.fields.map(([key,label,value,min,max,step])=>`<label for="planning-${key}">${escapeHTML(label)}<input type="number" inputmode="decimal" id="planning-${key}" name="${key}" value="${value}" min="${min}" max="${max}" step="${step}" aria-describedby="help-${key}"><small id="help-${key}">Range ${sourceData?min:min.toLocaleString('en-CA')} to ${sourceData?max:max.toLocaleString('en-CA')}</small></label>`).join('')}<button type="button" class="planning-reset">${sourceData?'Restore source year':'Restore example'}</button></form><p class="planning-error" role="alert" hidden></p><noscript><p>${sourceData?'The source charts':'The example charts'} below work without JavaScript. Enable JavaScript to ${sourceData?'select a source year':'change assumptions'}.</p></noscript><div class="planning-results">${renderResult(planningResult(kind,defaults(kind)))}</div></section>`;
 }

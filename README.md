@@ -708,3 +708,7 @@ See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.
 
 Four charts separate repeated-event probabilities, average costs and reserve shortfalls. See
 `docs/planning-repeat-risk-2026-10-25.md` for sources and checks.
+
+## AI work-time survey and personal income scenarios
+
+Five charts distinguish reported time, overlapping survey responses and independently entered paid-work cash assumptions. See `docs/planning-ai-time-2026-10-25.md` for sources, bounded data-quality checks and validation.

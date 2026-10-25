@@ -4,6 +4,7 @@ const colors=['#087f76','#102f50','#b8822e'];
 export function format(value,unit,compact=false) {
   if(value==null)return unit==='months'?'NR':'Unavailable';
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
+  if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
   if(unit==='decimal')return value.toFixed(1);
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
@@ -104,7 +105,8 @@ function barPlot(spec,width) {
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
   let body='';
-  for(let i=0;i<=4;i++){const v=max*i/4;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
+  const tickCount=spec.axisTicks??4;
+  for(let i=0;i<=tickCount;i++){const v=max*i/tickCount;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
   spec.rows.forEach((r,index)=>{
     const y=top+index*rowHeight;
     let label=r.label;
@@ -178,7 +180,7 @@ function waterfallPlot(spec,width){
   const low=-niceMax(Math.abs(Math.min(0,...rows.flatMap(r=>[r.start,r.end]))));
   const high=niceMax(Math.max(0,...rows.flatMap(r=>[r.start,r.end])));
   const lo=rows.every(r=>r.start>=0&&r.end>=0)?0:low,hi=rows.every(r=>r.start<=0&&r.end<=0)?0:high;
-  const span=Math.max(1,hi-lo),height=top+rows.length*rowHeight+42;
+  const span=hi>lo?hi-lo:1,height=top+rows.length*rowHeight+42;
   const x=v=>left+(v-lo)/span*(width-left-right);
   let body='';
   const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+span*i/4),0])];

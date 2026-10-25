@@ -1,4 +1,8 @@
 import { cashMechanicsGuides } from './planning-cash-mechanics-guides.js';
+import { wealthChoiceGuides } from './planning-wealth-choice-guides.js';
+import { wealthFlexGuides } from './planning-wealth-flex-guides.js';
+import { calendarRiskGuides } from './planning-calendar-risk-guides.js';
+import { savingsProjectGuides } from './planning-savings-projects-guides.js';
 import { budgetExposureGuides } from './planning-budget-exposure-guides.js';
 import { commitmentGuides } from './planning-commitments-guides.js';
 import { wealthCareerGuides } from './planning-wealth-career-guides.js';
@@ -25,6 +29,10 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...cashMechanicsGuides,
+  ...wealthChoiceGuides,
+  ...wealthFlexGuides,
+  ...calendarRiskGuides,
+  ...savingsProjectGuides,
   ...budgetExposureGuides,
   ...commitmentGuides,
   ...wealthCareerGuides,

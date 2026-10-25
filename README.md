@@ -8,11 +8,14 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
+New cash-mechanics guides cover mortgage payment frequency, savings-promotion windows
+and foreign-card purchase/refund conversion, with twelve interactive figures.
+
+
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 81 visual planning guides and 324
-charts, with new guides on mortgage payment frequency, savings-promotion windows,
-foreign-card refunds, shrinking credit-card minimum payments, a pay-rise
-saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 92 visual planning guides and 368
+charts, with new guides on job-offer cash and commuting costs, losses before a
+fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -47,6 +50,15 @@ keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
 
+The latest three guides compare annual versus monthly insurance payments,
+lump-sum versus phased investment timing and renovation payment calendars.
+Each has four interactive graphics with explicit cash ledgers and accessible
+data tables. Payment percentages, returns and overruns are hypothetical;
+source notes identify the public mechanics reviewed. The premium equivalent
+rate is a mathematical IRR comparison, not a disclosed APR. Phased investment
+values include retained cash interest, and renovation gaps use the lowest
+balance rather than the final balance alone.
+
 `src/planning-guides.js` composes the article modules named
 `planning-*-guides.js`. `planning-models.js` composes the topic models, whose
 files are named `planning-*-models.js`, and owns the dated Statistics Canada
@@ -60,6 +72,12 @@ constraints. HBP projections start from a separately confirmed required year;
 income inclusions reduce the HBP ledger without restoring an RRSP contribution.
 The HBP tax percentage is a budget allowance, not a tax-return calculation.
 The homepage and library derive article and chart counts from the content.
+Job comparisons use independently entered take-home pay and show commuting
+hours without assigning them a cash value. Goal stress tests apply one loss
+before the selected month’s deposit; the contribution solver also stresses
+earlier deposits. Retirement rules keep all dollars and returns real, apply
+one persistent flexible-spending cut per triggered annual review, and retain
+unpaid essentials separately from deliberately forgone consumption.
 The federal bracket illustration is explicitly fixed to 2026 and excludes
 credits and other taxes. The FHSA calendar models an ordinary new-account
 case only; it does not determine personal eligibility or current account room.
@@ -139,6 +157,11 @@ Verify the public CPI extract against the saved original accessible HTML table:
 python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
 ```
 
+`planning-wealth-flex-models.js` adds home/pension group comparisons, retirement
+spending-cut rules and family gifts. Six public medians are checked with
+`python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
+Observation charts stay fixed when the separate cash controls change.
+
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,
 CAD currency returns, and portfolio concentration. Original hypothetical
@@ -189,7 +212,7 @@ The audit checked 63 market observations and 49 published growth points. All gro
 
 Public adapters include FactSet, MSCI, JPM, Nasdaq, LSEG, Raymond James, Edelweiss and named public research references. Exact benchmark/column/period checks are mandatory. No trailing P/E, CAPE, median, related-index or ETF distribution yield substitutes for a requested metric. Hosted Nasdaq/Edelweiss failures also use the existing 13:00 Vancouver browser check, dependent on the owner’s Mac and Codex. See [browser source runbook](docs/browser-source-runbook.md). No access challenge is bypassed.
 
-Cloudflare Workers serves `dist/` at **https://tickerlantern.com/**. The former `est.tickerlantern.com` address and `www.tickerlantern.com` permanently redirect to the HTTPS apex, preserving paths and queries. All asset requests run through the Worker so these redirects also cover static files. The GitHub repository and snapshot URL retain their existing names. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.
+Cloudflare Workers serves `dist/` at **https://tickerlantern.com/**. The former `est.tickerlantern.com` address and `www.tickerlantern.com` permanently redirect to the HTTPS apex, preserving paths and queries. All asset requests run through the Worker so these redirects also cover static files. The GitHub repository and snapshot URL retain their existing names. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. Merge the current `origin/main` before publishing. Wrangler runs `npm run build` for each deployment so the asset bundle reflects the merged source rather than an earlier build. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.
 
 The same host serves structured-note research at `/notes/research`, its screener
 and detail pages at `/notes` and `/notes/RBC…`, and the equity-linked GIC study at
@@ -216,3 +239,16 @@ visible assumptions and a data table for every chart.
 Run `node --test tests/planning-runway-spending.test.mjs` for the independent
 financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
 input, invalid-input retention, reset, table, responsive and runtime checks.
+
+## Employer risk and purchase financing
+
+Two English guides add eight hypothetical charts. Employer-share losses are
+tested alongside interrupted take-home pay, with bills before income. Cash
+purchase and financing use equal resources and retain any funding gap.
+See `docs/planning-wealth-choice-2026-10-25.md` for assumptions and verification.
+
+## Canadian bank equity research
+
+`/research/banks` links the restored RBC note and four new senior analyses for TD, BMO, Scotiabank and CIBC (25 October 2026). The new pages use 23 October TSX CAD closes and July-quarter issuer actuals, plus explicit original assumptions. `src/banks/*.json` owns public-source facts, prose and assumptions; `model.js` owns the linked FY2026–FY2028 earnings model, scenario returns, credit stress, steady-state book diagnostic and separate five-year cash-flow model. `scripts/build-bank-research.mjs` renders the articles, comparison hub, source/input JSON and forecast CSVs.
+
+The base valuation horizon is October 2027 using FY2027 modeled EPS. The five-year illustration starts separately from adjusted trailing EPS. TD insurance service expenses are deducted explicitly. Scotiabank's announced Chile tax-asset charge reduces modeled Q4/FY2026 adjusted earnings once, after tax. Source-specific non-GAAP definitions and distinct share-count dates remain visible. The aggregate model does not supply a full CET1, OCI or common-book bridge. No private files or downloaded issuer PDFs are part of the build.

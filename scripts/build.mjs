@@ -9,6 +9,7 @@ import { metricDisplay, canCompareHistory, historicalAssessment, valuationRefere
 import { validateFeed, historyCoverage } from '../src/index-data.js';
 import { buildResearch, publishedAt, planningChartCount } from './build-research.mjs';
 import { planningGuides } from '../src/planning-guides.js';
+import { buildBankResearch, bankNavigation } from './build-bank-research.mjs';
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 const m = project(DEFAULTS);
@@ -42,15 +43,17 @@ for (const { file, sha256 } of research.files) {
   if (!/^(?:royal-bank-valuation\.html|rbc-[a-z-]+\.(?:js|css|csv|json))$/.test(file)) throw Error('Unexpected research asset: ' + file);
   const bytes = await readFile('src/research/' + file);
   if (createHash('sha256').update(bytes).digest('hex') !== sha256) throw Error('Research restoration hash mismatch: ' + file);
-  await writeFile('dist/research/' + file, bytes);
+  await writeFile('dist/research/' + file, file === 'royal-bank-valuation.html' ? bytes.toString('utf8').replaceAll('href="/research/royal-bank-valuation" aria-current="page"','href="/research/banks" aria-current="page"').replace('</head>','<link rel="stylesheet" href="/research/banks/banks.css"></head>').replace('<main>', bankNavigation + '<main>') : bytes);
 }
 for (const file of ['site-theme.css', 'style.css', 'index-desk.css', 'workbench.css', 'growth.css', 'scenario-state.js', 'dividend-policy.js', 'five-year-growth.js', 'five-year-report.js', 'growth-data.js', 'valuation-policy.js', 'snapshot-client.js', 'update-status.js', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
 await mkdir('dist/data', { recursive: true });
 for (const file of ['indices.json','source-definitions.json','model-conventions.json']) await copyFile('data/'+file,'dist/data/'+file);
-await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nSitemap: https://tickerlantern.com/sitemap.xml\n');
-const researchPaths = await buildResearch();
+await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: https://tickerlantern.com/sitemap.xml\n');
+const researchPaths = [...await buildResearch(), ...await buildBankResearch()];
 await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url><url><loc>https://tickerlantern.com/research/royal-bank-valuation</loc><lastmod>2026-10-18</lastmod></url>'+researchPaths.map(path => `<url><loc>https://tickerlantern.com${path}</loc><lastmod>${publishedAt}</lastmod></url>`).join('')+'</urlset>');
 await copyFile('src/404.html', 'dist/404.html');
 await writeFile('dist/_headers', '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; frame-ancestors \'none\'\n');
 console.log('Built static report. Illustrative baseline:', JSON.stringify({ priceCAGR: m.priceCAGR, cashIRR: m.cashIRR, reinvestedCAGR: m.reinvestedCAGR }));
 await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/research/*\n  Cache-Control: no-cache\n');
+
+await import('./build-seo.mjs');

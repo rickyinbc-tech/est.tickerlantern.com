@@ -12,7 +12,7 @@ QA.mkdir(exist_ok=True)
 
 
 def browser(*args):
-    return subprocess.check_output(['agent-browser', '--session', SESSION, *map(str, args)], text=True).strip()
+    return subprocess.check_output(['agent-browser', '--session', SESSION, *map(str, args)], text=True, timeout=45).strip()
 
 
 def value(script):
@@ -25,7 +25,7 @@ def check(label, condition):
 
 
 def settle():
-    browser('eval', '(async()=>{await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return true})()')
+    browser('wait', '200')
 
 
 def metric():

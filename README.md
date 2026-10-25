@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 177 visual planning guides and 720
+charts**. The library now leads with 183 visual planning guides and 745
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -106,6 +107,10 @@ An RDSP guide separates a hypothetical permitted gross beneficiary payment
 from ordinary assistance repayment and the remaining plan value. It uses an
 entered issuer-confirmed AHA, excludes exceptional cases and payment eligibility,
 and keeps plan outflow separate from combined household resources.
+A fund-cost guide reconciles reinvested distributions, positive cash return
+of capital and the adjusted cost base before an all-unit sale. Units, NAV,
+retained cash and gain are separate records; no personal tax or inclusion rate
+is calculated. Fractional units keep full precision until display.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -474,6 +479,20 @@ Three four-chart guides compare a five-year deposit with repeated one-year renew
 filtering. Reproduce forty observations with `scripts/extract-planning-rpp-statistics.py`;
 see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.
 
-`planning-illness-cash` compares independent one-time and monthly net-benefit
-calendars, preserving early deficits and excluding future receipts. See
+## Advice sources and service-fee budgets
+
+An English guide pairs selected official 2024 FCAC survey observations with
+independent hypothetical project/review and annual-retainer fee calendars. See
+`docs/planning-advice-cost-2026-10-25.md` for sources and checks.
+
+
+### Charitable-donation claim statistics
+
+`/research/charitable-donation-statistics-claimants-medians-means` presents a fixed official 2022/2023 extract with a source-year selector: jurisdiction claimant counts, conditional medians, nominal claimed totals and age-group median/derived-mean comparisons. Canada is separate from the thirteen provinces and territories; age data uses only the Both sexes section. Derived means are clearly labelled approximations from published rounded totals. No personal giving target, tax-credit calculation or missing year is inferred.
+
+`python3 scripts/check-planning-charitable-source.py` checks 126 source values, header units, both-sex grouping, cross-table national totals, release scope and three original HTML hashes; raw source remains ignored in `qa/`. The new `statistics` explorer mode identifies source-year controls, and a dedicated count formatter plus billion-CAD compact labels preserve full values in accessible tables. `tests/planning-charitable.test.mjs` and `tests/browser_charitable.py [origin]` verify data selection, unsupported years, units, source-mode wording, reset and mobile chart bounds.
+
+The two-income household guide adds an exact four-state probability grid, cash-severity bars and separate frequency and severity curves. Its feasible-overlap stress control preserves both marginal probabilities and is not an estimated correlation. Window risks are original assumptions; expected unfunded dollars are not a sufficient reserve target. Mobile interaction, probability bounds and cash arithmetic are verified.
+
+`planning-illness-cash` adds independent benefit cash calendars; see
 `docs/planning-illness-cash-2026-10-25.md` for scope and validation.

@@ -35,7 +35,7 @@ def metric():
 pages = [
     ('rising-goal-price-monthly-saving-shortfall', 'monthly', '1000', 'years'),
     ('one-cash-balance-multiple-earmarks-double-counting', 'monthly', '1000', 'taxDue'),
-    ('borrowed-investment-own-capital-interest-loss', 'loan', '50000', 'years'),
+    ('leveraged-loss-asset-drop-own-capital', 'loan', '50000', 'years'),
 ]
 for slug, key, replacement, whole in pages:
     browser('set', 'viewport', '1440', '1000')

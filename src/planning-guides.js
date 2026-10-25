@@ -1,3 +1,4 @@
+import { premiumBondGuides } from './planning-premium-bond-guides.js';
 import { collateralRepairGuides } from './planning-collateral-repair-guides.js';
 import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
 import { unitCostGuides } from './planning-unit-cost-guides.js';
@@ -126,6 +127,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...premiumBondGuides,
   ...collateralRepairGuides,
   ...buybackDilutionGuides,
   ...unitCostGuides,

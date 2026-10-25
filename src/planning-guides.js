@@ -1,4 +1,5 @@
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
+import { tfsaLossGuides } from './planning-tfsa-loss-guides.js';
 import { warrantyGuides } from './planning-warranty-guides.js';
 import { ladderRenewalGuides } from './planning-ladder-renewal-guides.js';
 import { bookingRefundGuides } from './planning-booking-refund-guides.js';
@@ -98,6 +99,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...deferredCashGuides,
+  ...tfsaLossGuides,
   ...warrantyGuides,
   ...ladderRenewalGuides,
   ...bookingRefundGuides,

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 156 visual planning guides and 633
+charts**. The library now leads with 167 visual planning guides and 679 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -93,6 +93,14 @@ Debt-statistics guides distinguish holding shares, conditional medians and
 whole-population means. Ten 2023 SFS estimates retain twenty confidence bounds;
 interval bars and accessible tables display the published 95% intervals.
 Verify with `python3 scripts/check-planning-debt-denominators-source.py <source-table.zip>`.
+Pension-expiry, withdrawal-allocation and mortgage-life guides add twelve
+interactive charts. The pension ledger makes a temporary bridge ending visible
+before separately entered CPP cash begins. Withdrawal sources use the smaller
+remaining portfolio and report a separate residual rebalance. Insurance curves
+separate declining debt, flat assumed premiums and conditional claim destinations.
+See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
+New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
+retain their existing dates rather than being redated at every build.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -425,3 +433,22 @@ keep premium principal separate from financing interest, and do not assume
 equivalent coverage across independently entered premium quotes. Premium-related
 cash schedules exclude the common base loan payment. No claim, premium refund
 or policy eligibility is calculated.
+
+`planning-access-bridge-cover-models.js` adds ordinary RDSP payment/repayment
+cash, temporary pension bridge endings and hypothetical rebuilding coverage
+gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
+explicit contract assumptions and validation.
+
+## Inflation order and rate conventions
+
+Two English guides add nine charts on the order of price increases during
+withdrawals and on nominal versus effective annual rate conventions. See
+`docs/planning-timing-conventions-2026-10-25.md` for sources and checks.
+
+
+### Insurance renewal budgets and deposit access
+
+- `/research/term-life-renewal-premium-household-reserve` follows two independently entered equal premium periods, a recurring household assignment and a separately held reserve. Cash retained before a hypothetical renewal can fund later premiums; it is not a policy cash value or a premium refund. No renewal right, quote or insurance recommendation is inferred.
+- `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
+
+`tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.

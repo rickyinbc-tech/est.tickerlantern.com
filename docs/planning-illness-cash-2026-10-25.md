@@ -33,7 +33,7 @@ The default one-time calendar needs CAD 10,000 opening cash and ends at zero;
 the monthly calendar needs CAD 15,000 and ends with CAD 4,000 from the entered
 CAD 10,000. Its positive ending cash does not fund the earlier CAD 5,000 gap.
 
-Full JavaScript suite: 859 passed. Python suite: 122 passed.
+Full JavaScript suite: 871 passed. Python suite: 122 passed.
 Browser checks cover 1440, 390 and 320 pixels, four figures/tables, actual receipt
 date changes, out-of-window receipts, fractional-month rejection, reset and
 table disclosure. The test scrolls controls fully into view before clicking.

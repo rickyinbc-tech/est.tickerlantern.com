@@ -1,4 +1,6 @@
 import { illnessCashGuides } from './planning-illness-cash-guides.js';
+import { cardLedgerGuides } from './planning-card-ledger-guides.js';
+import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
 import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
 import { charitableGuides } from './planning-charitable-guides.js';
@@ -91,6 +93,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...illnessCashGuides,
+  ...cardLedgerGuides,
+  ...assetResilienceGuides,
   ...jointIncomeGuides,
   ...fundCostBaseGuides,
   ...charitableGuides,

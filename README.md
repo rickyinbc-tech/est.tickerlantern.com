@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 183 visual planning guides and 745
+charts**. The library now leads with 185 visual planning guides and 754
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
@@ -493,6 +493,17 @@ independent hypothetical project/review and annual-retainer fee calendars. See
 `python3 scripts/check-planning-charitable-source.py` checks 126 source values, header units, both-sex grouping, cross-table national totals, release scope and three original HTML hashes; raw source remains ignored in `qa/`. The new `statistics` explorer mode identifies source-year controls, and a dedicated count formatter plus billion-CAD compact labels preserve full values in accessible tables. `tests/planning-charitable.test.mjs` and `tests/browser_charitable.py [origin]` verify data selection, unsupported years, units, source-mode wording, reset and mobile chart bounds.
 
 The two-income household guide adds an exact four-state probability grid, cash-severity bars and separate frequency and severity curves. Its feasible-overlap stress control preserves both marginal probabilities and is not an estimated correlation. Window risks are original assumptions; expected unfunded dollars are not a sufficient reserve target. Mobile interaction, probability bounds and cash arithmetic are verified.
+
+### Asset-resilience definitions and essential-expense targets
+
+`/research/asset-resilience-statistics-household-emergency-target` pairs two fixed Statistics Canada interval charts with two separate hypothetical household cash-target charts. The selected national person-based observations retain reference years, supplied 95% bounds, source units/precision, vectors, coordinates, flags and the public download hash. Ten-province coverage excludes the territories. The invented benchmark is not an official current LIM or a classification of the reader.
+
+Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py <11100082-eng.zip>` using the official CSV ZIP identified in the data module. The extractor rejects duplicate/missing grains, changed latest-year coverage, flagged observations, invalid units and unordered intervals. Tests verify the independent hub controls, household reconciliation and fixed-source behavior; `tests/browser_asset_resilience.py` exercises real controls, invalid-input retention, reset, data tables and mobile SVG labels.
+
+## Card purchases and household bookkeeping
+
+Five charts reconcile purchases, card repayments and internal savings transfers. See
+`docs/planning-card-ledger-2026-10-25.md` for sources and checks.
 
 `planning-illness-cash` adds independent benefit cash calendars; see
 `docs/planning-illness-cash-2026-10-25.md` for scope and validation.

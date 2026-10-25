@@ -233,9 +233,9 @@ function donutPlot(spec,width){
     body+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="34" pathLength="100" stroke-dasharray="${share} ${100-share}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})"/>`;
     offset+=share;
   });
-  body+=txt(cx,cy-7,format(total,spec.unit,true),'middle','class="plot-donut-total"')+txt(cx,cy+20,total?'Total listed assets':'No listed assets','middle');
+  body+=txt(cx,cy-7,format(total,spec.unit,true),'middle','class="plot-donut-total"')+txt(cx,cy+20,spec.centerLabel||(total?'Total listed assets':'No listed assets'),'middle');
   const keys=spec.rows.map(row=>row.label+' · '+format(row.value,spec.unit)+' · '+(total?(row.value/total*100).toFixed(1)+'%':'allocation unavailable'));
-  return svgShell(spec,width,height,body,'Donut chart showing the composition of listed gross assets, before debt. Zero total assets produce an empty ring.')+legend(keys,true);
+  return svgShell(spec,width,height,body,spec.description||'Donut chart showing the composition of listed gross assets, before debt. Zero total assets produce an empty ring.')+legend(keys,true);
 }
 function returnsPlot(spec,width) {
   const height=320,left=51,right=15,top=20,bottom=40,lo=-.25,hi=.20;

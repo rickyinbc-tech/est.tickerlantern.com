@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 205 visual planning guides and 835
+charts**. The library now leads with 206 visual planning guides and 839
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -122,6 +122,10 @@ A gain-timing guide compares annual realization with one final sale using
 a common opening investment and an assumed tax fraction on full gains. Both
 endpoints deduct remaining modeled tax, each case reconciles its own growth,
 and interim liquidation values are distinct from actual tax payments.
+A return-shape guide compares two completely specified discrete distributions
+with identical mean and standard deviation. Outcome probabilities, CDF steps,
+expected wealth and goal failure remain separate. All probabilities are
+original assumptions, verified through deterministic outcome enumeration.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -558,3 +562,13 @@ Three charts retain a later required payment and inspect multiple IRR solutions.
 
 `planning-age-income` adds dated source income counts and conditional summaries; see
 `docs/planning-age-income-2026-10-25.md` for scope and validation.
+
+## Statistical methodology software reference
+
+The return-shape modeling workflow used the statistical-analysis skill for
+explicit population estimands, assumption scope and reproducible verification.
+Methodology acknowledgement: Kassis, T., Agarwal, V., He, Y., Patel, D., and
+Brueckner, A. M. (2026). [Scientific Agent Skills: A Library of Procedural
+Knowledge for Research Agents](https://doi.org/10.48550/arXiv.2609.00065).
+Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflow
+reference, not financial evidence or a market-data source.

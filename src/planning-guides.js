@@ -1,3 +1,4 @@
+import { tailShapeGuides } from './planning-tail-shape-guides.js';
 import { ageIncomeGuides } from './planning-age-income-guides.js';
 import { earningsCashflowGuides } from './planning-earnings-cashflow-guides.js';
 import { multipleIrrGuides } from './planning-multiple-irr-guides.js';
@@ -112,6 +113,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...tailShapeGuides,
   ...ageIncomeGuides,
   ...earningsCashflowGuides,
   ...multipleIrrGuides,

@@ -1,4 +1,9 @@
 import { giftCardGuides } from './planning-gift-card-guides.js';
+import { policySettlementGuides } from './planning-policy-settlement-guides.js';
+import { dayBasisGuides } from './planning-day-basis-guides.js';
+import { currencyMatchGuides } from './planning-currency-match-guides.js';
+import { tailMeasureGuides } from './planning-tail-measures-guides.js';
+import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
@@ -179,6 +184,11 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...giftCardGuides,
+  ...policySettlementGuides,
+  ...dayBasisGuides,
+  ...currencyMatchGuides,
+  ...tailMeasureGuides,
+  ...contributionTaxCashGuides,
   ...fuelMixGuides,
   ...taperGuides,
   ...bondConvexityGuides,

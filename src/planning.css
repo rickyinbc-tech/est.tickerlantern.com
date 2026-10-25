@@ -7,4 +7,5 @@
 @media print{.planning-controls,.planning-reset,.planning-label,.planning-error,.plot-data,.planning-explorer{break-before:page}.planning-figure{break-inside:avoid;padding:16px 0}.planning-figure figcaption h3{font-size:18pt}.planning-metrics{grid-template-columns:repeat(3,1fr)}.planning-metrics>div{display:block;border:0}.planning-metrics strong{text-align:left;font-size:20pt}.planning-hub-hero{display:block}.planning-topic{break-inside:avoid}.planning-article .guide-hero h1{font-size:28pt}}
 
 .plot-drawing .plot-donut-total{font-size:26px;font-weight:600;fill:#102f50}
+.plot-key-fill.plot-key-fan-outer{background:#dbece8;border:1px solid #789e96}.plot-key-fill.plot-key-fan-inner{background:#a6cec7;border:1px solid #547d74}.plot-key-fan-median{border-color:#102f50}
 .plot-key-fill{width:14px;height:10px;border:0;background:#087f76}.plot-key-fill.plot-key-1{background:#102f50}.plot-key-fill.plot-key-2{background:#b8822e}

@@ -1,4 +1,6 @@
 import { spousalCalendarGuides } from './planning-spousal-calendar-guides.js';
+import { emergencyRecoveryGuides } from './planning-emergency-recovery-guides.js';
+import { mortgageChargeGuides } from './planning-mortgage-charge-guides.js';
 import { rateBenchmarkGuides } from './planning-rate-benchmarks-guides.js';
 import { debtIncomeGuides } from './planning-debt-income-guides.js';
 import { taxContributionGuides } from './planning-tax-contribution-guides.js';
@@ -43,6 +45,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...spousalCalendarGuides,
+  ...emergencyRecoveryGuides,
+  ...mortgageChargeGuides,
   ...rateBenchmarkGuides,
   ...debtIncomeGuides,
   ...taxContributionGuides,

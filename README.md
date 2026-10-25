@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 152 visual planning guides and 616
+charts**. The library now leads with 155 visual planning guides and 628
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -415,3 +415,10 @@ single-balance earmark calendar and a leveraged-loss stress illustration.
 Each has four interactive graphics and data tables. The goal solver reprices
 the deadline, the earmark ledger checks the lowest balance against a floor,
 and the loss example retains unchanged debt and all outside interest costs.
+
+The `planning-renewal-supplement-time` guides compare rolling one-year
+deposits with a five-year term, map a temporary pension supplement ending
+before later income begins, and separate actual DIY cash consequences from
+a subjective value for non-work time. Every article contains four interactive
+figures and six detailed explanation sections. Figures retain payment timing,
+separate source definitions from examples and include accessible data tables.

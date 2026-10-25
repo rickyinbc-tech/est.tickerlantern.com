@@ -1,3 +1,4 @@
+import { shareSplitGuides } from './planning-share-split-guides.js';
 import { promoConditionGuides } from './planning-promo-condition-guides.js';
 import { forwardRateGuides } from './planning-forward-rate-guides.js';
 import { repairConditionGuides } from './planning-repair-condition-guides.js';
@@ -155,6 +156,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...shareSplitGuides,
   ...promoConditionGuides,
   ...forwardRateGuides,
   ...repairConditionGuides,

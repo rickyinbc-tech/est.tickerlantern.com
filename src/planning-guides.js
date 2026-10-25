@@ -1,3 +1,4 @@
+import { jointIncomeGuides } from './planning-joint-income-guides.js';
 import { vacationCommitmentGuides } from './planning-vacation-commitment-guides.js';
 import { constructionQuoteGuides } from './planning-construction-quote-guides.js';
 import { etfTrackingGuides } from './planning-etf-tracking-guides.js';
@@ -80,6 +81,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...jointIncomeGuides,
   ...vacationCommitmentGuides,
   ...constructionQuoteGuides,
   ...etfTrackingGuides,

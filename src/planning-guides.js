@@ -1,3 +1,4 @@
+import { priceCutGuides } from './planning-price-cut-guides.js';
 import { percentageDeductibleGuides } from './planning-percentage-deductible-guides.js';
 import { commuteCashGuides } from './planning-commute-cash-guides.js';
 import { graduateDebtGuides } from './planning-graduate-debt-guides.js';
@@ -187,6 +188,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...priceCutGuides,
   ...percentageDeductibleGuides,
   ...commuteCashGuides,
   ...graduateDebtGuides,

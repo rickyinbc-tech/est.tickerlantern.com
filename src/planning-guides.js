@@ -1,4 +1,12 @@
 import { inventoryCycleGuides } from './planning-inventory-cycle-guides.js';
+import { feeSlicesGuides } from './planning-fee-slices-guides.js';
+import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
+import { bondAccrualGuides } from './planning-bond-accrual-guides.js';
+import { expectationsGuides } from './planning-expectations-guides.js';
+import { bankWaiverGuides } from './planning-bank-waiver-guides.js';
+import { feeWaiverGuides } from './planning-fee-waiver-guides.js';
+import { adjustedIncomeGuides } from './planning-adjusted-income-guides.js';
+import { foodCashGuides } from './planning-food-cash-guides.js';
 import { familyReceivableGuides } from './planning-family-receivable-guides.js';
 import { performanceFeeGuides } from './planning-performance-fee-guides.js';
 import { priceBasisGuides } from './planning-price-basis-guides.js';
@@ -144,6 +152,14 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...inventoryCycleGuides,
+  ...feeSlicesGuides,
+  ...tfsaKindGuides,
+  ...bondAccrualGuides,
+  ...expectationsGuides,
+  ...bankWaiverGuides,
+  ...feeWaiverGuides,
+  ...adjustedIncomeGuides,
+  ...foodCashGuides,
   ...familyReceivableGuides,
   ...performanceFeeGuides,
   ...priceBasisGuides,

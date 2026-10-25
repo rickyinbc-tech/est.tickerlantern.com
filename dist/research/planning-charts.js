@@ -66,8 +66,9 @@ function linePlot(spec,width) {
 }
 function barPlot(spec,width) {
   const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
-  const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:62, height=top+spec.rows.length*rowHeight+40;
-  const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):r.value??0;
+  const interval=spec.type==='intervalbar';
+  const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:interval?86:62, height=top+spec.rows.length*rowHeight+40;
+  const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):interval?Math.max(r.value,r.upper):r.value??0;
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
   let body='';
@@ -81,12 +82,17 @@ function barPlot(spec,width) {
     if(group){r.values.forEach((v,i)=>{body+=`<rect x="${left}" y="${y+22+i*20}" width="${Math.max(0,x(v)-left)}" height="13" fill="${colors[i]}"/>`;});}
     else if(stack){let previous=0;r.values.forEach((v,i)=>{body+=`<rect x="${x(previous)}" y="${y+24}" width="${Math.max(0,x(v)-left)}" height="18" fill="${colors[i]}"/>`;previous+=v;});}
     else body+=`<rect x="${left}" y="${y+24}" width="${Math.max(0,x(r.value)-left)}" height="18" fill="${colors[0]}"/>`;
-    const labelValue=group?r.values.map(v=>format(v,spec.unit)).join(' / '):format(rowMax(r),spec.unit);
+    if(interval){
+      const lo=x(r.lower),hi=x(r.upper),cy=y+33,d=`M${lo},${cy}H${hi}M${lo},${cy-5}V${cy+5}M${hi},${cy-5}V${cy+5}`;
+      body+=`<path d="${d}" fill="none" stroke="white" stroke-width="4"/><path d="${d}" fill="none" stroke="${colors[1]}" stroke-width="1.6"/>`;
+      body+=txt(left,y+77,'95% CI: '+format(r.lower,spec.unit)+'–'+format(r.upper,spec.unit),'start','class="plot-value"');
+    }
+    const labelValue=group?r.values.map(v=>format(v,spec.unit)).join(' / '):format(interval?r.value:rowMax(r),spec.unit);
     // Values sit on a separate text row so long currency labels never clip the plot.
     body+=txt(left,y+(group?37+20*groupCount:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
-  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
+  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
 }
 function signedBarPlot(spec,width) {
   const left=64,right=30,top=12,rowHeight=70,height=top+spec.rows.length*rowHeight+42;
@@ -187,6 +193,7 @@ function chartTable(spec) {
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
   else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
+  else if(spec.type==='intervalbar'){headers=['Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
   else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
   const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='percent'?'percent':spec.unit);
   return `<details class="plot-data"><summary>View chart data</summary><div class="guide-table" tabindex="0" role="region" aria-label="${escapeHTML(spec.title)} data"><table><caption>${escapeHTML(spec.title)} · ${escapeHTML(tableUnit)}</caption><thead><tr>${headers.map(h=>`<th scope="col">${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>'<tr>'+row.map((v,i)=>i?`<td>${escapeHTML(v)}</td>`:`<th scope="row">${escapeHTML(v)}</th>`).join('')+'</tr>').join('')}</tbody></table></div></details>`;

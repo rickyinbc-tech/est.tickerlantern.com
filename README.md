@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 197 visual planning guides and 804
+charts**. The library now leads with 198 visual planning guides and 808
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -533,3 +533,8 @@ Four charts separate expected repair costs from the cash required in each outcom
 `/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.
 
 The disability-prevalence guide uses a dated Statistics Canada all-gender extract with the exact published 2017/2022 estimates and asymmetric 95% confidence limits. Its separate invented age-mix illustration preserves fixed subgroup rates, excludes youth explicitly, and does not infer aggregate intervals, individual transition risks or insurance-claim probabilities. Source units, percentage-point differences, weighted arithmetic and mobile controls are verified.
+
+`planning-age-income` explains conditional employment-income summaries beside
+population counts and derived recipient shares, retaining source quality codes.
+Reproduce the 72 official observations with `scripts/extract-planning-age-income.py`.
+See `docs/planning-age-income-2026-10-25.md` for scope and validation.

@@ -9,8 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty-three visual planning guides and 252
-charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with sixty-nine visual planning guides and 276
+charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -31,8 +32,8 @@ separate cash budgets for a household separation, incremental energy-upgrade
 payback, lease-return versus buy-and-sell car costs and retirement survivor
 income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
-basic CESG catch-up and HBP repayment obligations, job-loss settlement timing,
-retirement spending phases and event deposit/final-payment calendars.
+basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
+principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -51,14 +52,6 @@ constraints. HBP projections start from a separately confirmed required year;
 income inclusions reduce the HBP ledger without restoring an RRSP contribution.
 The HBP tax percentage is a budget allowance, not a tax-return calculation.
 The homepage and library derive article and chart counts from the content.
-`planning-runway-spending-models.js` adds an 18-month job-loss ledger, a
-30-year retirement category budget and an event-payment calendar. Job-loss
-receipts are independent net assumptions; no EI entitlement is calculated.
-Retirement care amounts are in retirement-start dollars and inflate from
-year one; annual cash-gap sums are not required starting capital. Event
-deposits occur before saving, and the final bill precedes the event-month
-paycheque. Run `python3 tests/browser_runway_spending.py <origin>` for the
-three labs’ real input, validation, reset, table and responsive checks.
 The federal bracket illustration is explicitly fixed to 2026 and excludes
 credits and other taxes. The FHSA calendar models an ordinary new-account
 case only; it does not determine personal eligibility or current account room.
@@ -184,3 +177,19 @@ gate remain independent. Study bundles use `/notes-app/assets/`, avoiding the
 index workbench's files. The index snapshot API stays at `/api/indices`; study
 health is `/api/notes/health`. The old notes host is retained only for permanent
 redirects, with its homepage mapped to `/notes/research`.
+
+## Job-loss, retirement-category and event-payment guides
+
+Three additional English guides and twelve interactive charts explain a job-loss
+cash runway, retirement spending phases and a wedding/event payment calendar.
+`planning-runway-spending-models.js` owns the original hypothetical arithmetic.
+The job-loss ledger receives independent net cash amounts and does not assess EI.
+Care prices inflate from retirement start, including before care begins; summed
+annual funding gaps are not a required starting portfolio. The event deposit is
+paid at time zero, and saving transfers end before the event-month opening bill.
+Each article includes six explanation sections, dated official reference links,
+visible assumptions and a data table for every chart.
+
+Run `node --test tests/planning-runway-spending.test.mjs` for the independent
+financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
+input, invalid-input retention, reset, table, responsive and runtime checks.

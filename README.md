@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 252 visual planning guides and 1036
+charts**. The library now leads with 254 visual planning guides and 1045 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -690,5 +690,10 @@ The English guide `disability-benefit-offset-retroactive-award-repayment-cash` u
 `planning-cpp-amounts` retains dated new-beneficiary means and new-start maxima
 beside a separate editable household cash ledger; see
 `docs/planning-cpp-amounts-2026-10-25.md`.
+
+## Flat and reducing-balance interest bases
+
+Four charts compare explicit loan interest bases and payment-date equivalents. See
+`docs/planning-flat-loan-2026-10-25.md` for sources and checks.
 
 The reward-redemption guide separates matched cash outlay, purchasing missing points and the chosen other-use value of existing points consumed. Four charts keep actual payments apart from opportunity-value deductions and display implied cents per required point with a native precise cents format. No card or program quote is used. Partial/full/zero balances, double-counting checks, matching-price changes and responsive controls are verified.

@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with seventy-two visual planning guides and 288
-charts, including employer-share risks, investment-entry schedules, purchase
-financing, job-loss cash flow, retirement spending and event-payment calendars. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with eighty-one visual planning guides and 324
+charts, with new guides on shrinking credit-card minimum payments, a pay-rise
+saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -34,6 +34,13 @@ income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
 basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
 principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
+The latest additions examine dated wealth medians versus liquid cash, career
+retraining opportunity costs and pension service buyback cash flows.
+Joint-loan payment takeovers, annual-versus-monthly subscription commitments and
+investment-sale cash goals add twelve more figures. Their models separate
+remaining debt from future instalments, unused prepaid service from an assumed
+refund, and adjusted cost base from spendable sale proceeds. All three use
+hypothetical scenarios with official public sources for the general mechanics.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -115,6 +122,21 @@ BNPL examples aggregate three hypothetical four-payment contracts. Buy-only
 allocation keeps prices and existing holdings fixed, with no tax or security
 recommendation. Parental-leave examples keep published gross percentages
 separate from independent net cash inputs over a common 78-week window.
+
+`planning-budget-exposure-data.js` retains nine public 2025 annual-average CPI
+observations from Statistics Canada Table 18-10-0005-01. The new guides explain
+personal spending-basket exposure, automatic-saving transfer dates and operating
+cash, and the interaction of net-pay growth, price changes and lifestyle expansion.
+The budget applies observed rates once to hypothetical amounts. The transfer
+comparison preserves annual pay and saving across different saving dates. The
+income-growth tool records unfunded living costs separately from its conditional
+positive-surplus investment balances.
+
+Verify the public CPI extract against the saved original accessible HTML table:
+
+```sh
+python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
+```
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

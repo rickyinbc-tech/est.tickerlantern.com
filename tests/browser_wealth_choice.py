@@ -29,7 +29,6 @@ for slug,kind in pages:
         assert info['scroll']<=info['width']+1 and info['overflowFigures']==0,info
         evaluate("document.querySelector('.planning-figure').scrollIntoView({block:'start'})")
         browser('screenshot',str(qa/(kind+'-'+str(width)+'.png')))
-    observed=evaluate("[...document.querySelectorAll('.planning-figure')].slice(0,2).map(e=>e.innerHTML)") if kind=='unused' else None
     if kind=='employerRisk':
         browser('fill','#planning-shareFall','100')
         values=evaluate("[...document.querySelectorAll('.planning-metrics strong')].map(e=>e.textContent)")

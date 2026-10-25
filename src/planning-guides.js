@@ -1,4 +1,12 @@
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
+import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
+import { charitableGuides } from './planning-charitable-guides.js';
+import { bondPricingGuides } from './planning-bond-pricing-guides.js';
+import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
+import { adviceCostGuides } from './planning-advice-cost-guides.js';
+import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
+import { renewalSupplementTimeGuides } from './planning-renewal-supplement-time-guides.js';
+import { callableBondGuides } from './planning-callable-bond-guides.js';
 import { vacationCommitmentGuides } from './planning-vacation-commitment-guides.js';
 import { constructionQuoteGuides } from './planning-construction-quote-guides.js';
 import { etfTrackingGuides } from './planning-etf-tracking-guides.js';
@@ -82,6 +90,14 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...jointIncomeGuides,
+  ...fundCostBaseGuides,
+  ...charitableGuides,
+  ...bondPricingGuides,
+  ...bondReinvestmentGuides,
+  ...adviceCostGuides,
+  ...rppStatisticsGuides,
+  ...renewalSupplementTimeGuides,
+  ...callableBondGuides,
   ...vacationCommitmentGuides,
   ...constructionQuoteGuides,
   ...etfTrackingGuides,

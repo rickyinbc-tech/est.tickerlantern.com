@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 206 visual planning guides and 839
+charts**. The library now leads with 209 visual planning guides and 851
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -126,6 +126,10 @@ A return-shape guide compares two completely specified discrete distributions
 with identical mean and standard deviation. Outcome probabilities, CDF steps,
 expected wealth and goal failure remain separate. All probabilities are
 original assumptions, verified through deterministic outcome enumeration.
+A tuition-credit guide adds four graphics separating eligible tuition, baseline
+credit value, tax capacity and matched prepayment refunds. It excludes complete
+return calculations, top-up rules, transfers and carryforward balances; its
+source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -572,6 +576,8 @@ Brueckner, A. M. (2026). [Scientific Agent Skills: A Library of Procedural
 Knowledge for Research Agents](https://doi.org/10.48550/arXiv.2609.00065).
 Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflow
 reference, not financial evidence or a market-data source.
+
+The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.
 
 ### Temporary card authorizations and usable credit
 

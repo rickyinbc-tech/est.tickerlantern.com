@@ -1,4 +1,5 @@
 import { incomeTimingGuides } from './planning-income-timing-guides.js';
+import { habitsRecoveryGuides } from './planning-habits-recovery-guides.js';
 import { savingObligationGuides } from './planning-saving-obligations-guides.js';
 import { choicesCashGuides } from './planning-choices-cash-guides.js';
 import { homeCarSurvivorGuides } from './planning-home-car-survivor-guides.js';
@@ -19,6 +20,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...incomeTimingGuides,
+  ...habitsRecoveryGuides,
   ...savingObligationGuides,
   ...choicesCashGuides,
   ...homeCarSurvivorGuides,

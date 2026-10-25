@@ -1,4 +1,6 @@
 import { unitCostGuides } from './planning-unit-cost-guides.js';
+import { averageCostGuides } from './planning-average-cost-guides.js';
+import { rrifKindGuides } from './planning-rrif-kind-guides.js';
 import { employeeOptionGuides } from './planning-employee-option-guides.js';
 import { shareVestingGuides } from './planning-share-vesting-guides.js';
 import { creditSettlementGuides } from './planning-credit-settlement-guides.js';
@@ -122,6 +124,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...unitCostGuides,
+  ...averageCostGuides,
+  ...rrifKindGuides,
   ...employeeOptionGuides,
   ...shareVestingGuides,
   ...creditSettlementGuides,

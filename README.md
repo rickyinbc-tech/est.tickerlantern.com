@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 212 visual planning guides and 863 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 215 visual planning guides and 875
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -130,6 +131,10 @@ A tuition-credit guide adds four graphics separating eligible tuition, baseline
 credit value, tax capacity and matched prepayment refunds. It excludes complete
 return calculations, top-up rules, transfers and carryforward balances; its
 source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
+A purchase-average guide follows equal monthly cash through fractional units,
+security spending and fixed fees. Arithmetic quoted-price averages remain
+separate from harmonic purchase-price averages and all-in household cash per
+unit. A separate valuation and signed matrix keep losses visible.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -593,9 +598,10 @@ Four charts separate credit usage from the final settlement of prior tax payment
 
 The English guide `employee-stock-options-vesting-exercise-cash-spread` separates granted and vested units, current intrinsic spread, hypothetical exercise-and-sale proceeds and exercise-and-hold strike funding. Four original interactive figures use a fixed authored 48-month schedule with a 12-month cliff, whole-unit rounding and independently entered cash. Only vested units enter the sale illustration, which assumes a permitted immediate sale at the entered price and shows no transaction at or below strike. All scenarios are hypothetical CAD arithmetic, excluding actual employer terms, full option valuation, tax, fees, expiry and settlement. Public Investor.gov and current Fidelity stock-plan sources support the conceptual distinctions. No option exercise or sale is initiated.
 
+`planning-rrif-kind` separates securities received from assigned bank cash; see
+`docs/planning-rrif-kind-2026-10-25.md` for scope and validation.
+
 ## Equal cash, different unit quantities
 
-Four charts calculate average purchase cost from total cash and total units,
-with distinct cash/unit denominators and a marked-value ledger. The harmonic
-mean identity is an accounting comparison, not a strategy ranking. See
-`docs/planning-unit-cost-2026-10-25.md` for scope and checks.
+Four charts connect equal cash purchases with units, weighted cost and marked value. See
+`docs/planning-unit-cost-2026-10-25.md` for sources and checks.

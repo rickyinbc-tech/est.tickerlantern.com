@@ -112,42 +112,4 @@ export const guides = [
       { title: 'Investor.gov · Bonds', url: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds', note: 'Overview of bond cash flows and principal risk categories.' }
     ]
   }
-  ,{
-    slug: 'etf-tracking-difference-costs', category: 'ETF research',
-    title: 'ETF tracking: the gap between the index and your return',
-    description: 'Distinguish tracking difference from tracking error, compare matching benchmarks, and separate fund operating costs from the cost of your own trades.',
-    takeaway: 'Compare the exact benchmark with fund NAV total return first. Then account for the price, spread and conversion costs of your own transaction.',
-    related: ['currency-cad-hedging', 'portfolio-concentration-overlap'],
-    sections: [
-      { id: 'three-returns', title: 'Keep three return records separate', html: `
-        <p>An index return describes a calculation maintained by an index provider. A fund’s NAV total return describes the performance of its net assets with the stated distribution-reinvestment convention. Your account return additionally reflects the prices and dates of your trades, your cash flows, and any investor-level costs.</p>
-        <p>Write all three on separate lines. Comparing your brokerage account gain with a headline price index can mix distributions, purchase timing, and fund implementation in one unexplained difference. A reliable comparison starts with matching dates, currency, benchmark version, and return definition.</p>
-        <p>The <a href="https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/exchange-traded-funds-mechanics-applications">CFA Institute’s ETF overview</a> discusses tracking, trading costs, and premiums or discounts. Those are related dimensions, but they require different measurements.</p>` },
-      { id: 'difference', title: 'Tracking difference measures the return gap', html: `
-        <p>On this page, tracking difference means fund NAV total return minus benchmark total return over the same interval. Some publishers reverse the sign, so check the stated convention. If the benchmark returns 8.00% and the fund returns 7.72%, the difference is −0.28 percentage points, or −28 basis points.</p>
-        <div class="guide-formula">Tracking difference = fund NAV total return − matching benchmark total return</div>
-        <p>Do not subtract the fund’s expense ratio again from a published return that is already net of those expenses. Doing so would charge the same cost twice. Similarly, if the benchmark has a net-dividend convention, do not assume the resulting gap is entirely caused by withholding tax.</p>
-        <p>For a multi-year comparison, state whether you subtract annualized returns or compare cumulative wealth. These produce different-looking numbers. An eight-year cumulative shortfall cannot be labelled an annual cost without a suitable annualization.</p>` },
-      { id: 'error', title: 'Tracking error measures how variable the gap is', html: `
-        <p>Tracking error is commonly the annualized standard deviation of periodic fund-minus-benchmark returns. It asks how much the gap fluctuates. It does not directly measure how much return the investor lost over the whole period.</p>
-        <div class="guide-table" role="region" aria-label="Hypothetical tracking difference and variability" tabindex="0"><table><caption>Four invented monthly active returns · percentage points</caption><thead><tr><th scope="col">Month</th><th scope="col">Fund A minus index</th><th scope="col">Fund B minus index</th></tr></thead><tbody><tr><th scope="row">1</th><td>−0.02</td><td>+0.10</td></tr><tr><th scope="row">2</th><td>−0.02</td><td>−0.14</td></tr><tr><th scope="row">3</th><td>−0.02</td><td>+0.10</td></tr><tr><th scope="row">4</th><td>−0.02</td><td>−0.14</td></tr></tbody></table></div>
-        <p>Both series have an arithmetic mean gap of −0.02 percentage points per month. Fund A has zero variability in this deliberately artificial sample; Fund B does not. This is a demonstration of the distinction, not enough history for a useful tracking-error estimate. Equal arithmetic mean gaps also do not guarantee equal compounded wealth.</p>
-        <p>In a real study, record daily or monthly frequency, the sample period, the standard-deviation convention, and the annualization factor. Compare like with like rather than ranking incompatible published statistics.</p>` },
-      { id: 'explain', title: 'Build an explanation instead of guessing from the fee', html: `
-        <p>Suppose a hypothetical one-year gap is −0.28 percentage points. An analyst’s illustrative reconciliation might assign −0.15 to operating expenses, −0.06 to portfolio trading, −0.08 to unrecovered taxes, +0.03 to net lending revenue, and −0.02 to other implementation effects. The sum is −0.28.</p>
-        <p>This is an invented attribution, not a claim that public reports reveal each component exactly. In actual research, label observed expenses separately from inferred residuals. Sampling, cash balances, valuation timing, index changes, and the treatment of corporate actions can also require investigation.</p>
-        <p>A one-year favorable residual is not automatically a repeatable skill. Read the fund’s reports, benchmark methodology, replication policy, and lending disclosures before extrapolating it. Avoid choosing a fund because of a tiny return advantage that cannot be explained or survives only over one chosen interval.</p>` },
-      { id: 'trading', title: 'Your entry and exit add another layer', html: `
-        <p>The <a href="https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24">SEC ETF bulletin</a> explains that exchange prices can differ from NAV and that the bid–ask spread affects investor costs. These trading effects sit outside a clean NAV-to-index comparison.</p>
-        <p>Imagine an unchanged order book with a bid of 49.95 and ask of 50.05. Buying 200 units at the ask costs 10,010. An immediate sale at the bid returns 9,990, a loss of 20 before commissions. Relative to the 50 midpoint, the initial purchase costs 10 and the sale another 10. This full round-trip spread is 0.20% of the 10,000 midpoint value.</p>
-        <p>A limit order controls the worst price you accept, but it can remain unfilled. Compare the quote with current underlying-market conditions; yesterday’s closing NAV may be a poor intraday fair-value reference when the underlying market is closed or moving quickly.</p>` },
-      { id: 'compare', title: 'A comparison sheet that can be checked', html: `
-        <ol><li>Identify the legal fund, exact share class, benchmark, and hedging policy.</li><li>Compare fund NAV and matching benchmark total returns over identical periods.</li><li>Record operating expenses and realized tracking differences without subtracting costs twice.</li><li>Inspect spread, premium or discount history, brokerage charges, and currency-conversion costs.</li><li>Check holdings, replication, lending, and the explanation for persistent residuals.</li></ol>
-        <p>For a long holding period, a persistent annual gap can outweigh a modest one-time trading cost. For frequent transactions, spreads and commissions can matter much more. Estimate both using the intended behavior, and keep that estimate separate from the fund’s published performance record.</p>` }
-    ],
-    sources: [
-      { title: 'CFA Institute · Exchange Traded Funds: Mechanics and Applications', url: 'https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/exchange-traded-funds-mechanics-applications', note: 'Public overview of ETF structure, tracking, and costs. The calculations and attribution examples here are original illustrations.' },
-      { title: 'Investor.gov · Updated Investor Bulletin: Exchange-Traded Funds', url: 'https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24', note: 'US ETF market-price, NAV, spread and disclosure mechanics. Published 23 February 2023; jurisdiction-specific provisions are not Canadian rules.' }
-    ]
-  }
 ];

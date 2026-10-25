@@ -21,12 +21,13 @@ patterns=[
     r'credit counselling agencies at\s*(\d+)%'
 ]
 root=Path(__file__).resolve().parent.parent
-data=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {adviceSource} from './src/planning-advice-cost-data.js';console.log(JSON.stringify(adviceSource));"],cwd=root,text=True))
+data=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {adviceFeeSource} from './src/planning-advice-fee-cash-data.js';console.log(JSON.stringify(adviceFeeSource));"],cwd=root,text=True))
 assert len(data['rows'])==len(patterns)==8
 for row,pattern in zip(data['rows'],patterns):
     match=re.search(pattern,text)
     assert match,pattern
     assert abs(float(match.group(1))/100-row['value'])<1e-12,row
-assert data['released'] in text,'Publication date missing'
+assert data['updated'] in text,'Page date missing'
+assert data['released'] in raw.decode(),'Original issue date missing in HTML metadata'
 assert 'February and March 2024' in text and 'nearly 8,000' in text,'Survey context missing'
 print(json.dumps({'status':'verified','source_url':data['url'],'observations':8,'period':data['period'],'released':data['released'],'sha256':hashlib.sha256(raw).hexdigest()},indent=2))

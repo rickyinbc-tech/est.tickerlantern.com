@@ -1,47 +1,31 @@
-import { adviceSource } from './planning-advice-cost-data.js';
-
+import {adviceSource} from './planning-advice-data.js';
 export const adviceCostDefinitions={
-  adviceFeeCash:{title:'Budget three hypothetical fee schedules without assigning an investment benefit',fields:[
-    ['projectFee','One-time project fee paid immediately (CAD)',2500,0,15000,100],
-    ['monthlyFee','Alternative ongoing monthly retainer (CAD)',200,0,1000,25],
-    ['feeAssets','Unchanging assets used only as the fee calculation base (CAD)',400000,0,2000000,10000],
-    ['assetFee','Alternative annual charge on that fixed asset base (%)',.8,0,2.5,.1],
-    ['feeMonths','Months of ongoing service in the comparison',24,1,60,1],
-    ['feeCash','Outside cash available for advice bills at the start (CAD)',2000,0,50000,500],
-    ['feeSurplus','Monthly outside cash added before each ongoing bill (CAD)',150,0,3000,25]
+  adviceCost:{title:'Keep the survey context separate from a hypothetical advice-fee budget',fields:[
+    ['adviceProject','Initial project fee, paid at the start (CAD)',1500,0,20000,250],['adviceReview','Review fee in starting-date dollars (CAD)',500,0,5000,100],
+    ['adviceReviewEvery','Years between project reviews',3,1,10,1],['adviceRetainer','First annual retainer, paid at the start (CAD)',1800,0,10000,100],
+    ['adviceYears','Service years included',10,1,20,1],['adviceFeeGrowth','Annual increase in future quoted fees (%)',2,0,8,.5],
+    ['adviceDiscount','Effective annual discount assumption for fee timing (%)',3,0,10,.5]
   ]}
 };
-
-export function adviceFeePlan(input){
-  const assetMonthly=input.feeAssets*input.assetFee/100/12;
-  const schedules=[
-    {name:'One-time project',upfront:input.projectFee,monthly:0},
-    {name:'Monthly retainer',upfront:0,monthly:input.monthlyFee},
-    {name:'Asset-linked charge',upfront:0,monthly:assetMonthly}
-  ].map(s=>{
-    let paid=s.upfront,cumulative=-s.upfront,lowest=cumulative;
-    const rows=[{x:0,paid,cash:input.feeCash+cumulative}];
-    for(let month=1;month<=input.feeMonths;month++){
-      paid+=s.monthly;cumulative+=input.feeSurplus-s.monthly;lowest=Math.min(lowest,cumulative);
-      rows.push({x:month,paid,cash:input.feeCash+cumulative});
-    }
-    return {...s,rows,total:paid,ending:rows.at(-1).cash,required:-lowest,extra:Math.max(0,-lowest-input.feeCash)};
-  });
-  return {schedules,assetMonthly,annualAssetFee:assetMonthly*12,
-    equivalentAssets:input.assetFee>0?input.monthlyFee*12/(input.assetFee/100):null};
+export function adviceFeeSchedule(input){
+  let projectTotal=0,retainerTotal=0,projectPV=0,retainerPV=0;
+  const annual=[],cumulative=[{x:0,project:0,retainer:0}];
+  for(let t=0;t<input.adviceYears;t++){
+    const factor=(1+input.adviceFeeGrowth/100)**t;
+    const project=t===0?input.adviceProject:t%input.adviceReviewEvery===0?input.adviceReview*factor:0;
+    const retainer=input.adviceRetainer*factor,discount=(1+input.adviceDiscount/100)**t;
+    projectTotal+=project;retainerTotal+=retainer;projectPV+=project/discount;retainerPV+=retainer/discount;
+    annual.push({x:t+1,project,retainer,paymentTime:t});cumulative.push({x:t+1,project:projectTotal,retainer:retainerTotal});
+  }
+  return {annual,cumulative,projectTotal,retainerTotal,projectPV,retainerPV};
 }
-
 export function adviceCostResult(kind,input){
-  if(kind!=='adviceFeeCash')throw Error('Unknown advice-cost topic.');
-  const p=adviceFeePlan(input);
-  return {metrics:p.schedules.map(s=>[s.name+': total selected fees',s.total,'money']),
-    note:'The first figure contains fixed survey observations. The other figures compare three independent hypothetical payment schedules in CAD, not quotations or equivalent service packages. The project is paid at time zero and has no automatic renewal. Ongoing bills occur at each month-end after the entered outside-cash addition. The asset-linked bill uses a fixed asset base and one-twelfth of the annual percentage; it is paid from outside cash and never deducted from those assets. No portfolio return, promised advice benefit, tax, sales tax, product fee, commission, minimum charge, tiering or cancellation rule is calculated. Negative outside cash is an unmet funding need, not automatic borrowing. A lower cost does not establish adequate scope, quality, suitability or better outcomes.',
-    charts:[
-      {id:'advice-source-survey',type:'bar',title:'Reported sources of financial advice in the 2024 survey',unit:'percent',unitLabel:'Share of survey respondents reporting each source · overlapping categories',rows:adviceSource.rows,source:adviceSource.url,sourceLabel:'FCAC · 2024 CFCS advice-source summary',note:adviceSource.scope+' Released 21 November 2025; reviewed 25 October 2026. The percentages sum to 142%, not a partition of a 100% total. Editing the fee inputs does not change these observations.'},
-      {id:'advice-fee-cumulative',type:'line',title:'A project bill arrives immediately; recurring charges accumulate with time',unit:'money',xLabel:'Months of service',series:p.schedules.map((s,i)=>({name:s.name,rows:s.rows.map(r=>({x:r.x,value:r.paid})),dash:i===1})),note:'Each line is a separate payment alternative, not three charges assumed purchased together. Time zero includes the full one-time project bill; recurring fees begin at the end of month one. The project line assumes no further engagement, so it does not promise ongoing reviews for free.'},
-      {id:'advice-fee-outside-cash',type:'line',title:'Put each payment schedule beside the outside cash assigned to it',unit:'money',xLabel:'Months from first bill',series:p.schedules.map((s,i)=>({name:s.name+' · required opening cash '+cad(s.required),rows:s.rows.map(r=>({x:r.x,value:r.cash})),dash:i===1})),note:'All three alternatives start with the same outside cash and receive the same monthly additions. Every ending value equals starting cash plus additions less that alternative’s fees. Required opening cash uses the deepest funding deficit, including the project bill at time zero. Assets used to calculate the percentage charge are not another source of bill-paying cash here.'},
-      {id:'advice-fee-asset-base-grid',type:'heatmap',title:'Translate an annual percentage into one year of fee dollars',unit:'money',columns:[100000,400000,800000].map(n=>'$'+n/1000+'k base'),rows:[.4,.8,1.2].map(rate=>({label:rate.toFixed(1)+'% / yr',values:[100000,400000,800000].map(base=>base*rate/100)})),note:'Each cell replaces the annual percentage and the fixed calculation base, showing twelve monthly charges in total. The base stays unchanged; this is not a portfolio projection or a fee quote. Amounts exclude every other charge and tax. The recurring monthly-retainer input is a separate contract assumption.'}
-    ]};
+  if(kind!=='adviceCost')throw Error('Unknown advice-cost topic.');
+  const p=adviceFeeSchedule(input),line=(name,rows,key,extra={})=>({name,rows:rows.map(r=>({x:r.x,value:r[key]})),...extra});
+  return {metrics:[['Nominal fees: initial project and scheduled reviews',p.projectTotal,'money'],['Nominal fees: annual retainer',p.retainerTotal,'money'],['Present cost: retainer minus project schedule',p.retainerPV-p.projectPV,'money']],note:'The first two charts reproduce selected 2024 survey observations from the FCAC spotlight issued 17 November 2025 and modified 21 November 2025, retrieved 25 October 2026. They describe reported source use, not advisor quality or the effect of obtaining advice. The other two charts are separate hypothetical fee schedules. Both start immediately. The project path pays the initial fee at time zero, then a review after every selected number of complete years, only if its payment date falls before the end of the selected service window. The retainer path pays at the start of every service year. Future review and retainer quotes grow at the selected annual rate; the initial project fee is paid once without escalation. The discount rate converts dated payments to starting-date present cost and is not an expected portfolio return. No household funding account, investment performance, taxes, reimbursement, product costs or service outcomes are calculated. The two packages are not assumed to provide equivalent services.',charts:[
+    {id:'advice-professional-age-use',type:'bar',evidence:'Official survey observations',title:'Reported use of professional advisors across age groups',unit:'percent',unitLabel:'Reported share of each stated age group (%) · 2024 survey',rows:adviceSource.professionalByAge.map(r=>({label:r.label,value:r.percent/100})),source:adviceSource.url,sourceLabel:'FCAC · 2024 CFCS advice spotlight',note:'Descriptive source-use shares reported by FCAC. These groups have different denominators. The spotlight supplies no uncertainty intervals for these displayed comparisons; no significance or causal claim is made.'},
+    {id:'advice-young-selected-sources',type:'bar',evidence:'Official survey observations',title:'Three reported advice sources among people aged 18–34',unit:'percent',unitLabel:'Reported share of the 18–34 group (%) · selected sources',rows:adviceSource.youngSources.map(r=>({label:r.label,value:r.percent/100})),source:adviceSource.url,sourceLabel:'FCAC · 2024 CFCS advice spotlight',note:'Selected channels, with possible overlapping use. These bars are not a complete mutually exclusive allocation and should not be added into a pie or used to infer individual source combinations.'},
+    {id:'advice-fee-calendar',type:'line',title:'A project with periodic reviews has a different fee calendar from a retainer',unit:'money',xMin:1,xLabel:'Service year · each fee is paid at that year’s start',series:[line('Initial project / scheduled review',p.annual,'project'),line('Annual retainer',p.annual,'retainer',{dash:true})],note:'Original hypothetical quotes, not survey-reported fees or market prices. Lines connect annual fee amounts; there are no additional charges between year starts. A review after year three occurs at the start of service year four. It is excluded if the selected window contains only three service years.'},
+    {id:'advice-fee-cumulative',type:'line',title:'Compare cumulative nominal outlays before assessing service value',unit:'money',xLabel:'Number of service years included',series:[line('Project and review outlays',p.cumulative,'project'),line('Retainer outlays',p.cumulative,'retainer',{dash:true})],note:'The first service year includes the payment made immediately at the start. The lines accumulate cash outlays and do not represent an investment balance. Present-cost metrics discount the original payment times, not these year-count positions. A higher fee does not establish worse value, and a lower fee does not establish adequate scope.'}
+  ]};
 }
-
-function cad(value){return 'CAD '+value.toLocaleString('en-CA',{maximumFractionDigits:2});}

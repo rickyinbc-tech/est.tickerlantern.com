@@ -1,5 +1,9 @@
 # Advice fees, refundable bookings and renewing GIC income
 
+The advice cash-budget page complements the concurrently added age-group and
+project-review article, with separate module names and a cross-link. Its unique
+focus is outside-cash funding for monthly and asset-linked bills.
+
 Three English articles add twelve interactive charts and data tables. All
 household amounts and contracts are hypothetical; only the advice-source bars
 are survey observations. All three articles have six substantive sections and
@@ -7,7 +11,7 @@ more than 850 words of explanation.
 
 ## Sources reviewed on 25 October 2026
 
-- [FCAC advice-source research](https://www.canada.ca/en/financial-consumer-agency/programs/research/financial-advice.html), released 21 November 2025: eight overall 2024 CFCS observations, overlapping source use, February–March collection and nearly 8,000 participants. Do not mix these with the page’s separate recent-advice/payment questions. No category sample count, confidence interval or causal benefit is constructed.
+- [FCAC advice-source research](https://www.canada.ca/en/financial-consumer-agency/programs/research/financial-advice.html), issued 17 November 2025 and modified 21 November 2025: eight overall 2024 CFCS observations, overlapping source use, February–March collection and nearly 8,000 participants. Do not mix these with the page’s separate recent-advice/payment questions. No category sample count, confidence interval or causal benefit is constructed.
 - [FCAC advisor selection](https://www.canada.ca/en/financial-consumer-agency/services/savings-investments/choose-financial-advisor.html): questions about services, compensation, cost and the working relationship. The selected fee schedules do not price equivalent work or imply advice quality. The asset-linked charge is a separate hypothetical charge, rather than an all-in MER.
 - [CTA traveler tips](https://protection-passager-passenger.otc-cta.gc.ca/en/know-before-you-go/tips-for-travellers), modified 14 January 2026: checking ticket conditions and tariff restrictions. The booking model does not determine any actual contract or statutory supplier-cancellation right.
 - [Travel.gc.ca insurance guidance](https://travel.gc.ca/travelling/documents/travel-insurance), modified 2 September 2026: cancellation versus interruption/medical coverage and policy terms. The model includes no insurance claim or coverage decision.

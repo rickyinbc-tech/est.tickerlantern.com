@@ -1,58 +1,49 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { defaults, definitions, planningResult, validInputs } from '../src/planning-models.js';
-import { adviceFeePlan } from '../src/planning-advice-cost-models.js';
-import { adviceSource } from '../src/planning-advice-cost-data.js';
-import { adviceCostGuides } from '../src/planning-advice-cost-guides.js';
-import { planningGuides } from '../src/planning-guides.js';
-import { renderResult } from '../src/planning-charts.js';
+import {defaults,definitions,planningResult,validInputs} from '../src/planning-models.js';
+import {adviceSource} from '../src/planning-advice-data.js';
+import {adviceFeeSchedule} from '../src/planning-advice-cost-models.js';
+import {adviceCostGuides} from '../src/planning-advice-cost-guides.js';
+import {renderResult} from '../src/planning-charts.js';
 const near=(a,b)=>assert.ok(Math.abs(a-b)<Math.max(1,Math.abs(b))*1e-8,`${a} != ${b}`);
 
-test('the overlapping survey observations stay fixed when independent fees and cash change',()=>{
-  assert.equal(adviceSource.rows.length,8);near(adviceSource.rows.reduce((sum,r)=>sum+r.value,0),1.42);
-  const result=planningResult('adviceFeeCash');
-  assert.equal(result.charts[0].type,'bar');assert.equal(result.charts[0].source,adviceSource.url);
-  assert.deepEqual(result.charts[0],planningResult('adviceFeeCash',{...defaults('adviceFeeCash'),feeAssets:100000,projectFee:0,feeCash:50000}).charts[0]);
+test('FCAC extract retains the age/source grain, consistent overlapping observation and separate dates',()=>{
+  assert.equal(adviceSource.collection,'February and March 2024');assert.equal(adviceSource.published,'2025-11-17');assert.equal(adviceSource.modified,'2025-11-21');assert.equal(adviceSource.retrieved,'2026-10-25');
+  assert.deepEqual(adviceSource.professionalByAge.map(r=>r.percent),[20,26,27]);assert.deepEqual(adviceSource.youngSources.map(r=>r.percent),[57,20,18]);
+  assert.equal(adviceSource.professionalByAge[0].percent,adviceSource.youngSources[1].percent);assert.match(adviceSource.sha256,/^[a-f0-9]{64}$/);
 });
-
-test('default fee totals and outside-cash endpoints reconcile with closed-form amounts',()=>{
-  const input=defaults('adviceFeeCash'),p=adviceFeePlan(input);
-  near(p.assetMonthly,400000*.008/12);near(p.annualAssetFee,3200);near(p.equivalentAssets,300000);
-  const totals=[2500,4800,6400],ends=[3100,800,-800],required=[2500,1200,2800],extra=[500,0,800];
-  p.schedules.forEach((s,i)=>{
-    near(s.total,totals[i]);near(s.ending,ends[i]);near(s.required,required[i]);near(s.extra,extra[i]);
-    near(s.ending,input.feeCash+input.feeSurplus*input.feeMonths-s.total);
-  });
-  near(p.schedules[0].rows[0].cash,-500);near(p.schedules[1].rows[0].cash,2000);
-  near(p.schedules[1].rows[1].cash,1950);near(p.schedules[2].rows[1].paid,3200/12);
+test('project reviews occur after complete intervals and inside the selected service window',()=>{
+  const d=defaults('adviceCost'),p=adviceFeeSchedule(d);
+  assert.deepEqual(p.annual.filter(r=>r.project>0).map(r=>r.x),[1,4,7,10]);near(p.annual[0].project,1500);near(p.annual[3].project,500*1.02**3);
+  near(adviceFeeSchedule({...d,adviceYears:3}).projectTotal,1500);near(adviceFeeSchedule({...d,adviceYears:4}).projectTotal,1500+500*1.02**3);
+  near(p.projectTotal,3191.2314939431553);near(p.retainerTotal,19709.49779952814);
 });
-
-test('calendar requirements include immediate bills, charge outside assets only once and cure every deficit',()=>{
-  for(const feeMonths of [1,12,60])for(const feeSurplus of [0,150,1000]){
-    const input={...defaults('adviceFeeCash'),feeMonths,feeSurplus},p=adviceFeePlan(input);
-    for(const s of p.schedules){
-      near(s.required,s.upfront+Math.max(0,s.monthly-feeSurplus)*feeMonths);
-      const funded=adviceFeePlan({...input,feeCash:s.required}).schedules.find(r=>r.name===s.name);
-      assert.ok(funded.rows.every(r=>r.cash>=-1e-7));
-    }
-    near(p.schedules[2].total,input.feeAssets*(input.assetFee/100)*feeMonths/12);
-  }
-  const zero=adviceFeePlan({...defaults('adviceFeeCash'),projectFee:0,monthlyFee:0,assetFee:0});
-  assert.equal(zero.equivalentAssets,null);assert.ok(zero.schedules.every(s=>s.total===0&&s.required===0));
-  near(adviceFeePlan({...defaults('adviceFeeCash'),feeAssets:0}).schedules[2].total,0);
+test('nominal and present fee totals agree with independent geometric-series calculations',()=>{
+  const d=defaults('adviceCost'),p=adviceFeeSchedule(d),n=d.adviceYears,g=1+d.adviceFeeGrowth/100,q=g/(1+d.adviceDiscount/100);
+  near(p.retainerTotal,d.adviceRetainer*(g**n-1)/(g-1));near(p.retainerPV,d.adviceRetainer*(q**n-1)/(q-1));
+  let reviewNominal=0,reviewPV=0;
+  for(let review=1;review<=Math.floor((n-1)/d.adviceReviewEvery);review++){reviewNominal+=d.adviceReview*g**(review*d.adviceReviewEvery);reviewPV+=d.adviceReview*q**(review*d.adviceReviewEvery);}
+  near(p.projectTotal,d.adviceProject+reviewNominal);near(p.projectPV,d.adviceProject+reviewPV);
+  near(p.retainerPV-p.projectPV,14318.491434884192);
+  const equal=adviceFeeSchedule({...d,adviceDiscount:d.adviceFeeGrowth});near(equal.retainerPV,d.adviceRetainer*n);
 });
-
-test('a detailed guide and four accessible figures work at all supported field boundaries',()=>{
-  const kind='adviceFeeCash',slugs=new Set(planningGuides.map(g=>g.slug));
-  assert.equal(adviceCostGuides.length,1);const guide=adviceCostGuides[0];
-  assert.ok(guide.related.every(s=>slugs.has(s)));assert.equal(guide.sections.length,6);
-  assert.ok(guide.sections.map(s=>s.html.replace(/<[^>]*>/g,' ')).join(' ').split(/\s+/).length>850);
-  for(const input of [defaults(kind),Object.fromEntries(definitions[kind].fields.map(([k,,,min])=>[k,min])),Object.fromEntries(definitions[kind].fields.map(([k,,,,max])=>[k,max]))]){
-    assert.ok(validInputs(kind,input));const result=planningResult(kind,input);assert.equal(result.charts.length,4);
-    for(const width of [300,760]){
-      const html=renderResult(result,width);assert.doesNotMatch(html,/NaN|Infinity|undefined/);
-      assert.equal((html.match(/View chart data/g)||[]).length,4);
-    }
-  }
-  const fractional={...defaults(kind),feeMonths:12.5};assert.equal(validInputs(kind,fractional),false);assert.throws(()=>planningResult(kind,fractional));
+test('zero fee growth, zero discount and empty quotes preserve the correct cash identities',()=>{
+  const d={...defaults('adviceCost'),adviceFeeGrowth:0,adviceDiscount:0},p=adviceFeeSchedule(d);
+  near(p.projectTotal,d.adviceProject+Math.floor((d.adviceYears-1)/d.adviceReviewEvery)*d.adviceReview);near(p.retainerTotal,d.adviceYears*d.adviceRetainer);
+  near(p.projectPV,p.projectTotal);near(p.retainerPV,p.retainerTotal);
+  const zero=adviceFeeSchedule({...d,adviceProject:0,adviceReview:0,adviceRetainer:0});near(zero.projectTotal,0);near(zero.retainerTotal,0);
+  const retainerFree=planningResult('adviceCost',{...d,adviceRetainer:0});assert.ok(retainerFree.metrics[2][1]<0);
+});
+test('survey figures stay fixed when fee assumptions change and identify FCAC explicitly',()=>{
+  const d=defaults('adviceCost'),a=planningResult('adviceCost',d),b=planningResult('adviceCost',{...d,adviceProject:10000,adviceRetainer:0});
+  assert.deepEqual(a.charts.slice(0,2),b.charts.slice(0,2));assert.ok(a.charts.slice(0,2).every(c=>c.source===adviceSource.url&&c.sourceLabel.startsWith('FCAC')));
+  assert.ok(a.charts.slice(2).every(c=>!c.source));assert.equal(adviceCostGuides.length,1);
+});
+test('fee inputs reject fractional service periods and all supported boundaries render four finite charts/tables',()=>{
+  const d=defaults('adviceCost'),fields=definitions.adviceCost.fields;
+  assert.equal(validInputs('adviceCost',{...d,adviceYears:2.5}),false);assert.equal(validInputs('adviceCost',{...d,adviceReviewEvery:1.5}),false);
+  const finite=v=>{if(typeof v==='number')assert.ok(Number.isFinite(v));else if(Array.isArray(v))v.forEach(finite);else if(v&&typeof v==='object')Object.values(v).forEach(finite);};
+  const cases=[d,...fields.flatMap(([k,,,lo,hi])=>[{...d,[k]:lo},{...d,[k]:hi}]),Object.fromEntries(fields.map(([k,,,lo])=>[k,lo])),Object.fromEntries(fields.map(([k,,,,hi])=>[k,hi]))];
+  for(const input of cases){assert.ok(validInputs('adviceCost',input));const result=planningResult('adviceCost',input);finite(result);assert.equal(result.charts.length,4);
+    for(const width of [300,760]){const html=renderResult(result,width);assert.doesNotMatch(html,/NaN|Infinity|>undefined<|="undefined"/);assert.equal((html.match(/<svg /g)||[]).length,4);assert.equal((html.match(/<caption>/g)||[]).length,4);}}
 });

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 274 visual planning guides and 1131
+charts**. The library now leads with 277 visual planning guides and 1143
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -152,6 +152,10 @@ A mean-maturity guide compares two principal calendars with identical face
 totals and face-weighted mean dates. Exact deadline ledgers retain missing
 cash even when later receipts equalize the endpoints. Prices, coupons and
 duration are excluded, so the example does not rank investment returns.
+An exact five-state loss model distinguishes inverse-cumulative value at risk,
+expected shortfall over an exact probability tail and the largest specified
+loss. Boundary probability mass is allocated explicitly, including signed
+quantiles; all outcomes and probabilities are invented.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -743,3 +747,8 @@ Two new contribution and tax-cash companions add eight editable charts on afford
 regular investing through an income interruption and the cash provision for a
 reinvested fund distribution. All scenarios and tax factors are hypothetical.
 See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).
+
+## Actual dates and annual interest denominators
+
+Four charts separate actual days, fixed denominators and a calendar-year example. See
+`docs/planning-day-basis-2026-10-25.md` for sources and checks.

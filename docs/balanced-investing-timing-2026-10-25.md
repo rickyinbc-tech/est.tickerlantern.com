@@ -1,0 +1,16 @@
+# Balanced investing, crash concerns and market timing
+
+Two English companion articles authored 25 October 2026:
+
+- `balanced-fund-crash-inflation-long-term-plan` (`balancedStress`): stock/bond stress, dollar loss, nominal/real wealth and real-outcome sensitivity; account-wrapper explanation with CRA sources.
+- `market-timing-exit-reentry-two-decisions` (`timingRule`): fully disclosed authored return paths, identical monthly contributions, a causal one-cycle exit/re-entry rule, waiting cash and transaction costs.
+
+These supplement the existing unit-cost/DCA, phased-lump-sum, contribution-sequence, fee and RRSP/TFSA guides rather than reproducing them. All eight charts have editable scenarios and accessible data tables. No historical crisis returns, probability, guaranteed recovery or product recommendation is claimed.
+
+Public primary sources reviewed on 25 October 2026: OSC investor education, Bank of Canada inflation explanation, CRA TFSA (page dated 17 September 2026), CRA RRSP (7 May 2026), CRA mutual-fund tax treatment, FINRA market timing (10 June 2025), FINRA DCA (19 May 2026), SEC Investor.gov DCA definition. Each article links the exact source beside the relevant statement and identifies its limits. No US holding-period or retirement-account tax rules are applied to Canada.
+
+The stress model uses starting asset weights, applies first-year asset total returns, deducts a fee from closing value, then applies an independent whole-portfolio return and fee in later years. Inflation includes year one. No new contributions or withdrawals are included. The default calculation is CAD 100,000 − 21,000 − 3,200 − 758 = CAD 75,042 after year one; year twenty is CAD 187,579.13879463104 nominal / CAD 126,235.38309788423 in starting purchasing power. These values were independently checked with 40-digit Python Decimal arithmetic. Published returns already net of expenses must not have the same fee deducted again.
+
+The timing rule observes month-end returns, adds matching new cash, then decides. It experiences the triggering decline and misses the triggering rebound while in cash. Re-entry participates only from the next month. At most one exit/re-entry cycle is simulated. Its paths are deliberately constructed examples rather than a backtest. Default fast-rebound resources: remain invested CAD 18,401.052275384627; timing CAD 16,415.18432548798. Default longer-decline resources: remain invested CAD 11,717.912413513965; timing CAD 13,947.520516475004. Default whipsaw never triggers the 20% exit, so both end at CAD 17,078.774499324893. There is no claim that the three paths represent their real-world likelihoods.
+
+Verification includes a separate fractional-unit benchmark ledger, an analytical waiting-cash annuity, observed-prefix causality, switching costs, no-trigger/flat/zero cases, stress accounting and price-basis identities, all field boundaries, related-page resolution and four finite chart/table pairs per page. Local original-source captures, source hashes, test logs, screenshots and release receipts remain ignored and uncommitted under `qa/planning-balanced-timing/`. Investor.gov was read through the web tool; its direct curl archive returned 403 and was not bypassed.

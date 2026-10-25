@@ -18,8 +18,13 @@ New cash-mechanics guides cover mortgage payment frequency, savings-promotion wi
 and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
+Two new long-term investing companions add eight editable charts on balanced-fund
+crash stress, inflation, account wrappers, regular contributions and the separate
+exit/re-entry decisions in market timing. All return paths are explicitly hypothetical.
+See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.md).
+
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 241 visual planning guides and 988
+charts**. The library now leads with 243 visual planning guides and 996
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,

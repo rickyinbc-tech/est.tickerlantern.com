@@ -11,6 +11,7 @@ export function format(value,unit,compact=false) {
   }
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
   if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
+  if(unit==='cents')return value.toFixed(compact?1:2)+'¢';
   if(unit==='decimal')return value.toFixed(1);
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');

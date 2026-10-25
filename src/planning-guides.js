@@ -1,3 +1,4 @@
+import { rewardRedemptionGuides } from './planning-reward-redemption-guides.js';
 import { inventoryCycleGuides } from './planning-inventory-cycle-guides.js';
 import { feeSlicesGuides } from './planning-fee-slices-guides.js';
 import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
@@ -151,6 +152,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rewardRedemptionGuides,
   ...inventoryCycleGuides,
   ...feeSlicesGuides,
   ...tfsaKindGuides,

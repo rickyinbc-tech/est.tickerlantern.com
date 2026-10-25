@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 244 visual planning guides and 1001
+charts**. The library now leads with 245 visual planning guides and 1005
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -672,3 +672,5 @@ Four charts explain annual fee allocation, minimums, fixed charges and threshold
 `docs/planning-fee-slices-2026-10-25.md` for sources and checks.
 
 The inventory cash-cycle guide models identical batches over a fixed 365-day window, separating sale recognition from supplier and customer cash dates. Five charts distinguish a fixed per-batch timing interval, cumulative simplified profit, net trading cash, a funding trough and inventory/receivable/payable reconciliation at a selected day. Trade balances reconcile every modeled day, all supported events close within the year, and payment-term changes preserve fixed-year margin and overhead. Mobile snapshot and funding controls are verified.
+
+The reward-redemption guide separates matched cash outlay, purchasing missing points and the chosen other-use value of existing points consumed. Four charts keep actual payments apart from opportunity-value deductions and display implied cents per required point with a native precise cents format. No card or program quote is used. Partial/full/zero balances, double-counting checks, matching-price changes and responsive controls are verified.

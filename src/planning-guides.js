@@ -1,3 +1,4 @@
+import { inventoryCashGuides } from './planning-inventory-cash-guides.js';
 import { bondAccrualGuides } from './planning-bond-accrual-guides.js';
 import { expectationsGuides } from './planning-expectations-guides.js';
 import { bankWaiverGuides } from './planning-bank-waiver-guides.js';
@@ -148,6 +149,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...inventoryCashGuides,
   ...bondAccrualGuides,
   ...expectationsGuides,
   ...bankWaiverGuides,

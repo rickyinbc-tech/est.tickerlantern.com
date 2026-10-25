@@ -661,3 +661,7 @@ with saved waived fees and the opportunity cost of an additional balance; see
 
 Five charts preserve official survey medians and independent household price assumptions. See
 `docs/planning-expectations-2026-10-25.md` for sources and checks.
+
+### Inventory profit, receivables and owner withdrawals
+
+`/research/business-profit-inventory-receivable-owner-withdrawal-cash` follows a one-batch business through inventory purchase, a half-batch credit sale, operating cost, customer collection and one owner transfer. Five charts reconcile operating profit and cash while computing funding from every ordered event, including deficits hidden by positive month-end balances. Funded asset stacks identify their assumed new opening owner capital explicitly. Tests check event order, cash/stock/receivable identities, cost recognition, timing changes and zero-amount boundaries; the browser companion checks controls, tables and mobile labels. No actual business records, financial statements, loan approvals or tax treatment are applied.

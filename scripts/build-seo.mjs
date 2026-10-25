@@ -1,0 +1,39 @@
+import {readFile,writeFile,readdir,copyFile} from 'node:fs/promises';
+import {origin,esc,schema,socialMeta,footer,studyPages} from '../src/seo.js';
+const about=[
+  {path:'/about',title:'About TickerLantern',description:'Independent educational financial planning and investment research, with public source references, visible assumptions and interactive models.',body:`<p>TickerLantern is an independent educational research website. It brings together global index valuations, financial planning guides, company analysis, structured-note studies and equity-linked GIC research.</p><h2>Read the evidence, then change the assumptions</h2><p>Research pages link to public sources and identify observation dates where available. Interactive tools show how changing an assumption changes a result. A scenario is not a forecast, a guaranteed return or a personal recommendation.</p><h2>Who writes the research?</h2><p>Articles credited to TickerLantern Research are published under the website’s organizational byline. A byline does not imply an external professional designation, independent peer review or approval by a regulator.</p><h2>Independence and scope</h2><p>TickerLantern is not affiliated with or endorsed by the issuers and index providers discussed on this site. Product names and source references identify the subject of research. The site does not offer securities for sale or confirm trading availability.</p><h2>Contact and corrections</h2><p>Send a page URL and a description of the issue to <a href="mailto:support@tickerlantern.com">support@tickerlantern.com</a>. Please do not send account numbers, statements, identity documents or other private financial information.</p><p><a href="/editorial-policy">Read the research and corrections policy</a> or <a href="/research/">explore the guide library</a>.</p>`},
+  {path:'/editorial-policy',title:'Research, Sources & Corrections Policy',description:'How to interpret TickerLantern source dates, financial research, hypothetical scenarios, model limits and corrections.',body:`<p>These principles describe how to read and assess research published on TickerLantern.</p><h2>Sources and dates</h2><p>Prefer the original official publication for the fact being discussed. Retrieval time, source observation date and article publication date describe different events. A successful refresh does not turn an older observation into current data. Dated or unavailable inputs retain their qualifications.</p><h2>Facts, calculations and scenarios</h2><p>Source-reported observations, calculations derived from them and hypothetical assumptions must be distinguishable. Source references support only the claims they actually contain. Interactive results depend on the selected inputs, timing conventions and model limits; they do not establish a probability or a fair value unless a separately described model supports that interpretation.</p><h2>Financial planning and product research</h2><p>Tax, benefit, legal and product rules can change. Check the current official source and the applicable issuer documents before making a decision. Examples do not assess a reader’s full circumstances or replace advice from an appropriately qualified professional. Product availability and executable prices are not established by a research page.</p><h2>Limitations and source rights</h2><p>Missing coverage, incompatible definitions and conditional estimates belong beside the relevant result. Original third-party source documents and raw private research files are not part of this website’s publication. Links to a source do not imply its endorsement or permission for further redistribution.</p><h2>Report a correction</h2><p>Email <a href="mailto:support@tickerlantern.com">support@tickerlantern.com</a> with the affected page, the disputed statement and an official reference if available. Corrections should identify the affected claim and preserve the distinction between a changed source observation and a calculation error. Do not include private client or account records.</p><p><a href="/about">About TickerLantern</a> · <a href="/sources">Structured-note source coverage</a> · <a href="/">Index sources and model conventions</a></p>`}
+];
+for(const page of about){
+  const title=page.title+' | TickerLantern';
+  await writeFile('dist'+page.path+'.html',`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102f50"><title>${esc(title)}</title><meta name="description" content="${esc(page.description)}"><link rel="canonical" href="${origin}${page.path}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${origin}${page.path}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site-theme.css"><link rel="stylesheet" href="/research/guides.css"></head><body class="guide-page"><a class="guide-skip" href="#main">Skip to content</a><header class="tl-header"><div class="tl-header__inner"><a class="tl-brand" href="/"><img src="/favicon.svg" width="34" height="34" alt=""><span>TickerLantern<small>Independent research</small></span></a><nav class="tl-nav" aria-label="Main navigation"><a href="/">Indices</a><a href="/research/">Financial planning</a><a href="/notes/research">Structured notes</a></nav></div></header><main id="main" class="guide-width"><header class="guide-hero"><p class="guide-kicker">Research information</p><h1>${esc(page.title)}</h1><p class="guide-deck">${esc(page.description)}</p></header><article class="guide-prose">${page.body}</article></main></body></html>`);
+}
+const decode=s=>s.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+let count=0;
+async function enrich(dir){
+ for(const entry of await readdir(dir,{withFileTypes:true})){
+  const file=dir+'/'+entry.name;
+  if(entry.isDirectory()){await enrich(file);continue;}
+  if(!entry.name.endsWith('.html'))continue;
+  let html=await readFile(file,'utf8');
+  if(entry.name==='404.html'){await writeFile(file,html.replace('</head>','<meta name="robots" content="noindex,follow"></head>'));continue;}
+  const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);
+  if(!canonical)throw Error('Missing canonical: '+file);
+  const path=new URL(canonical[1]).pathname;
+  const title=decode(html.match(/<title>(.*?)<\/title>/s)[1]);
+  const description=decode(html.match(/<meta name="description" content="([^"]*)"/)[1]);
+  const published=html.match(/property="article:published_time" content="([^"]+)"/)?.[1];
+  const modified=html.match(/property="article:modified_time" content="([^"]+)"/)?.[1];
+  const data=schema({title,description,path,article:Boolean(published),published,modified,collection:path==='/research/'});
+  html=html.replace(/<meta name="robots"[^>]*>/g,'');
+  html=html.replace('</head>',`<meta name="robots" content="index,follow,max-image-preview:large">${socialMeta(title,description)}<link rel="stylesheet" href="/seo.css"><script type="application/ld+json">${data}</script></head>`).replace('</body>',footer+'</body>');
+  await writeFile(file,html);count++;
+ }
+}
+await enrich('dist');
+await copyFile('src/seo.css','dist/seo.css');
+await copyFile('src/social.png','dist/social.png');
+let sitemap=await readFile('dist/sitemap.xml','utf8');
+sitemap=sitemap.replace('</urlset>',[...about.map(p=>p.path),...Object.keys(studyPages)].map(path=>`<url><loc>${origin}${path}</loc></url>`).join('')+'</urlset>');
+await writeFile('dist/sitemap.xml',sitemap);
+console.log(`SEO metadata and structured data built for ${count} static pages; ${Object.keys(studyPages).length} study routes added to sitemap.`);

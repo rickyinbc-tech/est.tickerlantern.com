@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with eighty-one visual planning guides and 324
+charts**. The library now leads with 81 visual planning guides and 324
 charts, with new guides on shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -45,6 +45,15 @@ Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
+
+The latest three guides compare annual versus monthly insurance payments,
+lump-sum versus phased investment timing and renovation payment calendars.
+Each has four interactive graphics with explicit cash ledgers and accessible
+data tables. Payment percentages, returns and overruns are hypothetical;
+source notes identify the public mechanics reviewed. The premium equivalent
+rate is a mathematical IRR comparison, not a disclosed APR. Phased investment
+values include retained cash interest, and renovation gaps use the lowest
+balance rather than the final balance alone.
 
 `src/planning-guides.js` composes the article modules named
 `planning-*-guides.js`. `planning-models.js` composes the topic models, whose
@@ -216,16 +225,13 @@ Run `node --test tests/planning-runway-spending.test.mjs` for the independent
 financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
 input, invalid-input retention, reset, table, responsive and runtime checks.
 
-## Employer risk and payment choices
+## Employer risk and purchase financing
 
 The employer-share stress holds other investments fixed and tests a simultaneous
 share-price loss and interruption in net earnings. Bills precede month-end income;
-unfunded bills are retained outside the cash account. A separate assumed sale
-uses independently entered net proceeds, without calculating tax or sale eligibility.
-The staged-entry comparison begins with equal capital available immediately,
-invests at the beginning of each scheduled month and retains cash interest
-separately. An invented shock multiplies one month’s trend factor. Purchase
-financing uses equal household budgets and checks payments before month-end
-resources; any negative cash position suppresses the ending economic comparison.
-These models have independent arithmetic and boundary checks in
+unfunded bills stay outside the cash account. A separate assumed sale uses
+independently entered net proceeds without determining tax or sale eligibility.
+Purchase financing uses equal household budgets and checks payments before
+month-end resources. Any negative cash position suppresses the ending economic
+comparison. Independent arithmetic and boundary checks are in
 `tests/planning-wealth-choice.test.mjs`.

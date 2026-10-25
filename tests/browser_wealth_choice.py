@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the three wealth-choice articles in a real browser using agent-browser."""
+"""Check the two wealth-choice articles in a real browser using agent-browser."""
 import json
 from pathlib import Path
 import subprocess
@@ -18,7 +18,7 @@ def browser(*args):
 
 def evaluate(js): return browser('eval',js)['result']
 
-pages=[('employer-stock-income-interruption-household-risk','employerRisk'),('lump-sum-staged-investing-cash-return-path','stagedEntry'),('cash-discount-financing-purchase-reserve-tradeoff','purchaseFinance')]
+pages=[('employer-stock-income-interruption-household-risk','employerRisk'),('cash-discount-financing-purchase-reserve-tradeoff','purchaseFinance')]
 for slug,kind in pages:
     browser('open',base+'/research/'+slug+'.html')
     for width,height in [(1440,1000),(390,844)]:
@@ -33,10 +33,6 @@ for slug,kind in pages:
         browser('fill','#planning-shareFall','100')
         values=evaluate("[...document.querySelectorAll('.planning-metrics strong')].map(e=>e.textContent)")
         assert values[0]=='$60,000' and values[1]==values[2],values
-    elif kind=='stagedEntry':
-        browser('fill','#planning-stageMonths','1')
-        values=evaluate("[...document.querySelectorAll('.planning-metrics strong')].map(e=>e.textContent)")
-        assert values[0]==values[1] and values[2]=='$0',values
     else:
         browser('fill','#planning-cash','0')
         assert 'Funding needed' in evaluate("document.querySelector('.planning-metrics').innerText")
@@ -51,4 +47,4 @@ for slug,kind in pages:
     evaluate("document.querySelector('.plot-data').open=true")
     assert evaluate("document.querySelector('.plot-data').open")
     print('PASS',kind,'desktop/mobile charts, tables, edits, invalid-input retention and reset',flush=True)
-print('PASS all twelve new charts and three article interactions',flush=True)
+print('PASS all eight new charts and two article interactions',flush=True)

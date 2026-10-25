@@ -1,16 +1,15 @@
-# Employer risk, investment-entry schedules and purchase financing
+# Employer risk and purchase financing
 
-Three English visual guides, with four figures and a data table for every figure:
+Two English visual guides, with four figures and a data table for every figure:
 
 - `/research/employer-stock-income-interruption-household-risk`
-- `/research/lump-sum-staged-investing-cash-return-path`
 - `/research/cash-discount-financing-purchase-reserve-tradeoff`
 
-The original wealth-median draft was replaced when the current main branch
-added its own SFS guide. That published statistics article and its source
-snapshot are retained without a competing definition or a duplicate article.
+The wealth-median and staged-entry drafts were removed when the current main
+branch added those topics. Existing published guides and public statistical
+snapshots are retained, without competing definitions or duplicate articles.
 
-All twelve new graphics are original hypothetical scenarios. Their public
+All eight new graphics are original hypothetical scenarios. Their public
 source notes were reviewed on 25 October 2026. Investor.gov supplies the
 employer concentration and periodic-investment principles; FCAC supplies
 the general loan-cost context. Neither source supplies the model inputs or
@@ -26,12 +25,6 @@ assumes all shares can be sold after the shock and uses an independently
 entered usable share of gross proceeds; it does not calculate tax, vesting,
 permission to sell or the value of continued ownership.
 
-Investment entry gives both schedules the same starting capital. Purchases
-occur at the beginning of each month; waiting cash earns a monthly-equivalent
-effective return, retained in cash. One shock multiplies one monthly market
-factor. Total wealth includes both invested assets and waiting cash. There
-are no historical returns, probability estimates or trading costs.
-
 Purchase financing gives both methods identical starting cash and monthly
 household resources. A cash discount, a cash-paid setup fee and loan interest
 are distinct. The loan payment precedes the month-end household budget. Any
@@ -42,12 +35,11 @@ priced overdraft; they require a separately funded plan.
 
 ## Verification
 
-`tests/planning-wealth-choice.test.mjs` checks independent expanded investment
-holdings, waiting-cash interest, annuity payment and terminal cash formulas,
+`tests/planning-wealth-choice.test.mjs` checks independent annuity payment and terminal cash formulas,
 expense timing, ledger conservation, 0% cases, complete share loss, missing
 funding and numerical/rendering boundaries. The final build and full Node and
-Python suites are required before publication. Server HTML checks verify all
-three pages, English metadata, canonical URLs, twelve figures and twelve tables.
+Python suites are required before publication. Server HTML checks verify both
+pages, English metadata, canonical URLs, eight figures and eight tables.
 
 `tests/browser_wealth_choice.py` is a reproducible browser interaction check.
 This session's browser service timed out during navigation and then reported

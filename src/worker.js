@@ -1,3 +1,4 @@
+import { enrichStudyHTML, studyPages } from './seo.js';
 import { validateFeed } from './index-data.js';
 import { isNotesResearchPath, handleNotesResearch } from './notes-research.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
@@ -27,7 +28,18 @@ export default {
       url.protocol = 'https:';
       return Response.redirect(url.href, 308);
     }
-    if (isNotesResearchPath(url.pathname)) return handleNotesResearch(request, env);
+    if (url.pathname === '/research' || url.pathname === '/research/index.html' || url.pathname === '/index.html' || /^\/research\/[a-z0-9-]+(?:\.html|\/)$/.test(url.pathname) || /^\/(?:about|editorial-policy)(?:\.html|\/)$/.test(url.pathname)) {
+      url.pathname = url.pathname === '/index.html' ? '/' : url.pathname === '/research' || url.pathname === '/research/index.html' ? '/research/' : url.pathname.replace(/(?:\.html|\/)$/, '');
+      return Response.redirect(url.href, 308);
+    }
+    if (url.pathname.endsWith('/') && studyPages[url.pathname.slice(0, -1)]) {
+      url.pathname = url.pathname.slice(0, -1);
+      return Response.redirect(url.href, 308);
+    }
+    if (isNotesResearchPath(url.pathname)) {
+      const response = await handleNotesResearch(request, env);
+      return enrichStudyHTML(response, url.pathname);
+    }
     if (url.pathname !== '/api/indices') return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     let remote, bundled;

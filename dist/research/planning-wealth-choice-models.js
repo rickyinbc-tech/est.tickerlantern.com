@@ -6,11 +6,6 @@ export const wealthChoiceDefinitions = {
     ['replacement','Monthly net cash receipts during the interruption (CAD)',1000,0,15000,250],['interruptionMonths','Months of interrupted earnings from month one',6,0,12,1],
     ['netSalePct','Gross post-shock share value usable as net sale cash (%)',90,0,100,5]
   ]},
-  stagedEntry:{title:'Compare equal starting capital over one invented market year',fields:[
-    ['capital','Starting capital available immediately (CAD)',60000,0,500000,5000],['stageMonths','Number of equal beginning-of-month investments',6,1,12,1],
-    ['trend','Effective annual market trend before the one-off shock (%)',6,-20,20,1],['shock','Additional one-month market shock (%)',-20,-60,60,5],
-    ['entryShockMonth','Month receiving the additional shock',2,1,12,1],['cashRate','Effective annual interest on waiting cash (%)',3,0,8,.5]
-  ]},
   purchaseFinance:{title:'Compare one purchase, one starting balance and one monthly budget',fields:[
     ['price','Full purchase price including applicable sales tax (CAD)',10000,500,100000,500],['discount','Discount available only for paying now (%)',3,0,20,.5],
     ['fee','Financing setup fee paid from cash immediately (CAD)',150,0,5000,50],['apr','Nominal annual loan interest assumption (%)',5,0,30,.5],
@@ -31,21 +26,6 @@ export function employerCash(input,sell=false) {
     cash+=receipt;income+=receipt;rows.push({x:month,value:cash,before,gap,receipt});
   }
   return {rows,shareValue,saleCash,cash,unfunded,paid,income};
-}
-// Month zero is after the first purchase. Each later purchase precedes that month's return.
-export function entryPath(input,staged=false) {
-  const count=staged?input.stageMonths:1,installment=input.capital/count;
-  let cash=input.capital,invested=0,market=100,cashInterest=0;
-  const rows=[];
-  for(let month=1;month<=12;month++) {
-    const transfer=month<=count?installment:0;cash-=transfer;if(Math.abs(cash)<1e-8)cash=0;invested+=transfer;
-    if(month===1)rows.push({x:0,value:invested+cash,invested,cash,market});
-    const factor=(1+monthlyRate(input.trend))*(month===input.entryShockMonth?1+input.shock/100:1);
-    market*=factor;invested*=factor;
-    const interest=cash*monthlyRate(input.cashRate);cash+=interest;cashInterest+=interest;
-    rows.push({x:month,value:invested+cash,invested,cash,market});
-  }
-  return {rows,total:cash+invested,invested,cash,cashInterest};
 }
 export function purchasePath(input,financed=false) {
   const rate=input.apr/1200,n=input.financeMonths;
@@ -71,16 +51,6 @@ export function wealthChoiceResult(kind,input) {
       {id:'employer-cash-runway',type:'line',title:'Follow cash after each bill, before that month’s income arrives',unit:'money',xLabel:'Months from the joint stress',series:[{name:'Keep employer shares',rows:hold.rows.map(r=>({x:r.x,value:r.before}))},{name:'Assume an immediate net-cash sale',rows:sell.rows.map(r=>({x:r.x,value:r.before})),dash:true}],note:'Month zero includes any assumed sale cash. Later points show cash after the bill but before month-end income. Zero cash can coexist with unpaid bills, which are retained in the separate funding metric and next chart. Month-end balances can be higher and do not erase earlier gaps.'},
       {id:'employer-bills-funding',type:'stackbar',title:'Available cash and unpaid bills tell different stories',unit:'money',seriesNames:['Bills paid on time','Bills without cash funding at their due dates'],rows:[{label:'Keep employer shares',values:[hold.paid,hold.unfunded]},{label:'Assumed net-cash sale',values:[sell.paid,sell.unfunded]}],note:'Both bars total twelve times monthly essential bills. An unpaid amount is a financing problem requiring a separate solution. It is not forgiven, funded with automatic credit or counted as a negative savings account.'},
       {id:'employer-joint-stress',type:'heatmap',title:'Unfunded bills after the assumed sale under combined stresses',unit:'money',columns:['0 months','3 months','6 months','12 months'],rows:[0,20,40,80].map(shareFall=>({label:shareFall+'% share fall',values:[0,3,6,12].map(interruptionMonths=>employerCash({...input,shareFall,interruptionMonths},true).unfunded)})),note:'Rows replace the immediate share-price loss; columns replace the income-interruption duration. The net usable sale percentage, starting cash, income amounts and expenses remain selected. Both stresses occur in the same case but have no assigned relationship or probability. Even zero interrupted months requires opening cash for the first bill before normal month-end pay.'}
-    ]};
-  }
-  if(kind==='stagedEntry') {
-    const immediate=entryPath(input),staged=entryPath(input,true);
-    const cashRows=Array.from({length:13},(_,x)=>({x,value:input.capital*(1+monthlyRate(input.cashRate))**x}));
-    return {metrics:[['Month-12 total with immediate investment',immediate.total,'money'],['Month-12 total with staged investment',staged.total,'money'],['Staged minus immediate at month 12',staged.total-immediate.total,'money']],note:'One invented 12-month market path, no historical returns or assigned probabilities. All capital exists before month one. Immediate investment deploys all of it before the first return; staged investment makes equal transfers of starting principal at the beginning of each selected month, starting immediately. Uninvested cash earns the effective annual cash rate converted monthly, and that interest remains in cash. The selected market trend is an effective annual rate converted monthly. The one-off shock multiplies that month’s market factor; it is not added to the annual return. Fractional units and costless transfers are assumed. All paths retain waiting cash and its interest in total wealth. No dividends, tax, fees, slippage, account limits or inflation are modeled. A fixed purchase schedule is not a capital guarantee.',charts:[
-      {id:'entry-market-path',type:'line',title:'Read the invented market path before judging either schedule',unit:'decimal',unitLabel:'Synthetic market index · starts at 100',xLabel:'Months from the first investment',series:[{name:'Selected market path',rows:immediate.rows.map(r=>({x:r.x,value:r.market}))}],note:'The price index is a scenario, not an official market observation. At month 12 it equals 100 × (1 + trend) × (1 + shock). Moving the shock changes the path but preserves this terminal index.'},
-      {id:'entry-total-wealth',type:'line',title:'Compare investments plus every dollar still waiting in cash',unit:'money',xLabel:'Months from the first investment',series:[{name:'Invest immediately',rows:immediate.rows},{name:'Equal staged investments',rows:staged.rows,dash:true},{name:'Keep all capital in cash',rows:cashRows}],note:'All lines start with identical total capital and receive no additional income. The cash-only line is a reference, not an investment recommendation. Comparing only the invested account would omit capital still waiting for scheduled purchases.'},
-      {id:'entry-assets-cash',type:'stackbar',title:'Staged investment changes market exposure during the year',unit:'money',seriesNames:['Invested asset value','Waiting cash plus retained interest'],rows:[0,3,6,12].map(month=>{const r=staged.rows[month];return {label:'Month '+month,values:[r.invested,r.cash]};}),note:'Month zero follows the first transfer but precedes the first return. The original principal is fully transferred by the last scheduled purchase; cash interest is retained, so a small cash balance can remain afterwards. Market exposure is a value, not a guaranteed future payment.'},
-      {id:'entry-shock-timing',type:'heatmap',title:'Staged minus immediate: the same shock at different dates',unit:'money',signed:true,columns:['Month 1','Month 3','Month 6','Month 12'],rows:[-40,-20,0,20].map(shock=>({label:shock+'% shock',values:[1,3,6,12].map(entryShockMonth=>{const d={...input,shock,entryShockMonth};return entryPath(d,true).total-entryPath(d).total;})})),note:'Each row replaces the one-off shock; columns move it. Starting capital, staging duration, trend and cash rate remain selected. Positive means staging ends with more total wealth in that cell; negative means immediate investment does. These cases are neither frequency estimates nor a forecast of the best entry date.'}
     ]};
   }
   if(kind==='purchaseFinance') {

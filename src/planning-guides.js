@@ -1,3 +1,4 @@
+import { marketResilienceGuides } from './planning-market-resilience-guides.js';
 import { paymentOptionGuides } from './planning-payment-options-guides.js';
 import { cashMechanicsGuides } from './planning-cash-mechanics-guides.js';
 import { wealthChoiceGuides } from './planning-wealth-choice-guides.js';
@@ -29,6 +30,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...marketResilienceGuides,
   ...paymentOptionGuides,
   ...cashMechanicsGuides,
   ...wealthChoiceGuides,

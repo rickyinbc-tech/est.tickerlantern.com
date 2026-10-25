@@ -1,4 +1,20 @@
 import { policySettlementGuides } from './planning-policy-settlement-guides.js';
+import { dayBasisGuides } from './planning-day-basis-guides.js';
+import { currencyMatchGuides } from './planning-currency-match-guides.js';
+import { tailMeasureGuides } from './planning-tail-measures-guides.js';
+import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
+import { fuelMixGuides } from './planning-fuel-mix-guides.js';
+import { taperGuides } from './planning-taper-guides.js';
+import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
+import { fxCostGuides } from './planning-fx-cost-guides.js';
+import { energyTimingGuides } from './planning-energy-timing-guides.js';
+import { loanRateOrderGuides } from './planning-loan-rate-order-guides.js';
+import { incomeTransitionGuides } from './planning-income-transition-guides.js';
+import { aiTimeGuides } from './planning-ai-time-guides.js';
+import { tieredSavingsGuides } from './planning-tiered-savings-guides.js';
+import { unpaidTimeGuides } from './planning-unpaid-time-guides.js';
+import { capitalLossGuides } from './planning-capital-loss-guides.js';
+import { maturityAverageGuides } from './planning-maturity-average-guides.js';
 import { repeatedRiskGuides } from './planning-repeated-risk-guides.js';
 import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
 import { repeatRiskGuides } from './planning-repeat-risk-guides.js';
@@ -167,6 +183,22 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...policySettlementGuides,
+  ...dayBasisGuides,
+  ...currencyMatchGuides,
+  ...tailMeasureGuides,
+  ...contributionTaxCashGuides,
+  ...fuelMixGuides,
+  ...taperGuides,
+  ...bondConvexityGuides,
+  ...fxCostGuides,
+  ...energyTimingGuides,
+  ...loanRateOrderGuides,
+  ...incomeTransitionGuides,
+  ...aiTimeGuides,
+  ...tieredSavingsGuides,
+  ...unpaidTimeGuides,
+  ...capitalLossGuides,
+  ...maturityAverageGuides,
   ...repeatedRiskGuides,
   ...wholeReinvestGuides,
   ...repeatRiskGuides,

@@ -38,7 +38,7 @@ bank cash. Opening bank cash brings the bank balance to CAD 22,000. Tax and
 spending assignments total CAD 24,000, leaving a CAD 2,000 funding need.
 The same gross amount at a 52% securities share just funds the two assignments.
 
-Full JavaScript suite: 1042 passed. Python suite: 122 passed.
+Full JavaScript suite: 1052 passed. Python suite: 122 passed.
 Browser checks cover 1440, 390 and 320 pixels, four figures/tables, actual
 securities-share and starting-cash changes, invalid-share retention, reset and
 data disclosure. All four mobile figure screenshots are inspected before

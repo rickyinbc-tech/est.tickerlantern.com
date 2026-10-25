@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 213 visual planning guides and 867
+charts**. The library now leads with 214 visual planning guides and 871
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -588,6 +588,11 @@ The savings-sensitivity guide introduces a native accessible tornado chart with 
 
 Four charts separate credit usage from the final settlement of prior tax payments. See
 `docs/planning-credit-settlement-2026-10-25.md` for sources and checks.
+
+
+### Employee option grant cash planning
+
+The English guide `employee-stock-options-vesting-exercise-cash-spread` separates granted and vested units, current intrinsic spread, hypothetical exercise-and-sale proceeds and exercise-and-hold strike funding. Four original interactive figures use a fixed authored 48-month schedule with a 12-month cliff, whole-unit rounding and independently entered cash. Only vested units enter the sale illustration, which assumes a permitted immediate sale at the entered price and shows no transaction at or below strike. All scenarios are hypothetical CAD arithmetic, excluding actual employer terms, full option valuation, tax, fees, expiry and settlement. Public Investor.gov and current Fidelity stock-plan sources support the conceptual distinctions. No option exercise or sale is initiated.
 
 `planning-rrif-kind` separates securities received from assigned bank cash; see
 `docs/planning-rrif-kind-2026-10-25.md` for scope and validation.

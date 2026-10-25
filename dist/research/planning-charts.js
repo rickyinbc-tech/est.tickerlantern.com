@@ -4,6 +4,7 @@ const colors=['#087f76','#102f50','#b8822e'];
 export function format(value,unit,compact=false) {
   if(value==null)return unit==='months'?'NR':'Unavailable';
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
+  if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
   if(unit==='decimal')return value.toFixed(1);
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
@@ -42,6 +43,38 @@ function fanPlot(spec,width) {
   const keys='<ul class="plot-legend"><li><span class="plot-key plot-key-fill plot-key-fan-outer" aria-hidden="true"></span>5th–95th percentiles</li><li><span class="plot-key plot-key-fill plot-key-fan-inner" aria-hidden="true"></span>25th–75th percentiles</li><li><span class="plot-key plot-key-fan-median" aria-hidden="true"></span>Median</li></ul>';
   return keys+svgShell(spec,width,height,body,'Pointwise percentile fan. Shaded regions describe the assumed distribution at each year, not a prediction interval for an entire investment path. Vertical axis begins at zero; values in CAD.');
 }
+function scatterPlot(spec,width) {
+  if(!spec.rows.length||spec.rows.some(r=>!Number.isFinite(r.x)||r.x<0||!Number.isFinite(r.value)))throw Error('Scatter coordinates must be finite; this chart requires a non-negative horizontal measure.');
+  const height=350,left=64,right=22,top=25,bottom=58;
+  const xmax=niceMax(Math.max(.01,...spec.rows.map(r=>r.x))),minimum=Math.min(0,...spec.rows.map(r=>r.value)),maximum=Math.max(0,...spec.rows.map(r=>r.value));
+  const ymin=minimum<0?-niceMax(-minimum):0,ymax=maximum>0?niceMax(maximum):minimum<0?0:.01;
+  const x=v=>left+v/xmax*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
+  let body='';
+  for(let i=0;i<=4;i++){
+    const xv=xmax*i/4,yv=ymin+(ymax-ymin)*i/4;
+    body+=line(x(xv),top,x(xv),height-bottom)+txt(x(xv),height-bottom+24,format(xv,spec.xUnit,true),'middle');
+    body+=line(left,y(yv),width-right,y(yv))+txt(left-9,y(yv)+4,format(yv,spec.unit,true),'end');
+  }
+  body+=line(left,top,left,height-bottom,'plot-axis')+line(left,height-bottom,width-right,height-bottom,'plot-axis');
+  if(ymin<0&&ymax>0)body+=line(left,y(0),width-right,y(0),'plot-axis');
+  for(const row of [...spec.rows].sort((a,b)=>Number(Boolean(a.selected))-Number(Boolean(b.selected)))){
+    const px=x(row.x),py=y(row.value),selected=Boolean(row.selected);
+    body+=`<circle cx="${px}" cy="${py}" r="${selected?5.5:3.5}" fill="${selected?colors[0]:'white'}" stroke="${selected?colors[0]:colors[1]}" stroke-width="${selected?2.4:1.5}" tabindex="0" role="img" aria-label="${escapeHTML(row.label+': '+spec.xLabel+' '+format(row.x,spec.xUnit)+', '+spec.yLabel+' '+format(row.value,spec.unit))}"><title>${escapeHTML(row.label+': '+format(row.x,spec.xUnit)+' / '+format(row.value,spec.unit))}</title></circle>`;
+  }
+  const placed=[],overlap=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+  for(const row of spec.rows.filter(r=>r.annotate||r.selected).sort((a,b)=>Number(Boolean(b.selected))-Number(Boolean(a.selected)))){
+    const px=x(row.x),py=y(row.value),labelWidth=String(row.label).length*7.5;
+    const candidates=[-12,22,-30,40,-48,58].flatMap(dy=>[[-10,dy,'end'],[10,dy,'start']]).map(([dx,dy,anchor])=>{
+      const tx=px+dx,ty=py+dy,box={left:anchor==='end'?tx-labelWidth:tx,right:anchor==='end'?tx:tx+labelWidth,top:ty-13,bottom:ty+3};
+      const outside=box.left<left+2||box.right>width-right-2||box.top<top+2||box.bottom>height-bottom-2;
+      const collisions=spec.rows.filter(r=>overlap(box,{left:x(r.x)-8,right:x(r.x)+8,top:y(r.value)-8,bottom:y(r.value)+8})).length+placed.filter(b=>overlap(box,b)).length;
+      return {tx,ty,anchor,box,score:collisions+(outside?100:0)};
+    });
+    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
+  }
+  body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
+  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. Filled larger marker identifies the selected allocation; hollow markers are alternatives.')+'<p class="plot-scale">Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.</p>';
+}
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
   const values=spec.series.flatMap(s=>s.rows.map(r=>r.value)),ymax=spec.yMax??niceMax(Math.max(0,...values)),ymin=spec.yMin??(Math.min(0,...values)<0?-niceMax(-Math.min(...values)):0);
@@ -66,8 +99,9 @@ function linePlot(spec,width) {
 }
 function barPlot(spec,width) {
   const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
-  const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:62, height=top+spec.rows.length*rowHeight+40;
-  const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):r.value??0;
+  const interval=spec.type==='intervalbar';
+  const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:interval?86:62, height=top+spec.rows.length*rowHeight+40;
+  const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):interval?Math.max(r.value,r.upper):r.value??0;
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
   let body='';
@@ -81,12 +115,17 @@ function barPlot(spec,width) {
     if(group){r.values.forEach((v,i)=>{body+=`<rect x="${left}" y="${y+22+i*20}" width="${Math.max(0,x(v)-left)}" height="13" fill="${colors[i]}"/>`;});}
     else if(stack){let previous=0;r.values.forEach((v,i)=>{body+=`<rect x="${x(previous)}" y="${y+24}" width="${Math.max(0,x(v)-left)}" height="18" fill="${colors[i]}"/>`;previous+=v;});}
     else body+=`<rect x="${left}" y="${y+24}" width="${Math.max(0,x(r.value)-left)}" height="18" fill="${colors[0]}"/>`;
-    const labelValue=group?r.values.map(v=>format(v,spec.unit)).join(' / '):format(rowMax(r),spec.unit);
+    if(interval){
+      const lo=x(r.lower),hi=x(r.upper),cy=y+33,d=`M${lo},${cy}H${hi}M${lo},${cy-5}V${cy+5}M${hi},${cy-5}V${cy+5}`;
+      body+=`<path d="${d}" fill="none" stroke="white" stroke-width="4"/><path d="${d}" fill="none" stroke="${colors[1]}" stroke-width="1.6"/>`;
+      body+=txt(left,y+77,'95% CI: '+format(r.lower,spec.unit)+'–'+format(r.upper,spec.unit),'start','class="plot-value"');
+    }
+    const labelValue=group?r.values.map(v=>format(v,spec.unit)).join(' / '):format(interval?r.value:rowMax(r),spec.unit);
     // Values sit on a separate text row so long currency labels never clip the plot.
     body+=txt(left,y+(group?37+20*groupCount:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
-  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
+  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
 }
 function signedBarPlot(spec,width) {
   const left=64,right=30,top=12,rowHeight=70,height=top+spec.rows.length*rowHeight+42;
@@ -140,7 +179,7 @@ function waterfallPlot(spec,width){
   const low=-niceMax(Math.abs(Math.min(0,...rows.flatMap(r=>[r.start,r.end]))));
   const high=niceMax(Math.max(0,...rows.flatMap(r=>[r.start,r.end])));
   const lo=rows.every(r=>r.start>=0&&r.end>=0)?0:low,hi=rows.every(r=>r.start<=0&&r.end<=0)?0:high;
-  const span=Math.max(1,hi-lo),height=top+rows.length*rowHeight+42;
+  const span=hi>lo?hi-lo:1,height=top+rows.length*rowHeight+42;
   const x=v=>left+(v-lo)/span*(width-left-right);
   let body='';
   const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+span*i/4),0])];
@@ -182,18 +221,20 @@ function returnsPlot(spec,width) {
 }
 function chartTable(spec) {
   let headers,rows;
-  if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
+  if(spec.type==='scatter'){headers=['Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
+  else if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
   else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
+  else if(spec.type==='intervalbar'){headers=['Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
   else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
   const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='percent'?'percent':spec.unit);
   return `<details class="plot-data"><summary>View chart data</summary><div class="guide-table" tabindex="0" role="region" aria-label="${escapeHTML(spec.title)} data"><table><caption>${escapeHTML(spec.title)} · ${escapeHTML(tableUnit)}</caption><thead><tr>${headers.map(h=>`<th scope="col">${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>'<tr>'+row.map((v,i)=>i?`<td>${escapeHTML(v)}</td>`:`<th scope="row">${escapeHTML(v)}</th>`).join('')+'</tr>').join('')}</tbody></table></div></details>`;
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
-  const chart=spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
+  const chart=spec.type==='scatter'?scatterPlot(spec,width):spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
   return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {

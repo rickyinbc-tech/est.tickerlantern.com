@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 253 visual planning guides and 1041 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 254 visual planning guides and 1045
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -695,3 +696,7 @@ beside a separate editable household cash ledger; see
 
 Four charts compare explicit loan interest bases and payment-date equivalents. See
 `docs/planning-flat-loan-2026-10-25.md` for sources and checks.
+
+`planning-capital-loss` reconciles a historical 2025 loss record across same-year
+use, requested carryback allocations and unapplied carryforward; see
+`docs/planning-capital-loss-2026-10-25.md`.

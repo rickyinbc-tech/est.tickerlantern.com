@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 145 visual planning guides and 588
+charts**. The library now leads with 152 visual planning guides and 616
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -410,10 +410,16 @@ Three English guides cover owner-level assessment reserves, the nominal and
 real burden of fixed debt, and weekly versus batched purchase fees. See
 `docs/planning-everyday-capital-2026-10-25.md` for sources and verified checks.
 
+The `planning-funding-boundaries` guides add a rising goal-price solver, a
+single-balance earmark calendar and a leveraged-loss stress illustration.
+Each has four interactive graphics and data tables. The goal solver reprices
+the deadline, the earmark ledger checks the lowest balance against a floor,
+and the loss example retains unchanged debt and all outside interest costs.
+
 
 ### Insurance renewal budgets and deposit access
 
 - `/research/term-life-renewal-premium-household-reserve` follows two independently entered equal premium periods, a recurring household assignment and a separately held reserve. Cash retained before a hypothetical renewal can fund later premiums; it is not a policy cash value or a premium refund. No renewal right, quote or insurance recommendation is inferred.
 - `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
 
-`tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on25October2026; all model amounts and conventions are authored assumptions.
+`tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on 25 October 2026; all model amounts and conventions are authored assumptions.

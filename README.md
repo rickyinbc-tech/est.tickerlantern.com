@@ -670,3 +670,7 @@ and room capacity while conserving gross market value; see
 
 Four charts explain annual fee allocation, minimums, fixed charges and threshold repricing. See
 `docs/planning-fee-slices-2026-10-25.md` for sources and checks.
+
+## Promotional credit payoff conditions
+
+Four charts separate purchase principal, an unposted interest memo and the final assessment under two invented contracts. See `docs/planning-promo-condition-2026-10-25.md` for sources and checks.

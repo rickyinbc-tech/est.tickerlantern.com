@@ -102,10 +102,10 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?(spec.currency??'CAD'):spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
-  const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
+  const left=52,right=spec.axisRight??(spec.unit==='percent'?30:18),top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
   const interval=spec.type==='intervalbar';
   const groupCount=spec.seriesNames?.length??2,rowHeight=group?42+20*groupCount:interval?86:62, height=top+spec.rows.length*rowHeight+40;
   const rowMax=r=>r.values?stack?r.values.reduce((a,b)=>a+b,0):Math.max(...r.values):interval?Math.max(r.value,r.upper):r.value??0;
@@ -133,7 +133,7 @@ function barPlot(spec,width) {
     body+=txt(left,y+(group?37+20*groupCount:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
-  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
+  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?(spec.currency??'CAD')+'; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
 }
 function signedBarPlot(spec,width) {
   const left=64,right=30,top=12,rowHeight=70,height=top+spec.rows.length*rowHeight+42;

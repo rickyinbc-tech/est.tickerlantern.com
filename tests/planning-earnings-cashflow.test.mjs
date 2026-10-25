@@ -34,7 +34,7 @@ test('grid cells replace the named working-capital changes and do not add accoun
 });
 test('the original route occurs once and its separate receivables example and other research remain intact',()=>{
  const matches=[...planningGuides,...guides].filter(g=>g.slug==='earnings-quality-cash-flow');assert.equal(matches.length,1);assert.equal(matches[0].planning,kind);assert.equal(matches[0].sections.length,8);
- assert.match(matches[0].sections.find(s=>s.id==='working-capital').html,/separate illustration/);assert.match(matches[0].sections.find(s=>s.id==='working-capital').html,/change of 70/);assert.match(matches[0].sources[0].note,/12 January 2014/);assert.equal(guides.filter(g=>g.slug==='buybacks-dilution-per-share-value').length,1);
+ assert.match(matches[0].sections.find(s=>s.id==='working-capital').html,/separate illustration/);assert.match(matches[0].sections.find(s=>s.id==='working-capital').html,/change of 70/);assert.match(matches[0].sources[0].note,/12 January 2014/);assert.equal([...planningGuides,...guides].filter(g=>g.slug==='buybacks-dilution-per-share-value').length,1);
 });
 test('all allowed boundaries retain nonnegative closing operating balances and five finite chart/table pairs',()=>{
  const d=defaults(kind),fields=definitions[kind].fields,inputs=[d,...fields.flatMap(([key,,,min,max])=>[{...d,[key]:min},{...d,[key]:max}]),Object.fromEntries(fields.map(([key,,,min])=>[key,min])),Object.fromEntries(fields.map(([key,,,,max])=>[key,max]))];

@@ -1,4 +1,6 @@
 import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
+import { rewardRedemptionGuides } from './planning-reward-redemption-guides.js';
+import { shareSplitGuides } from './planning-share-split-guides.js';
 import { flatLoanGuides } from './planning-flat-loan-guides.js';
 import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
 import { disabilityOffsetGuides } from './planning-disability-offset-guides.js';
@@ -161,6 +163,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...wholeReinvestGuides,
+  ...rewardRedemptionGuides,
+  ...shareSplitGuides,
   ...flatLoanGuides,
   ...cppAmountsGuides,
   ...disabilityOffsetGuides,

@@ -2,24 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { defaults, definitions, planningResult, validInputs } from '../src/planning-models.js';
 import { wealthChoiceGuides } from '../src/planning-wealth-choice-guides.js';
-import { wealthSource } from '../src/planning-wealth-data.js';
-import { wealthCash, entryPath, purchasePath } from '../src/planning-wealth-choice-models.js';
+import { employerCash, entryPath, purchasePath } from '../src/planning-wealth-choice-models.js';
 import { renderResult } from '../src/planning-charts.js';
 const near=(a,b)=>assert.ok(Math.abs(a-b)<Math.max(1,Math.abs(b))*1e-8,`${a} != ${b}`);
 
-test('wealth snapshot preserves age groups, survey family units and constant-dollar medians',()=>{
-  assert.equal(wealthSource.unit,'Constant 2023 CAD');assert.equal(wealthSource.released,'2024-10-29');
-  assert.deepEqual(wealthSource.ageRows.map(r=>[r.before,r.after]),[[56400,159100],[270800,409300],[602000,675800],[797000,873400],[627500,738900]]);
-  assert.deepEqual(wealthSource.familyRows.map(r=>r.after),[712900,278200]);
-  assert.match(wealthSource.sha256,/^[a-f0-9]{64}$/);
-});
-test('balance-sheet values do not silently convert home or pension wealth into bill-paying cash',()=>{
-  const d=defaults('wealthContext'),p=wealthCash(d);near(p.total,627000);near(p.available,7000);near(p.unfunded,0);
-  const stressed=wealthCash({...d,cash:1000,billsDue:8000,homeEquity:3000000,pensionValue:2000000});near(stressed.available,0);near(stressed.unfunded,7000);
-  const a=planningResult('wealthContext',d),b=planningResult('wealthContext',{...d,homeEquity:0,pensionValue:0});
-  assert.deepEqual(a.charts.slice(0,2),b.charts.slice(0,2));assert.deepEqual(a.charts[3],b.charts[3]);
-  near(a.charts[2].rows.reduce((sum,r)=>sum+r.value,0),p.total);
-});
 test('immediate investment follows the independent product and staged purchases match expanded unit holdings',()=>{
   const d=defaults('stagedEntry');
   for(const entryShockMonth of [1,2,6,12])for(const shock of [-60,0,60]){
@@ -67,10 +53,20 @@ test('all three guides retain finite accessible charts and reject fractional sch
   }
   assert.equal(validInputs('stagedEntry',{...defaults('stagedEntry'),entryShockMonth:2.5}),false);
   const finite=v=>{if(typeof v==='number')assert.ok(Number.isFinite(v));else if(Array.isArray(v))v.forEach(finite);else if(v&&typeof v==='object')Object.values(v).forEach(finite);};
-  for(const kind of ['wealthContext','stagedEntry','purchaseFinance']){
+  for(const kind of ['employerRisk','stagedEntry','purchaseFinance']){
     const d=defaults(kind),fields=definitions[kind].fields;
     const cases=[d,...fields.flatMap(([k,,,min,max])=>[{...d,[k]:min},{...d,[k]:max}]),Object.fromEntries(fields.map(([k,,,min])=>[k,min])),Object.fromEntries(fields.map(([k,,,,max])=>[k,max]))];
     for(const input of cases){assert.ok(validInputs(kind,input));const result=planningResult(kind,input);finite(result);assert.equal(result.charts.length,4);
       for(const width of [300,760]){const html=renderResult(result,width);assert.doesNotMatch(html,/NaN|Infinity|>undefined<|="undefined"/);assert.equal((html.match(/<svg /g)||[]).length,4);assert.equal((html.match(/<caption>/g)||[]).length,4);}}
   }
+});
+
+test('employer-share loss and lost pay remain distinct, with bills before income',()=>{
+  const d=defaults('employerRisk'),hold=employerCash(d),sell=employerCash(d,true);
+  near(hold.shareValue,36000);near(sell.saleCash,32400);near(hold.unfunded,10000);near(sell.unfunded,0);
+  near(hold.rows[7].gap,3000);near(hold.paid+hold.unfunded,12*d.essentials);
+  for(const p of [hold,sell])near(p.cash,d.cash+p.saleCash+p.income-p.paid);
+  assert.equal(employerCash({...d,shareFall:100},true).saleCash,0);
+  assert.deepEqual(employerCash({...d,netSalePct:0},true).rows,hold.rows);
+  assert.equal(validInputs('employerRisk',{...d,interruptionMonths:3.5}),false);
 });

@@ -1,10 +1,10 @@
-import { wealthSource } from './planning-wealth-data.js';
 export const wealthChoiceDefinitions = {
-  wealthContext:{title:'Separate survey benchmarks from your own cash position',fields:[
-    ['cash','Accessible cash today (CAD)',15000,0,250000,1000],['investments','Other investment assets, before tax (CAD)',35000,0,2000000,5000],
-    ['homeEquity','Home value less its mortgage (CAD)',400000,0,3000000,10000],['pensionValue','Separately estimated workplace pension asset value (CAD)',200000,0,2000000,10000],
-    ['otherDebt','Other debt, excluding the mortgage and bills below (CAD)',15000,0,500000,1000],['billsDue','Existing bills or debt due before the next income (CAD)',8000,0,100000,1000],
-    ['essentials','Essential monthly expenses after those bills (CAD)',3500,500,15000,250]
+  employerRisk:{title:'Stress employer shares and take-home income together',fields:[
+    ['cash','Starting accessible cash (CAD)',12000,0,100000,1000],['shares','Vested, saleable employer shares before the shock (CAD)',60000,0,500000,5000],
+    ['otherAssets','Other financial investments kept outside this cash ledger (CAD)',140000,0,2000000,10000],['shareFall','Immediate employer-share price fall (%)',40,0,100,5],
+    ['essentials','Essential monthly cash bills (CAD)',4000,500,15000,250],['normalIncome','Normal monthly take-home income after work resumes (CAD)',6000,0,20000,500],
+    ['replacement','Monthly net cash receipts during the interruption (CAD)',1000,0,15000,250],['interruptionMonths','Months of interrupted earnings from month one',6,0,12,1],
+    ['netSalePct','Gross post-shock share value usable as net sale cash (%)',90,0,100,5]
   ]},
   stagedEntry:{title:'Compare equal starting capital over one invented market year',fields:[
     ['capital','Starting capital available immediately (CAD)',60000,0,500000,5000],['stageMonths','Number of equal beginning-of-month investments',6,1,12,1],
@@ -20,9 +20,17 @@ export const wealthChoiceDefinitions = {
   ]}
 };
 const monthlyRate = annual => Math.expm1(Math.log1p(annual/100)/12);
-export function wealthCash(input) {
-  const total=input.cash+input.investments+input.homeEquity+input.pensionValue-input.otherDebt-input.billsDue;
-  return {total,available:Math.max(0,input.cash-input.billsDue),unfunded:Math.max(0,input.billsDue-input.cash)};
+export function employerCash(input,sell=false) {
+  const shareValue=input.shares*(1-input.shareFall/100),saleCash=sell?shareValue*input.netSalePct/100:0;
+  let cash=input.cash+saleCash,unfunded=0,paid=0,income=0;
+  const rows=[{x:0,value:cash,before:cash}];
+  for(let month=1;month<=12;month++) {
+    const funded=Math.min(cash,input.essentials),gap=input.essentials-funded;
+    cash-=funded;paid+=funded;unfunded+=gap;
+    const before=cash,receipt=month<=input.interruptionMonths?input.replacement:input.normalIncome;
+    cash+=receipt;income+=receipt;rows.push({x:month,value:cash,before,gap,receipt});
+  }
+  return {rows,shareValue,saleCash,cash,unfunded,paid,income};
 }
 // Month zero is after the first purchase. Each later purchase precedes that month's return.
 export function entryPath(input,staged=false) {
@@ -56,13 +64,13 @@ export function purchasePath(input,financed=false) {
   return {rows,cash,debt,payment:financed?payment:0,interest,cashInterest,paid,minCash,fundingGap:Math.max(0,-minCash),reserveGap:Math.max(0,input.reserve-minCash)};
 }
 export function wealthChoiceResult(kind,input) {
-  if(kind==='wealthContext') {
-    const p=wealthCash(input);
-    return {metrics:[['Illustrative net worth, before realization costs',p.total,'money'],['Accessible cash after the entered bills',p.available,'money'],['Bills without accessible cash funding',p.unfunded,'money']],note:'The first two charts are fixed public survey observations, not a current wealth ranking or a savings target. Age follows the major income recipient. The survey includes economic families and persons outside economic families in the ten provinces; it excludes Indigenous communities and collective dwellings and underrepresents very high wealth. All survey amounts, including 2019, are expressed in constant 2023 dollars. Sampling variability applies; this release table supplies no confidence intervals. The separate household example uses nominal CAD today, not inflation-adjusted survey dollars. Home equity is already net of its mortgage; exclude that mortgage from other debt. The separately estimated pension value is an asset amount, not annual income or an accessible account. Existing due bills must not also appear in other debt. Investments, property and pension assets are not automatically converted to cash. No tax, sale cost or benefit eligibility is calculated.',charts:[
-      {id:'wealth-age-medians',type:'groupbar',title:'Median net worth by age of the major income recipient',unit:'money',unitLabel:'Constant 2023 Canadian dollars · survey medians',seriesNames:['2019 in 2023 dollars','2023'],rows:wealthSource.ageRows.map(r=>({label:r.label,values:[r.before,r.after]})),source:wealthSource.url,note:'Survey of Financial Security. Released 29 October 2024; retrieved 25 October 2026. These are age-group snapshots, not the growth path of one family. Medians cannot be added or used to derive individual percentiles.'},
-      {id:'wealth-family-unit',type:'bar',title:'Changing the family unit changes the comparison',unit:'money',unitLabel:'Constant 2023 Canadian dollars · 2023 survey medians',rows:wealthSource.familyRows.map(r=>({label:r.label,value:r.after})),source:wealthSource.url,note:'Economic families have two or more related people in the same dwelling. Persons outside economic families may live alone or with unrelated people. These groups have different age and household compositions; this is not an age-controlled comparison or a causal family-size effect.'},
-      {id:'wealth-liquidity-reconcile',type:'waterfall',title:'Your example: net worth includes assets you cannot spend immediately',unit:'money',rows:[{label:'Accessible cash',value:input.cash},{label:'Other investments',value:input.investments},{label:'Home equity, after mortgage',value:input.homeEquity},{label:'Workplace pension asset value',value:input.pensionValue},{label:'Other debt',value:-input.otherDebt},{label:'Existing bills / debt due soon',value:-input.billsDue}],totalLabel:'Illustrative net worth',note:'A separate hypothetical balance sheet. Do not place an annual pension payment in the asset-value field or count the same pension asset twice. Liquidation, withdrawal taxes and settlement costs could lower spendable proceeds.'},
-      {id:'wealth-cash-runway',type:'heatmap',title:'Cash-only expense coverage after the entered bills',unit:'decimal',unitLabel:'Months of essential expenses · hypothetical',tableUnit:'months',columns:['$2,500/mo','$3,500/mo','$5,000/mo','$7,000/mo'],rows:[0,5000,10000,20000].map(billsDue=>({label:'$'+billsDue.toLocaleString('en-CA')+' due',values:[2500,3500,5000,7000].map(essentials=>Math.max(0,input.cash-billsDue)/essentials)})),note:'Rows replace bills due and columns replace monthly essential expenses; accessible cash stays selected. Other assets remain untouched. A zero cell can coexist with unpaid bills and substantial net worth. No income, return or emergency probability is assumed. Selected-input coverage equals accessible cash after bills divided by the entered monthly essentials.'}
+  if(kind==='employerRisk') {
+    const hold=employerCash(input),sell=employerCash(input,true);
+    return {metrics:[['Immediate loss on employer shares',input.shares-hold.shareValue,'money'],['Unfunded bills while keeping the shares',hold.unfunded,'money'],['Unfunded bills after the assumed net-cash sale',sell.unfunded,'money']],note:'Hypothetical joint stress, not a prediction of a company’s shares, employment or benefit eligibility. The employer-share shock occurs immediately before month one; other investment values stay fixed as a control. Both paths receive the same household income schedule and essential bills over twelve months. The hold path sells nothing. The sale path assumes all entered shares are vested, saleable and sold immediately after the shock; only the independently entered usable percentage of gross value enters cash. The remainder is excluded from spending, without calculating tax, gains, withholding or fees. Any real tax shortfall must be funded separately. Unvested awards, options, blackout restrictions and future awards are outside this model. Bills arrive at the start of each month; net income arrives at month-end. Bills can use only accessible cash then available. Unfunded amounts remain recorded separately, without automatic debt or retroactive payment from later income. Cash earns no interest. The comparison neither sells other investments nor values the long-term benefits of continuing to hold shares.',charts:[
+      {id:'employer-assets-shock',type:'stackbar',title:'A single-company loss changes one part of the balance sheet',unit:'money',seriesNames:['Accessible cash','Employer shares','Other financial investments'],rows:[{label:'Before the joint stress',values:[input.cash,input.shares,input.otherAssets]},{label:'After the share-price shock, before any sale',values:[input.cash,hold.shareValue,input.otherAssets]}],note:'Other assets are deliberately held unchanged to isolate the employer-share loss. They could also fall in a real downturn. This is a financial-asset view, excluding property, debts and any capital value assigned to future wages.'},
+      {id:'employer-cash-runway',type:'line',title:'Follow cash after each bill, before that month’s income arrives',unit:'money',xLabel:'Months from the joint stress',series:[{name:'Keep employer shares',rows:hold.rows.map(r=>({x:r.x,value:r.before}))},{name:'Assume an immediate net-cash sale',rows:sell.rows.map(r=>({x:r.x,value:r.before})),dash:true}],note:'Month zero includes any assumed sale cash. Later points show cash after the bill but before month-end income. Zero cash can coexist with unpaid bills, which are retained in the separate funding metric and next chart. Month-end balances can be higher and do not erase earlier gaps.'},
+      {id:'employer-bills-funding',type:'stackbar',title:'Available cash and unpaid bills tell different stories',unit:'money',seriesNames:['Bills paid on time','Bills without cash funding at their due dates'],rows:[{label:'Keep employer shares',values:[hold.paid,hold.unfunded]},{label:'Assumed net-cash sale',values:[sell.paid,sell.unfunded]}],note:'Both bars total twelve times monthly essential bills. An unpaid amount is a financing problem requiring a separate solution. It is not forgiven, funded with automatic credit or counted as a negative savings account.'},
+      {id:'employer-joint-stress',type:'heatmap',title:'Unfunded bills after the assumed sale under combined stresses',unit:'money',columns:['0 months','3 months','6 months','12 months'],rows:[0,20,40,80].map(shareFall=>({label:shareFall+'% share fall',values:[0,3,6,12].map(interruptionMonths=>employerCash({...input,shareFall,interruptionMonths},true).unfunded)})),note:'Rows replace the immediate share-price loss; columns replace the income-interruption duration. The net usable sale percentage, starting cash, income amounts and expenses remain selected. Both stresses occur in the same case but have no assigned relationship or probability. Even zero interrupted months requires opening cash for the first bill before normal month-end pay.'}
     ]};
   }
   if(kind==='stagedEntry') {

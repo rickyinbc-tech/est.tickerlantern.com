@@ -1,4 +1,5 @@
 import { wealthChoiceDefinitions, wealthChoiceResult } from './planning-wealth-choice-models.js';
+import { runwaySpendingDefinitions, runwaySpendingResult } from './planning-runway-spending-models.js';
 import { incomeTimingDefinitions, incomeTimingResult } from './planning-income-timing-models.js';
 import { habitsRecoveryDefinitions, habitsRecoveryResult } from './planning-habits-recovery-models.js';
 import { savingObligationDefinitions, savingObligationResult } from './planning-saving-obligations-models.js';
@@ -53,8 +54,8 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...wealthChoiceDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
-export const wholeInputKeys=['stageMonths','entryShockMonth','financeMonths','changeAfter','firstPayday','billDay','years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','shockMonthA','shockMonthB'];
+export const definitions = {...coreDefinitions,...wealthChoiceDefinitions,...runwaySpendingDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
+export const wholeInputKeys=['interruptionMonths','stageMonths','entryShockMonth','financeMonths','settlementMonth','supportDelay','supportMonths','jobMonth','careYear','guests','eventMonth','changeAfter','firstPayday','billDay','years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','shockMonthA','shockMonthB'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
   return definitions[kind].fields.every(([key,,,min,max])=> Number.isFinite(input[key]) && input[key]>=min && input[key]<=max && (!wholeInputKeys.includes(key)||Number.isInteger(input[key])));
@@ -102,6 +103,7 @@ export function retirementPath(initial, withdrawal, inflation, returns) {
 const series = (name, rows, extra={}) => ({name,rows,...extra});
 export function planningResult(kind,input=defaults(kind)) {
   if(!validInputs(kind,input))throw Error('Inputs are outside the supported scenario range.');
+  if(runwaySpendingDefinitions[kind])return runwaySpendingResult(kind,input);
   if(wealthChoiceDefinitions[kind])return wealthChoiceResult(kind,input);
   if(incomeTimingDefinitions[kind])return incomeTimingResult(kind,input);
   if(habitsRecoveryDefinitions[kind])return habitsRecoveryResult(kind,input);

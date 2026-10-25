@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty-nine visual planning guides and 276
-charts, with new guides on Canadian wealth medians, lump-sum versus staged
-investment and cash-discount versus purchase-financing cash calendars. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with seventy-two visual planning guides and 288
+charts, including employer-share risks, investment-entry schedules, purchase
+financing, job-loss cash flow, retirement spending and event-payment calendars. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -178,22 +178,29 @@ index workbench's files. The index snapshot API stays at `/api/indices`; study
 health is `/api/notes/health`. The old notes host is retained only for permanent
 redirects, with its homepage mapped to `/notes/research`.
 
-## Wealth benchmarks and payment choices
+## Job-loss, retirement-category and event-payment guides
 
-`planning-wealth-data.js` preserves fourteen public SFS median observations
-(five age groups and two family-unit groups for 2019 and 2023). Twelve are
-displayed. Both survey years remain in constant 2023 dollars, separate from
-the nominal household example. Reproduce and validate the public extract with:
+Three additional English guides and twelve interactive charts explain a job-loss
+cash runway, retirement spending phases and a wedding/event payment calendar.
+`planning-runway-spending-models.js` owns the original hypothetical arithmetic.
+The job-loss ledger receives independent net cash amounts and does not assess EI.
+Care prices inflate from retirement start, including before care begins; summed
+annual funding gaps are not a required starting portfolio. The event deposit is
+paid at time zero, and saving transfers end before the event-month opening bill.
+Each article includes six explanation sections, dated official reference links,
+visible assumptions and a data table for every chart.
 
-```sh
-python3 scripts/extract-planning-wealth.py qa/wealth-statcan-table.html
-python3 scripts/extract-planning-wealth.py qa/wealth-statcan-table.html --check
-```
+Run `node --test tests/planning-runway-spending.test.mjs` for the independent
+financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
+input, invalid-input retention, reset, table, responsive and runtime checks.
 
-Download the original Table 1 HTML from the attributed Statistics Canada URL
-into ignored `qa/` first. The extractor checks row uniqueness, median-column
-headers, units and the source SHA-256. No private library evidence is used.
-The staged-entry comparison starts with equal capital available immediately,
+## Employer risk and payment choices
+
+The employer-share stress holds other investments fixed and tests a simultaneous
+share-price loss and interruption in net earnings. Bills precede month-end income;
+unfunded bills are retained outside the cash account. A separate assumed sale
+uses independently entered net proceeds, without calculating tax or sale eligibility.
+The staged-entry comparison begins with equal capital available immediately,
 invests at the beginning of each scheduled month and retains cash interest
 separately. An invented shock multiplies one month’s trend factor. Purchase
 financing uses equal household budgets and checks payments before month-end

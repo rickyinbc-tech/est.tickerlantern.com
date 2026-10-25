@@ -1,3 +1,4 @@
+import { indexedBondGuides } from './planning-indexed-bond-guides.js';
 import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
 import { tfsaLossGuides } from './planning-tfsa-loss-guides.js';
@@ -99,6 +100,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...indexedBondGuides,
   ...warrantyRiskGuides,
   ...deferredCashGuides,
   ...tfsaLossGuides,

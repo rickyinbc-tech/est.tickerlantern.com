@@ -519,3 +519,8 @@ The extended-warranty guide separates whole-window repair probability, condition
 
 Four charts separate expected repair costs from the cash required in each outcome. See
 `docs/planning-warranty-risk-2026-10-25.md` for sources and checks.
+
+
+### Inflation-indexed bond cash flows
+
+The English guide `inflation-linked-bond-principal-coupon-maturity-cash` uses four original interactive USD figures to separate adjusted principal, semiannual coupon receipts, redemption and purchase outlay. A hypothetical smooth index permits inflation and deflation; the original-face floor applies only to maturity principal, while coupons continue to use adjusted principal. A principal-only matrix keeps purchase premiums separate from total cash returns. TreasuryDirect sources explain the real TIPS mechanism; no actual security, CPI observation, yield quote, tax result or CAD hedge is modeled. Data tables and accessible chart descriptions identify USD explicitly.

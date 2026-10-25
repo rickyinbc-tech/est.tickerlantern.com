@@ -47,10 +47,12 @@ for (const { file, sha256 } of research.files) {
 for (const file of ['site-theme.css', 'style.css', 'index-desk.css', 'workbench.css', 'growth.css', 'scenario-state.js', 'dividend-policy.js', 'five-year-growth.js', 'five-year-report.js', 'growth-data.js', 'valuation-policy.js', 'snapshot-client.js', 'update-status.js', 'app.js', 'model.js', 'index-data.js', 'favicon.svg', 'social.svg']) await copyFile('src/' + file, 'dist/' + file);
 await mkdir('dist/data', { recursive: true });
 for (const file of ['indices.json','source-definitions.json','model-conventions.json']) await copyFile('data/'+file,'dist/data/'+file);
-await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nSitemap: https://tickerlantern.com/sitemap.xml\n');
+await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: https://tickerlantern.com/sitemap.xml\n');
 const researchPaths = await buildResearch();
 await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url><url><loc>https://tickerlantern.com/research/royal-bank-valuation</loc><lastmod>2026-10-18</lastmod></url>'+researchPaths.map(path => `<url><loc>https://tickerlantern.com${path}</loc><lastmod>${publishedAt}</lastmod></url>`).join('')+'</urlset>');
 await copyFile('src/404.html', 'dist/404.html');
 await writeFile('dist/_headers', '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; frame-ancestors \'none\'\n');
 console.log('Built static report. Illustrative baseline:', JSON.stringify({ priceCAGR: m.priceCAGR, cashIRR: m.cashIRR, reinvestedCAGR: m.reinvestedCAGR }));
 await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/research/*\n  Cache-Control: no-cache\n');
+
+await import('./build-seo.mjs');

@@ -1,4 +1,6 @@
 import { paymentShareGuides } from './planning-payment-shares-guides.js';
+import { giftCardGuides } from './planning-gift-card-guides.js';
+import { policySettlementGuides } from './planning-policy-settlement-guides.js';
 import { dayBasisGuides } from './planning-day-basis-guides.js';
 import { currencyMatchGuides } from './planning-currency-match-guides.js';
 import { tailMeasureGuides } from './planning-tail-measures-guides.js';
@@ -183,6 +185,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...paymentShareGuides,
+  ...giftCardGuides,
+  ...policySettlementGuides,
   ...dayBasisGuides,
   ...currencyMatchGuides,
   ...tailMeasureGuides,

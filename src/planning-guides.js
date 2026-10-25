@@ -1,3 +1,4 @@
+import { priceBasisGuides } from './planning-price-basis-guides.js';
 import { taxIndexationGuides } from './planning-tax-indexation-guides.js';
 import { leaseDistanceGuides } from './planning-lease-distance-guides.js';
 import { rrspRoomGuides } from './planning-rrsp-room-guides.js';
@@ -139,6 +140,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...priceBasisGuides,
   ...taxIndexationGuides,
   ...leaseDistanceGuides,
   ...rrspRoomGuides,

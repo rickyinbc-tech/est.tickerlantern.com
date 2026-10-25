@@ -1,3 +1,4 @@
+import { etfTrackingGuides } from './planning-etf-tracking-guides.js';
 import { accessBridgeCoverGuides } from './planning-access-bridge-cover-guides.js';
 import { pensionWithdrawalProtectionGuides } from './planning-pension-withdrawal-protection-guides.js';
 import { debtDenominatorGuides } from './planning-debt-denominators-guides.js';
@@ -72,6 +73,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...etfTrackingGuides,
   ...accessBridgeCoverGuides,
   ...pensionWithdrawalProtectionGuides,
   ...debtDenominatorGuides,

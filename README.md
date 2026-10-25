@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 161 visual planning guides and 653
+charts**. The library now leads with 162 visual planning guides and 657
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -438,3 +438,11 @@ or policy eligibility is calculated.
 cash, temporary pension bridge endings and hypothetical rebuilding coverage
 gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
 explicit contract assumptions and validation.
+
+The original `/research/etf-tracking-difference-costs` route now has four
+interactive figures for matched NAV/benchmark wealth, cumulative return gaps,
+a fixed monthly active-return pattern and an explicitly invented attribution.
+The annual gap is entered in percentage points, already included in NAV return;
+no expense ratio is deducted a second time. The fixed examples are independent
+of the annual controls. Source verification and exact arithmetic are documented
+in `docs/etf-tracking-visual-upgrade-source-research-2026-10-25.md`.

@@ -57,3 +57,4 @@ console.log('Built static report. Illustrative baseline:', JSON.stringify({ pric
 await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/research/*\n  Cache-Control: no-cache\n');
 
 await import('./build-seo.mjs');
+await import('./build-search.mjs');

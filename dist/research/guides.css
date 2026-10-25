@@ -5,3 +5,5 @@
 @media(max-width:500px){.guide-card-grid{grid-template-columns:1fr}.guide-toc ol{columns:1}.guide-page h1{font-size:36px}.guide-page h2{font-size:28px}.guide-hub-meta{display:grid}.guide-card__number{margin-bottom:16px}}
 @media(prefers-reduced-motion:reduce){.guide-card{transition:none}}
 @media print{.guide-toc,.guide-breadcrumb,.guide-related,.guide-footer>a,.guide-skip{display:none}.guide-width{width:100%}.guide-layout{display:block;border:0;padding:0}.guide-hero{padding:0 0 20px}.guide-page{font-size:11pt}.guide-page h1{font-size:28pt}.guide-prose h2{font-size:19pt;break-after:avoid}.guide-table{overflow:visible;break-inside:avoid}.guide-table table{min-width:0;font-size:9pt}.guide-prose section{padding-top:22px}.guide-card-grid{display:block}.guide-card{margin-bottom:20px;break-inside:avoid}.guide-page a{color:inherit}.guide-hub-hero{padding-top:0}}
+
+.guide-takeaway .guide-kicker{color:#056b64}

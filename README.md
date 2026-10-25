@@ -8,6 +8,19 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
+New editorial work focuses on **financial planning explained in English through
+charts**. The library now leads with five visual planning guides and fifteen
+interactive figures. Use official statistics where they answer the question;
+keep observed data, dates and population separate from hypothetical scenarios.
+Every article chart includes a data table and visible assumptions. All site
+copy, controls, labels and article text are in English.
+
+`src/planning-guides.js` contains the articles. `planning-models.js` owns the
+explicit cash-flow conventions and the dated Statistics Canada spending rows;
+`planning-charts.js` renders the figures on the server and in the browser.
+`planning-ui.js` handles edits, validation and responsive chart sizing. The
+financial arithmetic is checked independently in `tests/planning.test.mjs`.
+
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,
 CAD currency returns, and portfolio concentration. Original hypothetical

@@ -1,4 +1,5 @@
 import { energyTimingGuides } from './planning-energy-timing-guides.js';
+import { loanRateOrderGuides } from './planning-loan-rate-order-guides.js';
 import { incomeTransitionGuides } from './planning-income-transition-guides.js';
 import { aiTimeGuides } from './planning-ai-time-guides.js';
 import { tieredSavingsGuides } from './planning-tiered-savings-guides.js';
@@ -173,6 +174,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...energyTimingGuides,
+  ...loanRateOrderGuides,
   ...incomeTransitionGuides,
   ...aiTimeGuides,
   ...tieredSavingsGuides,

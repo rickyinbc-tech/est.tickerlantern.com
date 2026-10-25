@@ -1,4 +1,5 @@
 import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
+import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
 import { tfsaLossGuides } from './planning-tfsa-loss-guides.js';
 import { warrantyGuides } from './planning-warranty-guides.js';
@@ -100,6 +101,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...billableCapacityGuides,
+  ...warrantyRiskGuides,
   ...deferredCashGuides,
   ...tfsaLossGuides,
   ...warrantyGuides,

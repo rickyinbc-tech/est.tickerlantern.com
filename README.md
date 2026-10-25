@@ -743,3 +743,7 @@ Two new contribution and tax-cash companions add eight editable charts on afford
 regular investing through an income interruption and the cash provision for a
 reinvested fund distribution. All scenarios and tax factors are hypothetical.
 See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).
+
+### Gift-credit bonuses, redemption and matched cash prices
+
+`/research/gift-card-bonus-redemption-cash-price-comparison` separates bonus-on-cash percentages, conditional full-basket discounts, unspent restricted credit and cumulative cash outlays in five original hypothetical charts. The comparison does not write off unused credit or label its outlay gap as an investment loss. Paid and bonus credit share one explicitly assumed noncash pool, with actual terms outside the model. Tests check denominator identities, partial and full use, cash catch-up thresholds, monthly timing and finite boundaries; the browser companion also checks small negative/zero axis-label separation on mobile.

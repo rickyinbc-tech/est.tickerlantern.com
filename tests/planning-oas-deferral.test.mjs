@@ -12,6 +12,7 @@ test('dated OAS table and simple deferral cash bridge reconcile independently',(
  assert.equal(r.metrics[1][1],1037);
  assert.ok(Math.abs(r.metrics[3][1]-83.92)<.01);
  assert.equal(r.metrics[4][1],20130);
+ assert.deepEqual(r.charts[3].rows.map(x=>x.value),[.25,.5,.75,1]);
 });
 test('starting at 65 makes both paths equal and zero-delay bridge is zero',()=>{
  const d=defaults(kind),r=planningResult(kind,{...d,oasStartAge:65});

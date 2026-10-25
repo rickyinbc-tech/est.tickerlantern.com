@@ -1,4 +1,10 @@
 import { indexedBondGuides } from './planning-indexed-bond-guides.js';
+import { savingDistributionGuides } from './planning-saving-distribution-guides.js';
+import { disabilityPrevalenceGuides } from './planning-disability-prevalence-guides.js';
+import { gainTimingGuides } from './planning-gain-timing-guides.js';
+import { settlementCashGuides } from './planning-settlement-cash-guides.js';
+import { paymentValueGuides } from './planning-payment-value-guides.js';
+import { billableCapacityGuides } from './planning-billable-capacity-guides.js';
 import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
 import { deferredCashGuides } from './planning-deferred-cash-guides.js';
 import { tfsaLossGuides } from './planning-tfsa-loss-guides.js';
@@ -101,6 +107,12 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...indexedBondGuides,
+  ...savingDistributionGuides,
+  ...disabilityPrevalenceGuides,
+  ...gainTimingGuides,
+  ...settlementCashGuides,
+  ...paymentValueGuides,
+  ...billableCapacityGuides,
   ...warrantyRiskGuides,
   ...deferredCashGuides,
   ...tfsaLossGuides,

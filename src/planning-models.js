@@ -1,3 +1,4 @@
+import { mortgageBudgetDefinitions, mortgageBudgetResult } from './planning-mortgage-budget-models.js';
 import { bankingHousingDefinitions, bankingHousingResult } from './planning-banking-housing-models.js';
 import { marketResilienceDefinitions, marketResilienceResult } from './planning-market-resilience-models.js';
 import { paymentOptionDefinitions, paymentOptionResult } from './planning-payment-options-models.js';
@@ -64,7 +65,7 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...bankingHousingDefinitions,...marketResilienceDefinitions,...paymentOptionDefinitions,...cashMechanicsDefinitions,...wealthChoiceDefinitions,...calendarRiskDefinitions,...savingsProjectDefinitions,...budgetExposureDefinitions,...coreDefinitions,...wealthFlexDefinitions,...commitmentDefinitions,...wealthCareerDefinitions,...runwaySpendingDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
+export const definitions = {...mortgageBudgetDefinitions,...bankingHousingDefinitions,...marketResilienceDefinitions,...paymentOptionDefinitions,...cashMechanicsDefinitions,...wealthChoiceDefinitions,...calendarRiskDefinitions,...savingsProjectDefinitions,...budgetExposureDefinitions,...coreDefinitions,...wealthFlexDefinitions,...commitmentDefinitions,...wealthCareerDefinitions,...runwaySpendingDefinitions,...incomeTimingDefinitions,...habitsRecoveryDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
 export const wholeInputKeys=['firstSalaryDay','bondYears','cashYear','financeMonths','transferCount','horizonMonths','financeMonths','interruptionMonths','shockMonth','workDaysA','workDaysB','workWeeks','phaseMonths','takeoverMonth','useMonths','paymentYears','settlementMonth','supportDelay','supportMonths','jobMonth','careYear','guests','eventMonth','changeAfter','firstPayday','billDay','years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','giftYear','shockMonthA','shockMonthB','firstPayDay','savingDay'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
@@ -113,6 +114,7 @@ export function retirementPath(initial, withdrawal, inflation, returns) {
 const series = (name, rows, extra={}) => ({name,rows,...extra});
 export function planningResult(kind,input=defaults(kind)) {
   if(!validInputs(kind,input))throw Error('Inputs are outside the supported scenario range.');
+  if(mortgageBudgetDefinitions[kind])return mortgageBudgetResult(kind,input);
   if(bankingHousingDefinitions[kind])return bankingHousingResult(kind,input);
   if(marketResilienceDefinitions[kind])return marketResilienceResult(kind,input);
   if(paymentOptionDefinitions[kind])return paymentOptionResult(kind,input);

@@ -1,4 +1,15 @@
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
+import { disabilityCapGuides } from './planning-disability-cap-guides.js';
+import { vacancyBandGuides } from './planning-vacancy-band-guides.js';
+import { giftCreditGuides } from './planning-gift-credit-guides.js';
+import { survivorRecordGuides } from './planning-survivor-records-guides.js';
+import { priceCutGuides } from './planning-price-cut-guides.js';
+import { equivalentCostGuides } from './planning-equivalent-cost-guides.js';
+import { cpiWindowGuides } from './planning-cpi-window-guides.js';
+import { householdScaleGuides } from './planning-household-scale-guides.js';
+import { etfPremiumGuides } from './planning-etf-premium-guides.js';
+import { percentageDeductibleGuides } from './planning-percentage-deductible-guides.js';
+import { commuteCashGuides } from './planning-commute-cash-guides.js';
 import { graduateDebtGuides } from './planning-graduate-debt-guides.js';
 import { paymentShareGuides } from './planning-payment-shares-guides.js';
 import { giftCardGuides } from './planning-gift-card-guides.js';
@@ -187,6 +198,17 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...paymentPerceptionGuides,
+  ...disabilityCapGuides,
+  ...vacancyBandGuides,
+  ...giftCreditGuides,
+  ...survivorRecordGuides,
+  ...priceCutGuides,
+  ...equivalentCostGuides,
+  ...cpiWindowGuides,
+  ...householdScaleGuides,
+  ...etfPremiumGuides,
+  ...percentageDeductibleGuides,
+  ...commuteCashGuides,
   ...graduateDebtGuides,
   ...paymentShareGuides,
   ...giftCardGuides,

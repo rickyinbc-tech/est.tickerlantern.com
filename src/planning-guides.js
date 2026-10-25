@@ -1,4 +1,6 @@
 import { paymentPauseGuides } from './planning-payment-pause-guides.js';
+import { feeSlicesGuides } from './planning-fee-slices-guides.js';
+import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
 import { bondAccrualGuides } from './planning-bond-accrual-guides.js';
 import { expectationsGuides } from './planning-expectations-guides.js';
 import { bankWaiverGuides } from './planning-bank-waiver-guides.js';
@@ -150,6 +152,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...paymentPauseGuides,
+  ...feeSlicesGuides,
+  ...tfsaKindGuides,
   ...bondAccrualGuides,
   ...expectationsGuides,
   ...bankWaiverGuides,

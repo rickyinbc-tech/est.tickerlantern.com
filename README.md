@@ -18,13 +18,9 @@ New cash-mechanics guides cover mortgage payment frequency, savings-promotion wi
 and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
-Two new long-term investing companions add eight editable charts on balanced-fund
-crash stress, inflation, account wrappers, regular contributions and the separate
-exit/re-entry decisions in market timing. All return paths are explicitly hypothetical.
-See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.md).
-
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 243 visual planning guides and 996
+charts**. The library now leads with 255 visual planning guides and 1049
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -666,3 +662,42 @@ with saved waived fees and the opportunity cost of an additional balance; see
 
 Five charts preserve official survey medians and independent household price assumptions. See
 `docs/planning-expectations-2026-10-25.md` for sources and checks.
+
+`planning-tfsa-kind` separates contribution-date FMV, allocated cost, gain/loss
+and room capacity while conserving gross market value; see
+`docs/planning-tfsa-kind-2026-10-25.md`.
+
+## Progressive fee slices and whole-balance bands
+
+Four charts explain annual fee allocation, minimums, fixed charges and threshold repricing. See
+`docs/planning-fee-slices-2026-10-25.md` for sources and checks.
+
+The inventory cash-cycle guide models identical batches over a fixed 365-day window, separating sale recognition from supplier and customer cash dates. Five charts distinguish a fixed per-batch timing interval, cumulative simplified profit, net trading cash, a funding trough and inventory/receivable/payable reconciliation at a selected day. Trade balances reconcile every modeled day, all supported events close within the year, and payment-term changes preserve fixed-year margin and overhead. Mobile snapshot and funding controls are verified.
+
+## Promotional credit payoff conditions
+
+Four charts separate principal, an unposted interest memo and the final conditional assessment. See
+`docs/planning-promo-condition-2026-10-25.md` for sources and checks.
+
+### Inventory profit, receivables and owner withdrawals
+
+`/research/business-profit-inventory-receivable-owner-withdrawal-cash` follows a one-batch business through inventory purchase, a half-batch credit sale, operating cost, customer collection and one owner transfer. Five charts reconcile operating profit and cash while computing funding from every ordered event, including deficits hidden by positive month-end balances. Funded asset stacks identify their assumed new opening owner capital explicitly. Tests check event order, cash/stock/receivable identities, cost recognition, timing changes and zero-amount boundaries; the browser companion checks controls, tables and mobile labels. No actual business records, financial statements, loan approvals or tax treatment are applied.
+
+
+### Disability-benefit offsets and retroactive awards
+
+The English guide `disability-benefit-offset-retroactive-award-repayment-cash` uses four original interactive CAD figures to separate ongoing coordination, past overlapping benefit periods, a retroactive award and an unpaid repayment earmark. Two independently entered trailing payment windows determine overlap; Plan A reductions are capped at its initial amount. A day-end ledger keeps cash, unpaid repayment and residual separate, including immediate same-day repayment. A matrix varies the offset and B's covered months while retaining A's history. All amounts are before tax, and the example estimates no eligibility, actual contract terms, overall-income cap or tax result. Current public FCAC, TBS and Service Canada HTML supports the conceptual context; the federal plan's individual-policy exception remains explicitly plan-specific.
+
+`planning-cpp-amounts` retains dated new-beneficiary means and new-start maxima
+beside a separate editable household cash ledger; see
+`docs/planning-cpp-amounts-2026-10-25.md`.
+
+## Flat and reducing-balance interest bases
+
+Four charts compare explicit loan interest bases and payment-date equivalents. See
+`docs/planning-flat-loan-2026-10-25.md` for sources and checks.
+
+Two new long-term investing companions add eight editable charts on balanced-fund
+crash stress, inflation, account wrappers, regular contributions and the separate
+exit/re-entry decisions in market timing. All return paths are explicitly hypothetical.
+See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.md).

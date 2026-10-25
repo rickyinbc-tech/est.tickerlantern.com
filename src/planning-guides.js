@@ -1,3 +1,4 @@
+import { carEquityGuides } from './planning-car-equity-guides.js';
 import { emergencyRecoveryGuides } from './planning-emergency-recovery-guides.js';
 import { mortgageChargeGuides } from './planning-mortgage-charge-guides.js';
 import { rateBenchmarkGuides } from './planning-rate-benchmarks-guides.js';
@@ -43,6 +44,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...carEquityGuides,
   ...emergencyRecoveryGuides,
   ...mortgageChargeGuides,
   ...rateBenchmarkGuides,

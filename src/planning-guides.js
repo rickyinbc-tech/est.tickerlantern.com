@@ -1,4 +1,5 @@
 import { disabilityOffsetGuides } from './planning-disability-offset-guides.js';
+import { inventoryCashGuides } from './planning-inventory-cash-guides.js';
 import { promoConditionGuides } from './planning-promo-condition-guides.js';
 import { forwardRateGuides } from './planning-forward-rate-guides.js';
 import { repairConditionGuides } from './planning-repair-condition-guides.js';
@@ -157,6 +158,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...disabilityOffsetGuides,
+  ...inventoryCashGuides,
   ...promoConditionGuides,
   ...forwardRateGuides,
   ...repairConditionGuides,

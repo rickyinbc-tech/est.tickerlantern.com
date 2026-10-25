@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 132 visual planning guides and 534
+charts**. The library now leads with 137 visual planning guides and 554
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -197,6 +197,13 @@ python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
 spending-cut rules and family gifts. Six public medians are checked with
 `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
 Observation charts stay fixed when the separate cash controls change.
+
+`planning-access-bridge-cover-models.js` adds ordinary RDSP repayment cash,
+temporary pension-bridge endings and hypothetical dwelling rebuilding gaps.
+The RDSP tool takes issuer-confirmed limits and separates two outflows; the
+pension tool uses independent whole-year net amounts; the home tool declares
+its own payout formula and keeps market value outside the claim calculation.
+See `docs/planning-access-bridge-cover-2026-10-25.md` for source and scope notes.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

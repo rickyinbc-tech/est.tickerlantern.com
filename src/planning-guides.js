@@ -1,4 +1,8 @@
 import { discountBasisGuides } from './planning-discount-basis-guides.js';
+import { retirementAgeGuides } from './planning-retirement-age-guides.js';
+import { unemploymentDurationGuides } from './planning-unemployment-duration-guides.js';
+import { annuityGuaranteeGuides } from './planning-annuity-guarantee-guides.js';
+import { lifeTableGuides } from './planning-life-table-guides.js';
 import { depositMapGuides } from './planning-deposit-map-guides.js';
 import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
 import { homeownershipAgeGuides } from './planning-homeownership-age-guides.js';
@@ -132,6 +136,10 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...discountBasisGuides,
+  ...retirementAgeGuides,
+  ...unemploymentDurationGuides,
+  ...annuityGuaranteeGuides,
+  ...lifeTableGuides,
   ...depositMapGuides,
   ...benefitCoordinationGuides,
   ...homeownershipAgeGuides,

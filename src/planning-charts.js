@@ -104,7 +104,7 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?(spec.currency??'CAD'):spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.valueUnitLabel??(spec.unit==='money'?(spec.currency??'CAD'):spec.unit))+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
   const left=52,right=spec.axisRight??(spec.unit==='percent'?30:18),top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
@@ -146,7 +146,8 @@ function signedBarPlot(spec,width) {
   const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4),0])].sort((a,b)=>a-b);
   for(const v of ticks){
     if(v!==0&&v!==lo&&v!==hi&&Math.abs(x(v)-x(0))<34)continue;
-    body+=line(x(v),top+18,x(v),height-32,v===0?'plot-axis':'plot-grid')+txt(x(v),height-10,format(v,spec.unit,true),'middle');
+    const label=spec.axisDecimals==null?format(v,spec.unit,true):Number(v.toFixed(spec.axisDecimals)).toLocaleString('en-CA',{useGrouping:false});
+    body+=line(x(v),top+18,x(v),height-32,v===0?'plot-axis':'plot-grid')+txt(x(v),height-10,label,'middle');
   }
   spec.rows.forEach((row,index)=>{
     const y=top+index*rowHeight,maxLabel=width<500?32:65,label=row.label.length>maxLabel?row.label.slice(0,maxLabel-1)+'…':row.label;
@@ -256,7 +257,7 @@ function chartTable(spec) {
   else if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
-  else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
+  else if(spec.type==='heatmap'){headers=[spec.rowLabel??'Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
   else if(spec.seriesNames){headers=[spec.rowLabel??'Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
   else if(spec.type==='intervalbar'){headers=[spec.rowLabel??'Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
   else {headers=[spec.rowLabel??'Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}

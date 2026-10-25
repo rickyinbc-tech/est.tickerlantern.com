@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 197 visual planning guides and 804
+charts**. The library now leads with 198 visual planning guides and 809
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -533,3 +533,12 @@ Four charts separate expected repair costs from the cash required in each outcom
 `/research/cash-now-future-payments-present-value-receipt-calendar` separates actual receipt dates, present value and cumulative receipts in four original hypothetical charts. Payments at year zero receive no extra discount period; delayed streams preserve their payment count. No reinvestment, spending, borrowing or life contingency is silently added. Independent annuity formulas, date shifts, zero-rate controls and immediate single-payment boundaries are checked by `tests/planning-payment-value.test.mjs`; the browser companion checks real controls, data tables and responsive labels.
 
 The disability-prevalence guide uses a dated Statistics Canada all-gender extract with the exact published 2017/2022 estimates and asymmetric 95% confidence limits. Its separate invented age-mix illustration preserves fixed subgroup rates, excludes youth explicitly, and does not infer aggregate intervals, individual transition risks or insurance-claim probabilities. Source units, percentage-point differences, weighted arithmetic and mobile controls are verified.
+
+The original `/research/earnings-quality-cash-flow` route now has five figures
+for a fictional manufacturer, in CAD millions. Profit, operating cash and
+closing cash reconcile without counting the same subtotal twice. Working-capital
+balances are distinct from cash adjustments; changing an assumed maintenance
+split cannot change total paid capex or actual modeled cash. The original
+receivables/revenue example remains separate from the main bridge. Evidence
+and exact-arithmetic checks are in
+`docs/earnings-cashflow-visual-upgrade-source-research-2026-10-25.md`.

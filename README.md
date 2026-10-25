@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 172 visual planning guides and 701 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 179 visual planning guides and 729 charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -463,11 +464,18 @@ and distinguishes nominal cash costs from discounted totals. The reporting
 window does not establish contract termination, resale value or cancellation
 rights. No proceeds from unused rights, exit receipt or property value is added.
 
-The existing `/research/bond-duration-yield-total-return` article has five
-cash-flow figures for a fully specified fictional annual-pay bond. Exact prices
-and derived duration use the same original payments. The separate one-year
-return receives the first coupon and ages the remaining bond before sale;
-year-one maturity redeems principal once and leaves no sale asset. The original
-portfolio table remains a separate first-order example. Public source review
-and independent rational-arithmetic checks are in
-`docs/bond-pricing-visual-upgrade-source-research-2026-10-25.md`.
+### Renewal rates, pension quote price years and personal time
+
+Three four-chart guides compare a five-year deposit with repeated one-year renewals, distinguish a later pension quote from its purchasing power in the first modeled year, and reconcile DIY cash costs with displaced paid work and separately valued personal time. All entered amounts and rates are hypothetical. The pension illustration separates a temporary supplement from a later payment and does not calculate benefit entitlement or required retirement capital.
+
+`tests/planning-renewal-supplement-time.test.mjs` checks independent deposit endpoints, renewal-rate equality, future quote discounting, annual component boundaries, and cash/time reconciliation. `tests/browser_renewal_supplement_time.py` checks real controls, reset, data tables and 320/390-pixel chart labels.
+
+`planning-rpp-statistics` adds four official count charts with reference-year
+filtering. Reproduce forty observations with `scripts/extract-planning-rpp-statistics.py`;
+see `docs/planning-rpp-statistics-2026-10-25.md` for scope and validation.
+
+## Advice sources and service-fee budgets
+
+An English guide pairs selected official 2024 FCAC survey observations with
+independent hypothetical project/review and annual-retainer fee calendars. See
+`docs/planning-advice-cost-2026-10-25.md` for sources and checks.

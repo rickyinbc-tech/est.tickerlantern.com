@@ -10,6 +10,6 @@ Validation:
 
 - All 1,395 Node tests passed for the implementation. A later prose-only reserve-companion refinement was rebuilt and passed both affected model suites plus SEO checks.
 - Seven focused model tests verify before/after conservation, loss capped at remaining benefit, right-hand boundaries, zero benefit/phase-out/raise, undefined denominator, negative change at a 160% offset, exact kink insertion, matrix replacement assumptions and supported finite renderings.
-- Independent piecewise-slope integration over 1,512 combinations of tax/phase-out/benefit/start/increase matches endpoint changes.
+- Independent piecewise-slope integration over 504 combinations of tax/phase-out/benefit/start/increase matches endpoint changes.
 - `tests/browser_taper.py` passed at desktop and 390px mobile: English, four accessible figures/tables, SVG descriptions/text bounds, no overflow, default complete-raise ratio, zero-raise N/A, a negative CAD 60 gain, 160% offset, invalid-rate retention, reset and component-table reconciliation.
 - Mobile raise-waterfall and change-matrix screenshots were visually inspected.

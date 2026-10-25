@@ -1,4 +1,6 @@
+import { additionalPlanningGuides } from './planning-more-guides.js';
 export const planningGuides = [
+  ...additionalPlanningGuides,
   {
     slug:'savings-compounding', category:'Financial planning · Saving', planning:'savings',
     title:'The savings plan you can see: time, contributions and compounding',

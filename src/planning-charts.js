@@ -7,16 +7,17 @@ export function format(value,unit,compact=false) {
   if(unit==='decimal')return value.toFixed(1);
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
   if(unit==='money') {
-    if(compact&&Math.abs(value)>=1000000)return '$'+(value/1000000).toFixed(1)+'m';
-    if(compact&&Math.abs(value)>=1000)return '$'+Number((value/1000).toFixed(Math.abs(value)>=100000?0:1)).toLocaleString('en-CA')+'k';
-    return '$'+value.toLocaleString('en-CA',{maximumFractionDigits:compact?(Math.abs(value)<1?2:Number.isInteger(value)?0:1):2,minimumFractionDigits:0});
+    const prefix=(value<0?'-':'')+'$',amount=Math.abs(value);
+    if(compact&&amount>=1000000)return prefix+(amount/1000000).toFixed(1)+'m';
+    if(compact&&amount>=1000)return prefix+Number((amount/1000).toFixed(amount>=100000?0:1)).toLocaleString('en-CA')+'k';
+    return prefix+amount.toLocaleString('en-CA',{maximumFractionDigits:compact?(amount<1?2:Number.isInteger(amount)?0:1):2,minimumFractionDigits:0});
   }
   return String(value);
 }
 const txt=(x,y,value,anchor='start',extra='')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" ${extra}>${escapeHTML(value)}</text>`;
 const line=(x1,y1,x2,y2,cls='plot-grid')=>`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
 const niceMax=value=>{if(value<=0)return 1;const p=10**Math.floor(Math.log10(value));const n=value/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;};
-const legend=names=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}" aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
+const legend=(names,fill=false)=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}${fill?' plot-key-fill':''}" aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
 function svgShell(spec,width,height,inner,description) {
   return `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="${spec.id}-title ${spec.id}-desc"><title id="${spec.id}-title">${escapeHTML(spec.title)}</title><desc id="${spec.id}-desc">${escapeHTML(description)} Exact values are available in the chart data table below.</desc>${inner}</svg>`;
 }
@@ -60,7 +61,7 @@ function barPlot(spec,width) {
     body+=txt(left,y+(group?77:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
-  return (spec.seriesNames?legend(spec.seriesNames):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
+  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'?'CAD; value axis starts at zero.':'Value axis starts at zero.'));
 }
 function heatPlot(spec,width) {
   const left=width<450?77:110,right=10,top=43,cellHeight=56;
@@ -83,8 +84,43 @@ function heatPlot(spec,width) {
       body+=txt(x+cellWidth/2,y+cellHeight/2+5,value==null?'NR':format(value,spec.unit,true),'middle','class="plot-cell-label"');
     });
   });
-  const scale=spec.signed?'Negative purchasing-power returns use gold; positive returns use teal.':`Darker cells mean larger values. Scale: ${format(min,spec.unit,true)} to ${format(max,spec.unit,true)}.`;
+  const scale=spec.signed?'Negative values use gold; positive values use teal. Read the signed cell labels.':`Darker cells mean larger values. Scale: ${format(min,spec.unit,true)} to ${format(max,spec.unit,true)}.`;
   return svgShell(spec,width,height,body,'Scenario matrix. '+scale)+`<p class="plot-scale">${escapeHTML(scale)}</p>`;
+}
+function waterfallPlot(spec,width){
+  const left=64,right=20,top=14,rowHeight=67;
+  let cumulative=0;
+  const rows=spec.rows.map(r=>{const start=cumulative;cumulative+=r.value;return {...r,start,end:cumulative};});
+  rows.push({label:spec.totalLabel||'Net total',value:cumulative,start:0,end:cumulative,total:true});
+  const low=-niceMax(Math.abs(Math.min(0,...rows.flatMap(r=>[r.start,r.end]))));
+  const high=niceMax(Math.max(0,...rows.flatMap(r=>[r.start,r.end])));
+  const lo=rows.every(r=>r.start>=0&&r.end>=0)?0:low,hi=rows.every(r=>r.start<=0&&r.end<=0)?0:high;
+  const span=Math.max(1,hi-lo),height=top+rows.length*rowHeight+42;
+  const x=v=>left+(v-lo)/span*(width-left-right);
+  let body='';
+  for(let i=0;i<=4;i++){const v=lo+span*i/4;body+=line(x(v),top,x(v),height-34)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
+  body+=line(x(0),top,x(0),height-34,'plot-axis');
+  rows.forEach((r,i)=>{
+    const y=top+i*rowHeight,label=r.label.length>(width<500?32:65)?r.label.slice(0,width<500?29:62)+'…':r.label;
+    body+=txt(left,y+12,label);
+    body+=`<rect x="${x(Math.min(r.start,r.end))}" y="${y+23}" width="${Math.abs(x(r.end)-x(r.start))}" height="18" fill="${r.total?colors[1]:r.value>=0?colors[0]:colors[2]}"/>`;
+    body+=txt(left,y+57,(r.total?'':r.value>0?'+':'')+format(r.value,spec.unit),'start','class="plot-value"');
+    if(i<rows.length-2)body+=`<line x1="${x(r.end)}" x2="${x(r.end)}" y1="${y+41}" y2="${y+rowHeight+23}" stroke="#7f939e" stroke-dasharray="2 3"/>`;
+  });
+  body+=line(left,height-34,width-right,height-34,'plot-axis');
+  return svgShell(spec,width,height,body,'Horizontal waterfall. Teal steps add to the running amount, gold steps subtract, and the navy endpoint is the total. Negative endpoints extend left of zero on the value scale.');
+}
+function donutPlot(spec,width){
+  const height=270,total=spec.rows.reduce((sum,r)=>sum+r.value,0),cx=width/2,cy=130,r=86;
+  let body=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#e3ebed" stroke-width="34"/>`,offset=0;
+  if(total>0)spec.rows.forEach((row,i)=>{
+    const share=row.value/total*100;
+    body+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="34" pathLength="100" stroke-dasharray="${share} ${100-share}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=share;
+  });
+  body+=txt(cx,cy-7,format(total,spec.unit,true),'middle','class="plot-donut-total"')+txt(cx,cy+20,total?'Total listed assets':'No listed assets','middle');
+  const keys=spec.rows.map(row=>row.label+' · '+format(row.value,spec.unit)+' · '+(total?row.value/total*100:0).toFixed(1)+'%');
+  return svgShell(spec,width,height,body,'Donut chart showing the composition of listed gross assets, before debt. Zero total assets produce an empty ring.')+legend(keys,true);
 }
 function returnsPlot(spec,width) {
   const height=320,left=51,right=15,top=20,bottom=40,lo=-.25,hi=.20;
@@ -96,11 +132,12 @@ function returnsPlot(spec,width) {
     body+=`<rect x="${x}" y="${Math.min(y(v),y(0))}" width="${barWidth}" height="${Math.abs(y(v)-y(0))}" fill="${colors[j]}"/>`;
   });body+=txt(left+(i+.5)*step,height-14,r.label,'middle');});
   body+=line(left,top,left,height-bottom,'plot-axis');
-  return legend(spec.seriesNames)+svgShell(spec,width,height,body,'Grouped annual return bars. Negative returns appear below the zero line.');
+  return legend(spec.seriesNames,true)+svgShell(spec,width,height,body,'Grouped annual return bars. Negative returns appear below the zero line.');
 }
 function chartTable(spec) {
   let headers,rows;
-  if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.x,s.name,format(r.value,spec.unit)]));}
+  if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
+  else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>format(v,spec.unit))]);}
   else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
   else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
@@ -108,7 +145,7 @@ function chartTable(spec) {
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
-  const chart=spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):barPlot(spec,width);
+  const chart=spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):barPlot(spec,width);
   return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${spec.source?'Official statistics':'Hypothetical scenario'}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${spec.source}">Statistics Canada · original source ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {

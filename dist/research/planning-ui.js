@@ -1,4 +1,4 @@
-import { definitions, defaults, planningResult, validInputs } from './planning-models.js';
+import { definitions, defaults, planningResult, validInputs, wholeInputKeys } from './planning-models.js';
 import { renderResult, renderFigure } from './planning-charts.js';
 for (const preview of document.querySelectorAll('[data-planning-preview]')) {
   let previousWidth=0;
@@ -18,10 +18,9 @@ for(const app of document.querySelectorAll('[data-planning-app]')) {
   const update=()=>{
     const input=Object.fromEntries(definitions[kind].fields.map(([key])=>[key,form.elements[key].value===''?NaN:Number(form.elements[key].value)]));
     let valid=validInputs(kind,input);
-    if(('years' in input&&!Number.isInteger(input.years))||('months' in input&&!Number.isInteger(input.months)))valid=false;
     error.hidden=valid;
     error.textContent=valid?'':'Enter values within the displayed ranges, with whole years and months. Charts retain the last valid scenario.';
-    for(const [key,,,min,max] of definitions[kind].fields)form.elements[key].setAttribute('aria-invalid',String(!Number.isFinite(input[key])||input[key]<min||input[key]>max||(['years','months'].includes(key)&&!Number.isInteger(input[key]))));
+    for(const [key,,,min,max] of definitions[kind].fields)form.elements[key].setAttribute('aria-invalid',String(!Number.isFinite(input[key])||input[key]<min||input[key]>max||(wholeInputKeys.includes(key)&&!Number.isInteger(input[key]))));
     if(valid){accepted=input;cancelAnimationFrame(frame);frame=requestAnimationFrame(paint);}
   };
   form.addEventListener('submit',event=>event.preventDefault());

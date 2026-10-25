@@ -7,7 +7,7 @@ import { baselineForecast } from '../src/five-year-report.js';
 import { updateHealth, checkTime } from '../src/update-status.js';
 import { metricDisplay, canCompareHistory, historicalAssessment, valuationReference, valuationReferenceLabel, metricDateBasis } from '../src/valuation-policy.js';
 import { validateFeed, historyCoverage } from '../src/index-data.js';
-import { buildResearch, publishedAt } from './build-research.mjs';
+import { buildResearch, publishedAt, planningChartCount } from './build-research.mjs';
 import { planningGuides } from '../src/planning-guides.js';
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
@@ -18,6 +18,7 @@ html = html.replace('{{INDEX_EXPLORER}}', await readFile('src/index-explorer.htm
 const feed = validateFeed(JSON.parse(await readFile('data/indices.json', 'utf8')));
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 html = html.replace('{{RESEARCH_GUIDES}}', planningGuides.map(guide => `<article><h3><a href="/research/${guide.slug}">${esc(guide.title)}</a></h3><p>${esc(guide.description)}</p></article>`).join(''));
+html = html.replaceAll('{{PLANNING_GUIDE_COUNT}}',planningGuides.length).replaceAll('{{PLANNING_CHART_COUNT}}',planningChartCount);
 const metric = value => value == null ? '—' : value.toFixed(2) + '×';
 const dated = value => value ? new Date(value).toLocaleDateString('en-GB', { timeZone: value.includes('T') ? 'America/Vancouver' : 'UTC', day:'numeric', month:'short', year:'numeric' }) : 'Not connected';
 const observed = feed.indices.filter(row => row.forwardPE != null).length;

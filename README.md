@@ -342,3 +342,10 @@ Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML 
 - `/research/utility-equal-payments-annual-settlement-reserve` distinguishes a generic twelve-instalment payment plan, authored seasonal cost allocation, provider balance and a separate household settlement reserve. Provider credits never become assumed cash refunds. It does not replicate BC Hydro tariff or review mechanics.
 
 `scripts/check-planning-spending-utility-sources.py` verifies six quintile shares, two annual means, release context and utility-plan context against the original public HTML snapshots and their hashes. Raw snapshots remain ignored in `qa/`. `tests/planning-spending-utility.test.mjs` checks cash conservation, zero denominators, denominator effects, annual allocation, settlement identities and credit treatment. `tests/browser_spending_utility.py [origin]` checks real inputs, reset, tables and responsive chart bounds.
+
+
+### Taxable interest and purchasing power
+
+`/research/taxable-interest-after-tax-inflation-purchasing-power` follows fully taxable interest through a simplified annual tax payment from the same accessible savings account, then deflates its balance into starting-date CAD. It separates the before-tax reference, nominal after-tax balance, real balance and required break-even gross rate. No personal tax brackets, product yields or current CPI values are inferred.
+
+`tests/planning-taxable-real.test.mjs` compares the ledger with independent compound and geometric-sum formulas, checks rate/valuation invariants and contribution-free cash reconciliation, and tests supported input limits. `tests/browser_taxable_real.py [origin]` checks real controls, whole-year validation, reset, tables and responsive chart text. CRA and Bank of Canada source context was reviewed on 25 October 2026.

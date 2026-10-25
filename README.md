@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 78 visual planning guides and 312
+charts**. The library now leads with 81 visual planning guides and 324
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -45,6 +45,15 @@ Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
 copy, controls, labels and article text are in English.
+
+The latest three guides compare annual versus monthly insurance payments,
+lump-sum versus phased investment timing and renovation payment calendars.
+Each has four interactive graphics with explicit cash ledgers and accessible
+data tables. Payment percentages, returns and overruns are hypothetical;
+source notes identify the public mechanics reviewed. The premium equivalent
+rate is a mathematical IRR comparison, not a disclosed APR. Phased investment
+values include retained cash interest, and renovation gaps use the lowest
+balance rather than the final balance alone.
 
 `src/planning-guides.js` composes the article modules named
 `planning-*-guides.js`. `planning-models.js` composes the topic models, whose
@@ -194,7 +203,7 @@ The audit checked 63 market observations and 49 published growth points. All gro
 
 Public adapters include FactSet, MSCI, JPM, Nasdaq, LSEG, Raymond James, Edelweiss and named public research references. Exact benchmark/column/period checks are mandatory. No trailing P/E, CAPE, median, related-index or ETF distribution yield substitutes for a requested metric. Hosted Nasdaq/Edelweiss failures also use the existing 13:00 Vancouver browser check, dependent on the owner’s Mac and Codex. See [browser source runbook](docs/browser-source-runbook.md). No access challenge is bypassed.
 
-Cloudflare Workers serves `dist/` at **https://tickerlantern.com/**. The former `est.tickerlantern.com` address and `www.tickerlantern.com` permanently redirect to the HTTPS apex, preserving paths and queries. All asset requests run through the Worker so these redirects also cover static files. The GitHub repository and snapshot URL retain their existing names. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.
+Cloudflare Workers serves `dist/` at **https://tickerlantern.com/**. The former `est.tickerlantern.com` address and `www.tickerlantern.com` permanently redirect to the HTTPS apex, preserving paths and queries. All asset requests run through the Worker so these redirects also cover static files. The GitHub repository and snapshot URL retain their existing names. The narrow read-only `/api/indices` endpoint reads the public GitHub snapshot with a validated bundled fallback. Worker, GitHub, edge and client polling caches can compound; loading the snapshot does not force a new publisher observation. Authenticate through Wrangler’s normal credential store, then deploy with `wrangler deploy`. Merge the current `origin/main` before publishing. Wrangler runs `npm run build` for each deployment so the asset bundle reflects the merged source rather than an earlier build. No credentials, neighboring private files, source PDFs, client records or account holdings belong in the publication.
 
 The same host serves structured-note research at `/notes/research`, its screener
 and detail pages at `/notes` and `/notes/RBC…`, and the equity-linked GIC study at

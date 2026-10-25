@@ -69,3 +69,18 @@ desktop and 390px phone viewports. Review captures remain ignored under
 `qa/planning-wealth-career/`. A page opened during a Git conflict briefly loaded
 conflict markers; it was reloaded after rebuilding before final interaction QA.
 The published assets contain no conflict markers or raw downloaded source HTML.
+
+## Deployment build protection
+
+A concurrent publication briefly replaced the asset bundle with a build from
+before the wealth/career source merge. The final release incorporates that
+publication’s additional guides and rebuilds the combined library. Wrangler’s
+`build.command` now runs `npm run build` for each deployment; contributors must
+also merge current `origin/main` before publishing. This prevents reusing a
+pre-merge bundle after source integration.
+
+The final browser recheck was unavailable because agent-browser became
+unresponsive and the in-app browser was unavailable. Earlier wealth and career
+phone/desktop captures, arithmetic tests, the rebuilt module graph and live HTTP
+publication checks provide the available evidence; no final pension interaction
+pass is claimed.

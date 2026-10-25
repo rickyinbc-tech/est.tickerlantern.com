@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 135 visual planning guides and 546
+charts**. The library now leads with 138 visual planning guides and 558
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -197,6 +197,18 @@ python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
 spending-cut rules and family gifts. Six public medians are checked with
 `python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
 Observation charts stay fixed when the separate cash controls change.
+
+`planning-access-rent-models.js` adds three visual guides on account-access
+interruptions, unused credit limits versus cash reserves, and asking-versus-paid
+rental statistics. The access delay is hypothetical and establishes no legal
+authority. The borrowing exercise separates an unpaid bill from debt actually
+drawn. `planning-access-rent-data.js` holds ten public Q2 2026 observations for
+five selected CMAs, with asking and paid rental populations kept distinct.
+Verify the source extract with:
+
+```sh
+python3 scripts/check-planning-rent-source.py qa/access-rent-sources/rent-q2-2026-chart.html
+```
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

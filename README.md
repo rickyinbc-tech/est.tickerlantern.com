@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 255 visual planning guides and 1049 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 266 visual planning guides and 1097 charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -146,6 +147,10 @@ A coupon-accrual guide separates clean quote, purchased accrued coupon and
 fees in settlement cash. A before/after coupon transfer preserves combined
 value, and an independent sale-plus-coupon ledger reconciles the final cash
 result. The invented 180-day period is not a market day-count implementation.
+A mean-maturity guide compares two principal calendars with identical face
+totals and face-weighted mean dates. Exact deadline ledgers retain missing
+cash even when later receipts equalize the endpoints. Prices, coupons and
+duration are excluded, so the example does not rank investment returns.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -696,5 +701,24 @@ Four charts compare explicit loan interest bases and payment-date equivalents. S
 `docs/planning-flat-loan-2026-10-25.md` for sources and checks.
 
 The reward-redemption guide separates matched cash outlay, purchasing missing points and the chosen other-use value of existing points consumed. Four charts keep actual payments apart from opportunity-value deductions and display implied cents per required point with a native precise cents format. No card or program quote is used. Partial/full/zero balances, double-counting checks, matching-price changes and responsive controls are verified.
+
+Two new long-term investing companions add eight editable charts on balanced-fund
+crash stress, inflation, account wrappers, regular contributions and the separate
+exit/re-entry decisions in market timing. All return paths are explicitly hypothetical.
+See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.md).
+
+## Repeated independent events and reserve coverage
+
+Four charts separate repeated-event probabilities, average costs and reserve shortfalls. See
+`docs/planning-repeat-risk-2026-10-25.md` for sources and checks.
+
+`planning-capital-loss` reconciles a historical 2025 loss record across same-year
+use, requested carryback allocations and unapplied carryforward; see
+`docs/planning-capital-loss-2026-10-25.md`.
+
+## AI work-time survey and personal income scenarios
+
+Five charts distinguish reported time, overlapping responses and independent paid-work cash assumptions. See
+`docs/planning-ai-time-2026-10-25.md` for sources and checks.
 
 A time-of-use energy guide holds monthly kWh constant while shifting an entered fraction of peak use. Four interactive charts distinguish consumption weights, variable energy costs, unchanged bill amounts and a full-range timing comparison. All rates and usage are hypothetical; the OEB source supplies bill-component context only.

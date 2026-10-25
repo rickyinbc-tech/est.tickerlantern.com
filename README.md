@@ -9,12 +9,13 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with twenty-one visual planning guides and 79
+charts**. The library now leads with twenty-four visual planning guides and 91
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
-work breaks, employer matching, consolidation and variable income.
+work breaks, employer matching, consolidation, variable income, federal tax
+brackets, an ordinary-case FHSA calendar and moving-home cash release.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -27,6 +28,9 @@ spending rows. `planning-charts.js` renders the figures on the server and in
 the browser. `planning-ui.js` handles edits, validation and responsive sizing.
 Financial arithmetic is checked independently in `tests/planning*.test.mjs`.
 The homepage and library derive article and chart counts from the content.
+The federal bracket illustration is explicitly fixed to 2026 and excludes
+credits and other taxes. The FHSA calendar models an ordinary new-account
+case only; it does not determine personal eligibility or current account room.
 `planning-life-data.js` holds a small attributed public Statistics Canada snapshot
 (preliminary 2022–2024, Canada). Reproduce it with
 `python3 scripts/extract-planning-life-table.py --archive qa/statcan-life-table.zip`.

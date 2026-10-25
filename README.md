@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 215 visual planning guides and 875
+charts**. The library now leads with 216 visual planning guides and 879
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -600,6 +600,8 @@ The English guide `employee-stock-options-vesting-exercise-cash-spread` separate
 
 `planning-rrif-kind` separates securities received from assigned bank cash; see
 `docs/planning-rrif-kind-2026-10-25.md` for scope and validation.
+
+The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group means and rounded changes. Approximate wealth shares use explicit 40/20/20/20 household weights and normalise the rounded weighted sum, disclosing the Q4 2025 20-cent reconciliation difference. Its cumulative chart contains only the published group boundaries, without inventing a lowest-quintile point, within-group Lorenz detail, Gini coefficient or confidence bounds. Source-year switching and mobile layout are verified.
 
 ## Equal cash, different unit quantities
 

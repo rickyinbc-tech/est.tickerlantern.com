@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 137 visual planning guides and 555
+charts**. The library now leads with 140 visual planning guides and 567
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -85,6 +85,14 @@ An investment-borrowing guide compares net positions using matched monthly
 household cash. Interest reduces the borrowing case’s new investing cash,
 principal is repaid once, and signed differences are retained. Constant returns
 exclude tax deductions, margin calls and any strategy suitability finding.
+Pension-expiry, withdrawal-allocation and mortgage-life guides add twelve
+interactive charts. The pension ledger makes a temporary bridge ending visible
+before separately entered CPP cash begins. Withdrawal sources use the smaller
+remaining portfolio and report a separate residual rebalance. Insurance curves
+separate declining debt, flat assumed premiums and conditional claim destinations.
+See `docs/pension-withdrawal-protection-2026-10-25.md` for public sources and checks.
+New guides can set `publishedAt` and `reviewedAt` independently; legacy articles
+retain their existing dates rather than being redated at every build.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

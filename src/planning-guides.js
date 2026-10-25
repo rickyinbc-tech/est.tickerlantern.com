@@ -1,4 +1,6 @@
 import { constructionQuoteGuides } from './planning-construction-quote-guides.js';
+import { salesTaxGuides } from './planning-sales-tax-guides.js';
+import { renewalAccessGuides } from './planning-renewal-access-guides.js';
 import { diversificationGuides } from './planning-diversification-guides.js';
 import { timingConventionGuides } from './planning-timing-conventions-guides.js';
 import { accessBridgeCoverGuides } from './planning-access-bridge-cover-guides.js';
@@ -76,6 +78,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...constructionQuoteGuides,
+  ...salesTaxGuides,
+  ...renewalAccessGuides,
   ...diversificationGuides,
   ...timingConventionGuides,
   ...accessBridgeCoverGuides,

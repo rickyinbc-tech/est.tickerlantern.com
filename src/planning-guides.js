@@ -1,3 +1,4 @@
+import { giftCardGuides } from './planning-gift-card-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
@@ -177,6 +178,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...giftCardGuides,
   ...fuelMixGuides,
   ...taperGuides,
   ...bondConvexityGuides,

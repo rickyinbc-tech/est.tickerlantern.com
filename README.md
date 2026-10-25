@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 271 visual planning guides and 1118 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 272 visual planning guides and 1122 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -737,3 +737,5 @@ Four charts distinguish resource levels and full-increase offsets in an invented
 `docs/planning-taper-2026-10-25.md` for sources and checks.
 
 A vehicle fuel-budget guide adds four charts connecting distance-weighted L/100 km, annual litres and vehicle-specific fuel prices. Original synthetic vehicles have separate consumption and cash crossovers; a signed driving-mix curve and price matrix retain reversals. NRCan HTML supplies label conventions and test-rating limitations, without reproducing vehicle ratings or pump quotes.
+
+A discounted retailer gift-card guide tracks matched purchases through four interactive figures. Upfront card cash, later top-ups, actual redemptions and unused nominal purchasing credit stay separate. The original example distinguishes the shopping-stop month from expiry and reconciles cash catch-up without treating unused credit as a refund. FCAC supplies general mechanics only.

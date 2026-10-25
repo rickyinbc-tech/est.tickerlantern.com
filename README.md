@@ -695,3 +695,7 @@ beside a separate editable household cash ledger; see
 
 Four charts compare explicit loan interest bases and payment-date equivalents. See
 `docs/planning-flat-loan-2026-10-25.md` for sources and checks.
+
+### Loan-rate order on declining principal
+
+`/research/loan-rate-order-declining-principal-average-interest-cost` reverses two two-year rate blocks while holding four equal annual principal repayments fixed. Five charts show matching simple averages beside different rate/balance pairings, interest totals and cash payments. The model is not level-total-payment amortization or a regulated APR calculation. Tests independently verify balance weights, principal reconciliation, rate-swap symmetry and the closed-form cost difference; the browser companion exercises controls, reset, signed differences and mobile labels.

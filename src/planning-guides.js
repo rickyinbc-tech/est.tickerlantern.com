@@ -1,3 +1,4 @@
+import { deferredCashGuides } from './planning-deferred-cash-guides.js';
 import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
 import { adviceCostGuides } from './planning-advice-cost-guides.js';
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
@@ -85,6 +86,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...deferredCashGuides,
   ...bondReinvestmentGuides,
   ...adviceCostGuides,
   ...rppStatisticsGuides,

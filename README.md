@@ -503,3 +503,10 @@ Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py 
 
 Five charts reconcile purchases, card repayments and internal savings transfers. See
 `docs/planning-card-ledger-2026-10-25.md` for sources and checks.
+
+## Warranty costs and repair-day reserves
+
+Four charts separate a two-outcome expected-cost comparison from the cash
+required in a specified repair state. Probabilities and contract terms are
+explicit hypothetical assumptions. See
+`docs/planning-warranty-risk-2026-10-25.md` for scope and verification.

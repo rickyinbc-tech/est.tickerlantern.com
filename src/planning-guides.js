@@ -1,3 +1,4 @@
+import { warrantyRiskGuides } from './planning-warranty-risk-guides.js';
 import { cardLedgerGuides } from './planning-card-ledger-guides.js';
 import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
 import { jointIncomeGuides } from './planning-joint-income-guides.js';
@@ -91,6 +92,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...warrantyRiskGuides,
   ...cardLedgerGuides,
   ...assetResilienceGuides,
   ...jointIncomeGuides,

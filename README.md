@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 298 visual planning guides and 1232
+charts**. The library now leads with 299 visual planning guides and 1236
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -807,3 +807,7 @@ Adds a source-backed English guide with five interactive figures: the overall CS
 `planning-resp-aip` separates a hypothetical RESP contribution refund,
 returned benefits and accumulated income payment; see
 `docs/planning-resp-aip-2026-10-25.md`.
+
+`planning-gis-withdrawal` follows RRSP and TFSA cash withdrawals into a later
+GIS review period without estimating an individual benefit. See
+`docs/planning-gis-withdrawal-2026-10-25.md`.

@@ -43,8 +43,7 @@ Home Buyers' Plan or Lifelong Learning Plan withdrawals or another exception.
 
 ## Verification
 
-Nine focused tests pass. A clean build generated 309 static pages and four
-charts. The browser check passed at 1440, 390 and 320 CSS-pixel viewports,
+Nine focused tests pass. The integrated full JavaScript suite passes 1621 tests and the Python suite passes 122. The merged build generated 309 static pages with four charts for this guide. The browser check passed at 1440, 390 and 320 CSS-pixel viewports,
 including source data tables, 2025 income to the July 2026–June 2027 review
 window, changing the year/month, January/December month intervals, the maximum
 withdrawal boundary, invalid-input retention and reset. The four mobile charts

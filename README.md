@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with thirty-three visual planning guides and 127
+charts**. The library now leads with thirty-six visual planning guides and 139
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -18,7 +18,9 @@ work breaks, employer matching, consolidation, variable income, federal tax
 brackets, an ordinary-case FHSA calendar, moving-home cash release, retirement
 income bridges, caregiving cash needs, estate liquidity timing, disability-income
 schedules, foreign-currency goals, annuity cash-flow trade-offs, repayment order,
-shared-budget goal deadlines and ordinary RRIF withdrawals versus spending.
+shared-budget goal deadlines, ordinary RRIF withdrawals versus spending,
+TFSA recontribution calendars, RESP withdrawal sources and mortgage prepayments
+versus liquid savings.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -55,6 +57,11 @@ each goal’s deadline. The RRIF tool is a one-year All other RRIFs illustration
 its tax allowance is not actual withholding or final tax. Validate its public
 factor snapshot with `python3 scripts/check-planning-rrif-source.py` followed by
 the saved CRA and Justice Canada HTML source paths under ignored `qa/`.
+The TFSA calendar caps modeled deposits and treats the next-year new-room amount
+as an assumption. The RESP ledger assumes promoter-confirmed capacity and does
+not determine eligibility or actual student tax. Mortgage prepayment comparisons
+preserve the same monthly budget and save unused payments after payoff; they
+assume the lump sum is permitted without penalty.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

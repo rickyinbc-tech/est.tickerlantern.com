@@ -547,3 +547,7 @@ The English guide `inflation-linked-bond-principal-coupon-maturity-cash` uses fo
 ### Project draw timing and borrowed cash
 
 `/research/project-loan-staged-draws-idle-borrowed-cash-interest` compares a full time-zero draw with three project-bill draws. Separate debt, project cash and unused-limit paths reconcile to the same ending principal, while an explicit monthly convention traces borrowing interest, fees and separately paid cash interest. The illustration assumes future draws remain available; it does not reproduce daily lender billing or infer project resale value. Independent tranche-period sums and a balance-month identity are checked by `tests/planning-staged-draw.test.mjs`; `tests/browser_staged_draw.py` covers real controls, reset, data tables and mobile labels.
+
+### Temporary card authorizations and usable credit
+
+`/research/credit-card-authorization-holds-available-capacity-calendar` traces two requested incidental holds, posted debt and one usable-credit payment date. It tests a separate planned purchase without posting it or simulating issuer approval. Negative headroom describes excess requested capacity; hold release restores credit capacity without creating cash income. Tests preserve release-day boundaries, capped debt repayment, absent purchases and never-fitting transactions; the browser companion checks controls, tables, reset and 320/390-pixel labels.

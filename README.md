@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 72 visual planning guides and 288
+charts**. The library now leads with 78 visual planning guides and 312
 charts, with new guides on shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -122,6 +122,21 @@ BNPL examples aggregate three hypothetical four-payment contracts. Buy-only
 allocation keeps prices and existing holdings fixed, with no tax or security
 recommendation. Parental-leave examples keep published gross percentages
 separate from independent net cash inputs over a common 78-week window.
+
+`planning-budget-exposure-data.js` retains nine public 2025 annual-average CPI
+observations from Statistics Canada Table 18-10-0005-01. The new guides explain
+personal spending-basket exposure, automatic-saving transfer dates and operating
+cash, and the interaction of net-pay growth, price changes and lifestyle expansion.
+The budget applies observed rates once to hypothetical amounts. The transfer
+comparison preserves annual pay and saving across different saving dates. The
+income-growth tool records unfunded living costs separately from its conditional
+positive-surplus investment balances.
+
+Verify the public CPI extract against the saved original accessible HTML table:
+
+```sh
+python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
+```
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

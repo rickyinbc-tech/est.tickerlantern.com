@@ -1,3 +1,4 @@
+import { fxCostGuides } from './planning-fx-cost-guides.js';
 import { unpaidTimeGuides } from './planning-unpaid-time-guides.js';
 import { capitalLossGuides } from './planning-capital-loss-guides.js';
 import { maturityAverageGuides } from './planning-maturity-average-guides.js';
@@ -168,6 +169,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...fxCostGuides,
   ...unpaidTimeGuides,
   ...capitalLossGuides,
   ...maturityAverageGuides,

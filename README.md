@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 112 visual planning guides and 451
+charts**. The library now leads with 115 visual planning guides and 463
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -60,6 +60,11 @@ Income-ledger guides distinguish rental cash from an operating subtotal, annual
 certificate-interest receipts from consumption and reinvestment, and two card
 balance buckets from their combined debt. Their models use independent cash
 inputs, explicit accrual conventions and incomplete-projection flags.
+Rate-and-benchmark guides add seven checked 2024 CIS after-tax income medians,
+explicit 365-day short-term return annualisations and balloon-payment funding.
+Survey medians remain fixed while an independent cash budget changes. Verify
+the extract with `python3 scripts/check-planning-income-source.py <source-table.zip>`.
+Balloon required saving rounds up to cents; the debt graph ends before the balloon.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

@@ -1,3 +1,4 @@
+import { rateBenchmarkGuides } from './planning-rate-benchmarks-guides.js';
 import { debtIncomeGuides } from './planning-debt-income-guides.js';
 import { taxContributionGuides } from './planning-tax-contribution-guides.js';
 import { jointLongevityGuides } from './planning-joint-longevity-guides.js';
@@ -40,6 +41,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rateBenchmarkGuides,
   ...debtIncomeGuides,
   ...taxContributionGuides,
   ...jointLongevityGuides,

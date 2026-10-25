@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 259 visual planning guides and 1066 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 261 visual planning guides and 1074
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -708,3 +709,8 @@ See [the source and calculation note](docs/balanced-investing-timing-2026-10-25.
 
 Four charts separate repeated-event probabilities, average costs and reserve shortfalls. See
 `docs/planning-repeat-risk-2026-10-25.md` for sources and checks.
+
+Two new contribution and tax-cash companions add eight editable charts on affordable
+regular investing through an income interruption and the cash provision for a
+reinvested fund distribution. All scenarios and tax factors are hypothetical.
+See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).

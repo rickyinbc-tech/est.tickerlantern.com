@@ -1,4 +1,5 @@
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
+import { jointOwnerGuides } from './planning-joint-owner-guides.js';
 import { rightsCashGuides } from './planning-rights-cash-guides.js';
 import { replacementRatioGuides } from './planning-replacement-ratio-guides.js';
 import { arrearsCountGuides } from './planning-arrears-count-guides.js';
@@ -202,6 +203,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...paymentPerceptionGuides,
+  ...jointOwnerGuides,
   ...rightsCashGuides,
   ...replacementRatioGuides,
   ...arrearsCountGuides,

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 294 visual planning guides and 1215 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 296 visual planning guides and 1223
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -794,6 +794,10 @@ A daily-reset compounding guide adds four charts using two original synthetic be
 
 Four charts separate theoretical entitlement value and subscription cash funding. See
 `docs/planning-rights-cash-2026-10-25.md` for sources and checks.
+
+`planning-joint-owner` combines joint deposits by member and owner set before
+applying a conditional limit; see
+`docs/planning-joint-owner-2026-10-25.md`.
 
 
 ### Perceived missed-payment probability and full-minimum funding

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 202 visual planning guides and 823 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 204 visual planning guides and 830 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -554,3 +554,5 @@ The repair-or-replace guide compares forward cash from one decision date through
 
 Three charts retain a later required payment and inspect multiple IRR solutions. See
 `docs/planning-multiple-irr-2026-10-25.md` for sources and checks.
+
+The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.

@@ -24,7 +24,8 @@ function svgShell(spec,width,height,inner,description) {
 }
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
-  const values=spec.series.flatMap(s=>s.rows.map(r=>r.value)),ymax=niceMax(Math.max(0,...values)),ymin=Math.min(0,...values)<0?-niceMax(-Math.min(...values)):0;
+  const values=spec.series.flatMap(s=>s.rows.map(r=>r.value)),ymax=spec.yMax??niceMax(Math.max(0,...values)),ymin=spec.yMin??(Math.min(0,...values)<0?-niceMax(-Math.min(...values)):0);
+  if(values.some(v=>!Number.isFinite(v))||!Number.isFinite(ymin)||!Number.isFinite(ymax)||ymax<=ymin||Math.min(...values)<ymin||Math.max(...values)>ymax)throw Error('Line-chart axis must include all finite observations.');
   const xmin=spec.xMin??0,xmax=Math.max(xmin+1,...spec.series.flatMap(s=>s.rows.map(r=>r.x)));
   const x=v=>left+(v-xmin)/(xmax-xmin)*(width-left-right),y=v=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
   let body='';
@@ -41,7 +42,7 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)))+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.');
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)))+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
   const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';

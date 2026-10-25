@@ -1,4 +1,10 @@
 import { cardLedgerGuides } from './planning-card-ledger-guides.js';
+import { assetResilienceGuides } from './planning-asset-resilience-guides.js';
+import { jointIncomeGuides } from './planning-joint-income-guides.js';
+import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
+import { charitableGuides } from './planning-charitable-guides.js';
+import { bondPricingGuides } from './planning-bond-pricing-guides.js';
+import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
 import { adviceCostGuides } from './planning-advice-cost-guides.js';
 import { rppStatisticsGuides } from './planning-rpp-statistics-guides.js';
 import { renewalSupplementTimeGuides } from './planning-renewal-supplement-time-guides.js';
@@ -86,6 +92,12 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...cardLedgerGuides,
+  ...assetResilienceGuides,
+  ...jointIncomeGuides,
+  ...fundCostBaseGuides,
+  ...charitableGuides,
+  ...bondPricingGuides,
+  ...bondReinvestmentGuides,
   ...adviceCostGuides,
   ...rppStatisticsGuides,
   ...renewalSupplementTimeGuides,

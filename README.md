@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 86 visual planning guides and 344
+charts**. The library now leads with 89 visual planning guides and 356
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -153,6 +153,11 @@ Verify the public CPI extract against the saved original accessible HTML table:
 python3 scripts/check-planning-cpi-source.py qa/cpi-2025-components.html
 ```
 
+`planning-wealth-flex-models.js` adds home/pension group comparisons, retirement
+spending-cut rules and family gifts. Six public medians are checked with
+`python3 scripts/check-planning-housing-wealth-source.py qa/statcan-wealth-2023.html`.
+Observation charts stay fixed when the separate cash controls change.
+
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,
 CAD currency returns, and portfolio concentration. Original hypothetical
@@ -233,11 +238,7 @@ input, invalid-input retention, reset, table, responsive and runtime checks.
 
 ## Employer risk and purchase financing
 
-The employer-share stress holds other investments fixed and tests a simultaneous
-share-price loss and interruption in net earnings. Bills precede month-end income;
-unfunded bills stay outside the cash account. A separate assumed sale uses
-independently entered net proceeds without determining tax or sale eligibility.
-Purchase financing uses equal household budgets and checks payments before
-month-end resources. Any negative cash position suppresses the ending economic
-comparison. Independent arithmetic and boundary checks are in
-`tests/planning-wealth-choice.test.mjs`.
+Two English guides add eight hypothetical charts. Employer-share losses are
+tested alongside interrupted take-home pay, with bills before income. Cash
+purchase and financing use equal resources and retain any funding gap.
+See `docs/planning-wealth-choice-2026-10-25.md` for assumptions and verification.

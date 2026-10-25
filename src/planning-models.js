@@ -5,6 +5,7 @@ import { lifeEventDefinitions, lifeEventResult } from './planning-life-events-mo
 import { incomeCreditDefinitions, incomeCreditResult } from './planning-income-credit-models.js';
 import { taxHomeDefinitions, taxHomeResult } from './planning-tax-home-models.js';
 import { transitionDefinitions, transitionResult } from './planning-transitions-models.js';
+import { fundingChoiceDefinitions, fundingChoiceResult } from './planning-funding-choices-models.js';
 // Educational scenarios, not forecasts. CAD throughout. Source observations are kept separate.
 export const spendingSource = {
   publisher: 'Statistics Canada', period: '2021 and 2023', released: '2025-05-21', reviewed: '2026-10-25',
@@ -39,8 +40,8 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions};
-export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth'];
+export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions};
+export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
   return definitions[kind].fields.every(([key,,,min,max])=> Number.isFinite(input[key]) && input[key]>=min && input[key]<=max && (!wholeInputKeys.includes(key)||Number.isInteger(input[key])));
@@ -95,6 +96,7 @@ export function planningResult(kind,input=defaults(kind)) {
   if(incomeCreditDefinitions[kind])return incomeCreditResult(kind,input);
   if(taxHomeDefinitions[kind])return taxHomeResult(kind,input);
   if(transitionDefinitions[kind])return transitionResult(kind,input);
+  if(fundingChoiceDefinitions[kind])return fundingChoiceResult(kind,input);
   if(kind==='savings') {
     const path=savingsPath(input), end=path.at(-1);
     return {metrics:[['Ending savings',end.value,'money'],['Contributed',end.contributions,'money'],['Modeled growth',end.value-end.contributions,'money']], note:'Hypothetical constant effective annual return, converted to an equivalent monthly rate. Contributions arrive at month-end; starting savings are invested immediately. Nominal CAD before fees, tax and inflation. No probabilities are assigned.', charts:[

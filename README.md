@@ -9,14 +9,15 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with twenty-seven visual planning guides and 103
+charts**. The library now leads with thirty visual planning guides and 115
 interactive figures, covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
 work breaks, employer matching, consolidation, variable income, federal tax
 brackets, an ordinary-case FHSA calendar, moving-home cash release, retirement
-income bridges, caregiving cash needs and estate liquidity timing.
+income bridges, caregiving cash needs, estate liquidity timing, disability-income
+schedules, foreign-currency goals and annuity cash-flow trade-offs.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -43,6 +44,10 @@ categories, including the source confidence intervals. Validate the extract with
 The caregiving budget is a separate hypothetical scenario. The retirement bridge
 does not calculate pension start-age adjustments or expenses beyond its horizon;
 the estate ledger does not determine legal authority, taxes or distributions.
+Disability benefits are entered net of taxes and coordination, without claim
+assessment. The currency-goal tool uses hypothetical CAD-per-FCU rates and one
+terminal conversion. The annuity tool uses hypothetical gross payments,
+conditional on survival, and does not equate payout ratios with investment yield.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

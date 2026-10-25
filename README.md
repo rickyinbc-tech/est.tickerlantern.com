@@ -695,3 +695,7 @@ beside a separate editable household cash ledger; see
 
 Four charts compare explicit loan interest bases and payment-date equivalents. See
 `docs/planning-flat-loan-2026-10-25.md` for sources and checks.
+
+## Repeated independent events and reserve coverage
+
+Four charts separate cumulative event probability, event counts, average cost and unfunded outcomes. See `docs/planning-repeat-risk-2026-10-25.md` for assumptions, sources and checks.

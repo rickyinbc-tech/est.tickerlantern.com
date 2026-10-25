@@ -1,3 +1,4 @@
+import { repeatRiskGuides } from './planning-repeat-risk-guides.js';
 import { flatLoanGuides } from './planning-flat-loan-guides.js';
 import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
 import { disabilityOffsetGuides } from './planning-disability-offset-guides.js';
@@ -159,6 +160,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...repeatRiskGuides,
   ...flatLoanGuides,
   ...cppAmountsGuides,
   ...disabilityOffsetGuides,

@@ -1,0 +1,39 @@
+export const disabilityOffsetDefinitions={
+  disabilityOffset:{title:'Reconcile two invented benefit sources and a retroactive payment',fields:[
+    ['coordPlanMonthly','Plan A monthly amount before coordination (CAD)',4000,0,15000,250],
+    ['coordOtherMonthly','Source B monthly amount (CAD)',1200,0,10000,100],
+    ['coordOffsetPercent','Assumed Plan A reduction as % of Source B',100,0,100,25],
+    ['coordRetroMonths','Prior whole months covered by B, ending before receipt',6,0,24,1],
+    ['coordPlanMonths','Prior whole months paid by A, ending before receipt',6,0,24,1],
+    ['coordRepayLagDays','Days from B receipt to full modeled repayment',30,0,90,1]
+  ]}
+};
+
+export function disabilityOffsetLedger(input){
+  const reduction=Math.min(input.coordPlanMonthly,input.coordOtherMonthly*input.coordOffsetPercent/100);
+  const planAfter=input.coordPlanMonthly-reduction,ongoingTotal=planAfter+input.coordOtherMonthly;
+  // Both histories end immediately before receipt; their trailing windows overlap by the shorter duration.
+  const overlapMonths=Math.min(input.coordRetroMonths,input.coordPlanMonths),outsideMonths=input.coordPlanMonths-overlapMonths;
+  const originalPlanPaid=input.coordPlanMonthly*input.coordPlanMonths;
+  const repayment=reduction*overlapMonths,revisedPlanEntitlement=Math.max(0,originalPlanPaid-repayment);
+  const retroAward=input.coordOtherMonthly*input.coordRetroMonths,residual=Math.max(0,retroAward-repayment);
+  const horizon=Math.max(30,input.coordRepayLagDays+1);
+  const calendar=Array.from({length:horizon+1},(_,x)=>{
+    const settled=x>=input.coordRepayLagDays,bankCash=settled?residual:retroAward,earmark=settled?0:repayment;
+    return {x,bankCash,earmark,residual};
+  });
+  return {reduction,planAfter,ongoingTotal,overlapMonths,outsideMonths,originalPlanPaid,repayment,revisedPlanEntitlement,retroAward,residual,horizon,calendar};
+}
+
+export function disabilityOffsetResult(kind,input){
+  if(kind!=='disabilityOffset')throw Error('Unknown benefit-coordination topic.');
+  const p=disabilityOffsetLedger(input);
+  return {metrics:[['Combined ongoing monthly amount after the assumed offset · before tax',p.ongoingTotal,'money'],['Modeled repayment for past overlapping months · before tax',p.repayment,'money'],['Retroactive award less modeled repayment · before tax',p.residual,'money']],note:'Original hypothetical CAD illustration of gross payments, not an actual disability award, insurance quotation, CPP calculation or universal coordination rule. Source B is assumed eligible for the entered offset. Plan A is reduced by the selected percentage of B, capped at A’s original monthly amount so A cannot become negative. Both past payment histories end immediately before B’s receipt; only the shorter trailing window overlaps. A was assumed paid in full for its entered past months, and the revised offset applies retrospectively only to overlapping months. B’s gross retroactive award covers its entered prior months. Day 0 is after award receipt; full repayment occurs at the end of the selected lag day. If lag is zero, the first point is after both same-day transactions and no intraday peak is shown. The calendar isolates the retroactive award, the unpaid repayment earmark and their residual. It excludes starting household cash, spending, regular ongoing benefits, tax, withholding, fees, interest, instalment repayments and borrowing. The residual is not verified spendable net cash. No eligibility assessment, overall-income ceiling, source exclusion, indexation, repayment deadline or tax relief is estimated. Actual documents determine the coordination basis, covered dates and repayment amount.',charts:[
+    {id:'disability-offset-ongoing',type:'waterfall',title:'Combine the two monthly sources after accounting for the assumed reduction',unit:'money',tableUnit:'CAD, before tax',unitLabel:'Hypothetical ongoing monthly amounts (CAD) · before tax',rows:[{label:'Plan A before coordination',value:input.coordPlanMonthly},{label:'Source B monthly amount',value:input.coordOtherMonthly},{label:'Assumed reduction of Plan A',value:-p.reduction}],totalLabel:'Combined ongoing monthly amount before tax',note:'The reduction is min(Plan A, Source B × entered offset percentage). Only Plan A is reduced in this authored rule; B stays unchanged. The endpoint equals adjusted A plus B. Components describe one coordinated monthly amount, not three independent receipts. The chart neither prices insurance nor establishes which real sources a contract offsets.'},
+    {id:'disability-offset-past-payments',type:'stackbar',axisRight:30,title:'Past Plan A cash splits between revised entitlement and modeled repayment',unit:'money',tableUnit:'CAD, before tax',unitLabel:'Hypothetical past Plan A payments (CAD) · before tax',rowLabel:'Past payment period',seriesNames:['Revised Plan A entitlement','Modeled Plan A overpayment'],rows:[{label:p.overlapMonths+' overlapping prior months',values:[p.planAfter*p.overlapMonths,p.repayment]},{label:p.outsideMonths+' A-only prior months',values:[input.coordPlanMonthly*p.outsideMonths,0]}],note:'Both trailing histories end before B’s award is received. Overlap equals the smaller of the two entered month counts. Only overlap produces an A adjustment; A-only months keep their original amount. Together the bars reconcile all '+input.coordPlanMonths+' prior A payments, totaling '+cad(p.originalPlanPaid)+'. The colored overpayment portion is a liability within cash previously received, not another cash receipt.'},
+    {id:'disability-offset-retro-calendar',type:'line',title:'A larger bank balance can sit beside an equally large unpaid repayment',unit:'money',tableUnit:'CAD, before tax',unitLabel:'Isolated retroactive-award ledger (CAD) · day-end balances before tax',xLabel:'Days after the award receipt',series:[{name:'Unspent cash from B’s retroactive award',step:true,rows:p.calendar.map(r=>({x:r.x,value:r.bankCash}))},{name:'Unpaid modeled repayment earmark',dash:true,step:true,rows:p.calendar.map(r=>({x:r.x,value:r.earmark}))},{name:'Cash less that unpaid earmark, before tax',step:true,rows:p.calendar.map(r=>({x:r.x,value:r.residual}))}],note:'Before settlement, award cash equals the gross retroactive receipt and the earmark equals the modeled repayment. At the selected day-end, cash falls by the repayment and the earmark becomes zero. Cash minus the unpaid earmark stays the same; subtracting the already-paid repayment again would double-count it. A zero-day lag shows only the post-settlement day-0 balance. The earmark is a claim against the same cash; the lines are not added together. No regular benefits, household bills or withholding enter this isolated ledger. The chosen lag is an invented timing assumption, not a permitted deadline.'},
+    {id:'disability-offset-retro-matrix',type:'heatmap',title:'The remaining gross award depends on both coordination and the covered months',unit:'money',tableUnit:'CAD, before tax',unitLabel:'Retroactive B award less modeled A repayment (CAD) · before tax',rowLabel:'Assumed offset percentage',columns:['3 mo','6 mo','12 mo','24 mo'],rows:[0,50,100].map(coordOffsetPercent=>({label:coordOffsetPercent+'% offset',values:[3,6,12,24].map(coordRetroMonths=>disabilityOffsetLedger({...input,coordOffsetPercent,coordRetroMonths}).residual)})),note:'Rows replace the assumed offset percentage; columns replace B’s prior covered months. A’s prior payment duration and both monthly amounts stay selected. If B’s retroactive period extends before A began paying, those earlier B months create no A repayment in this model. Larger cells are residual gross amounts, not recommendations, probabilities, tax refunds or permission to spend. The matrix does not change with the repayment-day input because timing alone does not change these entitlements.'}
+  ]};
+}
+
+function cad(value){return 'CAD '+value.toLocaleString('en-CA',{maximumFractionDigits:2});}

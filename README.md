@@ -651,3 +651,8 @@ The lease-distance guide compares hypothetical full-term kilometre allowances, d
 ### Performance fees and loss recovery
 
 `/research/performance-fee-high-water-mark-loss-recovery-cash` compares two invented annual fee bases across the same four gross returns. The mark rule retains the prior highest post-fee annual balance; the annual-reset rule carries no loss forward. Five charts trace returns, net balances, actual charges and the subsequent-return effect on deducted fees. Tests independently compound each actual fee through its remaining periods, including later negative returns, and check zero-rate, no-capital and all-loss cases. The browser companion verifies real controls, reset, fee tables and mobile SVG labels. No fund contract, eligibility rule, actual performance or fee quote is applied.
+
+
+### Disability-benefit offsets and retroactive awards
+
+The English guide `disability-benefit-offset-retroactive-award-repayment-cash` uses four original interactive CAD figures to separate ongoing coordination, past overlapping benefit periods, a retroactive award and an unpaid repayment earmark. Two independently entered trailing payment windows determine overlap; Plan A reductions are capped at its initial amount. A day-end ledger keeps cash, unpaid repayment and residual separate, including immediate same-day repayment. A matrix varies the offset and B's covered months while retaining A's history. All amounts are before tax, and the example estimates no eligibility, actual contract terms, overall-income cap or tax result. Current public FCAC, TBS and Service Canada HTML supports the conceptual context; the federal plan's individual-policy exception remains explicitly plan-specific.

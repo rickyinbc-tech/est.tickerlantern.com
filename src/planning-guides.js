@@ -1,3 +1,4 @@
+import { cpiLevelGuides } from './planning-cpi-level-guides.js';
 import { accruedInterestGuides } from './planning-accrued-interest-guides.js';
 import { rrspDeductionGuides } from './planning-rrsp-deduction-guides.js';
 import { rentalMoveGuides } from './planning-rental-move-guides.js';
@@ -54,6 +55,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...cpiLevelGuides,
   ...accruedInterestGuides,
   ...rrspDeductionGuides,
   ...rentalMoveGuides,

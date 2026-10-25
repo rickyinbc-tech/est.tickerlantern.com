@@ -790,6 +790,11 @@ A self-employed pricing guide adds four charts separating revenue growth from un
 
 A daily-reset compounding guide adds four charts using two original synthetic benchmark paths with an identical endpoint. Ideal daily-multiple accounts remain separate from a multiple-of-full-period arithmetic reference. Tests verify daily identities, exact paired round trips, positive-trend outperformance of the reference and endpoint invariance when an unchanged return set is reordered. No real ETF, historical price or return forecast is used.
 
+## Rights-issue entitlements and subscription funding
+
+Four charts separate theoretical entitlement value and subscription cash funding. See
+`docs/planning-rights-cash-2026-10-25.md` for sources and checks.
+
 
 ### Perceived missed-payment probability and full-minimum funding
 

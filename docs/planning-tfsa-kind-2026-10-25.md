@@ -56,7 +56,7 @@ independence, zero cases, wealth conservation, exact in-range crossing and
 finite accessible rendering at all supported field extrema. Invalid fractional
 units, out-of-range amounts and NaN are rejected.
 
-Full JavaScript suite: 1224 passed. Python suite: 122 passed.
+Full JavaScript suite: 1233 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/data tables,
 no page overflow, the denied-loss label, negative room remainder, zero proposed
 units, invalid fractional-unit retention, reset and table disclosure. All four

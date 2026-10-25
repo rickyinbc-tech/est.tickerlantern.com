@@ -1,4 +1,15 @@
 import { adjustedIncomeGuides } from './planning-adjusted-income-guides.js';
+import { familyReceivableGuides } from './planning-family-receivable-guides.js';
+import { performanceFeeGuides } from './planning-performance-fee-guides.js';
+import { priceBasisGuides } from './planning-price-basis-guides.js';
+import { taxIndexationGuides } from './planning-tax-indexation-guides.js';
+import { leaseDistanceGuides } from './planning-lease-distance-guides.js';
+import { rrspRoomGuides } from './planning-rrsp-room-guides.js';
+import { premiumBondGuides } from './planning-premium-bond-guides.js';
+import { discountBasisGuides } from './planning-discount-basis-guides.js';
+import { retirementAgeGuides } from './planning-retirement-age-guides.js';
+import { unemploymentDurationGuides } from './planning-unemployment-duration-guides.js';
+import { annuityGuaranteeGuides } from './planning-annuity-guarantee-guides.js';
 import { lifeTableGuides } from './planning-life-table-guides.js';
 import { depositMapGuides } from './planning-deposit-map-guides.js';
 import { benefitCoordinationGuides } from './planning-benefit-coordination-guides.js';
@@ -133,6 +144,17 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...adjustedIncomeGuides,
+  ...familyReceivableGuides,
+  ...performanceFeeGuides,
+  ...priceBasisGuides,
+  ...taxIndexationGuides,
+  ...leaseDistanceGuides,
+  ...rrspRoomGuides,
+  ...premiumBondGuides,
+  ...discountBasisGuides,
+  ...retirementAgeGuides,
+  ...unemploymentDurationGuides,
+  ...annuityGuaranteeGuides,
   ...lifeTableGuides,
   ...depositMapGuides,
   ...benefitCoordinationGuides,

@@ -1,3 +1,4 @@
+import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
 import { disabilityOffsetGuides } from './planning-disability-offset-guides.js';
 import { inventoryCashGuides } from './planning-inventory-cash-guides.js';
 import { promoConditionGuides } from './planning-promo-condition-guides.js';
@@ -157,6 +158,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...wholeReinvestGuides,
   ...disabilityOffsetGuides,
   ...inventoryCashGuides,
   ...promoConditionGuides,

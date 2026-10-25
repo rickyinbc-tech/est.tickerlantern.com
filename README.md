@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 296 visual planning guides and 1223
+charts**. The library now leads with 298 visual planning guides and 1232
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -795,10 +795,15 @@ A daily-reset compounding guide adds four charts using two original synthetic be
 Four charts separate theoretical entitlement value and subscription cash funding. See
 `docs/planning-rights-cash-2026-10-25.md` for sources and checks.
 
-`planning-resp-aip` separates a hypothetical RESP contribution refund, benefit
-repayment and accumulated income payment; see
-`docs/planning-resp-aip-2026-10-25.md`.
-
 `planning-joint-owner` combines joint deposits by member and owner set before
 applying a conditional limit; see
 `docs/planning-joint-owner-2026-10-25.md`.
+
+
+### Perceived missed-payment probability and full-minimum funding
+
+Adds a source-backed English guide with five interactive figures: the overall CSCE probability series, percentage-point changes, a full-minimum funding waterfall, a dated funding ledger and a timing/cash matrix. A validated five-quarter public-data extract retains source hashes and dates. Official interpolated medians remain independent of fictional cash inputs; payment dates require whole days, and negative funding balances describe missing resources rather than authorized overdrafts.
+
+`planning-resp-aip` separates a hypothetical RESP contribution refund,
+returned benefits and accumulated income payment; see
+`docs/planning-resp-aip-2026-10-25.md`.

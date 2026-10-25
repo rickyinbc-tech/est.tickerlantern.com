@@ -607,3 +607,10 @@ The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group mean
 
 Four charts connect equal cash purchases with units, weighted cost and marked value. See
 `docs/planning-unit-cost-2026-10-25.md` for sources and checks.
+
+## Client-name deposits across channels
+
+Four charts combine direct and client-name brokered eligible deposits by
+issuing member and coverage category before applying individual limits.
+Unused headroom remains local to its bucket. See
+`docs/planning-deposit-map-2026-10-25.md` for source scope and verification.

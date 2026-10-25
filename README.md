@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 205 visual planning guides and 835
+charts**. The library now leads with 206 visual planning guides and 839
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -558,3 +558,7 @@ Three charts retain a later required payment and inspect multiple IRR solutions.
 
 `planning-age-income` adds dated source income counts and conditional summaries; see
 `docs/planning-age-income-2026-10-25.md` for scope and validation.
+
+`planning-rrif-kind` separates a property payment from actual bank cash and
+two independent cash assignments. See `docs/planning-rrif-kind-2026-10-25.md`
+for source scope, resource conservation and verification.

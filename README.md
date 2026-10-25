@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 155 visual planning guides and 629
+charts**. The library now leads with 161 visual planning guides and 653
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -433,6 +433,11 @@ keep premium principal separate from financing interest, and do not assume
 equivalent coverage across independently entered premium quotes. Premium-related
 cash schedules exclude the common base loan payment. No claim, premium refund
 or policy eligibility is calculated.
+
+`planning-access-bridge-cover-models.js` adds ordinary RDSP payment/repayment
+cash, temporary pension bridge endings and hypothetical rebuilding coverage
+gaps. See `docs/planning-access-bridge-cover-2026-10-25.md` for source scope,
+explicit contract assumptions and validation.
 
 ## Inflation order and rate conventions
 

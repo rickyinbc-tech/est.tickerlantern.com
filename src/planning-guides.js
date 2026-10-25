@@ -1,4 +1,5 @@
 import { timingConventionGuides } from './planning-timing-conventions-guides.js';
+import { accessBridgeCoverGuides } from './planning-access-bridge-cover-guides.js';
 import { pensionWithdrawalProtectionGuides } from './planning-pension-withdrawal-protection-guides.js';
 import { debtDenominatorGuides } from './planning-debt-denominators-guides.js';
 import { currencyTranslationGuides } from './planning-currency-translation-guides.js';
@@ -73,6 +74,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...timingConventionGuides,
+  ...accessBridgeCoverGuides,
   ...pensionWithdrawalProtectionGuides,
   ...debtDenominatorGuides,
   ...currencyTranslationGuides,

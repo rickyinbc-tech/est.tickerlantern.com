@@ -8,9 +8,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
-The household-saving guide adds twelve official quarterly observations and a
-source-reconciled accounting bridge. Its personal cash-budget charts remain
-separate. Verify the retained public CSV with
+The household-saving guide separates twelve official quarterly observations and
+a verified pension-adjusted accounting bridge from a hypothetical personal
+cash budget. Verify source bytes and all 60 source rows with
 `python3 scripts/check-planning-saving-rate-source.py <csv-path>`.
 
 
@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 93 visual planning guides and 372
+charts**. The library now leads with 97 visual planning guides and 388
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -51,6 +51,11 @@ investment-sale cash goals add twelve more figures. Their models separate
 remaining debt from future instalments, unused prepaid service from an assumed
 refund, and adjusted cost base from spendable sale proceeds. All three use
 hypothetical scenarios with official public sources for the general mechanics.
+Payment-option guides add cash-back caps and annual fees, cash discounts versus
+interest-free instalments, and international-transfer costs. A small attributed
+FCAC worked-example extract uses quotes recorded on 23 June 2026; it stays fixed
+while the separate hypothetical transfer budget changes. Verify the source with
+`python3 scripts/check-planning-remittance-source.py <saved-source.html>`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

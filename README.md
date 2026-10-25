@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 66 visual planning guides and 264
+charts**. The library now leads with 72 visual planning guides and 288
 charts, with new guides on shrinking credit-card minimum payments, a pay-rise
 saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -32,7 +32,8 @@ separate cash budgets for a household separation, incremental energy-upgrade
 payback, lease-return versus buy-and-sell car costs and retirement survivor
 income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
-basic CESG catch-up and HBP repayment obligations.
+basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
+principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
 The latest additions examine dated wealth medians versus liquid cash, career
 retraining opportunity costs and pension service buyback cash flows.
 Use official statistics where they answer the question;
@@ -178,3 +179,19 @@ gate remain independent. Study bundles use `/notes-app/assets/`, avoiding the
 index workbench's files. The index snapshot API stays at `/api/indices`; study
 health is `/api/notes/health`. The old notes host is retained only for permanent
 redirects, with its homepage mapped to `/notes/research`.
+
+## Job-loss, retirement-category and event-payment guides
+
+Three additional English guides and twelve interactive charts explain a job-loss
+cash runway, retirement spending phases and a wedding/event payment calendar.
+`planning-runway-spending-models.js` owns the original hypothetical arithmetic.
+The job-loss ledger receives independent net cash amounts and does not assess EI.
+Care prices inflate from retirement start, including before care begins; summed
+annual funding gaps are not a required starting portfolio. The event deposit is
+paid at time zero, and saving transfers end before the event-month opening bill.
+Each article includes six explanation sections, dated official reference links,
+visible assumptions and a data table for every chart.
+
+Run `node --test tests/planning-runway-spending.test.mjs` for the independent
+financial checks and `python3 tests/browser_runway_spending.py <origin>` for real
+input, invalid-input retention, reset, table, responsive and runtime checks.

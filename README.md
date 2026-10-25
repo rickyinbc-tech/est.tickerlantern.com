@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 272 visual planning guides and 1124 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 280 visual planning guides and 1157 charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -151,6 +152,10 @@ A mean-maturity guide compares two principal calendars with identical face
 totals and face-weighted mean dates. Exact deadline ledgers retain missing
 cash even when later receipts equalize the endpoints. Prices, coupons and
 duration are excluded, so the example does not rank investment returns.
+An exact five-state loss model distinguishes inverse-cumulative value at risk,
+expected shortfall over an exact probability tail and the largest specified
+loss. Boundary probability mass is allocated explicitly, including signed
+quantiles; all outcomes and probabilities are invented.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -737,3 +742,20 @@ Four charts distinguish resource levels and full-increase offsets in an invented
 `docs/planning-taper-2026-10-25.md` for sources and checks.
 
 A vehicle fuel-budget guide adds four charts connecting distance-weighted L/100 km, annual litres and vehicle-specific fuel prices. Original synthetic vehicles have separate consumption and cash crossovers; a signed driving-mix curve and price matrix retain reversals. NRCan HTML supplies label conventions and test-rating limitations, without reproducing vehicle ratings or pump quotes.
+
+Two new contribution and tax-cash companions add eight editable charts on affordable
+regular investing through an income interruption and the cash provision for a
+reinvested fund distribution. All scenarios and tax factors are hypothetical.
+See [the source and calculation note](docs/contribution-tax-cash-2026-10-25.md).
+
+## Actual dates and annual interest denominators
+
+Four charts separate actual days, fixed denominators and a calendar-year example. See
+`docs/planning-day-basis-2026-10-25.md` for sources and checks.
+
+
+### Life-insurance quotation reconciliation
+
+The English guide `life-insurance-surrender-death-quote-policy-loan` separates a fictional dated surrender quote, total conditional death quote and existing insurer policy loan including accrued interest. Four interactive CAD charts show alternative recipients/events, a surrender waterfall, a same-date loan sensitivity and a quotation matrix. Each alternative debits the loan once; full surrender ends this example's coverage, and the two residual amounts are not added. No future policy valuation, loan approval, dividend, tax, lapse or replacement is estimated. Optional definition-level inputIssue validation rejects unsupported quote combinations, gives a specific accessible explanation and preserves the last accepted results; legacy validation retains its existing range and whole-number behavior.
+
+A discounted retailer gift-card guide tracks matched purchases through four interactive figures. Upfront card cash, later top-ups, actual redemptions and unused nominal purchasing credit stay separate. The original example distinguishes the shopping-stop month from expiry and reconciles cash catch-up without treating unused credit as a refund. FCAC supplies general mechanics only.

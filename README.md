@@ -317,3 +317,11 @@ cash-flow schedule. Neither return path is market data or a forecast.
 Run `node --test tests/planning-tax-contribution.test.mjs` and
 `python3 tests/browser_tax_contribution.py <origin>` for mathematical, date,
 input, table and responsive checks.
+
+
+### Emergency-savings statistics and loss-recovery arithmetic
+
+- `/research/emergency-savings-survey-payment-choice-available-cash` retains six 2025 U.S. SHED savings-capacity bands and two question-specific indicators. Official observations use USD and U.S. adult survey weights; an independent editable CAD ledger deducts already committed cash before funding a shock.
+- `/research/investment-loss-recovery-purchasing-power-deposits` compares nominal and inflation-adjusted recovery requirements after an immediate loss, with a separate contribution ledger and surplus/shortfall matrix. All paths are deterministic illustrations.
+
+Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML snapshots remain ignored in `qa/`; `python3 scripts/check-planning-emergency-source.py` checks their hashes, published table cells and methodology against the bundle. The build requires no source fetch. Model tests use closed-form compound sums, contribution-timing checks and cash conservation; `tests/browser_emergency_recovery.py [origin]` checks real controls, reset, accessible tables and responsive chart text.

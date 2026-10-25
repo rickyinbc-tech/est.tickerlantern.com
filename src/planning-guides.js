@@ -1,3 +1,4 @@
+import { emergencyRecoveryGuides } from './planning-emergency-recovery-guides.js';
 import { taxContributionGuides } from './planning-tax-contribution-guides.js';
 import { jointLongevityGuides } from './planning-joint-longevity-guides.js';
 import { creditUseGuides } from './planning-credit-use-guides.js';
@@ -39,6 +40,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...emergencyRecoveryGuides,
   ...taxContributionGuides,
   ...jointLongevityGuides,
   ...creditUseGuides,

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 216 visual planning guides and 879
+charts**. The library now leads with 218 visual planning guides and 887
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -607,3 +607,8 @@ The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group mean
 
 Four charts connect equal cash purchases with units, weighted cost and marked value. See
 `docs/planning-unit-cost-2026-10-25.md` for sources and checks.
+
+`planning-life-table` separates period mean uncertainty, conditional survival
+and an authored cash horizon. Reproduce 294 observations with
+`scripts/extract-planning-life-table.py`; see
+`docs/planning-life-table-2026-10-25.md` for scope and validation.

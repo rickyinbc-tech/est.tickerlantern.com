@@ -330,3 +330,11 @@ input, table and responsive checks.
 - `/research/investment-loss-recovery-purchasing-power-deposits` compares nominal and inflation-adjusted recovery requirements after an immediate loss, with a separate contribution ledger and surplus/shortfall matrix. All paths are deterministic illustrations.
 
 Source extract: `src/planning-emergency-recovery-data.js`. Original public HTML snapshots remain ignored in `qa/`; `python3 scripts/check-planning-emergency-source.py` checks their hashes, published table cells and methodology against the bundle. The build requires no source fetch. Model tests use closed-form compound sums, contribution-timing checks and cash conservation; `tests/browser_emergency_recovery.py [origin]` checks real controls, reset, accessible tables and responsive chart text.
+
+
+### Income-group spending shares and utility settlements
+
+- `/research/household-spending-income-quintiles-consumption-shares` compares dated 2023 SHS consumption shares and annual means for the lowest and highest income quintiles, with an independent monthly cash model. The consumption and income denominators remain separate; a ratio can rise while the cash remainder improves.
+- `/research/utility-equal-payments-annual-settlement-reserve` distinguishes a generic twelve-instalment payment plan, authored seasonal cost allocation, provider balance and a separate household settlement reserve. Provider credits never become assumed cash refunds. It does not replicate BC Hydro tariff or review mechanics.
+
+`scripts/check-planning-spending-utility-sources.py` verifies six quintile shares, two annual means, release context and utility-plan context against the original public HTML snapshots and their hashes. Raw snapshots remain ignored in `qa/`. `tests/planning-spending-utility.test.mjs` checks cash conservation, zero denominators, denominator effects, annual allocation, settlement identities and credit treatment. `tests/browser_spending_utility.py [origin]` checks real inputs, reset, tables and responsive chart bounds.

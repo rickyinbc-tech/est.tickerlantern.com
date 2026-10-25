@@ -77,10 +77,12 @@ function scatterPlot(spec,width) {
       const collisions=spec.rows.filter(r=>overlap(box,{left:x(r.x)-8,right:x(r.x)+8,top:y(r.value)-8,bottom:y(r.value)+8})).length+placed.filter(b=>overlap(box,b)).length;
       return {tx,ty,anchor,box,score:collisions+(outside?100:0)};
     });
-    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
+    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);
+    if(spec.labelLeaders)body+=line(px,py,chosen.tx+(chosen.anchor==='end'?3:-3),chosen.ty-4,'plot-grid');
+    body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
   }
   body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
-  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. Filled larger marker identifies the selected allocation; hollow markers are alternatives.')+'<p class="plot-scale">Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.</p>';
+  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. '+(spec.pointContext??'Filled larger marker identifies the selected allocation; hollow markers are alternatives.'))+'<p class="plot-scale">'+escapeHTML(spec.pointContext??'Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.')+'</p>';
 }
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
@@ -229,14 +231,14 @@ function returnsPlot(spec,width) {
 }
 function chartTable(spec) {
   let headers,rows;
-  if(spec.type==='scatter'){headers=['Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
+  if(spec.type==='scatter'){headers=[spec.pointLabelHeader??'Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
   else if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
-  else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
-  else if(spec.type==='intervalbar'){headers=['Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
-  else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
+  else if(spec.seriesNames){headers=[spec.rowLabel??'Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
+  else if(spec.type==='intervalbar'){headers=[spec.rowLabel??'Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
+  else {headers=[spec.rowLabel??'Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
   const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='percent'?'percent':spec.unit);
   return `<details class="plot-data"><summary>View chart data</summary><div class="guide-table" tabindex="0" role="region" aria-label="${escapeHTML(spec.title)} data"><table><caption>${escapeHTML(spec.title)} · ${escapeHTML(tableUnit)}</caption><thead><tr>${headers.map(h=>`<th scope="col">${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>'<tr>'+row.map((v,i)=>i?`<td>${escapeHTML(v)}</td>`:`<th scope="row">${escapeHTML(v)}</th>`).join('')+'</tr>').join('')}</tbody></table></div></details>`;
 }

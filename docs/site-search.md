@@ -24,8 +24,9 @@ default example, not a visitor's custom scenario.
 Structured-note and GIC landing pages are indexed from the existing public
 `studyPages` metadata. Individual note contracts and dynamic screener rows are
 not indexed as separate articles or figures. The main Worker inserts the same
-search entry into the proxied research site's header without changing the
-separate notes service.
+search assets into the proxied research site's HTML without changing the
+separate notes service. The client keeps the search entry present when that
+application renders or replaces its header.
 
 Query, type and topic are shareable URL parameters. Search result pages use
 `noindex,follow` and stay out of the sitemap. The input supports IME composition,

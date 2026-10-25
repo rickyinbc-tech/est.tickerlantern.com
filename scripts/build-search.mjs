@@ -79,6 +79,6 @@ for(const doc of documents){
   if(id&&!html.includes('id="'+id+'"'))throw Error('Broken search anchor: '+doc.url);
 }
 await writeFile('dist/search-index.json',JSON.stringify({version:1,counts,documents}));
-for(const file of ['search-engine.js','search-ui.js','search-shortcut.js','search.css'])await copyFile('src/'+file,'dist/'+file);
+for(const file of ['search-engine.js','search-ui.js','search-navigation.js','search-shortcut.js','search.css'])await copyFile('src/'+file,'dist/'+file);
 await writeFile('dist/search.html',addSearchNavigation(await readFile('src/search.html','utf8')));
 console.log('Search library built:',counts,'·',documents.length,'entries');

@@ -1,3 +1,4 @@
+import { rrspDeductionGuides } from './planning-rrsp-deduction-guides.js';
 import { rentalMoveGuides } from './planning-rental-move-guides.js';
 import { premiumFinancingGuides } from './planning-premium-financing-guides.js';
 import { reverseEquityGuides } from './planning-reverse-equity-guides.js';
@@ -52,6 +53,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rrspDeductionGuides,
   ...rentalMoveGuides,
   ...premiumFinancingGuides,
   ...reverseEquityGuides,

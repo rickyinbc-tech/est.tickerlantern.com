@@ -66,7 +66,7 @@ zero/fully used losses, total-capacity identity, waterfall and matrix
 reconciliation, collapsed zero scenarios, supported field extrema, finite
 accessible rendering, invalid inputs and editorial boundaries.
 
-Full JavaScript suite: 1330 passed. Python suite: 122 passed.
+Full JavaScript suite: 1366 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/data tables,
 no page overflow, partial/no carryback, a current gain that consumes the loss,
 a collapsed all-zero matrix, invalid-input retention, reset and disclosure.

@@ -1,0 +1,306 @@
+{
+  "slug": "td-bank-valuation",
+  "name": "The Toronto-Dominion Bank",
+  "shortName": "TD",
+  "ticker": "TD",
+  "title": "TD: recovery has a price; controls still matter",
+  "deck": "Capital return and a stronger earnings base support the franchise. A demanding starting valuation still requires durable U.S. execution, sound Canadian credit and lasting control improvements.",
+  "stance": "Watchlist · valuation and execution sensitive",
+  "hinge": "Can repeatable common earnings justify the recovery premium while U.S. constraints remain?",
+  "actual": {
+    "reportedEPS": 2.74,
+    "adjustedEPS": 2.77,
+    "bvps": 69.69,
+    "roe": 16,
+    "cet1": 14.3
+  },
+  "epsBridge": {
+    "annual": 8.37,
+    "priorYtd": 6.19,
+    "currentYtd": 7.59
+  },
+  "market": {
+    "price": 174.47,
+    "date": "2026-10-23",
+    "sourceId": "td-price"
+  },
+  "dividend": 1.12,
+  "loanProxy": 991000,
+  "loanProxyLabel": "31 July 2026 net loans, a period-end balance rather than an average",
+  "ytd": {
+    "revenue": 49592,
+    "expenses": 25343,
+    "insurance": 4666,
+    "pcl": 2957,
+    "pretax": 16626,
+    "tax": 3571,
+    "net": 13055,
+    "common": 12658,
+    "shares": 1667.6
+  },
+  "q4": {
+    "revenue": 17050,
+    "expenses": 8607,
+    "insurance": 1725,
+    "pcl": 993,
+    "taxRate": 0.215,
+    "nonCommon": 103,
+    "shares": 1630
+  },
+  "forecast": [
+    {
+      "year": 2027,
+      "revenueGrowth": 0.05338975420905734,
+      "expenseGrowth": 0.030927835051546282,
+      "insuranceGrowth": 0.11093725551556877,
+      "pcl": 4400,
+      "taxRate": 0.22,
+      "nonCommon": 520,
+      "shares": 1605
+    },
+    {
+      "year": 2028,
+      "revenueGrowth": 0.03988603988603989,
+      "expenseGrowth": 0.03142857142857136,
+      "insuranceGrowth": 0.04225352112676051,
+      "pcl": 4600,
+      "taxRate": 0.22,
+      "nonCommon": 540,
+      "shares": 1560
+    }
+  ],
+  "basePE": 14,
+  "book": {
+    "roe": 0.16,
+    "cost": 0.1,
+    "growth": 0.03
+  },
+  "longGrowth": 0.07,
+  "cases": [
+    {
+      "name": "Bear",
+      "revenueChange": -0.03,
+      "expenseChange": 0.02,
+      "pcl": 6000,
+      "pe": 12,
+      "rationale": "Weaker U.S. economics, persistent controls spending and higher credit loss"
+    },
+    {
+      "name": "Base",
+      "revenueChange": 0,
+      "expenseChange": 0,
+      "pcl": 4400,
+      "pe": 14,
+      "rationale": "Moderate recurring growth, normalized provisions and partial buyback delivery"
+    },
+    {
+      "name": "Bull",
+      "revenueChange": 0.025,
+      "expenseChange": -0.01,
+      "pcl": 3600,
+      "pe": 16,
+      "rationale": "Stronger relationships and productivity; premium valuation persists"
+    }
+  ],
+  "modelNotes": [
+    "Q4 assumes C$17.05bn gross revenue and C$1.725bn insurance service expenses, leaving C$15.325bn net of claims. FY2027 and FY2028 net-of-insurance revenue reaches C$63.1bn and C$65.6bn. This treats insurance costs explicitly rather than giving gross insurance revenue a bank-lending margin.",
+    "Expense assumptions retain remediation and control investment. They do not add back the US$550m spending expectation to published adjusted earnings. Credit provisions rise from the implied FY2026 model into FY2027; no uninterrupted reserve-release tailwind is assumed.",
+    "Diluted shares fall to 1,605m and 1,560m as analyst assumptions. The approved 2026 program does not establish a FY2028 authorization. This is an earnings model, not a full forecast of repurchase cash, CET1 or common book; its per-share gains are conditional on affordable capital distributions."
+  ],
+  "modelSources": [
+    "td-q3",
+    "td-rts",
+    "td-buyback-approved"
+  ],
+  "valuationSources": [
+    "td-q3",
+    "td-fy25",
+    "td-rts",
+    "td-price"
+  ],
+  "multipleRationale": "Our 14× base exit P/E recognises a diversified domestic franchise while retaining a discount for constrained U.S. deployment and control execution. It is an analytical choice, not a sourced historical average. The 12× bear and 16× bull cases ask how much earnings persistence investors might reward or penalize; they are not statistically estimated valuation bounds.",
+  "bookRationale": "A 16% sustainable ROE is consistent with the latest adjusted quarter, but extending it indefinitely is a strong assumption. At 3% growth and 10% equity cost the model supports less than the observed 2.50× July book multiple. Excess capital, its deployment path and future book can change the comparison. The diagnostic is a warning about the burden of persistence, not proof that the stock must converge to one book multiple.",
+  "peerView": "TD has more capital-return optionality than a simple dividend comparison suggests, but that must be assessed alongside its U.S. regulatory constraints. RBC’s higher observed ROE and TD’s excess capital are different economic attributes. Neither permits a direct substitution of one bank’s justified multiple for the other.",
+  "marketNote": "The reference quotation is a delayed TSX close of C$174.47. A mixed-date capitalization proxy is approximately C$284.93bn using 1,633.13m issued shares disclosed at 31 August, rather than a verified October count. The issuer Q3 diluted average is 1,652.2m; its 31 July common book is C$69.69 per share. Reported TTM EPS is approximately C$9.34 under the same FY/YTD bridge, affected by the prior Schwab transaction. Those denominators are separate from a provider forward-P/E field.",
+  "nextEvent": "3 December 2026 · scheduled Q4 results conference call, 9:30 a.m. ET. No assumed date for asset-cap removal.",
+  "asOf": "2026-10-25",
+  "dataCutoff": "2026-07-31",
+  "marketAsOf": "2026-10-23T16:00:00-04:00",
+  "sources": [
+    {
+      "id": "td-q3",
+      "title": "TD Q3 FY2026 earnings release",
+      "url": "https://td.mediaroom.com/2026-08-27-TD-Bank-Group-Reports-Third-Quarter-2026-Results",
+      "published": "2026-08-27",
+      "period": "Quarter and nine months ended July 31, 2026",
+      "location": "Financial highlights; Tables 1, 3, 5; segment discussions; AML update"
+    },
+    {
+      "id": "td-rts",
+      "title": "TD Q3 FY2026 Report to Shareholders — original SEC HTML",
+      "url": "https://www.sec.gov/Archives/edgar/data/947263/000156276226000098/ex991.htm",
+      "published": "2026-08-27",
+      "period": "Quarter and nine months ended July 31, 2026",
+      "location": "Report pp. 13, 25–30, 76 and 79; native HTML read"
+    },
+    {
+      "id": "td-fy25",
+      "title": "TD Q4 and FY2025 earnings release",
+      "url": "https://td.mediaroom.com/2025-12-04-TD-Bank-Group-Reports-Fourth-Quarter-and-Fiscal-2025-Results",
+      "published": "2025-12-04",
+      "period": "Year ended October 31, 2025",
+      "location": "Annual financial highlights and strategy targets"
+    },
+    {
+      "id": "td-buyback-plan",
+      "title": "TD announces new share buyback of up to C$10 billion",
+      "url": "https://stories.td.com/ca/en/news/2026-09-30-td-bank-group-announces-intention-to-commence-a-new-share-bu",
+      "published": "2026-09-30",
+      "period": "Post-Q3 capital-return announcement",
+      "location": "Buyback size, September 25 completion, August 31 share count and intended July 2027 completion"
+    },
+    {
+      "id": "td-buyback-approved",
+      "title": "TD receives regulatory approval for new share buyback",
+      "url": "https://td.mediaroom.com/2026-10-08-TD-Bank-Group-Receives-Regulatory-Approval-for-New-Share-Buyback-Program",
+      "published": "2026-10-08",
+      "period": "Post-Q3 approval",
+      "location": "Opening paragraph: OSFI approval and October 9 commencement"
+    },
+    {
+      "id": "td-aml-resolution",
+      "title": "TD global AML resolution — original SEC exhibit",
+      "url": "https://www.sec.gov/Archives/edgar/data/947263/000119312524236027/d829657dex991.htm",
+      "published": "2024-10-10",
+      "period": "Original U.S. AML resolution",
+      "location": "Settlement terms and US$434 billion asset-cap scope"
+    },
+    {
+      "id": "td-occ",
+      "title": "OCC enforcement action against TD Bank N.A. and TD Bank USA N.A.",
+      "url": "https://www.occ.gov/news-issuances/news-releases/2024/nr-occ-2024-116.html",
+      "published": "2024-10-10",
+      "period": "Original enforcement action",
+      "location": "OCC release 2024-116"
+    },
+    {
+      "id": "td-price",
+      "title": "StockAnalysis — TD TSX historical prices",
+      "url": "https://stockanalysis.com/quote/tsx/TD/history/",
+      "published": "2026-10-23",
+      "period": "TSX close October 23, 2026, 4:00 p.m. EDT",
+      "location": "CAD174.47 delayed closing quote; observed October 25, 2026"
+    },
+    {
+      "id": "td-calendar",
+      "title": "TD current and upcoming investor events",
+      "url": "https://www.td.com/ca/en/about-td/for-investors/investor-relations/presentation-and-events/current-and-upcoming-events",
+      "published": "Checked 2026-10-25",
+      "period": "Q4 FY2026 conference call",
+      "location": "3 December 2026, 9:30 a.m. ET"
+    }
+  ],
+  "sections": [
+    {
+      "id": "investment-case",
+      "kicker": "The decision hinge",
+      "title": "The recovery is real; the easy valuation argument has gone",
+      "paragraphs": [
+        "<strong>Research judgment:</strong> TD is best framed as a capital-return and earnings-durability test. The investment case needs more than evidence that the franchise survived its U.S. compliance failure. At the October 23, 2026 TSX close of C$174.47, the shares trade at a calculated 17.86 times trailing adjusted EPS and 2.50 times July book value. That valuation already anticipates substantial recovery. It leaves less room for a thesis built only on improving sentiment.",
+        "The central question is whether incremental earnings come from deeper relationships and a better operating model, or from favourable credit comparisons, buoyant markets and fewer shares. These sources can coexist, but they deserve different multiples. Customer relationships and repeatable service efficiency support a durable premium. Market activity and provision normalization can lift earnings quickly while offering less protection when conditions reverse.",
+        "TD has an attractive route to value creation: retain the Canadian franchise, improve U.S. returns within existing constraints and distribute genuinely surplus capital. The combined route is more credible than assuming a rapid reopening of unrestricted U.S. expansion. The base underwriting should therefore allow operating improvement without assigning a removal date to the U.S. asset cap.",
+        "A favourable business view does not automatically establish an attractive entry price. The valuation must still work after normalizing market-sensitive income, retaining a continuing control-cost burden and charging a sensible cost of equity. Upside requires earnings to outperform that disciplined baseline or a premium multiple to persist. Downside can arise from multiple compression even when absolute earnings continue to grow."
+      ],
+      "sourceIds": [
+        "td-price",
+        "td-q3",
+        "td-fy25",
+        "td-aml-resolution"
+      ]
+    },
+    {
+      "id": "earnings-quality",
+      "kicker": "Normalize the denominator",
+      "title": "Keep the recovery, remove the accounting shortcuts",
+      "paragraphs": [
+        "For the nine months ended July 31, 2026, adjusted EPS was C$7.59 versus C$6.19 a year earlier. The clean trailing calculation is C$8.37 for FY2025, less C$6.19 for its first nine months, plus C$7.59 for the latest nine months: C$9.77. This is a historical earnings measure. It is neither a forecast nor an assertion that the latest quarter can be repeated unchanged.",
+        "The more revealing test is the bridge from revenue to common earnings. Subtract insurance service expenses from adjusted revenue, then deduct operating expenses and credit losses, apply tax, deduct preferred and other equity distributions, and divide by diluted shares. A gross insurance-revenue increase can overstate operating momentum if claims rise alongside it. Likewise, a lower share count can amplify EPS without producing equivalent growth in group profit.",
+        "FY2025 reported earnings include the Schwab sale and should not anchor a recurring P/E argument. Equally, adjusted earnings should not become a licence to remove every inconvenient expense. AML remediation and related governance investments already burden the operating result. A model that adds them back again would create an earnings number that the published adjusted measure does not support.",
+        "The forward model should preserve these distinctions. Allow a normal credit charge, avoid extrapolating a particularly strong capital-markets quarter indefinitely, and make tax and share assumptions visible. A conservative model can still recognize real productivity benefits. The falsifier is not simply a smaller adjusted-to-reported gap; it is a failure of common earnings to grow after the unusually helpful comparisons and repurchase effects fade."
+      ],
+      "sourceIds": [
+        "td-q3",
+        "td-fy25"
+      ]
+    },
+    {
+      "id": "franchise",
+      "kicker": "Where returns are earned",
+      "title": "Canada funds the thesis; the U.S. has to earn its capital",
+      "paragraphs": [
+        "In Q3 FY2026, Canadian P&C earned C$2.095 billion, U.S. Banking C$1.074 billion, Wealth and Insurance C$841 million and Wholesale C$743 million. Those figures describe distinct engines. Treating TD as a single interest-rate exposure obscures the different operating risks, capital requirements and cyclicality underneath the consolidated result.",
+        "The Canadian relationship bank is the anchor. The relevant question is whether deposit gathering, mortgage execution and business-client penetration expand together without sacrificing pricing or underwriting discipline. Volume growth purchased through aggressive rates would be less valuable than growth from customers using several products. Watch the relation between loan growth, deposit growth, margin and acquisition costs, rather than declaring victory from any one volume measure.",
+        "The U.S. business requires a different lens. The asset restriction makes balance-sheet allocation and customer economics especially important. Shedding low-return assets can improve margins and capital efficiency even as total loans contract. But runoff is finite. Once that comparison is exhausted, the business must demonstrate healthier core relationships, better deposit mix and greater fee contribution. Faster reported growth against restructuring losses is a weaker signal than recurring operating improvement.",
+        "Wealth, insurance and wholesale broaden the earnings base but bring their own sensitivities. Rising asset markets support fees; active financing and trading support wholesale; insurance claims can interrupt the apparent annuity. Diversification helps most when the engines respond differently to stress. The underwriting should not give every business its best environment simultaneously. Segment ROEs also use allocated capital, so their levels should not be read as directly interchangeable with consolidated shareholder returns."
+      ],
+      "sourceIds": [
+        "td-q3",
+        "td-rts",
+        "td-aml-resolution"
+      ]
+    },
+    {
+      "id": "credit-capital",
+      "kicker": "Two distinct constraints",
+      "title": "Credit is improving; regulatory execution still governs the option value",
+      "paragraphs": [
+        "At July 31, 2026, CET1 was 14.3%. Q3 credit losses were C$917 million, with C$865 million impaired and C$52 million performing provisions; gross impaired loans were C$5.143 billion. These figures support a better aggregate credit picture. They do not establish that every portfolio has reached the same point in its loss cycle.",
+        "The distinction matters because commercial resolutions can improve the group total while consumer migration worsens elsewhere. Provision releases and builds are forward-looking estimates, not cash receipts or losses already realized. The model should therefore distinguish the loss-rate assumption from loan growth and test both together. A weaker economy can raise provisions at the same time that slower lending restrains revenue, producing a disproportionate hit to common earnings.",
+        "The separate regulatory issue is the U.S. bank subsidiaries’ US$434 billion asset cap established in the October 2024 resolution. It does not cover all TD businesses. Nevertheless, the constraint reduces management’s strategic freedom where controls failed. Capital strength can absorb costs and support distributions, but a high CET1 ratio cannot substitute for accepted remediation or authorize unrestricted U.S. growth.",
+        "TD’s August 2026 update raised expected FY2026 remediation and related control spending to US$550 million and envisaged important work through 2027. Completion of management actions is only one stage; testing, sustainability and external review still matter. The base case should retain uncertainty after 2027. The downside mechanism is a longer period of elevated costs and constrained deployment, not merely another one-time fine. A fresh timetable or cost increase would warrant an immediate model review."
+      ],
+      "sourceIds": [
+        "td-q3",
+        "td-rts",
+        "td-aml-resolution",
+        "td-occ"
+      ]
+    },
+    {
+      "id": "distributions",
+      "kicker": "Capital allocation",
+      "title": "Repurchases can lift EPS while making book-value discipline more important",
+      "paragraphs": [
+        "OSFI approved TD’s new repurchase program on October 8, 2026: up to C$10 billion, capped at 61 million shares, beginning October 9. The September announcement set an intended completion by July 2027. This is a concrete capital-return catalyst. It is also a repurchase authorization, not evidence that U.S. AML restrictions have been lifted.",
+        "At the reference price, C$10 billion would purchase roughly 57 million shares before subsequent price changes. The economic benefit depends on the price paid relative to intrinsic value, not simply the size of the headline. Fewer shares can raise EPS even when total earnings are unchanged. Buying above book value also changes the book-value trajectory, so an earnings-minus-dividends rollforward alone is insufficient.",
+        "The model must reduce cash capital and share count together. It should then test how much capital remains after risk-weighted asset growth, ordinary dividends and continuing control investment. Repurchases are most compelling when the bank can distribute surplus resources without constraining high-return customer opportunities. An eventual slowdown in repurchases is not inherently negative if capital is being reinvested productively; the accompanying return evidence determines the interpretation.",
+        "The declared quarterly common dividend is C$1.12, implying C$4.48 annualized and a calculated 2.57% yield at the reference close. The shareholder proposition therefore relies substantially on earnings growth and capital allocation, rather than income alone. Future increases remain decisions of the board. Avoid counting both a falling share count and an unchanged stock of surplus capital as independent sources of value."
+      ],
+      "sourceIds": [
+        "td-buyback-plan",
+        "td-buyback-approved",
+        "td-rts",
+        "td-price"
+      ]
+    },
+    {
+      "id": "catalysts-risks",
+      "kicker": "What changes the view",
+      "title": "Demand proof of durability after the helpful comparisons fade",
+      "paragraphs": [
+        "The next scheduled results conference call is <strong>3 December 2026 at 9:30 a.m. ET</strong>. Test whether core U.S. relationships improve as portfolio runoff matures, whether Canadian customer depth supports margin without undue pricing concessions, and whether fee businesses maintain acceptable returns when market activity is less generous. These are monitoring windows tied to subsequent results; no unverified regulatory milestone is treated as a scheduled catalyst here.",
+        "Capital return is more measurable. Compare completed repurchases with the authorized program, average prices paid, diluted shares and the CET1 bridge. A reduction in surplus capital should be explained by distributions or productive deployment. Persistent excess capital with weak reinvestment returns would weaken the efficiency thesis; aggressive payouts accompanied by deteriorating credit or operating controls would weaken its resilience.",
+        "The thesis would be materially impaired by another substantial remediation-cost increase, a longer validation timetable, persistent deterioration in core U.S. deposits, or consumer losses that outweigh commercial improvement. It would also weaken if market-fee softness exposed poor underlying cost control. None requires a solvency crisis to hurt shareholders: a premium valuation can fall as investors reassess the persistence of earnings.",
+        "Conversely, the strongest upside proof would combine repeatable pre-provision growth, sound consumer credit, accepted control improvements and capital returned at sensible prices. That combination would support confidence in a durable return on equity. The research stance should change with that evidence and the entry valuation together. A higher EPS forecast alone is insufficient if the risk-adjusted multiple required to justify the share price has risen just as much."
+      ],
+      "sourceIds": [
+        "td-q3",
+        "td-rts",
+        "td-buyback-approved",
+        "td-aml-resolution",
+        "td-calendar"
+      ]
+    }
+  ],
+  "id": "td"
+}

@@ -242,3 +242,9 @@ Two English guides add eight hypothetical charts. Employer-share losses are
 tested alongside interrupted take-home pay, with bills before income. Cash
 purchase and financing use equal resources and retain any funding gap.
 See `docs/planning-wealth-choice-2026-10-25.md` for assumptions and verification.
+
+## Canadian bank equity research
+
+`/research/banks` links the restored RBC note and four new senior analyses for TD, BMO, Scotiabank and CIBC (25 October 2026). The new pages use 23 October TSX CAD closes and July-quarter issuer actuals, plus explicit original assumptions. `src/banks/*.json` owns public-source facts, prose and assumptions; `model.js` owns the linked FY2026–FY2028 earnings model, scenario returns, credit stress, steady-state book diagnostic and separate five-year cash-flow model. `scripts/build-bank-research.mjs` renders the articles, comparison hub, source/input JSON and forecast CSVs.
+
+The base valuation horizon is October 2027 using FY2027 modeled EPS. The five-year illustration starts separately from adjusted trailing EPS. TD insurance service expenses are deducted explicitly. Scotiabank's announced Chile tax-asset charge reduces modeled Q4/FY2026 adjusted earnings once, after tax. Source-specific non-GAAP definitions and distinct share-count dates remain visible. The aggregate model does not supply a full CET1, OCI or common-book bridge. No private files or downloaded issuer PDFs are part of the build.

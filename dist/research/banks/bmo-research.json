@@ -1,0 +1,304 @@
+{
+  "slug": "bmo-bank-valuation",
+  "name": "Bank of Montreal",
+  "shortName": "BMO",
+  "ticker": "BMO",
+  "title": "BMO: U.S. returns must earn the valuation premium",
+  "deck": "Credit normalization and capital efficiency are rebuilding earnings. At more than twice July common book, the share price also requires lasting improvement in the return on capital committed to the U.S. franchise.",
+  "stance": "Watchlist · return recovery already matters",
+  "hinge": "Can the U.S. franchise lift returns on total equity after the credit comparison becomes harder?",
+  "actual": {
+    "reportedEPS": 2.38,
+    "adjustedEPS": 3.96,
+    "bvps": 113.06,
+    "roe": 14,
+    "cet1": 13
+  },
+  "epsBridge": {
+    "annual": 12.16,
+    "priorYtd": 8.89,
+    "currentYtd": 11.11
+  },
+  "market": {
+    "price": 236.87,
+    "date": "2026-10-23",
+    "sourceId": "bmo-price"
+  },
+  "dividend": 1.71,
+  "loanProxy": 697927,
+  "loanProxyLabel": "31 July 2026 net loans, a period-end balance rather than an average",
+  "ytd": {
+    "revenue": 29373,
+    "expenses": 16371,
+    "pcl": 2207,
+    "pretax": 10795,
+    "tax": 2652,
+    "net": 8143,
+    "common": 7837,
+    "shares": 705.4
+  },
+  "q4": {
+    "revenue": 9900,
+    "expenses": 5400,
+    "pcl": 720,
+    "taxRate": 0.24,
+    "nonCommon": 100,
+    "shares": 698
+  },
+  "forecast": [
+    {
+      "year": 2027,
+      "revenueGrowth": 0.04652051027423432,
+      "expenseGrowth": 0.02429837857700612,
+      "pcl": 2650,
+      "taxRate": 0.24,
+      "nonCommon": 440,
+      "shares": 690
+    },
+    {
+      "year": 2028,
+      "revenueGrowth": 0.05352798053527974,
+      "expenseGrowth": 0.04260089686098656,
+      "pcl": 2600,
+      "taxRate": 0.24,
+      "nonCommon": 440,
+      "shares": 680
+    }
+  ],
+  "basePE": 13.5,
+  "book": {
+    "roe": 0.15,
+    "cost": 0.1,
+    "growth": 0.04
+  },
+  "longGrowth": 0.065,
+  "cases": [
+    {
+      "name": "Bear",
+      "revenueChange": -0.025,
+      "expenseChange": 0.03,
+      "pcl": 4500,
+      "pe": 11.5,
+      "rationale": "U.S. return recovery stalls as credit costs and funding pressure return"
+    },
+    {
+      "name": "Base",
+      "revenueChange": 0,
+      "expenseChange": 0,
+      "pcl": 2650,
+      "pe": 13.5,
+      "rationale": "Moderate net revenue growth with better efficiency and lower credit provisions"
+    },
+    {
+      "name": "Bull",
+      "revenueChange": 0.03,
+      "expenseChange": 0,
+      "pcl": 2200,
+      "pe": 15,
+      "rationale": "Deeper U.S. relationships and capital efficiency support stronger recurring return"
+    }
+  ],
+  "modelNotes": [
+    "The Q4 assumption is C$9.9bn revenue and C$5.4bn expense, slightly below Q3, allowing for disposed branch economics and normalization of activity. The model does not preserve all exited-business earnings and add a separate disposal gain. Net transaction and funding effects remain embedded in these aggregate assumptions.",
+    "FY2027 revenue grows about 4.7% and expense about 2.4%. Positive operating leverage and lower PCL do meaningful work. That is an explicit execution hurdle, not an extrapolation of every Q3 improvement. The Moneris gain is excluded from recurring earning power.",
+    "Credit charges of C$2.65bn and C$2.6bn, a 24% tax rate, and diluted shares of 690m and 680m are independent assumptions. Share reductions require capital spending; this model does not forecast the complete CET1 and common-equity bridge. Stress results should be read alongside capital disclosures."
+  ],
+  "modelSources": [
+    "bmo-q3-2026",
+    "bmo-branch-close",
+    "bmo-moneris",
+    "bmo-ncib"
+  ],
+  "valuationSources": [
+    "bmo-q3-2026",
+    "bmo-fy2025",
+    "bmo-price"
+  ],
+  "multipleRationale": "A 13.5× base P/E values the improving recurring earnings stream while asking for evidence that U.S. returns on total equity can continue rising. The bear case pairs credit pressure with 11.5×, and the bull case allows 15× for better persistence. These choices are research judgments, not a claim that BMO historically trades inside this range.",
+  "bookRationale": "Our 15% sustainable ROE assumption already builds in improvement from Q3’s 14%. At 10% equity cost and 4% growth it implies approximately 1.83× book, below the observed 2.10×. A lower cost of equity or stronger sustainable profitability would close the gap. Tangible ROE cannot be inserted in a formula using total common book without changing the economic definition.",
+  "peerView": "BMO’s key gap is the return earned on equity committed to the U.S., including acquisition goodwill. A premium to Scotiabank or CIBC cannot be justified simply by a large U.S. footprint; its normalized credit, deposits and capital efficiency must support the earnings attached to that footprint.",
+  "marketNote": "The reference close is C$236.87. Applying it to the most recently verified primary 31 August count of 695.092m shares gives approximately C$164.65bn market value, a mixed-date proxy rather than a verified live capitalization. Q3 weighted diluted shares are 701.7m. Reported TTM EPS is approximately C$12.27 versus adjusted C$14.38. A provider revenue display differs from the issuer annual/YTD bridge; the operating model retains issuer figures consistently.",
+  "nextEvent": "2 December 2026 · scheduled FY2026 results. Watch U.S. returns, credit normalization and disposal economics.",
+  "sources": [
+    {
+      "id": "bmo-q3-2026",
+      "title": "BMO Q3 2026 Report to Shareholders",
+      "url": "https://www.sec.gov/Archives/edgar/data/927971/000092797126000108/q32026mda.htm",
+      "published": "2026-08-25",
+      "period": "Quarter and nine months ended July 31, 2026",
+      "location": "Tables 1–5, 8–9 and 12; printed pp. 7–12, 15–19"
+    },
+    {
+      "id": "bmo-fy2025",
+      "title": "BMO Fourth Quarter and Fiscal 2025 Results",
+      "url": "https://newsroom.bmo.com/2025-12-04-BMO-Financial-Group-Reports-Fourth-Quarter-and-Fiscal-2025-Results",
+      "published": "2025-12-04",
+      "period": "Fiscal year ended October 31, 2025",
+      "location": "Table 2, adjusted results and EPS"
+    },
+    {
+      "id": "bmo-price",
+      "title": "Bank of Montreal — TSX historical price",
+      "url": "https://stockanalysis.com/quote/tsx/BMO/history/",
+      "published": "2026-10-23",
+      "period": "October 23, 2026 close, CAD",
+      "location": "Daily historical data"
+    },
+    {
+      "id": "bmo-west-terms",
+      "title": "BMO announces Bank of the West acquisition",
+      "url": "https://newsroom.bmo.com/2021-12-20-BMO-Financial-Group-accelerates-North-American-growth-with-strategic-acquisition-of-Bank-of-the-West",
+      "published": "2021-12-20",
+      "period": "Original acquisition terms",
+      "location": "Purchase price and strategic rationale"
+    },
+    {
+      "id": "bmo-west-close",
+      "title": "BMO Completes Acquisition of Bank of the West",
+      "url": "https://newsroom.bmo.com/2023-02-01-BMO-Completes-Acquisition-of-Bank-of-the-West",
+      "published": "2023-02-01",
+      "period": "Acquisition completion",
+      "location": "Opening announcement"
+    },
+    {
+      "id": "bmo-ncib",
+      "title": "BMO Receives Regulatory Approvals for Normal Course Issuer Bid",
+      "url": "https://newsroom.bmo.com/2026-09-02-Bank-of-Montreal-Receives-Regulatory-Approvals-for-Normal-Course-Issuer-Bid",
+      "published": "2026-09-02",
+      "period": "September 8, 2026–September 7, 2027 authorization",
+      "location": "Approval, share counts and prior purchases"
+    },
+    {
+      "id": "bmo-branch-close",
+      "title": "BMO Completes Sale of 138 U.S. Branches",
+      "url": "https://newsroom.bmo.com/2026-09-04-BMO-Completes-Sale-of-138-U-S-Branches-to-First-Citizens-Bank",
+      "published": "2026-09-04",
+      "period": "Branch-sale completion",
+      "location": "Opening announcement"
+    },
+    {
+      "id": "bmo-transport",
+      "title": "BMO Announces Strategic Sale of Transportation and Vendor Finance",
+      "url": "https://newsroom.bmo.com/2026-05-11-BMO-Announces-Strategic-Sale-of-Transportation-and-Vendor-Finance-Businesses",
+      "published": "2026-05-11",
+      "period": "Announced transaction",
+      "location": "Capital efficiency and retained minority interest"
+    },
+    {
+      "id": "bmo-moneris",
+      "title": "BMO Announces Sale of Moneris",
+      "url": "https://newsroom.bmo.com/2026-08-10-BMO-Announces-Sale-of-Moneris",
+      "published": "2026-08-10",
+      "period": "Announced sale; expected close by end Q1 FY2027",
+      "location": "Consideration, expected gain and CET1 benefit"
+    },
+    {
+      "id": "bmo-dividend",
+      "title": "BMO Declares Fourth Quarter 2026 Dividends",
+      "url": "https://newsroom.bmo.com/2026-08-25-BMO-Financial-Group-Declares-Dividends",
+      "published": "2026-08-25",
+      "period": "Fourth quarter FY2026 dividend declaration",
+      "location": "Common dividend and payment dates"
+    },
+    {
+      "id": "bmo-events",
+      "title": "BMO Investor Relations — Presentations and Events",
+      "url": "https://www.bmo.com/main/about-bmo/investor-relations/presentations-events",
+      "published": "2026-10-25",
+      "period": "Schedule checked October 25, 2026",
+      "location": "FY2026 earnings conference-call dates"
+    }
+  ],
+  "sections": [
+    {
+      "id": "investment-case",
+      "kicker": "Investment case",
+      "title": "A return recovery with a demanding entry price",
+      "paragraphs": [
+        "BMO offers exposure to a recovery in the earnings power of a large North American banking franchise. The investment question is how much further the return on shareholder capital can improve once easier credit comparisons fade. At the October 23 close of <strong>C$236.87</strong>, the shares trade at an analyst-calculated <strong>16.47× trailing adjusted EPS and 2.10× July book value</strong>. The former uses FY2025 adjusted EPS of C$12.16 plus nine-month FY2026 EPS of C$11.11, less the comparable C$8.89: a C$14.38 trailing measure. Neither the price nor the multiple describes an undiscovered turnaround.",
+        "Our valuation test separates business progress from the return available to a new shareholder. Faster profit growth can coexist with a disappointing share return if the starting multiple already capitalizes the improvement. A book-value cross-check makes that burden visible: with 4% perpetual growth and a 9.5% equity cost, the observed book multiple implies a sustainable ROE of approximately 15.5%. Raising the equity cost to 10% increases the required ROE to approximately 16.6%. These are stylized steady-state inferences, not price targets.",
+        "The favorable case requires deposits and fee relationships to deepen while lending produces acceptable returns after losses. A lower share count can help per-share earnings, but it cannot repair weak economics on the capital that remains deployed. We would become more constructive if recurring returns advance without greater credit risk or a higher valuation multiple. We would become less constructive if the recovery needs persistent reserve relief, unusually strong markets, or repeated disposals to meet the earnings path."
+      ],
+      "sourceIds": [
+        "bmo-price",
+        "bmo-fy2025",
+        "bmo-q3-2026"
+      ]
+    },
+    {
+      "id": "earnings-quality",
+      "kicker": "Earnings quality",
+      "title": "Read the operating recovery beside the accounting charges",
+      "paragraphs": [
+        "Q3 FY2026 reported EPS was <strong>C$2.38</strong>, against <strong>C$3.96 adjusted</strong>; reported and adjusted ROE were 8.4% and 14.0%. Divestiture-related goodwill reductions explain much of that divergence. Our nine-month bridge attributes the C$1.409 billion increase in adjusted income to C$1.210 billion higher pre-provision profit, C$655 million lower credit provisions and C$456 million higher tax. Performing allowances account for C$439 million of the credit improvement. The calculation supports an operating recovery, while also identifying a benefit that should not automatically recur.",
+        "Adjusted earnings are useful for forecasting the continuing business because they remove specified accounting and transaction items. They also require economic judgment. Excluding an acquisition-related goodwill charge does not reimburse shareholders for the original purchase price. An analysis that accepts the recurring earnings benefit but ignores the capital loss gives an incomplete account of value creation. We therefore use adjusted common income for the earnings model, and retain reported book value and capital allocation as independent tests.",
+        "The forecast should start with actual nine-month results and an explicit fourth-quarter estimate. Annualizing the best quarter can quietly embed favorable trading activity, seasonal effects and lower preference-share distributions into every future period. Each forecast change should have a named driver: revenue, expense, impaired losses, performing allowances, taxes or shares. Earnings quality improves when ordinary customer activity carries more of the growth and the need for adjustments narrows. A widening reported-to-adjusted gap would warrant a lower confidence rating even if headline adjusted EPS meets our estimate."
+      ],
+      "sourceIds": [
+        "bmo-q3-2026"
+      ]
+    },
+    {
+      "id": "franchise",
+      "kicker": "Franchise and returns",
+      "title": "The U.S. franchise must earn back its capital burden",
+      "paragraphs": [
+        "The Bank of the West transaction was announced at <strong>US$16.3 billion</strong> and completed in February 2023. Its strategic promise was scale and a broader customer base; its economic test is the return earned on all capital committed. U.S. Banking's Q3 adjusted ROE was <strong>9.8%</strong>. A return measured after excluding acquisition goodwill can be materially different from the return on total common equity. The distinction matters: attractive returns after removing goodwill do not establish that the total acquisition investment has earned its cost.",
+        "We underwrite the U.S. opportunity through customer economics. Commercial borrowers can support payments, treasury and wealth relationships, making the total relationship more valuable than a standalone loan spread. The bank must convert that potential into durable operating deposits and fees. Growing loans faster than relationship funding can weaken the funding mix, increase marginal costs and expose the franchise to a less forgiving credit cycle. Headline balance growth is therefore insufficient evidence of success.",
+        "Canada, wealth and capital markets can generate capital and soften a weak U.S. period, but their strength also creates a temptation to overlook the largest remaining return gap. Capital-market activity and wealth fees share exposure to market conditions; they are not independent cushions in every downturn. Our base case should normalize strong market earnings rather than compound them indefinitely. The franchise earns a stronger premium when U.S. returns rise through deeper relationships and better productivity while the established businesses sustain their economics. If U.S. returns stall after credit costs normalize, the case for a higher group multiple weakens."
+      ],
+      "sourceIds": [
+        "bmo-west-terms",
+        "bmo-west-close",
+        "bmo-q3-2026"
+      ]
+    },
+    {
+      "id": "credit-capital",
+      "kicker": "Credit and capital",
+      "title": "Track loss formation and capital released, separately",
+      "paragraphs": [
+        "Q3 credit provisions were <strong>C$722 million</strong>: C$708 million impaired and C$14 million performing. The total loss rate was 41 basis points; CET1 was 13.0%. These figures are starting observations, not through-cycle forecasts. The key distinction is between losses on borrowers already in difficulty and changes in expected losses on performing exposures. A quieter allowance quarter can improve profit without proving that new problem-loan formation has stopped.",
+        "Our credit thesis requires evidence across several quarters: stable formations, manageable watch-list migration, cash recoveries and losses consistent with the risk embedded in new lending. A falling impaired-loan balance alone is insufficient because write-offs and loan sales can also reduce it. Commercial files can make quarterly losses uneven, so a single favorable quarter should not set the terminal loss assumption. Stress cases should combine weaker revenue, higher impaired losses and renewed performing allowances rather than vary only one benign input.",
+        "Portfolio exits introduce another distinction. BMO completed the 138-branch sale in September; the Transportation and Vendor Finance sale was announced with a retained minority interest. Exiting lower-return assets can improve capital efficiency, but the foregone income must leave the earnings forecast. Capital released becomes valuable only through productive reinvestment or disciplined distributions. We would not add a full capital benefit, retain all disposed earnings and assume unchanged funding costs. The clean test is whether recurring common earnings per dollar of equity improve after transaction effects settle. A rising capital ratio with declining per-share earning power would be weaker evidence than the ratio alone suggests."
+      ],
+      "sourceIds": [
+        "bmo-q3-2026",
+        "bmo-branch-close",
+        "bmo-transport"
+      ]
+    },
+    {
+      "id": "distributions",
+      "kicker": "Dividends and buybacks",
+      "title": "Cash returns help, but the repurchase price matters",
+      "paragraphs": [
+        "The declared quarterly dividend is <strong>C$1.71</strong>, payable November 26 to holders of record October 30. Annualizing that declaration gives C$6.84, a <strong>2.89% yield</strong> at the reference price and approximately 47.6% of our trailing adjusted EPS measure. The annualized dividend is a convention, not a promise of future payments. Its contribution to total return is meaningful, but a low earnings multiple or an attractive entry price cannot be inferred from dividend continuity alone.",
+        "The September authorization permits up to <strong>25 million</strong> share repurchases through September 7, 2027. It is permission to buy, not proof of execution. The approval release identified 695.1 million shares outstanding at August 31. Our model must reconcile future share reductions with the cash and equity spent to achieve them. Buying above book value can increase EPS while reducing book value per remaining share; whether that creates value depends on the return the repurchased earnings stream offers compared with other uses of capital.",
+        "The Moneris agreement adds a separate capital event: BMO expects an approximately C$600 million after-tax gain and roughly 15 basis points of CET1 benefit on closing, anticipated by the end of Q1 FY2027. We exclude that gain from recurring earning power. Sale proceeds, accounting gains and free capital are different quantities. Our preferred distribution policy retains capacity for credible lending opportunities and adverse credit outcomes, then repurchases shares when their prospective return is attractive. Maximizing the near-term EPS lift would be a weaker objective than improving long-term value per share."
+      ],
+      "sourceIds": [
+        "bmo-dividend",
+        "bmo-price",
+        "bmo-fy2025",
+        "bmo-q3-2026",
+        "bmo-ncib",
+        "bmo-moneris"
+      ]
+    },
+    {
+      "id": "catalysts-risks",
+      "kicker": "Catalysts and falsifiers",
+      "title": "Execution must outpace what the valuation already assumes",
+      "paragraphs": [
+        "The next scheduled earnings checkpoint is <strong>December 2, 2026</strong>. The useful catalyst is a result that changes expected sustainable earning power, rather than a disposal gain that was already anticipated. We will examine whether stronger relationships support revenue after portfolio exits, expenses grow more slowly than recurring revenue, and U.S. returns improve without larger performing-allowance releases. The next operating checkpoint is evidence that the U.S. business can lift recurring returns on total equity after credit and transaction effects normalize. Better business performance still needs an attractive entry valuation to create a strong investment return.",
+        "A stronger outcome would combine durable deposit and fee growth, disciplined credit selection and productive capital redeployment. That combination can support both faster EPS growth and greater confidence in the earnings multiple. A weaker outcome could begin with modest operating disappointment and become more severe if investors simultaneously demand a higher equity return. This is why the scenario model must vary earnings and valuation together. A bank can remain profitable and well capitalized while its shares decline substantially as the market removes a premium.",
+        "Our thesis would need revision if U.S. return improvement stalls after credit normalization, core costs outrun revenue, or strong market businesses conceal disappointing customer-banking economics. Trade disruption could affect commercial borrowers on both sides of the border; funding competition can pressure margins before a clear deterioration appears in credit losses. Transaction execution and minority investments add further uncertainty. We would also challenge the favorable case if capital release is repeatedly needed to sustain distribution targets. The evidence that would change our view is explicit: recurring return on total equity, realized common-income growth and disciplined purchase prices for both acquisitions and the bank's own shares."
+      ],
+      "sourceIds": [
+        "bmo-events"
+      ]
+    }
+  ],
+  "id": "bmo"
+}

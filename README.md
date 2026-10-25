@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 142 visual planning guides and 576
+charts**. The library now leads with 143 visual planning guides and 581
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -391,3 +391,9 @@ return and log-return standard deviation separately. No return parameters are
 fitted to securities or historical observations. Quantiles are analytical;
 conditional probabilities use a tested normal-CDF approximation. The percentile
 bands describe each date, not the probability that an entire path stays inside.
+
+Optional loan-insurance illustrations hold usable loan proceeds constant,
+keep premium principal separate from financing interest, and do not assume
+equivalent coverage across independently entered premium quotes. Premium-related
+cash schedules exclude the common base loan payment. No claim, premium refund
+or policy eligibility is calculated.

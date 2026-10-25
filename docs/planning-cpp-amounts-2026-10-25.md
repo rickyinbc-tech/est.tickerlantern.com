@@ -68,7 +68,7 @@ labels, focused-axis bounds and distinct money ticks, independent cash sums,
 source/scenario independence, additional-cash sufficiency, zero/surplus cases,
 all supported field extrema, invalid months and source/editorial scope.
 
-Full JavaScript suite: 1252 passed. Python suite: 122 passed.
+Full JavaScript suite: 1307 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/data tables,
 no overflow, fixed official values under cash edits, zero shortfall, extreme
 negative reserve, invalid month retention, reset and disclosure. All four

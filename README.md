@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 207 visual planning guides and 843
+charts**. The library now leads with 208 visual planning guides and 847
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -126,6 +126,10 @@ A return-shape guide compares two completely specified discrete distributions
 with identical mean and standard deviation. Outcome probabilities, CDF steps,
 expected wealth and goal failure remain separate. All probabilities are
 original assumptions, verified through deterministic outcome enumeration.
+A tuition-credit guide adds four graphics separating eligible tuition, baseline
+credit value, tax capacity and matched prepayment refunds. It excludes complete
+return calculations, top-up rules, transfers and carryforward balances; its
+source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

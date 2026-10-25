@@ -1,4 +1,5 @@
 import { sensitivityGuides } from './planning-sensitivity-guides.js';
+import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
 import { tailShapeGuides } from './planning-tail-shape-guides.js';
 import { ageIncomeGuides } from './planning-age-income-guides.js';
 import { earningsCashflowGuides } from './planning-earnings-cashflow-guides.js';
@@ -115,6 +116,7 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...sensitivityGuides,
+  ...tuitionCreditCapacityGuides,
   ...tailShapeGuides,
   ...ageIncomeGuides,
   ...earningsCashflowGuides,

@@ -670,3 +670,7 @@ and room capacity while conserving gross market value; see
 
 Four charts explain annual fee allocation, minimums, fixed charges and threshold repricing. See
 `docs/planning-fee-slices-2026-10-25.md` for sources and checks.
+
+`planning-cpp-amounts` retains dated new-beneficiary means and new-start maxima
+beside a separate editable household cash ledger; see
+`docs/planning-cpp-amounts-2026-10-25.md`.

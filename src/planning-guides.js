@@ -1,3 +1,4 @@
+import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
 import { feeSlicesGuides } from './planning-fee-slices-guides.js';
 import { tfsaKindGuides } from './planning-tfsa-kind-guides.js';
 import { bondAccrualGuides } from './planning-bond-accrual-guides.js';
@@ -150,6 +151,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...cppAmountsGuides,
   ...feeSlicesGuides,
   ...tfsaKindGuides,
   ...bondAccrualGuides,

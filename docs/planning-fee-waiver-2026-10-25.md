@@ -58,7 +58,7 @@ analytical thresholds, partial-year patterns, zero cases, monotonicity,
 waterfall and matrix reconciliation, finite boundary rendering and invalid
 whole-year/month inputs. All supported input minima and maxima are exercised.
 
-Full JavaScript suite: 1171 passed. Python suite: 122 passed.
+Full JavaScript suite: 1208 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/tables, no page
 overflow, zero-yield labels, zero qualifying months, a negative resource
 difference, invalid fractional input retention, reset and data disclosure.

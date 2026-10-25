@@ -10,6 +10,7 @@ export function format(value,unit,compact=false) {
     return Math.round(value).toLocaleString('en-CA');
   }
   if(unit==='percent')return (value*100).toFixed(compact?1:2)+'%';
+  if(unit==='pp')return (compact?Number((value*100).toFixed(2)):(value*100).toFixed(2))+' pp';
   if(unit==='decimal')return value.toFixed(1);
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
@@ -25,7 +26,7 @@ export function format(value,unit,compact=false) {
 const txt=(x,y,value,anchor='start',extra='')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" ${extra}>${escapeHTML(value)}</text>`;
 const line=(x1,y1,x2,y2,cls='plot-grid')=>`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
 const niceMax=value=>{if(value<=0)return 1;const p=10**Math.floor(Math.log10(value));const n=value/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;};
-const legend=(names,fill=false)=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}${fill?' plot-key-fill':''}" aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
+const legend=(names,fill=false,series=null)=>`<ul class="plot-legend">${names.map((name,i)=>`<li><span class="plot-key plot-key-${i}${fill?' plot-key-fill':''}"${series&&!fill?` style="border-color:${colors[i%colors.length]};border-top-style:${series[i].dash?'dashed':'solid'}"`:''} aria-hidden="true"></span>${escapeHTML(name)}</li>`).join('')}</ul>`;
 function svgShell(spec,width,height,inner,description) {
   return `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="${spec.id}-title ${spec.id}-desc"><title id="${spec.id}-title">${escapeHTML(spec.title)}</title><desc id="${spec.id}-desc">${escapeHTML(description)} Exact values are available in the chart data table below.</desc>${inner}</svg>`;
 }
@@ -101,7 +102,7 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)))+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.unit==='money'?'CAD':spec.unit)+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
   const left=52,right=spec.unit==='percent'?30:18,top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
@@ -111,7 +112,8 @@ function barPlot(spec,width) {
   const max=niceMax(Math.max(0,...spec.rows.map(rowMax))),plotWidth=width-left-right;
   const x=v=>left+v/max*plotWidth;
   let body='';
-  for(let i=0;i<=4;i++){const v=max*i/4;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
+  const tickCount=spec.axisTicks??4;
+  for(let i=0;i<=tickCount;i++){const v=max*i/tickCount;body+=line(x(v),top+17,x(v),height-32)+txt(x(v),height-10,format(v,spec.unit,true),'middle');}
   spec.rows.forEach((r,index)=>{
     const y=top+index*rowHeight;
     let label=r.label;
@@ -185,7 +187,7 @@ function waterfallPlot(spec,width){
   const low=-niceMax(Math.abs(Math.min(0,...rows.flatMap(r=>[r.start,r.end]))));
   const high=niceMax(Math.max(0,...rows.flatMap(r=>[r.start,r.end])));
   const lo=rows.every(r=>r.start>=0&&r.end>=0)?0:low,hi=rows.every(r=>r.start<=0&&r.end<=0)?0:high;
-  const span=Math.max(1,hi-lo),height=top+rows.length*rowHeight+42;
+  const span=hi>lo?hi-lo:1,height=top+rows.length*rowHeight+42;
   const x=v=>left+(v-lo)/span*(width-left-right);
   let body='';
   const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+span*i/4),0])];

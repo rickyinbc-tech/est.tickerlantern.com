@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 288 visual planning guides and 1189
+charts**. The library now leads with 294 visual planning guides and 1215 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -163,6 +163,10 @@ A complete invented fund cohort remains inspectable beside an end-year
 directory filter. Count weights reconcile subgroup means, all original
 positions retain their known ending values, and an omitted-return sensitivity
 shows why the reporting gap cannot be signed from a missing-record label.
+A retirement replacement-ratio guide reconciles gross pay, disjoint current
+cash uses and a retirement spending budget. Explicit average tax assumptions
+translate gross receipts into cash; continuing debt and added spending remain
+visible. A one-year cash excess is not treated as lifetime retirement funding.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -780,6 +784,13 @@ Four charts compare equal-service cycles, annual equivalents and actual replacem
 
 A self-employed pricing guide adds four charts separating revenue growth from unit contribution and operating surplus. Its exact price-volume bridge values additional units at the new contribution, while whole-unit preservation targets remain distinct from operating break-even and a separate capacity assumption. Non-positive discounted contribution produces an explicit unavailable recovery target.
 
+### Gift-credit bonuses, redemption and matched cash prices
+
+`/research/gift-card-bonus-redemption-cash-price-comparison` separates bonus-on-cash percentages, conditional full-basket discounts, unspent restricted credit and cumulative cash outlays in five original hypothetical charts. The comparison does not write off unused credit or label its outlay gap as an investment loss. Paid and bonus credit share one explicitly assumed noncash pool, with actual terms outside the model. Tests check denominator identities, partial and full use, cash catch-up thresholds, monthly timing and finite boundaries; the browser companion also checks small negative/zero axis-label separation on mobile.
+
+A daily-reset compounding guide adds four charts using two original synthetic benchmark paths with an identical endpoint. Ideal daily-multiple accounts remain separate from a multiple-of-full-period arithmetic reference. Tests verify daily identities, exact paired round trips, positive-trend outperformance of the reference and endpoint invariance when an unchanged return set is reordered. No real ETF, historical price or return forecast is used.
+
 ## Rights-issue entitlements and subscription funding
 
-Four charts separate a theoretical capital adjustment, entitlement value and the cash required to subscribe. See `docs/planning-rights-cash-2026-10-25.md` for assumptions, sources and checks.
+Four charts separate theoretical entitlement value and subscription cash funding. See
+`docs/planning-rights-cash-2026-10-25.md` for sources and checks.

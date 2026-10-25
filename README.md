@@ -795,6 +795,10 @@ A daily-reset compounding guide adds four charts using two original synthetic be
 Four charts separate theoretical entitlement value and subscription cash funding. See
 `docs/planning-rights-cash-2026-10-25.md` for sources and checks.
 
+`planning-resp-aip` separates a hypothetical RESP contribution refund, benefit
+repayment and accumulated income payment; see
+`docs/planning-resp-aip-2026-10-25.md`.
+
 `planning-joint-owner` combines joint deposits by member and owner set before
 applying a conditional limit; see
 `docs/planning-joint-owner-2026-10-25.md`.

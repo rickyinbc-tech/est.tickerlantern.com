@@ -1,6 +1,6 @@
 import { definitions, defaults, planningResult } from './planning-models.js';
 export const escapeHTML = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const colors=['#087f76','#102f50','#b8822e'];
+const colors=['#087f76','#102f50','#b8822e','#6758a6','#bf5c4b'];
 export function format(value,unit,compact=false) {
   if(value==null)return unit==='months'?'NR':'Unavailable';
   if(unit==='count') {

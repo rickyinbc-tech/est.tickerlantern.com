@@ -1,3 +1,4 @@
+import { labourBudgetGuides } from './planning-labour-budget-guides.js';
 import { disabilityPrevalenceGuides } from './planning-disability-prevalence-guides.js';
 import { gainTimingGuides } from './planning-gain-timing-guides.js';
 import { settlementCashGuides } from './planning-settlement-cash-guides.js';
@@ -104,6 +105,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...labourBudgetGuides,
   ...disabilityPrevalenceGuides,
   ...gainTimingGuides,
   ...settlementCashGuides,

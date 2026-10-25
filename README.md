@@ -554,3 +554,10 @@ The repair-or-replace guide compares forward cash from one decision date through
 
 Three charts retain a later required payment and inspect multiple IRR solutions. See
 `docs/planning-multiple-irr-2026-10-25.md` for sources and checks.
+
+## Credit usage and the tax-return settlement
+
+Four charts separate tax-offset credit value, current non-refundable usage
+and payments already made. A modeled refund can return prior payments without
+paying out unapplied credit. See
+`docs/planning-credit-settlement-2026-10-25.md` for scope and validation.

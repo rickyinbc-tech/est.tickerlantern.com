@@ -1,3 +1,4 @@
+import { fundCostBaseGuides } from './planning-fund-cost-base-guides.js';
 import { charitableGuides } from './planning-charitable-guides.js';
 import { bondPricingGuides } from './planning-bond-pricing-guides.js';
 import { bondReinvestmentGuides } from './planning-bond-reinvestment-guides.js';
@@ -87,6 +88,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...fundCostBaseGuides,
   ...charitableGuides,
   ...bondPricingGuides,
   ...bondReinvestmentGuides,

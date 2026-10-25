@@ -1,4 +1,6 @@
 import { taxContributionGuides } from './planning-tax-contribution-guides.js';
+import { jointLongevityGuides } from './planning-joint-longevity-guides.js';
+import { creditUseGuides } from './planning-credit-use-guides.js';
 import { benefitsCreditGrowthGuides } from './planning-benefits-credit-growth-guides.js';
 import { variablePaymentGuides } from './planning-variable-payment-guides.js';
 import { incomeLedgerGuides } from './planning-income-ledgers-guides.js';
@@ -38,6 +40,8 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...taxContributionGuides,
+  ...jointLongevityGuides,
+  ...creditUseGuides,
   ...benefitsCreditGrowthGuides,
   ...variablePaymentGuides,
   ...incomeLedgerGuides,

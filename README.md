@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 155 visual planning guides and 629
+charts**. The library now leads with 159 visual planning guides and 646
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -433,3 +433,9 @@ keep premium principal separate from financing interest, and do not assume
 equivalent coverage across independently entered premium quotes. Premium-related
 cash schedules exclude the common base loan payment. No claim, premium refund
 or policy eligibility is calculated.
+
+The vacation-commitment illustration compares the same nights actually used,
+keeps annual dues payable in zero-use cases, separates a possible assessment,
+and distinguishes nominal cash costs from discounted totals. The reporting
+window does not establish contract termination, resale value or cancellation
+rights. No proceeds from unused rights, exit receipt or property value is added.

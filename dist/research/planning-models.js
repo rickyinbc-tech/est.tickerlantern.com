@@ -1,3 +1,4 @@
+import { incomeTimingDefinitions, incomeTimingResult } from './planning-income-timing-models.js';
 import { savingObligationDefinitions, savingObligationResult } from './planning-saving-obligations-models.js';
 import { choicesCashDefinitions, choicesCashResult } from './planning-choices-cash-models.js';
 import { homeCarSurvivorDefinitions, homeCarSurvivorResult } from './planning-home-car-survivor-models.js';
@@ -50,8 +51,8 @@ const coreDefinitions = {
     ['inflation','Annual withdrawal increase (%)',2,0,5,.5]
   ]}
 };
-export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions};
-export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear'];
+export const definitions = {...coreDefinitions,...additionalDefinitions,...decisionDefinitions,...resilienceDefinitions,...lifeEventDefinitions,...incomeCreditDefinitions,...taxHomeDefinitions,...transitionDefinitions,...fundingChoiceDefinitions,...priorityDefinitions,...accountUseDefinitions,...costTimingDefinitions,...householdStepDefinitions,...longerBudgetDefinitions,...paymentWorkDefinitions,...protectionTransitionDefinitions,...homeCarSurvivorDefinitions,...choicesCashDefinitions,...savingObligationDefinitions,...incomeTimingDefinitions};
+export const wholeInputKeys=['years','months','study','age','loanYears','claims','paidMonths','prepareMonths','currentYears','newYears','lowMonths','wait','startYear','workYears','dueMonth','receiptMonth','sickMonths','benefitMonths','deadlineA','deadlineB','deadlineC','amortYears','promoMonths','claimMonths','delay','repayMonths','collectionDelay','roofCycle','heatCycle','applianceCycle','savingMonth','loanMonths','gapWeeks','standardWeeks','extendedWeeks','startAge','previousYears','delayYears','remainingYears','firstYear','changeAfter','firstPayday','billDay'];
 export function defaults(kind) { return Object.fromEntries(definitions[kind].fields.map(([key,,value])=>[key,value])); }
 export function validInputs(kind, input) {
   return definitions[kind].fields.every(([key,,,min,max])=> Number.isFinite(input[key]) && input[key]>=min && input[key]<=max && (!wholeInputKeys.includes(key)||Number.isInteger(input[key])));
@@ -99,6 +100,7 @@ export function retirementPath(initial, withdrawal, inflation, returns) {
 const series = (name, rows, extra={}) => ({name,rows,...extra});
 export function planningResult(kind,input=defaults(kind)) {
   if(!validInputs(kind,input))throw Error('Inputs are outside the supported scenario range.');
+  if(incomeTimingDefinitions[kind])return incomeTimingResult(kind,input);
   if(additionalDefinitions[kind])return additionalResult(kind,input);
   if(decisionDefinitions[kind])return decisionResult(kind,input);
   if(resilienceDefinitions[kind])return resilienceResult(kind,input);

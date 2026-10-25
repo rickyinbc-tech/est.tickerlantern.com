@@ -1,4 +1,15 @@
 import { loanRateOrderGuides } from './planning-loan-rate-order-guides.js';
+import { incomeTransitionGuides } from './planning-income-transition-guides.js';
+import { aiTimeGuides } from './planning-ai-time-guides.js';
+import { tieredSavingsGuides } from './planning-tiered-savings-guides.js';
+import { unpaidTimeGuides } from './planning-unpaid-time-guides.js';
+import { capitalLossGuides } from './planning-capital-loss-guides.js';
+import { maturityAverageGuides } from './planning-maturity-average-guides.js';
+import { repeatedRiskGuides } from './planning-repeated-risk-guides.js';
+import { wholeReinvestGuides } from './planning-whole-reinvest-guides.js';
+import { repeatRiskGuides } from './planning-repeat-risk-guides.js';
+import { balancedTimingGuides } from './planning-balanced-timing-guides.js';
+import { rewardRedemptionGuides } from './planning-reward-redemption-guides.js';
 import { shareSplitGuides } from './planning-share-split-guides.js';
 import { flatLoanGuides } from './planning-flat-loan-guides.js';
 import { cppAmountsGuides } from './planning-cpp-amounts-guides.js';
@@ -162,6 +173,17 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...loanRateOrderGuides,
+  ...incomeTransitionGuides,
+  ...aiTimeGuides,
+  ...tieredSavingsGuides,
+  ...unpaidTimeGuides,
+  ...capitalLossGuides,
+  ...maturityAverageGuides,
+  ...repeatedRiskGuides,
+  ...wholeReinvestGuides,
+  ...repeatRiskGuides,
+  ...balancedTimingGuides,
+  ...rewardRedemptionGuides,
   ...shareSplitGuides,
   ...flatLoanGuides,
   ...cppAmountsGuides,

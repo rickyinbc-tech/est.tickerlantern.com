@@ -779,3 +779,7 @@ Four charts compare equal-service cycles, annual equivalents and actual replacem
 `docs/planning-equivalent-cost-2026-10-25.md` for sources and checks.
 
 A self-employed pricing guide adds four charts separating revenue growth from unit contribution and operating surplus. Its exact price-volume bridge values additional units at the new contribution, while whole-unit preservation targets remain distinct from operating break-even and a separate capacity assumption. Non-positive discounted contribution produces an explicit unavailable recovery target.
+
+## Rights-issue entitlements and subscription funding
+
+Four charts separate a theoretical capital adjustment, entitlement value and the cash required to subscribe. See `docs/planning-rights-cash-2026-10-25.md` for assumptions, sources and checks.

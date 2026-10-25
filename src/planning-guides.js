@@ -1,3 +1,4 @@
+import { rightsCashGuides } from './planning-rights-cash-guides.js';
 import { survivorRecordGuides } from './planning-survivor-records-guides.js';
 import { priceCutGuides } from './planning-price-cut-guides.js';
 import { equivalentCostGuides } from './planning-equivalent-cost-guides.js';
@@ -193,6 +194,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...rightsCashGuides,
   ...survivorRecordGuides,
   ...priceCutGuides,
   ...equivalentCostGuides,

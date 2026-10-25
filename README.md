@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 182 visual planning guides and 741 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 191 visual planning guides and 779 charts, with editable assumptions and inspectable data tables.
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -110,6 +111,11 @@ A fund-cost guide reconciles reinvested distributions, positive cash return
 of capital and the adjusted cost base before an all-unit sale. Units, NAV,
 retained cash and gain are separate records; no personal tax or inclusion rate
 is calculated. Fractional units keep full precision until display.
+Advice-fee, refundable-booking and renewing-GIC-income guides add twelve
+interactive charts. Eight checked FCAC advice-source observations stay fixed
+while independent fee schedules change. The other models separate conditional
+refunds from weighted costs, and renewed principal from spendable interest.
+Source scopes and checks are recorded in `docs/advice-booking-ladder-2026-10-25.md`.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -504,9 +510,12 @@ Reproduce the source snapshot with `python3 scripts/extract-asset-resilience.py 
 Five charts reconcile purchases, card repayments and internal savings transfers. See
 `docs/planning-card-ledger-2026-10-25.md` for sources and checks.
 
+`planning-illness-cash` adds independent benefit cash calendars; see
+`docs/planning-illness-cash-2026-10-25.md` for scope and validation.
+
+The extended-warranty guide separates whole-window repair probability, conditional eligibility and the capped provider payment in five interactive charts. All probabilities and contract terms are hypothetical. The model counts the upfront price once in every state, distinguishes expected cost from an actual repair reserve, and handles infeasible cost-equality thresholds explicitly. State arithmetic, boundary cases and mobile chart layout are verified.
+
 ## Warranty costs and repair-day reserves
 
-Four charts separate a two-outcome expected-cost comparison from the cash
-required in a specified repair state. Probabilities and contract terms are
-explicit hypothetical assumptions. See
-`docs/planning-warranty-risk-2026-10-25.md` for scope and verification.
+Four charts separate expected repair costs from the cash required in each outcome. See
+`docs/planning-warranty-risk-2026-10-25.md` for sources and checks.

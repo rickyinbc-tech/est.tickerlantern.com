@@ -66,7 +66,7 @@ single-count CAD expenses, both waterfalls, stress-row/matrix formulas,
 rounded-label consistency at high precision, all supported field extrema,
 finite accessible rendering, invalid inputs and editorial limits.
 
-Full JavaScript suite: 1386 passed. Python suite: 122 passed.
+Full JavaScript suite: 1417 passed. Python suite: 122 passed.
 Browser checks at 1440, 390 and 320 pixels verify four figures/data tables,
 no page overflow, equal USD proceeds, unchanged historical cost under sale
 edits, equal rates, expense-only loss, zero result, collapsed zero-proceeds

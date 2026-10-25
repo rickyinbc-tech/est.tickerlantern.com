@@ -1,3 +1,4 @@
+import { homeCarSurvivorGuides } from './planning-home-car-survivor-guides.js';
 import { protectionTransitionGuides } from './planning-protection-transition-guides.js';
 import { paymentWorkGuides } from './planning-payments-work-guides.js';
 import { longerBudgetGuides } from './planning-longer-budgets-guides.js';
@@ -14,6 +15,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...homeCarSurvivorGuides,
   ...protectionTransitionGuides,
   ...paymentWorkGuides,
   ...longerBudgetGuides,

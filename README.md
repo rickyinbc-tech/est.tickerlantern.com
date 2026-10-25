@@ -9,7 +9,7 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with fifty-one visual planning guides and 201
+charts**. The library now leads with fifty-four visual planning guides and 214
 charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
@@ -27,7 +27,9 @@ self-employed cash ledgers, recurring home-replacement reserves and charitable
 giving cash schedules, RRSP withholding versus final tax, a dated OAS recovery
 calendar, return-to-work cash budgets beside child-care expense observations,
 one-name deposit coverage with retained interest, refinancing cost recovery and
-separate cash budgets for a household separation.
+separate cash budgets for a household separation, incremental energy-upgrade
+payback, lease-return versus buy-and-sell car costs and retirement survivor
+income receipt gaps.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -95,6 +97,10 @@ without verifying actual membership or eligibility or forecasting future limits.
 the same principal and amortization and pays fees from cash, separating payment
 relief from interest-cost advantage. Separation budgets assume independently
 confirmed net transfers and cash access; they do not calculate legal entitlements.
+Energy-upgrade cash recovery is separate from nominal discounted value. Car
+comparisons sell the owned vehicle and repay principal at the lease-return date
+so both cases finish without a car or loan. Survivor income is independently
+entered, without statutory benefit percentages or automatic arrears receipts.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

@@ -9,9 +9,9 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with sixty-nine visual planning guides and 276
-charts, with new guides on shrinking credit-card minimum payments, a pay-rise
-saving rule and reserve recovery across repeated shocks. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with 72 visual planning guides and 288
+charts, including English articles on Canadian wealth statistics and liquidity,
+retirement spending cuts, and gifts to adult children. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -115,6 +115,13 @@ BNPL examples aggregate three hypothetical four-payment contracts. Buy-only
 allocation keeps prices and existing holdings fixed, with no tax or security
 recommendation. Parental-leave examples keep published gross percentages
 separate from independent net cash inputs over a common 78-week window.
+
+`planning-wealth-flex-models.js` preserves six dated public SFS medians. Validate
+them with `python3 scripts/check-planning-wealth-source.py qa/statcan-wealth-2023.html`.
+Its observation charts stay fixed when the separate cash inputs change.
+The retirement cut rule separates voluntary reductions from unfunded requests.
+The gift ledger caps payments and labels gifts outside the selected horizon.
+Both models disclose payment timing and preserve full cash reconciliations.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 191 visual planning guides and 779 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 193 visual planning guides and 787
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with new guides on job-offer cash and commuting costs, losses before a
@@ -519,6 +520,9 @@ The extended-warranty guide separates whole-window repair probability, condition
 
 Four charts separate expected repair costs from the cash required in each outcome. See
 `docs/planning-warranty-risk-2026-10-25.md` for sources and checks.
+
+`planning-billable-capacity` adds billable hours and annual cash allocation; see
+`docs/planning-billable-capacity-2026-10-25.md` for scope and validation.
 
 ### Upfront receipts and dated payment value
 

@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 280 visual planning guides and 1155
+charts**. The library now leads with 282 visual planning guides and 1165 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
@@ -156,6 +156,10 @@ An exact five-state loss model distinguishes inverse-cumulative value at risk,
 expected shortfall over an exact probability tail and the largest specified
 loss. Boundary probability mass is allocated explicitly, including signed
 quantiles; all outcomes and probabilities are invented.
+A commuting guide retains six May 2025 source figures with their commuter
+denominator. An independent attendance model separates committed pass cash,
+per-use fares, avoidable car cash and travel hours. It does not treat group
+means as personal routes or continuing ownership costs as cash savings.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

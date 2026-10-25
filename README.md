@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 207 visual planning guides and 843
+charts**. The library now leads with 208 visual planning guides and 848
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -576,3 +576,13 @@ Brueckner, A. M. (2026). [Scientific Agent Skills: A Library of Procedural
 Knowledge for Research Agents](https://doi.org/10.48550/arXiv.2609.00065).
 Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflow
 reference, not financial evidence or a market-data source.
+
+The original `/research/buybacks-dilution-per-share-value` route now contains
+five charts separating share-count, weighted EPS and assumed equity-value
+arithmetic. Its three original numerical cases remain separate. The coherent
+interactive extension states its additional5,000million equity assumption,
+keeps income fixed and does not infer award expense or legal share retirement.
+The library hides its prose-only section and jump link when that registry is
+empty; all original routes remain available as visual articles. Sources and
+exact-arithmetic checks are in
+`docs/buyback-dilution-visual-upgrade-source-research-2026-10-25.md`.

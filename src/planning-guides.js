@@ -1,3 +1,4 @@
+import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
 import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
 import { tailShapeGuides } from './planning-tail-shape-guides.js';
 import { ageIncomeGuides } from './planning-age-income-guides.js';
@@ -114,6 +115,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...buybackDilutionGuides,
   ...tuitionCreditCapacityGuides,
   ...tailShapeGuides,
   ...ageIncomeGuides,

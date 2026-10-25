@@ -77,10 +77,12 @@ function scatterPlot(spec,width) {
       const collisions=spec.rows.filter(r=>overlap(box,{left:x(r.x)-8,right:x(r.x)+8,top:y(r.value)-8,bottom:y(r.value)+8})).length+placed.filter(b=>overlap(box,b)).length;
       return {tx,ty,anchor,box,score:collisions+(outside?100:0)};
     });
-    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
+    const chosen=candidates.reduce((best,c)=>c.score<best.score?c:best);placed.push(chosen.box);
+    if(spec.labelLeaders)body+=line(px,py,chosen.tx+(chosen.anchor==='end'?3:-3),chosen.ty-4,'plot-grid');
+    body+=txt(chosen.tx,chosen.ty,row.label,chosen.anchor);
   }
   body+=txt(left+(width-left-right)/2,height-7,spec.xLabel,'middle');
-  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. Filled larger marker identifies the selected allocation; hollow markers are alternatives.')+'<p class="plot-scale">Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.</p>';
+  return `<p class="plot-unit">Vertical axis: ${escapeHTML(spec.yLabel)}</p>`+svgShell(spec,width,height,body,'Scatter chart. Horizontal axis: '+spec.xLabel+'. Vertical axis: '+spec.yLabel+'. '+(spec.pointContext??'Filled larger marker identifies the selected allocation; hollow markers are alternatives.'))+'<p class="plot-scale">'+escapeHTML(spec.pointContext??'Filled larger point: selected allocation. Hollow points: alternative allocations. All points are calculated scenarios, not observed annual returns.')+'</p>';
 }
 function linePlot(spec,width) {
   const height=310,left=65,right=20,top=22,bottom=52;
@@ -154,6 +156,26 @@ function signedBarPlot(spec,width) {
   });
   body+=line(left,height-32,width-right,height-32,'plot-axis');
   return svgShell(spec,width,height,body,'Horizontal signed bars around an explicit zero axis. Negative values extend left of zero, and positive values extend right. Signs and exact values are included in labels and the data table.');
+}
+function tornadoPlot(spec,width) {
+  if(!spec.rows.length||spec.rows.some(r=>!Number.isFinite(r.low)||!Number.isFinite(r.high)))throw Error('Sensitivity endpoints must be finite.');
+  const left=65,right=24,top=12,rowHeight=93,height=top+spec.rows.length*rowHeight+43;
+  const values=spec.rows.flatMap(r=>[r.low,r.high]),minimum=Math.min(0,...values),maximum=Math.max(0,...values);
+  const lo=minimum<0?-niceMax(-minimum):0,hi=maximum>0?niceMax(maximum):minimum<0?0:1;
+  const x=v=>left+(v-lo)/(hi-lo)*(width-left-right);
+  let body='';
+  const ticks=[...new Set([...Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4),0])].sort((a,b)=>a-b);
+  for(const value of ticks){if(value!==0&&value!==lo&&value!==hi&&Math.abs(x(value)-x(0))<38)continue;body+=line(x(value),top+20,x(value),height-33,value===0?'plot-axis':'plot-grid')+txt(x(value),height-10,format(value,spec.unit,true),'middle');}
+  spec.rows.forEach((row,index)=>{
+    const y=top+index*rowHeight;
+    body+=txt(left,y+12,row.label);
+    body+=`<rect x="${x(Math.min(row.low,row.high))}" y="${y+25}" width="${Math.abs(x(row.high)-x(row.low))}" height="14" fill="#dce8eb"/>`;
+    body+=`<circle cx="${x(row.low)}" cy="${y+32}" r="4.5" fill="${colors[0]}" stroke="${colors[0]}" stroke-width="1.8"/><circle cx="${x(row.high)}" cy="${y+32}" r="4.5" fill="white" stroke="${colors[1]}" stroke-width="2"/>`;
+    body+=txt(left,y+59,'Lower input: '+format(row.low,spec.unit),'start','class="plot-value"');
+    body+=txt(left,y+78,'Higher input: '+format(row.high,spec.unit),'start','class="plot-value"');
+  });
+  body+=line(left,height-33,width-right,height-33,'plot-axis');
+  return '<p class="plot-unit">Filled teal marker: lower input. Open navy marker: higher input. Zero means no change from the baseline gap.</p>'+svgShell(spec,width,height,body,'One-at-a-time sensitivity chart. Each neutral bar joins the output changes at the lower and higher tested input. Negative changes reduce the gap; positive changes increase it. Ranges are authored scenarios, not confidence intervals or probabilities.');
 }
 function heatPlot(spec,width) {
   const left=width<450?77:110,right=10,top=43,cellHeight=56;
@@ -229,20 +251,21 @@ function returnsPlot(spec,width) {
 }
 function chartTable(spec) {
   let headers,rows;
-  if(spec.type==='scatter'){headers=['Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
+  if(spec.type==='scatter'){headers=[spec.pointLabelHeader??'Allocation',spec.xLabel,spec.yLabel];rows=spec.rows.map(r=>[r.label,format(r.x,spec.xUnit),format(r.value,spec.unit)]);}
+  else if(spec.type==='tornado'){headers=['Assumption','Lower tested input','Change in gap at lower input','Higher tested input','Change in gap at higher input'];rows=spec.rows.map(r=>[r.label,r.lowLabel,format(r.low,spec.unit),r.highLabel,format(r.high,spec.unit)]);}
   else if(spec.type==='fan'){headers=[spec.xLabel,'5th percentile','25th percentile','Median','75th percentile','95th percentile'];rows=spec.rows.map(r=>[r.x,...['low','q25','median','q75','high'].map(key=>format(r[key],spec.unit))]);}
   else if(spec.type==='waterfall'){let cumulative=0;headers=['Step','Change','Running total'];rows=spec.rows.map(r=>{cumulative+=r.value;return [r.label,format(r.value,spec.unit),format(cumulative,spec.unit)];});rows.push([spec.totalLabel||'Net total','—',format(cumulative,spec.unit)]);}
   else if(spec.series){headers=[spec.xLabel,'Series','Value'];rows=spec.series.flatMap(s=>s.rows.map(r=>[r.label??r.x,s.name,format(r.value,spec.unit)]));}
   else if(spec.type==='heatmap'){headers=['Assumption',...spec.columns];rows=spec.rows.map(r=>[r.label,...r.values.map(v=>v==null&&spec.unavailableLabel?spec.unavailableLabel:format(v,spec.unit))]);}
-  else if(spec.seriesNames){headers=['Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
-  else if(spec.type==='intervalbar'){headers=['Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
-  else {headers=['Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
+  else if(spec.seriesNames){headers=[spec.rowLabel??'Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
+  else if(spec.type==='intervalbar'){headers=[spec.rowLabel??'Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
+  else {headers=[spec.rowLabel??'Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
   const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='percent'?'percent':spec.unit);
   return `<details class="plot-data"><summary>View chart data</summary><div class="guide-table" tabindex="0" role="region" aria-label="${escapeHTML(spec.title)} data"><table><caption>${escapeHTML(spec.title)} · ${escapeHTML(tableUnit)}</caption><thead><tr>${headers.map(h=>`<th scope="col">${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>'<tr>'+row.map((v,i)=>i?`<td>${escapeHTML(v)}</td>`:`<th scope="row">${escapeHTML(v)}</th>`).join('')+'</tr>').join('')}</tbody></table></div></details>`;
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
-  const chart=spec.type==='scatter'?scatterPlot(spec,width):spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
+  const chart=spec.type==='tornado'?tornadoPlot(spec,width):spec.type==='scatter'?scatterPlot(spec,width):spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
   return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {

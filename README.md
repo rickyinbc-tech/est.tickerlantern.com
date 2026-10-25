@@ -9,8 +9,8 @@ The website compares 21 exact benchmarks and always models five holding years. I
 ## Run and verify
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with thirty-six visual planning guides and 139
-interactive figures, covering saving, inflation, reserves, debt, retirement,
+charts**. The library now leads with thirty-nine visual planning guides and 151
+charts, with interactive scenarios covering saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
 tax timing, CPP start ages, renting versus buying, longevity, recurring fees,
 periodic-bill calendars, car ownership, insurance deductibles and planned
@@ -20,7 +20,8 @@ income bridges, caregiving cash needs, estate liquidity timing, disability-incom
 schedules, foreign-currency goals, annuity cash-flow trade-offs, repayment order,
 shared-budget goal deadlines, ordinary RRIF withdrawals versus spending,
 TFSA recontribution calendars, RESP withdrawal sources and mortgage prepayments
-versus liquid savings.
+versus liquid savings, tuition benchmarks and student budgets, promotional
+balance transfers and insurance reimbursement timing.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -62,6 +63,14 @@ as an assumption. The RESP ledger assumes promoter-confirmed capacity and does
 not determine eligibility or actual student tax. Mortgage prepayment comparisons
 preserve the same monthly budget and save unused payments after payoff; they
 assume the lump sum is permitted without penalty.
+`planning-tuition-data.js` contains twelve public Table 37-10-0045-01 observations
+for preliminary 2026/2027 tuition. Reproduce the dated extract with
+`python3 scripts/extract-planning-tuition.py --archive qa/statcan-tuition-37100045.zip`.
+The extractor checks coverage, duplicates, missingness, units and metadata-based
+preliminary/weighting status; the raw source stays ignored. Official tuition
+charts remain fixed while the student-budget assumptions change. Card promotions
+use one hypothetical rate bucket; claim cash needs include bills before month-end
+resources, not only ending balances.
 
 The public research library at `/research/` adds six educational guides on
 earnings quality, buybacks and dilution, bond duration, ETF implementation,

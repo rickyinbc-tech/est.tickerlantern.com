@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 132 visual planning guides and 534
+charts**. The library now leads with 137 visual planning guides and 555
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA
@@ -81,6 +81,10 @@ An accrued-interest guide keeps a locked compound investment separate from
 outside tax cash, new reserve allocations and the maturity inflow. Annual
 funding dates and tax rates are explicit hypothetical assumptions, with the
 pre-maturity gap preserved even when the final cash endpoint is positive.
+An investment-borrowing guide compares net positions using matched monthly
+household cash. Interest reduces the borrowing case’s new investing cash,
+principal is repaid once, and signed differences are retained. Constant returns
+exclude tax deductions, margin calls and any strategy suitability finding.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site

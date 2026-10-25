@@ -19,7 +19,8 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 208 visual planning guides and 848
+charts**. The library now leads with 218 visual planning guides and 888
+charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
@@ -130,6 +131,10 @@ A tuition-credit guide adds four graphics separating eligible tuition, baseline
 credit value, tax capacity and matched prepayment refunds. It excludes complete
 return calculations, top-up rules, transfers and carryforward balances; its
 source scope and checks are recorded in `docs/tuition-credit-capacity-2026-10-25.md`.
+A purchase-average guide follows equal monthly cash through fractional units,
+security spending and fixed fees. Arithmetic quoted-price averages remain
+separate from harmonic purchase-price averages and all-in household cash per
+unit. A separate valuation and signed matrix keep losses visible.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -577,12 +582,28 @@ Knowledge for Research Agents](https://doi.org/10.48550/arXiv.2609.00065).
 Latest verified arXiv revision: v2, 2 September 2026. This is a software-workflow
 reference, not financial evidence or a market-data source.
 
-The original `/research/buybacks-dilution-per-share-value` route now contains
-five charts separating share-count, weighted EPS and assumed equity-value
-arithmetic. Its three original numerical cases remain separate. The coherent
-interactive extension states its additional5,000million equity assumption,
-keeps income fixed and does not infer award expense or legal share retirement.
-The library hides its prose-only section and jump link when that registry is
-empty; all original routes remain available as visual articles. Sources and
-exact-arithmetic checks are in
-`docs/buyback-dilution-visual-upgrade-source-research-2026-10-25.md`.
+The savings-sensitivity guide introduces a native accessible tornado chart with filled/open input-endpoint markers, an explicit zero reference and a complete tested-input data table. Original one-at-a-time ranges are separated from probabilities, and a two-input matrix and sequential combined-case bridge expose interactions. The monthly ledger, ranking changes, zero ranges, signed endpoints and responsive rendering are verified.
+
+### Temporary card authorizations and usable credit
+
+`/research/credit-card-authorization-holds-available-capacity-calendar` traces two requested incidental holds, posted debt and one usable-credit payment date. It tests a separate planned purchase without posting it or simulating issuer approval. Negative headroom describes excess requested capacity; hold release restores credit capacity without creating cash income. Tests preserve release-day boundaries, capped debt repayment, absent purchases and never-fitting transactions; the browser companion checks controls, tables, reset and 320/390-pixel labels.
+
+## Credit usage and the tax-return settlement
+
+Four charts separate credit usage from the final settlement of prior tax payments. See
+`docs/planning-credit-settlement-2026-10-25.md` for sources and checks.
+
+
+### Employee option grant cash planning
+
+The English guide `employee-stock-options-vesting-exercise-cash-spread` separates granted and vested units, current intrinsic spread, hypothetical exercise-and-sale proceeds and exercise-and-hold strike funding. Four original interactive figures use a fixed authored 48-month schedule with a 12-month cliff, whole-unit rounding and independently entered cash. Only vested units enter the sale illustration, which assumes a permitted immediate sale at the entered price and shows no transaction at or below strike. All scenarios are hypothetical CAD arithmetic, excluding actual employer terms, full option valuation, tax, fees, expiry and settlement. Public Investor.gov and current Fidelity stock-plan sources support the conceptual distinctions. No option exercise or sale is initiated.
+
+`planning-rrif-kind` separates securities received from assigned bank cash; see
+`docs/planning-rrif-kind-2026-10-25.md` for scope and validation.
+
+The wealth-concentration guide retains dated Q4 2024/Q4 2025 official group means and rounded changes. Approximate wealth shares use explicit 40/20/20/20 household weights and normalise the rounded weighted sum, disclosing the Q4 2025 20-cent reconciliation difference. Its cumulative chart contains only the published group boundaries, without inventing a lowest-quintile point, within-group Lorenz detail, Gini coefficient or confidence bounds. Source-year switching and mobile layout are verified.
+
+## Equal cash, different unit quantities
+
+Four charts connect equal cash purchases with units, weighted cost and marked value. See
+`docs/planning-unit-cost-2026-10-25.md` for sources and checks.

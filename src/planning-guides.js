@@ -1,4 +1,14 @@
 import { buybackDilutionGuides } from './planning-buyback-dilution-guides.js';
+import { unitCostGuides } from './planning-unit-cost-guides.js';
+import { wealthSharesGuides } from './planning-wealth-shares-guides.js';
+import { averageCostGuides } from './planning-average-cost-guides.js';
+import { rrifKindGuides } from './planning-rrif-kind-guides.js';
+import { employeeOptionGuides } from './planning-employee-option-guides.js';
+import { shareVestingGuides } from './planning-share-vesting-guides.js';
+import { creditSettlementGuides } from './planning-credit-settlement-guides.js';
+import { cardHoldGuides } from './planning-card-holds-guides.js';
+import { labourBudgetGuides } from './planning-labour-budget-guides.js';
+import { sensitivityGuides } from './planning-sensitivity-guides.js';
 import { tuitionCreditCapacityGuides } from './planning-tuition-credit-capacity-guides.js';
 import { tailShapeGuides } from './planning-tail-shape-guides.js';
 import { ageIncomeGuides } from './planning-age-income-guides.js';
@@ -116,6 +126,16 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...buybackDilutionGuides,
+  ...unitCostGuides,
+  ...wealthSharesGuides,
+  ...averageCostGuides,
+  ...rrifKindGuides,
+  ...employeeOptionGuides,
+  ...shareVestingGuides,
+  ...creditSettlementGuides,
+  ...cardHoldGuides,
+  ...labourBudgetGuides,
+  ...sensitivityGuides,
   ...tuitionCreditCapacityGuides,
   ...tailShapeGuides,
   ...ageIncomeGuides,

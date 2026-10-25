@@ -8,12 +8,18 @@ The website compares 21 exact benchmarks and always models five holding years. I
 
 ## Run and verify
 
+The household-saving guide separates twelve official quarterly observations and
+a verified pension-adjusted accounting bridge from a hypothetical personal
+cash budget. Verify source bytes and all 60 source rows with
+`python3 scripts/check-planning-saving-rate-source.py <csv-path>`.
+
+
 New cash-mechanics guides cover mortgage payment frequency, savings-promotion windows
 and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 99 visual planning guides and 396
+charts**. The library now leads with 100 visual planning guides and 400
 charts, with new guides on job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
 mortgage renewal, family protection, education funding, net worth, RRSP/TFSA

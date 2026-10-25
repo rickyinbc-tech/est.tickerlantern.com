@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 267 visual planning guides and 1102 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 268 visual planning guides and 1106 charts, with editable assumptions and inspectable data tables.
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -724,3 +724,5 @@ Five charts distinguish reported time, overlapping responses and independent pai
 ### Loan-rate order on declining principal
 
 `/research/loan-rate-order-declining-principal-average-interest-cost` reverses two two-year rate blocks while holding four equal annual principal repayments fixed. Five charts show matching simple averages beside different rate/balance pairings, interest totals and cash payments. The model is not level-total-payment amortization or a regulated APR calculation. Tests independently verify balance weights, principal reconciliation, rate-swap symmetry and the closed-form cost difference; the browser companion exercises controls, reset, signed differences and mobile labels.
+
+A time-of-use energy guide holds monthly kWh constant while shifting an entered fraction of peak use. Four interactive charts distinguish consumption weights, variable energy costs, unchanged bill amounts and a full-range timing comparison. All rates and usage are hypothetical; the OEB source supplies bill-component context only.

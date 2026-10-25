@@ -45,5 +45,12 @@ tax-rate cases, tax-curve values, matrix checkpoints, half-cent rounding,
 control boundaries, invalid amounts, accessible charts, four distinct series
 colours, public-source references, article length and related-reading routes.
 
-Full JavaScript suite and build: pending. Python suite: pending. Bounded
-browser/mobile inspection: pending.
+The integrated build generated 308 static pages. The full JavaScript suite passed
+1,612 tests and the Python suite passed 122 tests. The RESP calculator passed
+at 1440, 390 and 320 CSS-pixel browser viewports; its four charts and tables,
+editable limits, invalid-input retention, reset and no-overflow behavior were
+checked. All four mobile charts were inspected after shortening the sensitivity
+axis labels. The deployed HTTPS article returned 200, appeared in the live hub,
+and loaded its model successfully in the browser. The four CRA/ESDC/Canada.ca
+source links were present in the published markup. These are browser viewport
+checks rather than tests on physical phones.

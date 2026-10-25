@@ -1,3 +1,4 @@
+import { renewalAccessGuides } from './planning-renewal-access-guides.js';
 import { everydayCapitalGuides } from './planning-everyday-capital-guides.js';
 import { accessRentGuides } from './planning-access-rent-guides.js';
 import { lookthroughGuides } from './planning-lookthrough-guides.js';
@@ -65,6 +66,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...renewalAccessGuides,
   ...everydayCapitalGuides,
   ...accessRentGuides,
   ...lookthroughGuides,

@@ -409,3 +409,11 @@ bands describe each date, not the probability that an entire path stays inside.
 Three English guides cover owner-level assessment reserves, the nominal and
 real burden of fixed debt, and weekly versus batched purchase fees. See
 `docs/planning-everyday-capital-2026-10-25.md` for sources and verified checks.
+
+
+### Insurance renewal budgets and deposit access
+
+- `/research/term-life-renewal-premium-household-reserve` follows two independently entered equal premium periods, a recurring household assignment and a separately held reserve. Cash retained before a hypothetical renewal can fund later premiums; it is not a policy cash value or a premium refund. No renewal right, quote or insurance recommendation is inferred.
+- `/research/cashable-locked-deposit-earlier-bill-bridge-cost` compares two hypothetical deposits at a common day365 endpoint after the same earlier bill. The locked route explicitly requires a separately available bridge, whose principal and simple interest are repaid from maturity proceeds. A negative endpoint remains an outside funding need. No actual issuer withdrawal terms or credit approval is established.
+
+`tests/planning-renewal-access.test.mjs` checks independent phase-endpoint reserve formulas, daily-principal interest sums, equal-expense reconciliation, no-bill cases, settlement shortfalls and supported timing/balance limits. `tests/browser_renewal_access.py [origin]` verifies real controls, reset, whole-number validation, accessible tables, mobile chart text and a negative maturity scenario. FCAC source context was reviewed on25October2026; all model amounts and conventions are authored assumptions.

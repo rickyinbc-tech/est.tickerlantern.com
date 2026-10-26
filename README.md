@@ -48,6 +48,8 @@ principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
 A fund income-type guide compares the same return paid as interest, eligible
 dividends, realized or deferred gains, and a crash-warning guide finds the hit
 rate needed to pay for false alarms; see `docs/planning-character-signal-2026-10-26.md`.
+A Canada Disability Benefit guide applies the 2026–27 regulation formula, the
+working-income exemption and the couple income test; see `docs/planning-cdb-income-2026-10-26.md`.
 The latest additions examine dated wealth medians versus liquid cash, career
 retraining opportunity costs and pension service buyback cash flows.
 Joint-loan payment takeovers, annual-versus-monthly subscription commitments and

@@ -12,6 +12,7 @@ import { pensionSplitGuides } from './planning-pension-split-guides.js';
 import { clientInvestingGuides } from './planning-client-investing-guides.js';
 import { cwbPhaseGuides } from './planning-cwb-phase-guides.js';
 import { cgebYearGuides } from './planning-cgeb-year-guides.js';
+import { cdbIncomeGuides } from './planning-cdb-income-guides.js';
 import { cppSharingGuides } from './planning-cpp-sharing-guides.js';
 import { respAipGuides } from './planning-resp-aip-guides.js';
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
@@ -236,6 +237,7 @@ export const planningGuides = [
   ...pensionSplitGuides,
   ...cwbPhaseGuides,
   ...cgebYearGuides,
+  ...cdbIncomeGuides,
   ...cppSharingGuides,
   ...respAipGuides,
   ...paymentPerceptionGuides,

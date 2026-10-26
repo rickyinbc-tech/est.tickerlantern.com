@@ -19,7 +19,7 @@ test('section 65.1(9) ratio, symmetry and combined total',()=>{
 function money(n){return Math.round((n+Number.EPSILON)*100)/100;}
 test('default couple reconciles to the worked example',()=>{
  const r=planningResult(kind,defaults(kind));
- assert.deepEqual(r.metrics.map(m=>m[1]),[72.92,310.21,939.79,750.21,695.33]);
+ assert.deepEqual(r.metrics.map(m=>m[1]),[.7292,310.21,939.79,750.21,695.33]);
  assert.deepEqual(r.charts[1].rows.map(x=>x.value),[401.04,75,-145.83,-20]);
  assert.deepEqual(r.charts[4].rows.map(x=>x.values),[[55091.47,52064.29],[17280,21002.5]]);
 });

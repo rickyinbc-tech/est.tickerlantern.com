@@ -44,8 +44,8 @@ export function cwbPhaseResult(kind,i){
  const kept$=v=>v.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
  return {metrics:[
   ['Adjusted (family) net income used for the 2026 CWB',money(now.afni),'money'],
-  ['2026 CWB entitlement · basic + disability',money(now.total),'money',`Basic CAD ${kept$(money(now.basic))} · disability CAD ${kept$(money(now.disability))}`],
-  ['CWB lost on the tested pay rise (negative = gained)',money(lost),'money',i.cwbRaise?`${(lost/i.cwbRaise*100).toFixed(1)}% of the raise`:'No raise entered'],
+  ['2026 CWB entitlement · basic + disability',money(now.total),'money',undefined,`Basic CAD ${kept$(money(now.basic))} · disability CAD ${kept$(money(now.disability))}`],
+  ['CWB lost on the tested pay rise (negative = gained)',money(lost),'money',undefined,i.cwbRaise?`${(lost/i.cwbRaise*100).toFixed(1)}% of the raise`:'No raise entered'],
   ['Kept from the raise after CWB loss and your other rate',money(kept),'money'],
   ['Settled at filing after ACWB advances (negative = repay)',money(settle),'money']
  ],note:'Original illustration for the 2026 tax year outside Alberta, Quebec and Nunavut, using CRA’s indexed 2026 CWB amounts (basic maximum CAD 1,665 single / CAD 2,869 family; phase-out from CAD 27,392 / CAD 31,251; secondary earner exemption CAD 16,714; disability supplement CAD 860 phasing out from CAD 38,495 / CAD 50,377) and the Income Tax Act section 122.7 rates (27% phase-in above CAD 3,000 of working income, or CAD 1,150 for the supplement; 15% phase-out, 7.5% per supplement when both spouses qualify). Working income is treated as employment or business income that also counts in net income; “other income” and deductions change only net income. All eligibility conditions (age, full-year residence, students, incarceration) are assumed met. Income tax, payroll deductions and provincial benefits are not modelled except through the single rate you enter. The model is not a filing calculation.',charts:[

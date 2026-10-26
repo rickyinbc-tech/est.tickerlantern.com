@@ -26,3 +26,10 @@ All defaults were reproduced with 40-digit Python Decimal arithmetic (`qa/planni
 
 - `npm test`: 1728 tests, 0 failures. `npm run zh:refresh`: 0 missing units. The 287 Chinese units were written directly (no external translation service), mapped by source text, and inserted only after `numguard` agreement and identical-markup checks.
 - Built HTML: both pages have English and Chinese editions; homepage, research index and sitemap entries present.
+- Browser QA: the in-app browser cannot open the local Worker, and the pages are not live yet, so no browser pass of the new pages is claimed. The in-app browser was used only to read the CRA source page.
+
+## Release status
+
+Pinned base `2f49a04c` (origin/main at start, unchanged when re-fetched before publishing). Source commit `6f5c23cb` was pushed to `main` as a fast-forward on 26 October 2026. Before pushing, the live sitemap was a strict subset of local `dist`: no live-only URLs; local-only were this batch's four URLs plus fourteen already on `main` but never deployed (TFSA asset location, missed best/worst months, fund income type, crash warnings, CPP pension sharing, Groceries and Essentials Benefit, Canada Disability Benefit; English and Chinese).
+
+`npx wrangler deploy` (Wrangler 4.153.0) was blocked by the unattended run's permission policy (production deploy). After the push, the new URLs and the earlier TFSA asset-location guide returned 404, while the homepage, research index and existing guides returned 200. The next authorized `npx wrangler deploy` from current `main` (Wrangler rebuilds from source) will publish all eighteen URLs. After it, verify each URL, the module `planning-shock-harvest-models.js`, the homepage/library/sitemap entries, and phone/desktop layouts.

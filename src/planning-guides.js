@@ -1,3 +1,4 @@
+import { offsetAccountGuides } from './planning-offset-account-guides.js';
 import { multipleJobholderGuides } from './planning-multiple-jobholder-guides.js';
 import { utilityEqualGuides } from './planning-utility-equal-guides.js';
 import { spatialIndexGuides } from './planning-spatial-index-guides.js';
@@ -212,6 +213,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...offsetAccountGuides,
   ...multipleJobholderGuides,
   ...utilityEqualGuides,
   ...spatialIndexGuides,

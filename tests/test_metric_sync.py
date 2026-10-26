@@ -11,6 +11,10 @@ import refresh_indices
 ATTEMPT='2026-10-23T10:00:00Z';RECOVERY='2026-10-23T11:00:00Z'
 def feed():return json.loads((ROOT/'data/indices.json').read_text())
 def row(id):return copy.deepcopy(next(r for r in feed()['indices'] if r['id']==id))
+def failed_primary(r):
+ # Live MSCI checks can recover; set the failed shared-document state explicitly.
+ r['sync']={'status':'retained','lastAttempt':'2026-10-23T09:18:44Z','lastSuccess':'2026-10-23T07:28:55Z','error':'Truncated PDF or non-PDF response','ownerId':'primary:msci:'+r['id'],'metrics':['forwardPE','dividendYield']}
+ r['yieldSource']=dict(r['source']);return r
 
 class MetricSyncTests(unittest.TestCase):
  def test_actual_primary_failure_path_covers_factset_mean_and_msci_yield(self):
@@ -31,7 +35,7 @@ class MetricSyncTests(unittest.TestCase):
   self.assertTrue(any(j['id']=='primary:factset' and j['status']=='retained' for j in after['primarySourceJobs']))
  def test_missing_or_older_explicit_sync_inherits_only_same_document(self):
   for id in ['msci-canada','eafe','uk']:
-   r=row(id);r.pop('yieldSync',None)
+   r=failed_primary(row(id));r.pop('yieldSync',None)
    shared=resolved_sync(r,'dividendYield');self.assertEqual(shared['status'],'retained');self.assertEqual(shared['lastAttempt'],r['sync']['lastAttempt'])
    r['yieldSync']={'status':'ok','lastAttempt':'2026-10-23T06:00:00Z','lastSuccess':'2026-10-23T06:00:00Z'}
    self.assertEqual(resolved_sync(r,'dividendYield')['status'],'retained')
@@ -57,12 +61,12 @@ class MetricSyncTests(unittest.TestCase):
   update_metrics(r,{'forwardPE':r['forwardPE'],'asOf':r['asOf']},r['source'],RECOVERY)
   self.assertEqual(resolved_sync(r,'forwardPE')['status'],'ok');self.assertEqual(resolved_sync(r,'dividendYield')['status'],'retained')
  def test_repair_materializes_only_proven_failure_without_financial_changes(self):
-  r=row('eafe');r.pop('yieldSync',None);before=copy.deepcopy(r);changes=repair_shared_sync(r)
+  r=failed_primary(row('eafe'));r.pop('yieldSync',None);before=copy.deepcopy(r);changes=repair_shared_sync(r)
   self.assertEqual(changes,['dividendYield']);self.assertEqual(r['yieldSync']['lastAttempt'],before['sync']['lastAttempt'])
   self.assertEqual(r['yieldSync']['lastSuccess'],before['sync']['lastSuccess'])
   r.pop('yieldSync');self.assertEqual(r,before)
  def test_registry_operational_evidence_uses_resolved_status(self):
-  f=feed();r=next(r for r in f['indices'] if r['id']=='eafe');r.pop('yieldSync',None)
+  f=feed();r=failed_primary(next(r for r in f['indices'] if r['id']=='eafe'));r.pop('yieldSync',None)
   apply_registry(f);e=r['metricDefinitions']['dividendYield']['evidence']
   self.assertEqual(e['checkStatus'],'retained');self.assertEqual(e['failureSummary'],r['sync']['error']);self.assertEqual(e['lastSuccess'],r['sync']['lastSuccess'])
  def test_not_meaningful_is_availability_not_failed_check(self):

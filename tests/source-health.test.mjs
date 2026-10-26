@@ -6,9 +6,16 @@ import {annualCSV,project,DEFAULTS} from '../src/model.js';
 import {scenarioInputs,fieldBasis} from '../src/scenario-state.js';
 const feed=JSON.parse(await readFile(new URL('../data/indices.json',import.meta.url)));
 const now=new Date('2026-10-23T10:00:00Z');
+// Live MSCI checks can recover; these fixtures set the failed shared-document state explicitly.
+const failedPrimary=id=>{
+ const row=structuredClone(feed.indices.find(r=>r.id===id));
+ row.sync={status:'retained',lastAttempt:'2026-10-23T09:18:44Z',lastSuccess:'2026-10-23T07:28:55Z',error:'Truncated PDF or non-PDF response',ownerId:`primary:msci:${id}`,metrics:['forwardPE','dividendYield']};
+ row.yieldSource={...row.source};row.yieldSync={...row.sync};
+ return row;
+};
 test('retained same-document yields inherit the existing proven primary failure',()=>{
  for(const id of ['msci-canada','eafe','uk']) {
-  const row=structuredClone(feed.indices.find(r=>r.id===id)); delete row.yieldSync;
+  const row=failedPrimary(id); delete row.yieldSync;
   assert.equal(metricHealth(row,'dividendYield',now).sourceFailure,true,id);
   assert.match(metricStatusText(row,'dividendYield',now),/check failed/);
  }
@@ -34,7 +41,7 @@ test('retained growth provenance includes the operational outcome in annual CSV'
 });
 
 test('an older explicit yield status yields to a newer shared failure but independent documents do not',()=>{
- const row=structuredClone(feed.indices.find(r=>r.id==='eafe'));
+ const row=failedPrimary('eafe');
  row.yieldSync={status:'ok',lastAttempt:'2026-10-23T06:00:00Z',lastSuccess:'2026-10-23T06:00:00Z'};
  let health=metricHealth(row,'dividendYield',now);
  assert.equal(health.sourceFailure,true);assert.equal(health.lastSuccess,row.yieldSync.lastSuccess);assert.equal(health.lastAttempt,row.sync.lastAttempt);
@@ -60,15 +67,15 @@ test('one shared document failure is counted once across owned metrics and job m
  assert.equal(updateHealth(isolated,now).failures,1);
 });
 test('retained evidence exposes check times and independently evaluated cadence',()=>{
- const row=structuredClone(feed.indices.find(r=>r.id==='eafe'));
- const later=new Date('2026-12-31T10:00:00Z'); const h=metricHealth(row,'dividendYield',later);
+ const row=failedPrimary('eafe');
+ const later=new Date(Date.parse(row.yieldAsOf)+120*864e5); const h=metricHealth(row,'dividendYield',later);
  assert.equal(h.checkOverdue,true);assert.equal(h.observationStale,true);assert.equal(h.sourceFailure,true);assert.equal(h.evaluatedAt,later.toISOString());
  assert.match(metricStatusText(row,'dividendYield',later),/overdue/);assert.match(metricStatusText(row,'dividendYield',later),/older/);
 });
 
 const readCSV=text=>text.split('\n').map(line=>{const cells=[];let cell='',quoted=false;for(let i=0;i<line.length;i++){if(line[i]==='"'){if(quoted&&line[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}else if(line[i]===','&&!quoted){cells.push(cell);cell='';}else cell+=line[i];}cells.push(cell);return cells;});
 test('CSV carries resolved metric checks and evaluation time without misattributing custom values',()=>{
- const row=feed.indices.find(r=>r.id==='eafe');
+ const row=failedPrimary('eafe');
  assert.equal(fieldBasis('dividendYield',row,{dividendMode:true}),'source');
  assert.equal(scenarioInputs(row,{...DEFAULTS,dividendMode:'yield',dividendYield:1},{dividendMode:true}).dividendYield,row.dividendYield);
  const model=project({...DEFAULTS,dividendMode:'yield',dividendYield:2.5,growthMode:'source',growthStartYear:2027,annualGrowth:[12.3],growthOverrides:{2027:12.3},years:1});

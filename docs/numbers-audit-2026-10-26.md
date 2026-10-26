@@ -44,6 +44,13 @@ what could not be improved.
   23 October failed because three tests pinned that day's dividend yield and
   valuation date. New publisher values made `npm test` fail, so the publish
   step never ran. The tests now use fixed fixtures or the feed's own values.
+  A copy of the suite run against a simulated next-day snapshot (every value,
+  date and check time changed) passes.
+- **MSCI Canada, United Kingdom and EAFE factsheets are accepted again.** MSCI
+  serves these files with a final `%%EO` marker (Content-Length matches; the
+  trailer is complete). The truncation guard rejected them, so the benchmarks
+  stayed retained and would have missed the next monthly factsheet. A missing
+  `%%EOF` is now accepted only when `startxref` points at a real xref section.
 
 ## Not improved, and why
 
@@ -51,6 +58,9 @@ what could not be improved.
   publisher blocks automated and browser access to a later edition.
 - **Nikkei 225 dividend yield** stays at 1.56% (23 Oct); Nikkei Indexes refuses
   automated requests.
+- **CSI 300 dividend yield** stays at 2.49% (30 Sep, verified against the
+  factsheet). The factsheet host answers from a workstation but not from the
+  GitHub-hosted runner, so the scheduled check shows as retained.
 - **FTSE 100 and Hang Seng P/E** stay at Edelweiss's 30 September values.
   These are correct, but the verification timestamp needs the owner's
   scheduled browser check.

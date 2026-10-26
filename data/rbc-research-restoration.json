@@ -22,7 +22,7 @@
     {
       "file": "rbc-research.js",
       "originalSha256": "2b89848731801940ec282bcf36e0bced3c96de5bd36eadf53256eac2c6d92d49",
-      "sha256": "628946ac597f4afef83ef75876759026b21e06b3bc49c7a41b09992a973a5edc"
+      "sha256": "0bae2bee555213921443f24f32fdd0a07f58722761767153cf9c9606c58d8fcc"
     },
     {
       "file": "rbc-return-data.js",
@@ -37,7 +37,7 @@
     {
       "file": "rbc-return-ui.js",
       "originalSha256": "d1c3bbcca5bed96258dde6fede45842db23b98b1070dcb13e690c4851621123d",
-      "sha256": "d1c3bbcca5bed96258dde6fede45842db23b98b1070dcb13e690c4851621123d"
+      "sha256": "260f8495edbef9efb07e7c6bf651bafa026f902f5861c9c606a3c09c661fd711"
     },
     {
       "file": "rbc-senior-model.js",

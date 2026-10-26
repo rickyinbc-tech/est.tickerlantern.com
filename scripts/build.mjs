@@ -58,3 +58,4 @@ await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/res
 
 await import('./build-seo.mjs');
 await import('./build-search.mjs');
+if (!process.env.TL_EN_ONLY) await import('./build-zh.mjs');

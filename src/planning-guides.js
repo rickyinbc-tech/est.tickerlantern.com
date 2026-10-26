@@ -11,6 +11,7 @@ import { fhsaWithdrawalGuides } from './planning-fhsa-withdrawal-guides.js';
 import { pensionSplitGuides } from './planning-pension-split-guides.js';
 import { clientInvestingGuides } from './planning-client-investing-guides.js';
 import { cwbPhaseGuides } from './planning-cwb-phase-guides.js';
+import { cppSharingGuides } from './planning-cpp-sharing-guides.js';
 import { respAipGuides } from './planning-resp-aip-guides.js';
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
 import { jointOwnerGuides } from './planning-joint-owner-guides.js';
@@ -232,6 +233,7 @@ export const planningGuides = [
   ...clientInvestingGuides,
   ...pensionSplitGuides,
   ...cwbPhaseGuides,
+  ...cppSharingGuides,
   ...respAipGuides,
   ...paymentPerceptionGuides,
   ...jointOwnerGuides,

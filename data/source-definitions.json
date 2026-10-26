@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "registryVersion": "source-definitions-2026-10-23.3",
-  "reviewedAt": "2026-10-23",
+  "registryVersion": "source-definitions-2026-10-26.1",
+  "reviewedAt": "2026-10-26",
   "scope": "21 exact benchmark universes; public documents only",
   "definitionUnknownPolicy": "unknown is not evidence of equivalence; preserve published value and qualify model use; no ETF/related-index substitution",
   "compatibilityPolicy": {
@@ -442,7 +442,7 @@
       "underlyingProvider": "State Street Investment Management",
       "precisionDecimals": 2,
       "freshnessPolicy": {
-        "publicationCadence": "daily market observation; manually reviewed",
+        "publicationCadence": "daily market observation; checked daily",
         "observationMaxAgeDays": 7,
         "checkMaxAgeHours": 48,
         "referenceOnly": false
@@ -468,7 +468,7 @@
       "underlyingProvider": "Carolann Steinhoff / Bloomberg Automation",
       "precisionDecimals": 1,
       "freshnessPolicy": {
-        "publicationCadence": "daily market observation; manually reviewed",
+        "publicationCadence": "daily market-close newsletter; checked daily",
         "observationMaxAgeDays": 7,
         "checkMaxAgeHours": 48,
         "referenceOnly": false
@@ -481,25 +481,26 @@
       "label": "Dividend Yield",
       "economic": {
         "earningsBasis": "not applicable to yield",
-        "aggregation": "FTSE 100 index characteristic; yield construction not further restated in the page",
+        "aggregation": "FTSE 100 month-end Index Characteristics dividend yield; trailing/indicated and gross/net construction not restated in the factsheet",
         "negativeEarners": "not disclosed",
         "missingEstimates": "not disclosed",
         "weighting": "not disclosed for this statistic",
         "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
         "methodologyVersion": "not disclosed",
-        "yieldConstruction": "FTSE 100 index characteristic; yield construction not further restated in the page",
+        "yieldConstruction": "FTSE 100 month-end Index Characteristics dividend yield; trailing/indicated and gross/net construction not restated in the factsheet",
         "taxTreatment": "gross/net not separately disclosed",
         "horizon": "published dividend anchor; construction as recorded"
       },
-      "underlyingProvider": "London Stock Exchange / FTSE Russell",
+      "underlyingProvider": "FTSE Russell",
       "precisionDecimals": 2,
       "freshnessPolicy": {
-        "publicationCadence": "monthly; manually reviewed",
+        "publicationCadence": "monthly factsheet; checked daily",
         "observationMaxAgeDays": 65,
         "checkMaxAgeHours": 48,
         "referenceOnly": false
       },
       "allowedPublishers": [
+        "FTSE Russell",
         "London Stock Exchange / FTSE Russell"
       ]
     },
@@ -573,7 +574,7 @@
       "underlyingProvider": "Hang Seng Indexes",
       "precisionDecimals": 2,
       "freshnessPolicy": {
-        "publicationCadence": "monthly; manually reviewed",
+        "publicationCadence": "monthly factsheet; checked daily",
         "observationMaxAgeDays": 65,
         "checkMaxAgeHours": 48,
         "referenceOnly": false
@@ -599,13 +600,38 @@
       "underlyingProvider": "China Securities Index Co., Ltd.",
       "precisionDecimals": 2,
       "freshnessPolicy": {
-        "publicationCadence": "monthly; manually reviewed",
+        "publicationCadence": "monthly factsheet; checked daily",
         "observationMaxAgeDays": 65,
         "checkMaxAgeHours": 48,
         "referenceOnly": false
       },
       "allowedPublishers": [
         "China Securities Index Co., Ltd."
+      ]
+    },
+    "cicc-reference": {
+      "label": "forward P/E; past-ten-year historical mean",
+      "economic": {
+        "earningsBasis": "not disclosed in the cited metric passage",
+        "aggregation": "not disclosed",
+        "negativeEarners": "not disclosed",
+        "missingEstimates": "not disclosed",
+        "weighting": "not disclosed for this statistic",
+        "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+        "methodologyVersion": "not disclosed",
+        "yieldConstruction": "not disclosed",
+        "taxTreatment": "not disclosed",
+        "horizon": "forward-unspecified"
+      },
+      "underlyingProvider": "Wind / CICC Research",
+      "precisionDecimals": 1,
+      "freshnessPolicy": {
+        "publicationCadence": "dated research report; revisions only",
+        "referenceOnly": true,
+        "checkMaxAgeHours": 48
+      },
+      "allowedPublishers": [
+        "CICC Research / Wind"
       ]
     }
   },

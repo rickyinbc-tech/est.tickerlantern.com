@@ -26,7 +26,7 @@ class DefinitionRegistryTests(unittest.TestCase):
         self.assertEqual(sum(len(r['metricDefinitions']) for r in self.rows.values()),84)
         self.assertEqual(sum(r['metricDefinitions']['dividendYield']['state']=='numeric' for r in self.rows.values()),21)
         observed=self.rows['sp500']['metricDefinitions']['dividendYield']
-        self.assertEqual(observed['evidence']['observationDate'],'2026-10-21')
+        self.assertEqual(observed['evidence']['observationDate'],self.rows['sp500']['yieldAsOf'])
         self.assertIn('first-payment-anchor',observed['permittedUse'])
         self.rows['sp500']['dividendYield']=None
         self.enrich()
@@ -45,10 +45,11 @@ class DefinitionRegistryTests(unittest.TestCase):
         self.assertEqual(self.rows['australia']['metricDefinitions']['forwardPE']['economic']['horizon'],'forward-unspecified')
 
     def test_metric_evidence_retains_independent_dates_and_unknown_windows(self):
-        self.enrich();em=self.rows['em']['metricDefinitions']
-        self.assertEqual(em['forwardPE']['observationDate'],'2026-10-23')
-        self.assertEqual(em['mean10YearForwardPE']['observationDate'],'2025-12-31')
-        self.assertEqual(em['dividendYield']['observationDate'],'2026-09-30')
+        self.enrich();row=self.rows['em'];em=row['metricDefinitions']
+        # Each metric keeps its own source date; daily refreshes move them independently.
+        self.assertEqual(em['forwardPE']['observationDate'],row['asOf'])
+        self.assertEqual(em['mean10YearForwardPE']['observationDate'],row['meanAsOf'])
+        self.assertEqual(em['dividendYield']['observationDate'],row['yieldAsOf'])
         self.assertEqual(em['dividendYield']['evidence']['publisher'],'MSCI')
         for key in ['windowStart','windowEnd']:
             self.assertIsNone(em['mean10YearForwardPE']['history'][key])
@@ -90,7 +91,7 @@ class DefinitionRegistryTests(unittest.TestCase):
         self.enrich(previous)
         d=self.rows['sp500']['metricDefinitions']['forwardPE']
         self.assertIsNone(d['evidence']['latestAcceptedChange'])
-        self.assertEqual(d['observationDate'],'2026-10-23')
+        self.assertEqual(d['observationDate'],self.rows['sp500']['asOf'])
         self.assertIn('publication-date-only',d['dateBasis'])
         self.rows['sp500']['forwardPE']=19.2
         self.enrich(previous)

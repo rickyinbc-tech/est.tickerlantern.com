@@ -27,7 +27,8 @@ test('primary-only failed attempts cannot produce an all-success summary',()=>{
 test('retained growth provenance includes the operational outcome in annual CSV',()=>{
  const live=feed.indices.find(r=>r.id==='russell2000').growthForecast;
  const forecast={...live,sync:{...live.sync,status:'retained',lastAttempt:'2026-10-23T09:18:44Z',lastSuccess:'2026-10-23T06:51:42Z',error:'Publisher robots policy unavailable'}};
- const model=project({...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[44],years:1});
+ const published=live.estimates.find(p=>p.year===2027).growth;
+ const model=project({...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[published],years:1});
  const csv=annualCSV(model,forecast,{healthEvaluatedAt:now.toISOString()});
  assert.match(csv,/retained/);assert.match(csv,/2026-10-23T09:18:44Z/);assert.match(csv,/robots policy unavailable/i);
 });

@@ -2,7 +2,7 @@
 
 Audited 23 October 2026 · `tickerlantern-forward-timing-v2`.
 
-[Full audit](docs/full-model-audit-2026-10-23.md) · [Five-year timing and all anchors](docs/five-year-forecast-policy.md) · [Dividend policy](docs/dividend-policy.md).
+[Numbers audit 26 Oct](docs/numbers-audit-2026-10-26.md) · [Full audit](docs/full-model-audit-2026-10-23.md) · [Five-year timing and all anchors](docs/five-year-forecast-policy.md) · [Dividend policy](docs/dividend-policy.md).
 
 The website compares 21 exact benchmarks and always models five holding years. It supports conditional scenario exploration, not an underwritten point forecast or a uniform return ranking. Source observations retain their dates, definitions and freshness warnings.
 

@@ -37,7 +37,7 @@ def plain(text):
     return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', text))).strip()
 
 
-HOSTS = {'www.msci.com', 'insight.factset.com', 'am.jpmorgan.com', 'www.nasdaq.com', 'lipperalpha.refinitiv.com', 'cambridgeretirementma.gov', 'www.ig.com', 'www.raymondjames.ca', 'www.manulife.com', 'cumberlandprivate.com', 'www.aranca.com', 'www.krungsri.com', 'www.ajbell.co.uk', 'www.goodridgegroup.ca', 'www.edelweissmf.com', 'www.scbam.com', 'meetings.sypensions.org.uk'}
+HOSTS = {'www.msci.com', 'insight.factset.com', 'am.jpmorgan.com', 'www.nasdaq.com', 'lipperalpha.refinitiv.com', 'cambridgeretirementma.gov', 'www.ig.com', 'www.raymondjames.ca', 'www.manulife.com', 'cumberlandprivate.com', 'www.aranca.com', 'www.krungsri.com', 'www.ajbell.co.uk', 'www.goodridgegroup.ca', 'www.edelweissmf.com', 'www.scbam.com', 'meetings.sypensions.org.uk', 'www.sohu.com', 'www.ssga.com', 'carolannsteinhoff.com', 'research.ftserussell.com', 'www.hsi.com.hk', 'oss-ch.csindex.com.cn'}
 
 
 def fetch(url):

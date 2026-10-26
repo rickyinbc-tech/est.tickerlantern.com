@@ -1,6 +1,6 @@
 {
   "reviewedAt": "2026-10-23T12:59:59Z",
-  "scope": "Seven previously missing exact-benchmark dividend statistics: six eligible cash anchors and one STOXX net-return-spread reference. No ETF distribution-yield proxy and no reported payout ratio are imported.",
+  "scope": "Seven previously missing exact-benchmark dividend statistics: six eligible cash anchors and one STOXX net-return-spread reference. No ETF distribution-yield proxy and no reported payout ratio are imported. Five of the seven became scheduled adapters on 26 October 2026; STOXX Europe 600 and Nikkei 225 remain manual because their public pages are script-rendered or challenge automated requests.",
   "observations": [
     {
       "id": "sp500",
@@ -17,7 +17,9 @@
         "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
         "location": "Yields section; Index Dividend Yield, not fund distribution yield or SEC yield"
       },
-      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed",
+      "supersededAt": "2026-10-26",
+      "supersededBy": "scheduled publisher adapter ssga-index-yield (scripts/dividend_sources.py); data/indices.json holds the current observation"
     },
     {
       "id": "tsx",
@@ -34,7 +36,9 @@
         "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
         "location": "Canada / Bloomberg Automation market-close section; exact S&P/TSX Composite trailing-12-month dividend yield"
       },
-      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed",
+      "supersededAt": "2026-10-26",
+      "supersededBy": "scheduled publisher adapter tsx-reported-yield (scripts/dividend_sources.py); data/indices.json holds the current observation"
     },
     {
       "id": "ftse100",
@@ -51,7 +55,10 @@
         "frequency": "Manually verified public source; not included in the scheduled publisher adapters",
         "location": "Index characteristics; Dividend yield (%); Source FTSE Russell as at 30 September 2026"
       },
-      "verification": "Original public table read; exact benchmark, date and yield column reviewed"
+      "verification": "Original public table read; exact benchmark, date and yield column reviewed",
+      "supersededAt": "2026-10-26",
+      "supersededBy": "scheduled publisher adapter ftse-index-yield (scripts/dividend_sources.py); data/indices.json holds the current observation",
+      "correction": "The London Stock Exchange page value (3.04%) was a dynamically loaded index value labelled with the factsheet date. FTSE Russell's own 30 September 2026 factsheet reports 3.11% in Index Characteristics; the scheduled adapter reads that factsheet."
     },
     {
       "id": "stoxx600",
@@ -107,7 +114,9 @@
         "location": "September 2026 factsheet, Index Fundamentals / HSI row / Dividend Yield (%); all data as at 30 Sep 2026",
         "page": 1
       },
-      "verification": "Original PDF page rendered and visually inspected"
+      "verification": "Original PDF page rendered and visually inspected",
+      "supersededAt": "2026-10-26",
+      "supersededBy": "scheduled publisher adapter hsi-index-yield (scripts/dividend_sources.py); data/indices.json holds the current observation"
     },
     {
       "id": "csi300",
@@ -125,7 +134,9 @@
         "location": "30-September-2026 factsheet, Fundamental table, Yield row; exact CSI 300 / 000300",
         "page": 1
       },
-      "verification": "Original PDF page rendered and visually inspected"
+      "verification": "Original PDF page rendered and visually inspected",
+      "supersededAt": "2026-10-26",
+      "supersededBy": "scheduled publisher adapter csi-index-yield (scripts/dividend_sources.py); data/indices.json holds the current observation"
     }
   ]
 }

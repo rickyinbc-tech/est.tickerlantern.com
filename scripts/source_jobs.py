@@ -279,4 +279,36 @@ def refresh_supplemental(by_id, fetch, update, checked, render_qa=False):
         if not observations: raise ValueError('; '.join(errors[-2:]) or 'No publisher TEMPO links found')
         return observations
     run('edelweiss-reference', ['ftse100', 'hangseng'], edelweiss)
+
+    def cicc():
+        from cicc_source import CICC_URL, parse_cicc_text
+        body = fetch(CICC_URL)
+        values, published = parse_cicc_text(body)
+        evidence = source('CICC Research / Wind', CICC_URL, body, CICC_URL, 'dated-reference')
+        evidence.update(parserVersion='cicc-valuation-1', publicationDate=published)
+        return [(values, evidence)]
+    run('cicc-reference', ['csi300'], cicc)
+
+    # Exact-benchmark cash-dividend anchors. Each job id is its definition family.
+    import dividend_sources as dividends
+    def dividend_job(family, ids, publisher, url, parser, location, discovery=None, get_url=None):
+        def action():
+            target = get_url() if get_url else url
+            body = fetch(target)
+            values = parser(body)
+            evidence = source(publisher, target, body, discovery or url)
+            evidence.update(parserVersion=dividends.PARSER_VERSION, location=location)
+            return [(values, evidence)]
+        run(family, ids, action)
+    dividend_job('ssga-index-yield', ['sp500'], 'State Street Investment Management', dividends.SSGA_URL, dividends.parse_ssga,
+                 'Yields section; Index Dividend Yield, not fund distribution yield or SEC yield')
+    dividend_job('tsx-reported-yield', ['tsx'], 'Carolann Steinhoff / Bloomberg Automation', None, dividends.parse_tsx_newsletter,
+                 'Canada / Bloomberg Automation market-close section; exact S&P/TSX Composite trailing-12-month dividend yield',
+                 dividends.TSX_FEED, lambda: dividends.tsx_newsletter_link(fetch(dividends.TSX_FEED)))
+    dividend_job('ftse-index-yield', ['ftse100'], 'FTSE Russell', dividends.FTSE_URL, dividends.parse_ftse_factsheet,
+                 'Month-end factsheet; Index Characteristics; FTSE 100 column; Dividend Yield %')
+    dividend_job('hsi-index-yield', ['hangseng'], 'Hang Seng Indexes', dividends.HSI_URL, dividends.parse_hsi_factsheet,
+                 'Month-end factsheet; Index Fundamentals; HSI row; Dividend Yield (%)')
+    dividend_job('csi-index-yield', ['csi300'], 'China Securities Index Co., Ltd.', dividends.CSI_URL, dividends.parse_csi_factsheet,
+                 'Month-end factsheet; Fundamental table; Yield row; exact CSI 300 / 000300')
     return jobs

@@ -39,6 +39,7 @@ import { tailMeasureGuides } from './planning-tail-measures-guides.js';
 import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
 import { contributionEscalationGuides } from './planning-contribution-escalation-guides.js';
 import { fundDisciplineGuides } from './planning-fund-discipline-guides.js';
+import { locationTimingGuides } from './planning-location-timing-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
@@ -258,6 +259,7 @@ export const planningGuides = [
   ...tailMeasureGuides,
   ...contributionTaxCashGuides,
   ...contributionEscalationGuides,
+  ...locationTimingGuides,
   ...fundDisciplineGuides,
   ...fuelMixGuides,
   ...taperGuides,

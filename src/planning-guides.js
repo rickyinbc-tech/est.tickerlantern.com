@@ -1,3 +1,4 @@
+import { spatialIndexGuides } from './planning-spatial-index-guides.js';
 import { rightsCashGuides } from './planning-rights-cash-guides.js';
 import { replacementRatioGuides } from './planning-replacement-ratio-guides.js';
 import { arrearsCountGuides } from './planning-arrears-count-guides.js';
@@ -200,6 +201,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...spatialIndexGuides,
   ...rightsCashGuides,
   ...replacementRatioGuides,
   ...arrearsCountGuides,

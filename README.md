@@ -19,7 +19,7 @@ and foreign-card purchase/refund conversion, with twelve interactive figures.
 
 
 New editorial work focuses on **financial planning explained in English through
-charts**. The library now leads with 296 visual planning guides and 1223 charts, with editable assumptions and inspectable data tables.
+charts**. The library now leads with 313 visual planning guides and 1262
 charts, with editable assumptions and inspectable data tables.
 New guides cover job-offer cash and commuting costs, losses before a
 fixed goal deadline, and retirement spending-adjustment rules. Interactive scenarios cover saving, inflation, reserves, debt, retirement,
@@ -167,10 +167,6 @@ A retirement replacement-ratio guide reconciles gross pay, disjoint current
 cash uses and a retirement spending budget. Explicit average tax assumptions
 translate gross receipts into cash; continuing debt and added spending remain
 visible. A one-year cash excess is not treated as lifetime retirement funding.
-A two-location index guide retains independent dollar anchors beside local
-time indexes. Matched hypothetical bundles can reverse the ordering suggested
-by the index levels alone. A separate net-income and moving-cost ledger shows
-recurring cash differences without assuming that future income funds upfront costs.
 Use official statistics where they answer the question;
 keep observed data, dates and population separate from hypothetical scenarios.
 Every article chart includes a data table and visible assumptions. All site
@@ -798,3 +794,20 @@ A daily-reset compounding guide adds four charts using two original synthetic be
 
 Four charts separate theoretical entitlement value and subscription cash funding. See
 `docs/planning-rights-cash-2026-10-25.md` for sources and checks.
+
+`planning-joint-owner` combines joint deposits by member and owner set before
+applying a conditional limit; see
+`docs/planning-joint-owner-2026-10-25.md`.
+
+
+### Perceived missed-payment probability and full-minimum funding
+
+Adds a source-backed English guide with five interactive figures: the overall CSCE probability series, percentage-point changes, a full-minimum funding waterfall, a dated funding ledger and a timing/cash matrix. A validated five-quarter public-data extract retains source hashes and dates. Official interpolated medians remain independent of fictional cash inputs; payment dates require whole days, and negative funding balances describe missing resources rather than authorized overdrafts.
+
+`planning-resp-aip` separates a hypothetical RESP contribution refund,
+returned benefits and accumulated income payment; see
+`docs/planning-resp-aip-2026-10-25.md`.
+
+`planning-gis-withdrawal` follows RRSP and TFSA cash withdrawals into a later
+GIS review period without estimating an individual benefit. See
+`docs/planning-gis-withdrawal-2026-10-25.md`.

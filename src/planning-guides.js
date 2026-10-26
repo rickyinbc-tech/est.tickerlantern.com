@@ -1,4 +1,12 @@
 import { spatialIndexGuides } from './planning-spatial-index-guides.js';
+import { gisWithdrawalGuides } from './planning-gis-withdrawal-guides.js';
+import { cppPrbGuides } from './planning-cpp-prb-guides.js';
+import { oasDeferralGuides } from './planning-oas-deferral-guides.js';
+import { principalResidenceGuides } from './planning-principal-residence-guides.js';
+import { ownerManagerGuides } from './planning-owner-manager-guides.js';
+import { respAipGuides } from './planning-resp-aip-guides.js';
+import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
+import { jointOwnerGuides } from './planning-joint-owner-guides.js';
 import { rightsCashGuides } from './planning-rights-cash-guides.js';
 import { replacementRatioGuides } from './planning-replacement-ratio-guides.js';
 import { arrearsCountGuides } from './planning-arrears-count-guides.js';
@@ -22,6 +30,7 @@ import { dayBasisGuides } from './planning-day-basis-guides.js';
 import { currencyMatchGuides } from './planning-currency-match-guides.js';
 import { tailMeasureGuides } from './planning-tail-measures-guides.js';
 import { contributionTaxCashGuides } from './planning-contribution-tax-cash-guides.js';
+import { contributionEscalationGuides } from './planning-contribution-escalation-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
@@ -202,6 +211,14 @@ import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
   ...spatialIndexGuides,
+  ...gisWithdrawalGuides,
+  ...cppPrbGuides,
+  ...oasDeferralGuides,
+  ...principalResidenceGuides,
+  ...ownerManagerGuides,
+  ...respAipGuides,
+  ...paymentPerceptionGuides,
+  ...jointOwnerGuides,
   ...rightsCashGuides,
   ...replacementRatioGuides,
   ...arrearsCountGuides,
@@ -225,6 +242,7 @@ export const planningGuides = [
   ...currencyMatchGuides,
   ...tailMeasureGuides,
   ...contributionTaxCashGuides,
+  ...contributionEscalationGuides,
   ...fuelMixGuides,
   ...taperGuides,
   ...bondConvexityGuides,

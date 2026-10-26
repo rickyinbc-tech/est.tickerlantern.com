@@ -59,7 +59,7 @@ test('missing, invalid or withdrawn dividend inputs remain blank, distinguishabl
  assert.equal(calibratedPayout({...row('sp500'),metricDefinitions:{dividendYield:{permittedUse:['display']}}},19),'');
  const missing=scenarioInputs({...row('sp500'),dividendYield:null},undefined,{},true,now);assert.equal(missing.payout,'');assert.throws(()=>project(missing));
  assert.equal(switchScenario({...row('sp500'),dividendYield:null},{...DEFAULTS,payout:30},{},false,now).payout,'');
- const excessive=scenarioInputs({...row('sp500'),dividendYield:10},undefined,{},true,now);assert.equal(excessive.payout,190);assert.throws(()=>project(excessive));
+ const excessive=scenarioInputs({...row('sp500'),dividendYield:10},undefined,{},true,now);assert.equal(excessive.payout,Math.round(10*row('sp500').forwardPE));assert.throws(()=>project(excessive));
  const zero=scenarioInputs({...row('sp500'),dividendYield:0},undefined,{},true,now);
  assert.equal(zero.payout,0);assert.equal(project(zero).last.cumulativeDividend,0);
  const blank={...feed,indices:[{...row('sp500'),dividendYield:null}]},records=csv(fiveYearCSV(blank,now));
@@ -84,7 +84,7 @@ test('CSV labels calibrated payouts as model inputs with separate yield and earn
  assert.equal(evidence.classification,'model-implied-payout');assert.equal(evidence.initialDividendAnchorPercent,1.09);
  assert.equal(evidence.yieldEvidence.observationDate,'2026-10-21');assert.match(evidence.interpretation,/Not a publisher-reported payout/);
  const records=csv(annualCSV(m,r.growthForecast,{payoutMetric:evidence}));const at=records[0].indexOf('Payout metric provenance');
- assert.equal(JSON.parse(records[1][at]).value,20.71);
+ close(JSON.parse(records[1][at]).value,+(1.09*r.forwardPE).toFixed(3));
  const all=csv(fiveYearCSV(feed,now)),payout=all[0].indexOf('Payout percent'),id=all[0].indexOf('Benchmark ID');
  assert.equal(all.length,127);
  for(const r of feed.indices){

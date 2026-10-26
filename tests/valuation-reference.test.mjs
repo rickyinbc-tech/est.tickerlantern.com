@@ -7,7 +7,7 @@ import {DEFAULTS,project,annualCSV} from '../src/model.js';
 import {fiveYearCSV} from '../src/five-year-report.js';
 import {validateFeed} from '../src/index-data.js';
 const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
-const now=new Date('2026-10-24T12:00:00Z'),r=id=>structuredClone(feed.indices.find(x=>x.id===id));
+const now=new Date('2026-10-26T12:00:00Z'),r=id=>structuredClone(feed.indices.find(x=>x.id===id));
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 const evidence={publisher:'Synthetic QA source',url:'https://example.test/valuation',checkedAt:'2026-10-23T10:00:00Z'};
 function trailingRow(){const row=r('sp500');row.mean10YearForwardPE=null;row.meanAsOf=null;row.meanMethod=null;row.historicalCompatibility={outcome:'insufficient',allowComparison:false,allowExitDefault:false,reasons:['No forward mean']};row.metricDefinitions.mean10YearForwardPE={...row.metricDefinitions.mean10YearForwardPE,state:'unavailable',rawReportedValue:null,observationDate:null,evidence:{...row.metricDefinitions.mean10YearForwardPE.evidence,observationDate:null}};

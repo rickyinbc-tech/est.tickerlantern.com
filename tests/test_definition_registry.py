@@ -46,7 +46,7 @@ class DefinitionRegistryTests(unittest.TestCase):
 
     def test_metric_evidence_retains_independent_dates_and_unknown_windows(self):
         self.enrich();em=self.rows['em']['metricDefinitions']
-        self.assertEqual(em['forwardPE']['observationDate'],'2026-10-22')
+        self.assertEqual(em['forwardPE']['observationDate'],'2026-10-23')
         self.assertEqual(em['mean10YearForwardPE']['observationDate'],'2025-12-31')
         self.assertEqual(em['dividendYield']['observationDate'],'2026-09-30')
         self.assertEqual(em['dividendYield']['evidence']['publisher'],'MSCI')
@@ -85,12 +85,12 @@ class DefinitionRegistryTests(unittest.TestCase):
 
     def test_check_only_change_does_not_invent_observation_or_accepted_change(self):
         self.enrich();previous=copy.deepcopy(self.feed)
-        self.rows['sp500']['source']['checkedAt']='2026-10-23T12:00:00Z'
+        self.rows['sp500']['source']['checkedAt']='2026-10-24T12:00:00Z'
         self.rows['sp500']['source']['sha256']='a'*64
         self.enrich(previous)
         d=self.rows['sp500']['metricDefinitions']['forwardPE']
         self.assertIsNone(d['evidence']['latestAcceptedChange'])
-        self.assertEqual(d['observationDate'],'2026-10-16')
+        self.assertEqual(d['observationDate'],'2026-10-23')
         self.assertIn('publication-date-only',d['dateBasis'])
         self.rows['sp500']['forwardPE']=19.2
         self.enrich(previous)

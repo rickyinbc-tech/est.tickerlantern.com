@@ -71,7 +71,7 @@ test('bridge retains uncapped rates and named-year gaps; invalid annual levels b
  const r=row('sp500'),changed={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85},{year:2029,growth:24}]}};
  const p=fiveYearGrowthPath(changed,now);
  assert.deepEqual(p.calendarInputs.map(x=>x.growth),[85,8.04,24,8.04,8.04,8.04]);
- close(p.rates[0],17.757809117743516);close(p.rates[1],20.833946833637683);
+ close(p.rates[0],16.789005278116132);close(p.rates[1],21.12593705462573);
  for(const growth of [-100,Infinity]){const broken={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth}]}};assert.ok(fiveYearGrowthPath(broken,now).bridgeError);assert.equal(baselineForecast(broken,now),null);}
  const high={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:1001}]}};assert.equal(fiveYearGrowthPath(high).calendarInputs[0].growth,1001);
 });

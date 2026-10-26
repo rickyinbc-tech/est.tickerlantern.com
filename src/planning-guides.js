@@ -1,3 +1,4 @@
+import { utilityEqualGuides } from './planning-utility-equal-guides.js';
 import { spatialIndexGuides } from './planning-spatial-index-guides.js';
 import { gisWithdrawalGuides } from './planning-gis-withdrawal-guides.js';
 import { cppPrbGuides } from './planning-cpp-prb-guides.js';
@@ -210,6 +211,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...utilityEqualGuides,
   ...spatialIndexGuides,
   ...gisWithdrawalGuides,
   ...cppPrbGuides,

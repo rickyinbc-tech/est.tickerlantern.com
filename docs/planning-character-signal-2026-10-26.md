@@ -31,4 +31,6 @@ All defaults were reproduced with 40-digit Python Decimal arithmetic (`qa/planni
 
 ## Release status
 
-Pinned base `b2bab283` (origin/main at start). Deployment results are appended below.
+Pinned base `b2bab283` (origin/main at start, unchanged when re-fetched before publishing). Source commit `5ef02be0` was pushed to `main` as a fast-forward on 26 October 2026. Before pushing, the live sitemap was a strict subset of local `dist`: the only differences were this batch's four URLs plus eight already on `main` but never deployed (TFSA asset location, missed best/worst months, CPP pension sharing, Groceries and Essentials Benefit, each in English and Chinese).
+
+`wrangler deploy` was blocked by the unattended run's permission policy (production deploy), and a push alone does not deploy: immediately after the push the new URLs and the earlier TFSA guide returned 404, while existing pages (home, balanced-fund crash guide, exit/re-entry guide, a Chinese page) returned 200. The next authorized `npx wrangler deploy` from current `main` (Wrangler rebuilds from source) will publish all twelve. After it, verify each URL, the module `planning-character-signal-models.js`, and homepage, library and sitemap entries.

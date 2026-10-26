@@ -15,4 +15,8 @@ All defaults were reproduced independently with 40-digit Python Decimal arithmet
 
 Chinese translations for the 232 new units were written directly (no external translation service) and passed `numguard`; `zh:refresh` reported 0 missing units.
 
-Browser QA was not available: the in-app preview server start was declined during this unattended run. Checks used built HTML (4 figures, 4 tables and numeric inputs per page), the built module graph in Node, and live HTTP checks after deployment. No browser pass is claimed.
+Browser QA was not available: the in-app preview server start was declined during this unattended run. Checks used built HTML (4 figures, 4 tables and numeric inputs per page), sitemap, homepage and research-index entries, and the built module graph in Node. No browser pass is claimed.
+
+## Release status
+
+Source commit `b9097b78` was pushed to `main` as a fast-forward from pinned `5d4745c2` on 26 October 2026. Before pushing, the live sitemap matched local `dist` except the four new URLs. `wrangler deploy` was blocked by the unattended run's permission policy, and a push alone does not deploy, so the new URLs still returned 404 after about six minutes. The next authorized deployment from current `main` (Wrangler rebuilds from source) will publish them; after that, verify the two English and two Chinese URLs, their module `planning-location-timing-models.js`, and the homepage, library and sitemap entries.

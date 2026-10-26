@@ -69,7 +69,7 @@ export function metricStatusText(row,key,now=new Date()) {
 export function metricDisclosure(row,key,now=new Date()) {
   const h=metricHealth(row,key,now),text=metricStatusText(row,key,now);
   if(!(h.sourceFailure || h.checkOverdue || h.observationStale || h.definitionReview || h.superseded)) return text;
-  return `${text}. Last attempt: ${checkTime(h.lastAttempt)}. Last successful validation: ${checkTime(h.lastSuccess)}.${h.sourceFailure && h.failureSummary?' '+h.failureSummary+'.':''}${h.browserDependent?' Browser check requires the owner’s Mac and Codex.':''}`;
+  return `${text}. Last attempt: ${checkTime(h.lastAttempt)}. Last successful validation: ${checkTime(h.lastSuccess)}.${h.sourceFailure && h.failureSummary?' '+h.failureSummary+'.':''}${h.browserDependent?' Browser check requires the owner’s desktop browser.':''}`;
 }
 export function metricProvenance(row,key,now=new Date()) {
   return {...row?.metricDefinitions?.[key],synchronization:resolvedSync(row,key),health:metricHealth(row,key,now)};

@@ -1,0 +1,11 @@
+# Pension income splitting election
+
+One English article dated 26 October 2026 with five editable figures and chart data tables:
+
+- `pension-income-splitting-eligible-pension-50-percent-election` (`pensionSplitElection`): a couple aged 65 or older allocates 0–50% of the transferring spouse's eligible pension income on Form T1032. Distinct from the OAS recovery calendar, RRIF minimum, spousal RRSP and marginal-tax guides.
+
+Official anchors (all reviewed 26 October 2026): CRA pension income splitting page (dated 20 January 2026) for conditions, eligible/ineligible income, the 50% cap, withholding allocation and the three-year late/amended window; CRA line 31400 (CAD 2,000 federal pension income amount); CRA current-year page (modified 25 June 2026) for 2026 federal brackets 14/20.5/26/29/33% at CAD 58,523 / 117,045 / 181,440 / 258,482; CRA TD1-WS (26) for the basic personal amount (CAD 16,452 to 14,829 between CAD 181,440 and 258,482) and the age amount (CAD 9,208, reduced 15% above CAD 46,432, zero at CAD 107,819); Service Canada OAS recovery tax page (modified 29 September 2026) for the 2026-income threshold of CAD 95,323.
+
+Model: federal-only, net income equals taxable income, credits at 14%, non-refundable credits cannot go below zero (the unused part is reported as its own bridge step), OAS recovery is 15% above the threshold capped at the OAS entered. No provincial tax, dividend, capital-gain, CPP-contribution, GIS or medical-expense effects. The "lowest-cost" metric is the smallest whole percentage within half a cent of the minimum.
+
+Defaults (pension CAD 70,000 + other CAD 25,000 incl. CAD 9,150 OAS; spouse CAD 16,000): no split CAD 12,818.53; 50% split CAD 8,272.06; saving CAD 4,546.47 = 2,275.00 bracket + 639.07 personal/age + 280.00 pension amount + 1,352.40 previously unusable credits. Variants: CAD 100,000 pension clears OAS recovery (CAD 4,451.55) at about 30%, minimum cost from 43% (saving CAD 9,563.73); a balanced couple saves about CAD 554 flat from 15% to 44% and CAD 325.00 at 50%; equal CAD 60,000 incomes lose CAD 1,339.07 at 50%. Defaults were hand-checked against bracket and credit arithmetic; tests cover bracket/credit boundaries, the bridge reconciliation, recovery cap, household-income conservation, field bounds, related-link resolution and five finite figure/table pairs.

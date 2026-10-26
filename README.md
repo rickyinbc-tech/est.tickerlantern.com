@@ -45,6 +45,9 @@ income receipt gaps, overlapping instalment purchases, new-money allocation
 maintenance and parental-leave household cash comparisons, GIC maturity calendars,
 basic CESG catch-up and HBP repayment obligations, HELOC interest-only versus
 principal repayments, pension-indexing caps and a daily biweekly-pay calendar.
+A fund income-type guide compares the same return paid as interest, eligible
+dividends, realized or deferred gains, and a crash-warning guide finds the hit
+rate needed to pay for false alarms; see `docs/planning-character-signal-2026-10-26.md`.
 The latest additions examine dated wealth medians versus liquid cash, career
 retraining opportunity costs and pension service buyback cash flows.
 Joint-loan payment takeovers, annual-versus-monthly subscription commitments and

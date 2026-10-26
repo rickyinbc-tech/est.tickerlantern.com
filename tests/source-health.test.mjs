@@ -25,7 +25,8 @@ test('primary-only failed attempts cannot produce an all-success summary',()=>{
  const health=updateHealth(isolated,now); assert.ok(health.failures>0);assert.match(health.message,/failed/);assert.equal(health.missed,false);
 });
 test('retained growth provenance includes the operational outcome in annual CSV',()=>{
- const forecast=feed.indices.find(r=>r.id==='russell2000').growthForecast;
+ const live=feed.indices.find(r=>r.id==='russell2000').growthForecast;
+ const forecast={...live,sync:{...live.sync,status:'retained',lastAttempt:'2026-10-23T09:18:44Z',lastSuccess:'2026-10-23T06:51:42Z',error:'Publisher robots policy unavailable'}};
  const model=project({...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[44],years:1});
  const csv=annualCSV(model,forecast,{healthEvaluatedAt:now.toISOString()});
  assert.match(csv,/retained/);assert.match(csv,/2026-10-23T09:18:44Z/);assert.match(csv,/robots policy unavailable/i);
@@ -79,7 +80,8 @@ test('CSV carries resolved metric checks and evaluation time without misattribut
 });
 test('retained Russell and JPM export original source dates, attempts, successes and safe failure summaries',()=>{
  for(const id of ['russell2000','japan']) {
-  const row=feed.indices.find(r=>r.id===id),forecast=row.growthForecast,point=forecast.estimates.find(p=>p.year===2027);
+  const live=feed.indices.find(r=>r.id===id);
+  const row={...live,growthForecast:{...live.growthForecast,sync:{...live.growthForecast.sync,status:'retained',lastAttempt:'2026-10-23T09:18:44Z',lastSuccess:'2026-10-23T06:51:42Z',error:'Hosted publisher page unavailable'}}},forecast=row.growthForecast,point=forecast.estimates.find(p=>p.year===2027);
   const model=project({...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[point.growth],years:1});
   const context={healthEvaluatedAt:now.toISOString(),growthMetric:metricProvenance(row,'growthForecast',now)};
   const rows=readCSV(annualCSV(model,forecast,context)),values=Object.fromEntries(rows[0].map((h,i)=>[h,rows[2][i]])),evidence=JSON.parse(values['Growth source provenance']);

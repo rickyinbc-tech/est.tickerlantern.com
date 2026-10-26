@@ -3,7 +3,7 @@
   "sources": {
     "nasdaq-dashboard": {
       "adapterId": "nasdaq-dashboard",
-      "verifiedAt": "2026-10-23T20:07:43Z",
+      "verifiedAt": "2026-10-26T06:24:32Z",
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
         "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
@@ -13,7 +13,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser"
       },
       "values": {

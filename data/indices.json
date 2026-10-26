@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-26T04:12:10Z",
+  "publishedAt": "2026-10-26T06:25:44Z",
   "sourceCheckAt": "2026-10-26T04:00:15Z",
   "refreshCadence": "Daily at 23:15 UTC plus daily scheduled browser source checks",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
     "successful": 16,
-    "failed": 9,
+    "failed": 8,
     "notConnected": 0
   },
   "sourceJobs": [
@@ -55,21 +55,6 @@
       "discoveryIssues": [
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table",
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique explicitly labelled historical-mean table"
-      ]
-    },
-    {
-      "id": "nasdaq-dashboard",
-      "indices": [
-        "nasdaq100",
-        "russell2000",
-        "japan"
-      ],
-      "status": "retained",
-      "checkedAt": "2026-10-26T04:00:15Z",
-      "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-      "discoveryIssues": [
-        "Discovery failed: Public source request unavailable",
-        "Candidate https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026 failed: Public source request unavailable"
       ]
     },
     {
@@ -143,6 +128,18 @@
         "Discovery failed: Public source HTTP 403",
         "Candidate https://www.edelweissmf.com/Files/Insights/viewpoint/9th%20Oct%20Edelweiss%20Mutual%20Fund%20-%20TEMPO_09102026_101803_AM.pdf failed: Public source HTTP 403"
       ]
+    },
+    {
+      "id": "nasdaq-dashboard",
+      "indices": [
+        "japan",
+        "nasdaq100",
+        "russell2000"
+      ],
+      "status": "browser-verified",
+      "checkedAt": "2026-10-26T06:24:32Z",
+      "lastBrowserCheck": "2026-10-26T06:24:32Z",
+      "error": null
     }
   ],
   "indices": [
@@ -602,21 +599,21 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
         "publicationDate": null
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -632,7 +629,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -645,19 +642,19 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -733,11 +730,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -794,11 +791,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -867,11 +864,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1004,14 +1001,14 @@
         "dividendYield": 0.5
       },
       "yieldSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       }
@@ -1040,21 +1037,21 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
         "publicationDate": null
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -1070,7 +1067,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -1083,19 +1080,19 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -1184,11 +1181,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1245,11 +1242,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1318,11 +1315,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -1455,14 +1452,14 @@
         "dividendYield": 1.5
       },
       "yieldSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       }
@@ -5851,7 +5848,7 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
@@ -5866,18 +5863,18 @@
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-23T20:07:43Z",
+        "checkedAt": "2026-10-26T06:24:32Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -6014,11 +6011,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -6087,11 +6084,11 @@
             "publicationDate": "2026-10-16",
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-26T04:00:15Z",
-            "lastSuccess": "2026-10-23T20:07:43Z",
-            "checkedAt": "2026-10-23T20:07:43Z",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-10-26T06:24:32Z",
+            "lastSuccess": "2026-10-26T06:24:32Z",
+            "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-23T16:10:12Z",
             "parserVersion": "nasdaq-global-dashboard-2",
             "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
@@ -6224,13 +6221,13 @@
         "dividendYield": 1.8
       },
       "yieldSync": {
-        "status": "retained",
-        "lastAttempt": "2026-10-26T04:00:15Z",
-        "lastSuccess": "2026-10-23T20:07:43Z",
-        "error": "Discovery: Public source request unavailable; Dashboard: Public source request unavailable; Scheduled-browser verification is overdue (48-hour limit)",
+        "status": "ok",
+        "lastAttempt": "2026-10-26T06:24:32Z",
+        "lastSuccess": "2026-10-26T06:24:32Z",
+        "error": null,
         "metrics": [
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       }
@@ -30071,7 +30068,7 @@
     "event": "local",
     "runId": null,
     "url": null,
-    "checkedAt": "2026-10-26T04:12:10Z"
+    "checkedAt": "2026-10-26T06:25:44Z"
   },
   "statusMetadataRepair": {
     "appliedAt": "2026-10-23T10:22:07Z",
@@ -30091,7 +30088,7 @@
       }
     ]
   },
-  "browserSourceCheckAt": "2026-10-23T20:07:43Z",
+  "browserSourceCheckAt": "2026-10-26T06:24:32Z",
   "primarySourceJobs": [
     {
       "id": "primary:factset",

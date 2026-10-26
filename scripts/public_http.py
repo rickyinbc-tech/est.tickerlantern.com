@@ -19,6 +19,18 @@ def checked_url(url, hosts):
     return url
 
 
+def complete_pdf(body):
+    tail = body[-2048:]
+    if b'%%EOF' in tail: return True
+    # Some publishers (MSCI country factsheets) serve a complete file whose final
+    # marker is written as %%EO. Accept it only when the trailing startxref
+    # points at a real cross-reference section inside the downloaded bytes.
+    match = re.search(rb'startxref\s+(\d+)\s+%%EOF?\s*$', tail)
+    if not match: return False
+    offset = int(match[1])
+    return offset < len(body) and re.match(rb'xref\s|\d+\s+\d+\s+obj\b', body[offset:offset + 32]) is not None
+
+
 def validate_body(body, content_type, url, allow_empty=False):
     if not body and allow_empty: return body
     if not body or len(body) > MAX_BYTES: raise ValueError('Empty or oversized public source')
@@ -26,7 +38,7 @@ def validate_body(body, content_type, url, allow_empty=False):
     is_pdf = body.startswith(b'%PDF')
     expects_pdf = urlparse(url).path.lower().endswith('.pdf') or mime in ('application/pdf', 'application/x-pdf')
     if expects_pdf or is_pdf:
-        if not is_pdf or b'%%EOF' not in body[-2048:]: raise ValueError('Truncated PDF or non-PDF response')
+        if not is_pdf or not complete_pdf(body): raise ValueError('Truncated PDF or non-PDF response')
         if mime and mime not in ('application/pdf', 'application/x-pdf', 'application/octet-stream', 'binary/octet-stream'): raise ValueError('Unexpected PDF content type')
         return body
     if mime and not (mime.startswith('text/') or mime in ('application/json', 'application/xml', 'application/rss+xml', 'application/atom+xml', 'application/xhtml+xml', 'application/octet-stream')): raise ValueError('Unexpected public source content type')

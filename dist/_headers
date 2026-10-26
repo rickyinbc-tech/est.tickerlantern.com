@@ -5,3 +5,5 @@
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 /research/*
   Cache-Control: no-cache
+/zh-locales/*
+  Cache-Control: public, max-age=0, must-revalidate

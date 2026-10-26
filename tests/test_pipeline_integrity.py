@@ -40,6 +40,12 @@ class PublicTransport(unittest.TestCase):
     def test_denial_wrong_content_and_truncated_pdf_are_failures(self):
         for body,mime,url in [(b'<html>Verify you are human</html>','text/html','https://publisher.example/report'),(b'%PDF-1.4 truncated','application/pdf','https://publisher.example/report.pdf'),(b'<html>Loading</html>','application/pdf','https://publisher.example/report.pdf'),(b'123','image/png','https://publisher.example/report')]:
             with self.subTest(body=body),self.assertRaises(ValueError): public_http.validate_body(body,mime,url)
+    def test_publisher_eof_marker_without_final_byte_needs_a_real_xref(self):
+        body=b'%PDF-1.4\n1 0 obj\n<<>>\nendobj\nxref\n0 1\n0000000000 65535 f \ntrailer\n<< /Size 1 >>\nstartxref\n'
+        complete=body.replace(b'startxref\n',b'startxref\n%d\n%%%%EO' % body.index(b'xref'))
+        self.assertEqual(public_http.validate_body(complete,'application/pdf','https://publisher.example/report.pdf'),complete)
+        for broken in [complete[:-1],complete.replace(b'startxref\n%d' % body.index(b'xref'),b'startxref\n9999'),complete.replace(b'startxref\n%d' % body.index(b'xref'),b'startxref\n3')]:
+            with self.subTest(broken=broken[-20:]),self.assertRaises(ValueError): public_http.validate_body(broken,'application/pdf','https://publisher.example/report.pdf')
     def test_http_timeout_and_rate_limit_fail_closed(self):
         with patch.object(public_http.subprocess,'run',return_value=subprocess.CompletedProcess([],28,b'',b'timeout')):
             with self.assertRaisesRegex(ValueError,'unavailable'):public_http.request('https://publisher.example/report',{'publisher.example'})

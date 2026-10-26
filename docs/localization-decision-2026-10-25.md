@@ -2,6 +2,19 @@
 
 Reviewed 25 October 2026.
 
+> **Superseded later on 25 October 2026.** The owner asked for every page to have an English and a
+> Simplified Chinese version that readers can choose between. The Chinese edition now ships under `/zh/`,
+> with its own URLs, canonical and hreflang metadata, a header and mobile-menu language switch that
+> remembers the reader's choice, a link to the English source and a correction address on every page.
+> Translation stays offline at build time from the committed memory in `src/locales/zh/`.
+>
+> To address the numerical-wording risk below, `scripts/i18n/numguard.py` checks every translated unit:
+> each quantity in the English source must appear in the Chinese text with the same value, including
+> scale (k, m, bn against 千, 万, 亿). Units that fail keep the English text. The first run rejected 121
+> units, among them chart labels where `$9.5k` had become `9.5 万美元` (ten times too large) and a share
+> count where `907.935m` had become `9.07935 万` (ten thousand times too small). Refresh the edition with
+> `npm run zh:refresh`. The record below is kept for context.
+
 ## Decision
 
 TickerLantern's public pages remain English-only. Do not merge the machine-translation experiment from

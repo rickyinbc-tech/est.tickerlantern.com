@@ -1,0 +1,79 @@
+:root {
+  --tl-zh-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", "Source Han Sans SC", var(--tl-sans);
+  --tl-zh-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "STSong", var(--tl-display);
+}
+html[lang="zh-Hans"] body,
+html[lang="zh-Hans"] button,
+html[lang="zh-Hans"] input,
+html[lang="zh-Hans"] select,
+html[lang="zh-Hans"] textarea,
+html[lang="zh-Hans"] .tl-header,
+html[lang="zh-Hans"] .tl-nav {
+  font-family: var(--tl-zh-sans);
+}
+html[lang="zh-Hans"] h1,
+html[lang="zh-Hans"] h2,
+html[lang="zh-Hans"] h3,
+html[lang="zh-Hans"] .hero h1,
+html[lang="zh-Hans"] .display {
+  font-family: var(--tl-zh-serif);
+}
+html[lang="zh-Hans"] body {
+  line-height: 1.8;
+  letter-spacing: .01em;
+  word-break: normal;
+  line-break: strict;
+}
+.tl-header .tl-lang {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--tl-line);
+  border-radius: 999px;
+  color: var(--tl-navy);
+  background: var(--tl-paper);
+  font: 600 12px/1.2 var(--tl-sans);
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: .02em;
+}
+.tl-header .tl-lang:hover {
+  border-color: var(--tl-teal);
+  color: var(--tl-teal);
+  background: #f4faf9;
+}
+.tl-header .tl-lang--menu { display: none; }
+@media (max-width: 760px) {
+  .tl-header .tl-lang { display: none; }
+  .tl-header .tl-lang--menu {
+    display: block;
+    margin: 6px 10px 2px;
+    padding: 11px 12px;
+    text-align: center;
+  }
+}
+.tl-translation-foot {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 24px 34px;
+  color: var(--tl-muted);
+  font: 12px/1.75 var(--tl-zh-sans);
+  text-align: center;
+}
+.tl-translation-foot a { color: var(--tl-blue); margin: 0 8px; white-space: nowrap; }
+.tl-translation-banner {
+  max-width: 1100px;
+  margin: 18px auto 0;
+  padding: 12px 18px;
+  border: 1px solid #e2d7b8;
+  border-radius: 6px;
+  background: #fdf9ee;
+  color: #64522a;
+  font: 13px/1.7 var(--tl-zh-sans);
+}
+.tl-translation-banner a { color: var(--tl-blue); }
+@media print {
+  .tl-lang, .tl-translation-foot, .tl-translation-banner { display: none !important; }
+}

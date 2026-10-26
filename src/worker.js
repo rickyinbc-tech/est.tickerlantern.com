@@ -29,6 +29,22 @@ export default {
       url.protocol = 'https:';
       return Response.redirect(url.href, 308);
     }
+    if (url.pathname === '/zh' || url.pathname === '/zh/index.html') {
+      url.pathname = '/zh/';
+      return Response.redirect(url.href, 308);
+    }
+    if (url.pathname.startsWith('/zh/')) {
+      let path = url.pathname;
+      if (path.endsWith('/index.html')) path = path.slice(0, -10);
+      else if (path.endsWith('.html')) path = path.slice(0, -5);
+      if (path === '/zh/research') path = '/zh/research/';
+      if (path === '/zh/search/') path = '/zh/search';
+      if (/^\/zh\/(?:about|editorial-policy)\/$/.test(path)) path = path.slice(0, -1);
+      if (path !== url.pathname) {
+        url.pathname = path;
+        return Response.redirect(url.href, 308);
+      }
+    }
     if (url.pathname === '/research' || url.pathname === '/research/index.html' || url.pathname === '/index.html' || /^\/research\/[a-z0-9-]+(?:\.html|\/)$/.test(url.pathname) || /^\/(?:about|editorial-policy)(?:\.html|\/)$/.test(url.pathname)) {
       url.pathname = url.pathname === '/index.html' ? '/' : url.pathname === '/research' || url.pathname === '/research/index.html' ? '/research/' : url.pathname.replace(/(?:\.html|\/)$/, '');
       return Response.redirect(url.href, 308);
@@ -45,7 +61,14 @@ export default {
       const response = await handleNotesResearch(request, env);
       return enrichSearchNavigation(enrichStudyHTML(response, url.pathname));
     }
-    if (url.pathname !== '/api/indices') return env.ASSETS.fetch(request);
+    if (url.pathname !== '/api/indices') {
+      const response = await env.ASSETS.fetch(request);
+      if (response.status === 404 && url.pathname.startsWith('/zh/')) {
+        const fallback = await env.ASSETS.fetch(new Request(new URL('/zh/404.html', url), request));
+        if (fallback.ok) return new Response(fallback.body, { status: 404, headers: fallback.headers });
+      }
+      return response;
+    }
     if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
     let remote, bundled;
     try {

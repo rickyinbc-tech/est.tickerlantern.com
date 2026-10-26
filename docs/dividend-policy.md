@@ -18,10 +18,10 @@ Payouts below use the current source entry P/E, rounded here to two decimal plac
 
 | Benchmark | Dividend anchor | Observation date | Model payout | Dividend evidence |
 | --- | ---: | --- | ---: | --- |
-| S&P 500 | 1.09% | 2026-10-21 | 20.71% | [State Street Investment Management](https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy) |
+| S&P 500 | 1.10% | 2026-10-22 | 20.57% | [State Street Investment Management](https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy) |
 | Nasdaq-100 | 0.50% | 2026-10-13 | 10.68% | [Nasdaq / Bloomberg / FactSet](https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026) |
 | Russell 2000 | 1.50% | 2026-10-13 | 35.80% | [Nasdaq / Bloomberg / FactSet](https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026) |
-| S&P/TSX Composite | 2.10% | 2026-10-22 | 32.76% | [Carolann Steinhoff / Bloomberg Automation](https://carolannsteinhoff.com/october-22nd-2026-newsletter/) |
+| S&P/TSX Composite | 2.10% | 2026-10-23 | 32.76% | [Carolann Steinhoff / Bloomberg Automation](https://carolannsteinhoff.com/october-23rd-2026-the-newsletter/) |
 | MSCI Canada | 2.19% | 2026-09-30 | 34.34% | [MSCI](https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf) |
 | MSCI ACWI | 1.58% | 2026-09-30 | 25.12% | [MSCI](https://www.msci.com/documents/10199/255599/msci-acwi.pdf) |
 | MSCI World | 1.52% | 2026-09-30 | 27.24% | [MSCI](https://www.msci.com/documents/10199/255599/msci-acwi.pdf) |
@@ -29,7 +29,7 @@ Payouts below use the current source entry P/E, rounded here to two decimal plac
 | MSCI Emerging Markets | 2.02% | 2026-09-30 | 17.98% | [MSCI](https://www.msci.com/documents/10199/255599/msci-acwi.pdf) |
 | MSCI Europe | 2.87% | 2026-09-30 | 40.18% | [MSCI](https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52) |
 | MSCI United Kingdom | 3.17% | 2026-09-30 | 38.42% | [MSCI](https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf) |
-| FTSE 100 | 3.04% | 2026-09-30 | 37.39% | [London Stock Exchange / FTSE Russell](https://www.londonstockexchange.com/en/indices/ftse-100) |
+| FTSE 100 | 3.11% | 2026-09-30 | 38.25% | [FTSE Russell factsheet](https://research.ftserussell.com/Analytics/FactSheets/Home/DownloadSingleIssue?issueName=UKX&IsManual=false) |
 | STOXX Europe 600 | 2.80% reference only | 2026-09-30 | Unavailable | [STOXX](https://stoxx.com/index/sxxp/?factsheet=true) |
 | MSCI Japan | 1.80% | 2026-10-13 | 27.00% | [Nasdaq / Bloomberg / FactSet](https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026) |
 | Nikkei 225 | 1.56% | 2026-10-23 | 30.73% | [Nikkei Indexes](https://indexes.nikkei.co.jp/en/nkave/archives/data?list=dividend) |
@@ -42,7 +42,7 @@ Payouts below use the current source entry P/E, rounded here to two decimal plac
 
 ## Review and refresh coverage
 
-The seven previously missing observations are recorded in `data/dividend-observations.json`: S&P 500, S&P/TSX Composite, FTSE 100, STOXX Europe 600, Nikkei 225, Hang Seng and CSI 300. These were manually reviewed public sources and are **not included in the scheduled publisher adapters**. A manual check is accepted for 48 hours before showing an overdue check; source observation age remains independent. Monthly snapshots retain their month-end dates. The other 14 dividend observations keep their existing source adapters and freshness state. This release does not claim to have reverified all 14 source documents.
+The seven previously missing observations are recorded in `data/dividend-observations.json`: S&P 500, S&P/TSX Composite, FTSE 100, STOXX Europe 600, Nikkei 225, Hang Seng and CSI 300. Since 26 October 2026, five of them (S&P 500, S&P/TSX, FTSE 100, Hang Seng and CSI 300) are refreshed daily by `scripts/dividend_sources.py` from the same exact-benchmark publisher pages and factsheets. STOXX Europe 600 and Nikkei 225 remain manually reviewed because their public pages are script-rendered or refuse automated requests; a manual check is accepted for 48 hours before showing an overdue check. Source observation age remains independent. The FTSE 100 anchor was corrected from 3.04% to FTSE Russell's factsheet value of 3.11% ([audit](numbers-audit-2026-10-26.md)). The table records review-day values; the live feed is authoritative. Monthly snapshots retain their month-end dates. The other 14 dividend observations keep their existing source adapters and freshness state. This release does not claim to have reverified all 14 source documents.
 
 Selection details: State Street’s **Index Dividend Yield** rather than ETF distribution/SEC yield; the exact TSX Composite Bloomberg Automation market-close figure; FTSE’s **Index characteristics** table; STOXX’s exact benchmark column plus net-return footnote; Nikkei’s **Index Weight Basis**, not simple average; HSI’s September factsheet HSI row; CSI’s exact 000300 factsheet yield. The HSI and CSI original PDF pages were rendered and visually inspected. Nikkei was available through public web retrieval; a direct browser challenge was not bypassed and its bytes are not recorded as financial evidence. Raw source documents/captures remain local and ignored; only observations, public URLs and evidence metadata are published.
 

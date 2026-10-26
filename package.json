@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
-    "preview": "python3 -m http.server 8764 --bind 127.0.0.1 --directory dist"
+    "preview": "python3 -m http.server 8764 --bind 127.0.0.1 --directory dist",
+    "zh:refresh": "TL_EN_ONLY=1 node scripts/build.mjs && python3 scripts/i18n/guard-memory.py && python3 scripts/i18n/catalog.py apply && python3 scripts/i18n/build-dicts.py && node scripts/i18n/search-index.mjs && node scripts/build.mjs"
   }
 }

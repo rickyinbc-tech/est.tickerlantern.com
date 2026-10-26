@@ -62,13 +62,15 @@ test('raw forecast rates remain intact while bridge plans disclose source period
   if(r.growthForecast.periodBasis==='publisher-year')assert.ok(p.bridgeAssumptions.some(x=>x.includes('calendar/fiscal')));
   if(r.metricDefinitions.forwardPE.economic.horizon==='forward-unspecified')assert.ok(p.bridgeAssumptions.some(x=>x.includes('rolling NTM')));
  }
- assert.equal(fiveYearGrowthPath(row('nasdaq100')).calendarInputs[0].growth,28);
+ const nasdaq2027=row('nasdaq100').growthForecast.estimates.find(p=>p.year===2027).growth;
+ assert.equal(fiveYearGrowthPath(row('nasdaq100')).calendarInputs[0].growth,nasdaq2027);
  assert.ok(fiveYearGrowthPath(row('nasdaq100')).rates[0]>8.04);
  assert.equal(fiveYearGrowthPath(row('sp500')).bridgeQuality,'explicit-calendar-ntm');
 });
 
 test('bridge retains uncapped rates and named-year gaps; invalid annual levels block affected returns',()=>{
- const r=row('sp500'),changed={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85},{year:2029,growth:24}]}};
+ // A fixed valuation date keeps the expected bridge independent of daily refreshes.
+ const r={...row('sp500'),asOf:'2026-10-23'},changed={...r,growthForecast:{...r.growthForecast,estimates:[{year:2027,growth:85},{year:2029,growth:24}]}};
  const p=fiveYearGrowthPath(changed,now);
  assert.deepEqual(p.calendarInputs.map(x=>x.growth),[85,8.04,24,8.04,8.04,8.04]);
  close(p.rates[0],16.789005278116132);close(p.rates[1],21.12593705462573);

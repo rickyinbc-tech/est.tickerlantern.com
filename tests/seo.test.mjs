@@ -42,7 +42,7 @@ test('built sitemap covers unique indexable pages with matching canonical URLs a
   const path=new URL(url).pathname;
   assert.equal(new URL(url).origin,'https://tickerlantern.com');
   if(studyPages[path])continue;
-  const file=path==='/'?'dist/index.html':path==='/research/'?'dist/research/index.html':'dist'+path+'.html';
+  const file=path==='/'?'dist/index.html':path.endsWith('/')?'dist'+path+'index.html':'dist'+path+'.html';
   const html=await readFile(file,'utf8');
   assert.ok(!/noindex|nofollow/i.test(html.match(/<head>.*?<\/head>/s)[0]),path);
   assert.equal([...html.matchAll(/rel="canonical"/g)].length,1,path);
@@ -51,7 +51,7 @@ test('built sitemap covers unique indexable pages with matching canonical URLs a
   const title=html.match(/<title>(.*?)<\/title>/s)[1];assert.ok(!titles.has(title),'Duplicate title: '+title);titles.add(title);
   const json=html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1];
   const graph=JSON.parse(json)['@graph'];assert.ok(graph.some(row=>row.url===url),path);
-  assert.ok(html.includes('href="/editorial-policy"'),path);
+  assert.ok(html.includes('href="'+(path.startsWith('/zh/')?'/zh/editorial-policy':'/editorial-policy')+'"'),path);
  }
  assert.ok((await readFile('dist/index.html','utf8')).includes('BmfsXlNCdI7LU_Irzf3c8nNsVAi7N7kLzxYcFAf2bJE'));
  assert.ok((await readFile('dist/404.html','utf8')).includes('noindex,follow'));

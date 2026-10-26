@@ -80,6 +80,7 @@ def _location(row, key, family, source):
     if family == 'edelweiss-reference': return f"Global equity markets at a glance; exact {'UK/FTSE100' if row['id']=='ftse100' else 'HongKong/HangSeng'} row;12-month-forward header; " + ('P/E10yr Avg column' if key == 'mean10YearForwardPE' else 'P/E column')
     if family == 'ig-asia-reference': return 'Nikkei225 named section; forwardP/E sentence and ten-year mean; separate observation-date statement'
     if family == 'scbam-reference': return 'global forward12-month P/E chart; exact CSI300 category;10Y Avg explicit printed label; separate z-score chart excluded'
+    if family == 'cicc-reference': return 'A-share valuation paragraph; exact CSI300 forward P/E sentence; first past-ten-year historical mean; P/B, ERP and Hong Kong figures excluded'
     return 'not disclosed / not connected'
 
 
@@ -89,6 +90,7 @@ def _evidence(row, key, source, sync, asof, family, previous, feed):
     if family == 'factset': date_basis = 'publication-date-only; separate price/consensus vintage not disclosed'
     if family == 'lseg-stoxx': date_basis = 'report-date-only; exact last price/estimate date not separately disclosed in this exhibit'
     if family.startswith('jpm'): date_basis = 'report-data-cutoff; individual price and estimate vintages not separately disclosed'
+    if family == 'cicc-reference': date_basis = 'explicit Wind data date; year from the dated public repost'
     if key == 'growthForecast' and family in ('ubs','nbi'): date_basis = 'publication/report-date-only; distinct forecast observation date not disclosed'
     if key == 'growthForecast' and family == 'amova': date_basis = 'committee-meeting-date; separate market/estimate observation date not disclosed'
     if key == 'growthForecast' and family == 'fsm': date_basis = 'explicit-table-observation-date'

@@ -52,6 +52,8 @@ A balanced-fund guide splits a year when stocks and bonds fall together under
 rising rates and inflation, with dated CPI, policy-rate and 10-year yield data,
 and a tax-loss guide prices selling a fund at a loss against the superficial loss
 rule; see `docs/planning-shock-harvest-2026-10-26.md`.
+A 2026 medical expense tax credit guide compares which spouse should claim, the
+12-month window and the refundable supplement; see `docs/planning-metc-claim-2026-10-26.md`.
 A Canada Disability Benefit guide applies the 2026–27 regulation formula, the
 working-income exemption and the couple income test; see `docs/planning-cdb-income-2026-10-26.md`.
 The latest additions examine dated wealth medians versus liquid cash, career

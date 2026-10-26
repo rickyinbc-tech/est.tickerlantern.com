@@ -1,6 +1,9 @@
 import { definitions, defaults, planningResult } from './planning-models.js';
 export const escapeHTML = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const colors=['#087f76','#102f50','#b8822e','#6758a6','#bf5c4b'];
+const currencyUnit=unit=>unit==='money'||unit==='hkd'||unit==='gbp';
+const currencyPrefix=unit=>unit==='hkd'?'HK$':unit==='gbp'?'£':'$';
+const currencyCode=unit=>unit==='hkd'?'HKD':unit==='gbp'?'GBP':'CAD';
 export function format(value,unit,compact=false) {
   if(value==null)return unit==='months'?'NR':'Unavailable';
   if(unit==='count') {
@@ -20,8 +23,8 @@ export function format(value,unit,compact=false) {
   }
   if(unit==='billions')return value.toLocaleString('en-CA',{maximumFractionDigits:compact?0:3});
   if(unit==='integer'||unit==='months')return Math.round(value).toLocaleString('en-CA');
-  if(unit==='money'||unit==='hkd') {
-    const prefix=(value<0?'-':'')+(unit==='hkd'?'HK$':'$'),amount=Math.abs(value);
+  if(currencyUnit(unit)) {
+    const prefix=(value<0?'-':'')+currencyPrefix(unit),amount=Math.abs(value);
     if(compact&&amount>=1000000000)return prefix+Number((amount/1000000000).toFixed(1)).toLocaleString('en-CA')+'b';
     if(compact&&amount>=1000000)return prefix+(amount/1000000).toFixed(1)+'m';
     if(compact&&amount>=1000)return prefix+Number((amount/1000).toFixed(amount>=100000?0:1)).toLocaleString('en-CA')+'k';
@@ -110,7 +113,7 @@ function linePlot(spec,width) {
     body+=`<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="2.8"${s.dash?' stroke-dasharray="7 5"':''}/>`;
     const end=s.rows.at(-1);body+=`<circle cx="${x(end.x)}" cy="${y(end.value)}" r="4" fill="${s.dash?'white':colors[i%colors.length]}" stroke="${colors[i%colors.length]}" stroke-width="2"/>`;
   });
-  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.valueUnitLabel??(spec.unit==='money'||spec.unit==='hkd'?(spec.currency??(spec.unit==='hkd'?'HKD':'CAD')):spec.unit))+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
+  return legend(spec.series.map(s=>s.name+' · ends at '+format(s.rows.at(-1).value,spec.unit)),false,spec.series)+svgShell(spec,width,height,body,'Line chart. '+spec.xLabel+'. Values in '+(spec.valueUnitLabel??(currencyUnit(spec.unit)?(spec.currency??currencyCode(spec.unit)):spec.unit))+'.'+(spec.yMin!=null||spec.yMax!=null?' Vertical axis '+format(ymin,spec.unit)+' to '+format(ymax,spec.unit)+'.':''));
 }
 function barPlot(spec,width) {
   const left=52,right=spec.axisRight??(spec.unit==='percent'?30:18),top=12,group=spec.type==='groupbar',stack=spec.type==='stackbar';
@@ -141,7 +144,7 @@ function barPlot(spec,width) {
     body+=txt(left,y+(group?37+20*groupCount:57),labelValue,'start','class="plot-value"');
   });
   body+=line(left,top+17,left,height-32,'plot-axis')+line(left,height-32,width-right,height-32,'plot-axis');
-  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(spec.unit==='money'||spec.unit==='hkd'?(spec.currency??(spec.unit==='hkd'?'HKD':'CAD'))+'; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
+  return (spec.seriesNames?legend(spec.seriesNames,true):'')+svgShell(spec,width,height,body,'Horizontal '+(group?'grouped ':stack?'stacked ':'')+'bar chart. '+(currencyUnit(spec.unit)?(spec.currency??currencyCode(spec.unit))+'; value axis starts at zero.':'Value axis starts at zero.')+(interval?' Whiskers show the published lower and upper bounds of a 95% confidence interval around each estimate.':''));
 }
 function signedBarPlot(spec,width) {
   const left=64,right=30,top=12,rowHeight=70,height=top+spec.rows.length*rowHeight+42;
@@ -268,13 +271,13 @@ function chartTable(spec) {
   else if(spec.seriesNames){headers=[spec.rowLabel??'Scenario',...spec.seriesNames];rows=spec.rows.map(r=>[r.label,...spec.seriesNames.map((_,i)=>r.values?format(r.values[i],spec.unit):'Not repaid')]);}
   else if(spec.type==='intervalbar'){headers=[spec.rowLabel??'Scenario','Estimate','95% CI lower','95% CI upper'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit),format(r.lower,spec.unit),format(r.upper,spec.unit)]);}
   else {headers=[spec.rowLabel??'Scenario','Value'];rows=spec.rows.map(r=>[r.label,format(r.value,spec.unit)]);}
-  const tableUnit=spec.tableUnit??(spec.unit==='money'?'CAD':spec.unit==='hkd'?'HKD':spec.unit==='percent'?'percent':spec.unit);
+  const tableUnit=spec.tableUnit??(currencyUnit(spec.unit)?currencyCode(spec.unit):spec.unit==='percent'?'percent':spec.unit);
   return `<details class="plot-data"><summary>View chart data</summary><div class="guide-table" tabindex="0" role="region" aria-label="${escapeHTML(spec.title)} data"><table><caption>${escapeHTML(spec.title)} · ${escapeHTML(tableUnit)}</caption><thead><tr>${headers.map(h=>`<th scope="col">${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>'<tr>'+row.map((v,i)=>i?`<td>${escapeHTML(v)}</td>`:`<th scope="row">${escapeHTML(v)}</th>`).join('')+'</tr>').join('')}</tbody></table></div></details>`;
 }
 export function renderFigure(spec,width=760) {
   width=Math.max(300,Math.round(width));
   const chart=spec.type==='tornado'?tornadoPlot(spec,width):spec.type==='scatter'?scatterPlot(spec,width):spec.type==='fan'?fanPlot(spec,width):spec.type==='line'?linePlot(spec,width):spec.type==='heatmap'?heatPlot(spec,width):spec.type==='returns'?returnsPlot(spec,width):spec.type==='waterfall'?waterfallPlot(spec,width):spec.type==='donut'?donutPlot(spec,width):spec.type==='signedbar'?signedBarPlot(spec,width):barPlot(spec,width);
-  return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(spec.unit==='money'?'Canadian dollars (CAD)':spec.unit==='hkd'?'Hong Kong dollars (HKD)':spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
+  return `<figure class="planning-figure" id="${spec.id}"><figcaption><span class="planning-evidence">${escapeHTML(spec.evidence||(spec.source?'Official statistics':'Hypothetical scenario'))}</span><h3>${escapeHTML(spec.title)}</h3><p class="plot-unit">${escapeHTML(spec.unitLabel||(currencyUnit(spec.unit)?(spec.unit==='hkd'?'Hong Kong dollars (HKD)':spec.unit==='gbp'?'Pounds sterling (GBP)':'Canadian dollars (CAD)'):spec.unit==='percent'?'Percentage returns':spec.unit==='months'?'Months to repay':'Scenario values'))}</p></figcaption><div class="plot-drawing">${chart}</div>${spec.note?'<p class="plot-note">'+escapeHTML(spec.note)+'</p>':''}${spec.source?`<p class="plot-note"><a href="${escapeHTML(spec.source)}">${escapeHTML(spec.sourceLabel||'Statistics Canada · original source')} ↗</a></p>`:''}${chartTable(spec)}</figure>`;
 }
 export function renderResult(result,width=1000) {
   return `<div class="planning-metrics" aria-live="polite">${result.metrics.map(([label,value,unit,custom])=>`<div><span>${escapeHTML(label)}</span><strong>${escapeHTML(custom??(unit==='months'&&value==null?'Not repaid':format(value,unit)))}</strong></div>`).join('')}</div><p class="planning-assumptions">${escapeHTML(result.note)}</p><div class="planning-figures">${result.charts.map(c=>renderFigure(c,width)).join('')}</div>`;

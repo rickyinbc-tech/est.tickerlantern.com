@@ -1,3 +1,4 @@
+import { ukPensionGuides } from './planning-uk-pension-guides.js';
 import { hkMpfGuides } from './planning-hk-mpf-guides.js';
 import { offsetAccountGuides } from './planning-offset-account-guides.js';
 import { multipleJobholderGuides } from './planning-multiple-jobholder-guides.js';
@@ -214,6 +215,7 @@ import { priorityGuides } from './planning-priorities-guides.js';
 import { accountUseGuides } from './planning-account-use-guides.js';
 import { costTimingGuides } from './planning-cost-timing-guides.js';
 export const planningGuides = [
+  ...ukPensionGuides,
   ...hkMpfGuides,
   ...offsetAccountGuides,
   ...multipleJobholderGuides,

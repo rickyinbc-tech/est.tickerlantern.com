@@ -9,6 +9,7 @@ import { principalResidenceGuides } from './planning-principal-residence-guides.
 import { ownerManagerGuides } from './planning-owner-manager-guides.js';
 import { fhsaWithdrawalGuides } from './planning-fhsa-withdrawal-guides.js';
 import { pensionSplitGuides } from './planning-pension-split-guides.js';
+import { cwbPhaseGuides } from './planning-cwb-phase-guides.js';
 import { respAipGuides } from './planning-resp-aip-guides.js';
 import { paymentPerceptionGuides } from './planning-payment-perception-guides.js';
 import { jointOwnerGuides } from './planning-joint-owner-guides.js';
@@ -227,6 +228,7 @@ export const planningGuides = [
   ...ownerManagerGuides,
   ...fhsaWithdrawalGuides,
   ...pensionSplitGuides,
+  ...cwbPhaseGuides,
   ...respAipGuides,
   ...paymentPerceptionGuides,
   ...jointOwnerGuides,

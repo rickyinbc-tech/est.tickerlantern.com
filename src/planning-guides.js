@@ -52,6 +52,7 @@ import { llpRepayGuides } from './planning-llp-repay-guides.js';
 import { ctcClaimGuides } from './planning-ctc-claim-guides.js';
 import { feeRealGuides } from './planning-fee-real-guides.js';
 import { recordHighGuides } from './planning-record-high-guides.js';
+import { tsxMonthlyGuides } from './planning-tsx-monthly-guides.js';
 import { estateAccountGuides } from './planning-estate-account-guides.js';
 import { inflationWindowGuides } from './planning-inflation-windows-guides.js';
 import { spouseLoanGuides } from './planning-spouse-loan-guides.js';
@@ -311,6 +312,7 @@ export const planningGuides = [
   ...otbComponentsGuides,
   ...llpRepayGuides,
   ...ctcClaimGuides,
+  ...tsxMonthlyGuides,
   ...recordHighGuides,
   ...estateAccountGuides,
   ...inflationWindowGuides,

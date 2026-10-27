@@ -87,6 +87,10 @@ September 2023) to compare what the index price did one to ten years after recor
 every fall below an old peak; an estate guide follows the same fund in a TFSA, an RRSP or RRIF and a taxable account to
 the final return, with the deemed disposition, full RRIF inclusion, probate and the spouse rollover; see
 `docs/planning-record-estate-2026-10-27.md`.
+A monthly-saving guide runs the same paycheque plan from every starting month of Statistics Canada's S&P/TSX
+Composite series (1956–2023): ending value per dollar paid in, months spent below the money paid in, the CPI-raised
+shortfall, and when phasing in a lump sum already saved beat investing it at once; see
+`docs/planning-tsx-monthly-2026-10-27.md`.
 A Lifelong Learning Plan guide applies CRA’s RRSP withdrawal limits, repayment-start
 rule and balance-over-years-left schedule, and prices a shortfall in tax and lost RRSP
 growth; see `docs/planning-llp-repay-2026-10-27.md`.

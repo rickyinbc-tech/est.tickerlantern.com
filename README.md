@@ -58,6 +58,10 @@ annual-average CPI inflation since 1996 and a saving plan in today's dollars; se
 An Ontario senior homeowners' property tax grant guide computes the 2026 grant (up to CAD 500, −3.33% over CAD 35,000 or
 45,000), CRA's Step 5 cut to the senior OEPTC, the 5.33% band on extra income and CAD 500 since 2010 in Ontario prices;
 see `docs/planning-oshptg-2026-10-27.md`.
+
+A child care expense deduction guide applies CRA’s three limits (CAD 8,000 / 5,000 per child, two-thirds of the lower
+earner’s earned income, amount paid) and adds the July 2026 to June 2027 CCB increase from the lower family income;
+see `docs/planning-ccd-2026-10-27.md`.
 A TFSA over-contribution guide follows the Income Tax Act’s excess TFSA amount month by month, prices the
 1%-a-month tax on the highest excess by removal month and shows why a withdrawal does not shelter a same-year
 re-deposit, with CRA’s 2024 TFSA statistics; see `docs/planning-tfsa-excess-2026-10-27.md`.

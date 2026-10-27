@@ -62,6 +62,10 @@ and taxable gain under CRA's average-cost rule; see
 A spousal transfer guide works the 2026 Schedule 2 (line 32600) for a spouse's
 unused age, pension, disability and tuition amounts beside the line 30300
 spouse amount; see `docs/planning-spouse-transfer-2026-10-26.md`.
+A TFSA guide rebuilds the dollar limit from the CPI indexation rule and its $500
+rounding, values each year's room in September 2026 prices and computes the 2027
+step from published CPI, and a fund guide prices buying just before a year-end
+distribution in a non-registered account; see `docs/planning-limit-distribution-2026-10-26.md`.
 A 2026 medical expense tax credit guide compares which spouse should claim, the
 12-month window and the refundable supplement; see `docs/planning-metc-claim-2026-10-26.md`.
 A Canada Disability Benefit guide applies the 2026–27 regulation formula, the

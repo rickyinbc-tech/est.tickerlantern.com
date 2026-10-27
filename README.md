@@ -55,6 +55,11 @@ rule; see `docs/planning-shock-harvest-2026-10-26.md`.
 An Ontario trillium benefit guide splits the 2026–27 payment into the OEPTC, OSTC
 and NOEC using CRA's 2026 calculation sheets and prices the single June payment
 option; see `docs/planning-otb-components-2026-10-27.md`.
+An RRSP guide compares waiting for the spring refund with reducing tax at source
+(payroll contributions or a T1213 letter of authority), using CRA's 2026 federal and
+BC brackets, and a T-series guide compares return-of-capital payouts with a
+systematic withdrawal plan from a non-registered fund; see
+`docs/planning-refund-payout-2026-10-27.md`.
 A tax guide compares giving non-registered fund units to charity in kind with
 selling first, using CRA's zero inclusion rate and provincial credit rates, and a
 TFSA timing guide separates a January deposit of money already saved from

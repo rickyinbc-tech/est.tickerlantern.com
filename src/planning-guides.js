@@ -47,6 +47,7 @@ import { characterSignalGuides } from './planning-character-signal-guides.js';
 import { shockHarvestGuides } from './planning-shock-harvest-guides.js';
 import { otbComponentsGuides } from './planning-otb-components-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
+import { refundPayoutGuides } from './planning-refund-payout-guides.js';
 import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
 import { metcClaimGuides } from './planning-metc-claim-guides.js';
 import { dtcTransferGuides } from './planning-dtc-transfer-guides.js';
@@ -288,6 +289,7 @@ export const planningGuides = [
   ...crashWithdrawalGuides,
   ...shockHarvestGuides,
   ...giftPaydayGuides,
+  ...refundPayoutGuides,
   ...otbComponentsGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,

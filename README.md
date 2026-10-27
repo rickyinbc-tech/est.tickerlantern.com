@@ -54,6 +54,11 @@ and a tax-loss guide prices selling a fund at a loss against the superficial los
 rule; see `docs/planning-shock-harvest-2026-10-26.md`.
 A disability tax credit transfer guide works the 2026 line 31800 worksheet, the
 child supplement and the Canada caregiver amount for a supporting relative; see `docs/planning-dtc-transfer-2026-10-26.md`.
+A paycheque-contribution guide follows monthly fund purchases through a
+hypothetical crash against pausing in cash until the old peak, and a
+non-registered fund withdrawal guide splits each redemption into returned cost
+and taxable gain under CRA's average-cost rule; see
+`docs/planning-crash-withdrawal-2026-10-26.md`.
 A 2026 medical expense tax credit guide compares which spouse should claim, the
 12-month window and the refundable supplement; see `docs/planning-metc-claim-2026-10-26.md`.
 A Canada Disability Benefit guide applies the 2026–27 regulation formula, the

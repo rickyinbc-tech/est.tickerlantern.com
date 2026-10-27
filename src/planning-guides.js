@@ -45,6 +45,7 @@ import { fundDisciplineGuides } from './planning-fund-discipline-guides.js';
 import { locationTimingGuides } from './planning-location-timing-guides.js';
 import { characterSignalGuides } from './planning-character-signal-guides.js';
 import { shockHarvestGuides } from './planning-shock-harvest-guides.js';
+import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
 import { metcClaimGuides } from './planning-metc-claim-guides.js';
 import { dtcTransferGuides } from './planning-dtc-transfer-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
@@ -272,6 +273,7 @@ export const planningGuides = [
   ...characterSignalGuides,
   ...dtcTransferGuides,
   ...metcClaimGuides,
+  ...crashWithdrawalGuides,
   ...shockHarvestGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,

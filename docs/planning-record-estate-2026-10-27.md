@@ -31,3 +31,22 @@ A data-embedding defect was caught by the new tests before publishing: the first
 - Built HTML: EN and ZH pages each 4 figures and 4 tables (7 and 10 inputs); homepage, research index, Chinese home, search index and sitemap (742 URLs, 738 live before) entries present; both model modules emitted in `dist/research/` and imported by `planning-models.js`.
 - 836 calculator cases (defaults, each field at min and max, 800 random) produced no NaN, Infinity or undefined, and every chart rendered at 340 px and 760 px.
 - Known cosmetic limit kept as elsewhere on the site: the year input hint shows "Range 1,957 to 2,013".
+
+## Release status
+
+Pinned base `036a9198` (origin/main at start, unchanged when re-fetched before pushing). Article commit `87bd5db7`
+pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027h` in the reused
+`tickerlantern-wealth-career-20261025` worktree).
+
+## Deployment (pending)
+
+`npx wrangler deploy` from the clean checkout of `87bd5db7` was blocked by this unattended session's permission policy
+(production deploy). The repository has no deploy-on-push workflow. On 2026-10-27 after the push: all four new EN/ZH
+routes returned 404; existing guides (FTHB GST rebate, inflation windows), the homepage and research index returned
+200; the live sitemap had 738 URLs against 742 in local `dist`.
+
+Required action: from a clean checkout of `main` at `87bd5db7` or later, run `npx wrangler deploy` (no config change;
+custom domains kept). Then verify: the four new EN/ZH routes return their article with 4 figures and 4 tables;
+homepage, research index, Chinese homepage, search index and sitemap (742) list them; SHA-256 of live
+`planning-record-high-models.js`, `planning-estate-account-models.js` and `planning-models.js` match `dist`; prior
+sitemap URLs still return 200; then exercise the inputs and check 375 px and 1280 px layouts in a browser.

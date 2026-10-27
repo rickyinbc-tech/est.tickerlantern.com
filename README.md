@@ -52,6 +52,10 @@ A balanced-fund guide splits a year when stocks and bonds fall together under
 rising rates and inflation, with dated CPI, policy-rate and 10-year yield data,
 and a tax-loss guide prices selling a fund at a loss against the superficial loss
 rule; see `docs/planning-shock-harvest-2026-10-26.md`.
+A tax guide compares giving non-registered fund units to charity in kind with
+selling first, using CRA's zero inclusion rate and provincial credit rates, and a
+TFSA timing guide separates a January deposit of money already saved from
+investing each paycheque; see `docs/planning-gift-payday-2026-10-27.md`.
 A disability tax credit transfer guide works the 2026 line 31800 worksheet, the
 child supplement and the Canada caregiver amount for a supporting relative; see `docs/planning-dtc-transfer-2026-10-26.md`.
 A paycheque-contribution guide follows monthly fund purchases through a

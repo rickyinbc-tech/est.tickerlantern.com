@@ -69,6 +69,10 @@ A TFSA guide rebuilds the dollar limit from the CPI indexation rule and its $500
 rounding, values each year's room in September 2026 prices and computes the 2027
 step from published CPI, and a fund guide prices buying just before a year-end
 distribution in a non-registered account; see `docs/planning-limit-distribution-2026-10-26.md`.
+A withholding-tax guide follows the same US stocks as a US-listed ETF or a Canadian-listed
+fund in an RRSP, TFSA or taxable account, and an inflation guide splits a long-held fund's
+capital gain into its real and inflation parts and the tax on each, with September CPI since
+2006; see `docs/planning-withholding-inflation-2026-10-26.md`.
 A 2026 medical expense tax credit guide compares which spouse should claim, the
 12-month window and the refundable supplement; see `docs/planning-metc-claim-2026-10-26.md`.
 A Canada Disability Benefit guide applies the 2026–27 regulation formula, the

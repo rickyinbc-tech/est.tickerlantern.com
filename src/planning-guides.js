@@ -51,6 +51,8 @@ import { otbComponentsGuides } from './planning-otb-components-guides.js';
 import { llpRepayGuides } from './planning-llp-repay-guides.js';
 import { ctcClaimGuides } from './planning-ctc-claim-guides.js';
 import { feeRealGuides } from './planning-fee-real-guides.js';
+import { inflationWindowGuides } from './planning-inflation-windows-guides.js';
+import { spouseLoanGuides } from './planning-spouse-loan-guides.js';
 import { tfsaStageGuides } from './planning-tfsa-stage-guides.js';
 import { exitTaxGuides } from './planning-exit-tax-guides.js';
 import { tfsaExcessGuides } from './planning-tfsa-excess-guides.js';
@@ -305,6 +307,8 @@ export const planningGuides = [
   ...otbComponentsGuides,
   ...llpRepayGuides,
   ...ctcClaimGuides,
+  ...inflationWindowGuides,
+  ...spouseLoanGuides,
   ...tfsaStageGuides,
   ...exitTaxGuides,
   ...feeRealGuides,

@@ -46,6 +46,7 @@ import { locationTimingGuides } from './planning-location-timing-guides.js';
 import { characterSignalGuides } from './planning-character-signal-guides.js';
 import { shockHarvestGuides } from './planning-shock-harvest-guides.js';
 import { metcClaimGuides } from './planning-metc-claim-guides.js';
+import { dtcTransferGuides } from './planning-dtc-transfer-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
 import { bondConvexityGuides } from './planning-bond-convexity-guides.js';
@@ -269,6 +270,7 @@ export const planningGuides = [
   ...contributionTaxCashGuides,
   ...contributionEscalationGuides,
   ...characterSignalGuides,
+  ...dtcTransferGuides,
   ...metcClaimGuides,
   ...shockHarvestGuides,
   ...locationTimingGuides,

@@ -1,0 +1,61 @@
+import {taxRoom,federalTax,bpa} from './planning-metc-claim-models.js';
+const issue=i=>i.dtcDepEarn>i.dtcDepNet?{message:'The dependant’s employment income cannot exceed their net income in this model.',fields:['dtcDepEarn','dtcDepNet']}:i.dtcSupEarn>i.dtcSupNet+60000?{message:'Working income should not exceed net income by more than the RRSP, pension and other deductions it could plausibly carry.',fields:['dtcSupEarn']}:!i.dtcUnder18&&i.dtcCare?{message:'The care-expense reduction applies only to the supplement for a child under 18; set it to zero for an adult.',fields:['dtcCare']}:null;
+export const dtcTransferDefinitions={dtcTransfer:{title:'Transfer the 2026 disability amount and the Canada caregiver amount to a supporting relative',inputIssue:issue,fields:[
+ ['dtcUnder18','Dependant’s age at 31 December 2026 (1 = under 18 · 0 = 18 or older)',0,0,1,1],
+ ['dtcDepNet','Dependant’s 2026 net income, taken as taxable income (CAD)',24000,0,100000,100],
+ ['dtcDepEarn','Dependant’s employment income in it (CAD; drives their CPP, EI and employment-amount credits)',18000,0,100000,100],
+ ['dtcCare','Child care and attendant care expenses claimed for a child under 18 (CAD)',0,0,30000,50],
+ ['dtcSupNet','Supporting person’s 2026 net income (CAD)',85000,0,300000,100],
+ ['dtcSupEarn','Supporting person’s employment income in it (CAD)',85000,0,300000,100],
+ ['dtcShare','Share of the dependant’s transferable amounts this supporter claims (%; the rest by another supporter)',100,0,100,5],
+ ['dtcCaregiver','Also claim the Canada caregiver amount, line 30450, for an adult dependant (1 = yes · 0 = no)',1,0,1,1]
+]}};
+export const dtcTransferWholeKeys=['dtcUnder18','dtcCaregiver'];
+const r6=n=>Math.round(n*1e6)/1e6;
+const money=n=>Math.round(r6(n)*100+1e-7)/100;
+// CRA 2026 indexed amounts (indexation 2.0%); worksheet structure from the 2025 Federal Worksheet 5000-D1.
+export const DTC_2026={rate:.14,base:10341,supp:6032,careThreshold:3533,cgMax:8773,cgFrom:20601,childCg:2740};
+export const DTC_2025={base:10138,supp:5914,careThreshold:3464,maxChild:16052,cgMax:8601,cgFrom:20197,cgEnd:28798};
+const D=DTC_2026;
+// Disability amount for the dependant: base plus, under 18, the supplement less care expenses above the threshold.
+export function disabilityAmount(under18,care=0){return under18?money(D.base+Math.max(0,D.supp-Math.max(0,care-D.careThreshold))):D.base;}
+// Line 98 of the dependant's return, limited to the basic personal amount and the credits that follow from employment income.
+export function line98(net,earn){const t=taxRoom(net,earn);return money(bpa(net)+Math.min(1501,earn)+t.cpp+t.ei);}
+// 5000-D1 line 31800 chart: lesser of the disability amount and (disability amount + line 98 − taxable income).
+export function transferable(amount,net,earn){return Math.min(amount,Math.max(0,money(amount+line98(net,earn)-net)));}
+export function caregiver(net){return Math.max(0,Math.min(D.cgMax,money(D.cgMax+D.cgFrom-net)));}
+export function dtcSplit({under18,care,depNet,depEarn,supNet,supEarn,share=100,cg=1}){
+ const amount=disabilityAmount(under18,care),l98=line98(depNet,depEarn),tr=transferable(amount,depNet,depEarn),own=money(amount-tr);
+ const depTax=Math.max(0,money(federalTax(depNet)-D.rate*l98)),ownValue=Math.min(money(D.rate*own),depTax);
+ const cgAmt=!under18&&cg?caregiver(depNet):0,s=share/100,claimed=money(s*(tr+cgAmt)),credit=money(D.rate*claimed),room=taxRoom(supNet,supEarn).room,used=Math.min(credit,room);
+ return {amount,line98:l98,transfer:tr,own,ownValue,depTax,caregiver:cgAmt,claimed,credit,room,used:money(used),lost:money(credit-used),other:money((1-s)*(tr+cgAmt)),family:money(ownValue+used)};
+}
+// Dependant net income at which nothing is left to transfer, holding employment income at min(entered, income).
+export function zeroPoint(amount,earn){let lo=0,hi=200000;for(let k=0;k<60;k++){const m=(lo+hi)/2;transferable(amount,m,Math.min(earn,m))>0?lo=m:hi=m;}return Math.round(hi);}
+export const DTC_STATS={year:2024,asOf:'30 November 2025',url:'https://www.canada.ca/content/dam/cra-arc/prog-policy/stats/t1-final-stats/2024-tax-year/tbl2_ac_en.pdf',
+ // [range, all returns, returns with line 31800, line 31800 amount in CAD thousands]
+ rows:[['Under 10k',3934160,23310,359911],['10k–20k',3453300,21640,321577],['20k–30k',4022830,25720,349862],['30k–40k',2950090,27480,355359],['40k–50k',2782710,33420,434698],['50k–60k',2620060,37090,491684],['60k–80k',3886400,64900,887577],['80k–100k',2664330,49250,691221],['100k–150k',3223120,72020,1025698],['150k–250k',1403640,34060,480018],['250k+',623510,13440,181453]],
+ total:[31564160,402330,5579058],self:[1197810,11843401],caregiver:[344670,2248484]};
+const cad=v=>'CAD '+v.toLocaleString('en-CA',{minimumFractionDigits:Number.isInteger(v)?0:2,maximumFractionDigits:2});
+export function dtcTransferResult(kind,i){
+ if(kind!=='dtcTransfer')throw Error('Unknown disability amount transfer illustration.');
+ const under18=i.dtcUnder18===1,args={under18,care:i.dtcCare,depNet:i.dtcDepNet,depEarn:i.dtcDepEarn,supNet:i.dtcSupNet,supEarn:i.dtcSupEarn,share:i.dtcShare,cg:i.dtcCaregiver};
+ const R=dtcSplit(args),zero=zeroPoint(R.amount,i.dtcDepEarn);
+ const xs=Array.from({length:81},(_,k)=>k*625),at=x=>dtcSplit({...args,depNet:x,depEarn:Math.min(i.dtcDepEarn,x)});
+ const cs=Array.from({length:61},(_,k)=>k*250),sx=Array.from({length:81},(_,k)=>k*1000);
+ const who=under18?'child under 18':'adult dependant';
+ return {metrics:[
+  ['Disability amount the supporter can claim, line 31800',R.transfer,'money',undefined,`Of the dependant’s ${cad(R.amount)} disability amount; they use ${cad(R.own)} themselves`],
+  ['Supporter’s federal credit from the transfer and caregiver amount',R.used,'money',undefined,`${cad(R.claimed)} of amounts claimed × 14%${R.lost?` · ${cad(R.lost)} wasted for lack of tax`:''}`],
+  ['Canada caregiver amount included, line 30450',money(R.caregiver*i.dtcShare/100),'money',undefined,under18?'Line 30450 is for dependants 18 or older':R.caregiver?`Full CAD 8,773 below ${cad(D.cgFrom)} of dependant income`:'Not claimed, or dependant income too high'],
+  ['Family federal value: dependant’s own use plus supporter’s credit',R.family,'money',undefined,`Dependant’s own disability credit worth ${cad(R.ownValue)}`],
+  ['Dependant income at which nothing is left to transfer',zero,'money',undefined,`With employment income of up to ${cad(i.dtcDepEarn)}`]
+ ],note:`Original illustration of the 2026 federal disability amount (line 31600) transferred to a supporting person (line 31800), using the 2025 Federal Worksheet chart with 2026 amounts. The transferable part is the lesser of the dependant’s disability amount and that amount plus their line 98 credits minus their taxable income. Line 98 here includes only the basic personal amount, the Canada employment amount and base CPP and EI credits on the employment income entered; age, pension, caregiver, home buyers’ and other amounts the dependant may have are left out, so the transfer may be understated for a dependant with them. For a child under 18 the CAD 6,032 supplement is reduced by child care and attendant care expenses above CAD 3,533. The Canada caregiver amount for an infirm dependant 18 or older is CAD 8,773, reduced by the dependant’s net income above CAD 20,601. Credits are 14% of the amounts and only reduce federal tax the supporter actually owes after their own basic, CPP, EI and employment credits. Provincial and territorial credits, the spouse transfer on Schedule 2 (line 32600), the eligible dependant amount, medical expenses and the attendant-care rules in Guide RC4065 are left out.`,charts:[
+  {id:'dtc-transfer-by-income',type:'line',unit:'money',title:`Amounts a supporter can claim as the ${who}’s income rises`,unitLabel:'CAD of amount claimed (before the 14% credit rate)',xLabel:'Dependant’s net income (CAD)',xUnit:'money',series:[{name:'Disability amount transferred, line 31800',rows:xs.map(x=>({x,value:at(x).transfer}))},...(under18?[]:[{name:'Canada caregiver amount, line 30450',dash:true,rows:xs.map(x=>({x,value:i.dtcCaregiver?caregiver(x):0}))}]),{name:'Disability amount the dependant uses',dash:true,rows:xs.map(x=>({x,value:at(x).own}))}],note:`Employment income is held at the lesser of ${cad(i.dtcDepEarn)} and the dependant’s net income. The transfer is complete until the dependant’s income passes their own line 98 credits, then falls dollar for dollar and reaches zero near ${cad(zero)}.${under18?'':' The caregiver amount falls dollar for dollar from CAD 20,601 to CAD 29,374.'}`},
+  {id:'dtc-transfer-waterfall',type:'waterfall',unit:'money',title:'From the dependant’s disability amount to the supporter’s credit',rows:[{label:'Dependant’s disability amount',value:R.amount},{label:'Less the part the dependant needs',value:-R.own},{label:'Plus Canada caregiver amount',value:R.caregiver},{label:'Less the share claimed by another supporter',value:R.other?-R.other:0},{label:'Less the 86% that is not credited',value:-money(R.claimed-R.credit)},{label:'Less credit with no tax to absorb it',value:R.lost?-R.lost:0}],totalLabel:'Supporter’s federal credit',note:'Each CAD 1 of transferred amount is worth 14 cents of federal tax to the supporter, if the supporter owes that much. Provincial credits add more at their own rates and amounts.'},
+  {id:'dtc-family-value',type:'groupbar',unit:'money',title:'Who gets the federal value of the disability credit',seriesNames:['Dependant’s own tax reduction','Supporter’s credit used','Credit wasted (too little tax)'],rowLabel:'Case',rows:[{label:'This household',values:[R.ownValue,R.used,R.lost]},{label:'Dependant with no income',values:(o=>[o.ownValue,o.used,o.lost])(dtcSplit({...args,depNet:0,depEarn:0}))},{label:'Supporter with CAD 20,000 net income',values:(o=>[o.ownValue,o.used,o.lost])(dtcSplit({...args,supNet:20000,supEarn:20000}))}],note:'The transfer moves the part of the disability credit the dependant cannot use. It is worth something only if the supporter has federal tax left; a low-income supporter can lose most of it.'},
+  {id:'dtc-child-supplement',type:'line',unit:'money',title:'Disability amount for a child under 18 as care expenses rise',unitLabel:'CAD of disability amount (2026)',xLabel:'Child care and attendant care expenses claimed for the child (CAD)',xUnit:'money',series:[{name:'Base amount plus supplement',rows:cs.map(x=>({x,value:disabilityAmount(true,x)}))},{name:'Base amount only (18 or older)',dash:true,rows:cs.map(x=>({x,value:D.base}))}],note:`The supplement is CAD 6,032 less care expenses above CAD 3,533, so the total runs from CAD 16,373 to the CAD 10,341 base amount once expenses reach ${cad(D.careThreshold+D.supp)}. A child with no income can usually transfer the whole amount to the parent approved on Form T2201.`},
+  {id:'dtc-supporter-income',type:'line',unit:'money',title:'Supporter’s usable credit by the supporter’s own income',unitLabel:'CAD of federal credit used',xLabel:'Supporting person’s net income, all from employment (CAD)',xUnit:'money',series:[{name:'Credit used',rows:sx.map(x=>({x,value:dtcSplit({...args,supNet:x,supEarn:x}).used}))},{name:'Credit available',dash:true,rows:sx.map(x=>({x,value:R.credit}))}],note:`The supporter needs federal tax of ${cad(R.credit)} after their own basic, CPP, EI and employment credits to use the whole credit. Below that, the excess is lost: it cannot go back to the dependant or carry forward.`},
+  {id:'dtc-cra-transfers',type:'bar',evidence:'Official tax statistics',title:'Returns claiming a disability amount transferred from a dependant, 2024',unit:'decimal',unitLabel:'Returns with line 31800 per 1,000 returns in the income range · 2024 tax year',rows:DTC_STATS.rows.map(([label,ret,n])=>({label,value:Math.round(n/ret*10000)/10})),source:DTC_STATS.url,sourceLabel:'CRA · Individual Income Tax Return Statistics, 2024 tax year, Table 2',note:'Data as of 30 November 2025; counts rounded to the nearest ten. Ranges are the supporter’s total income assessed, grouped from CRA’s 19 ranges. 402,330 returns claimed CAD 5.58 billion on line 31800, an average of about CAD 13,867, which includes child supplements. The share rises with income, consistent with transfers being claimed by the relative who has tax to reduce, but the table does not show why.'}
+ ]};
+}

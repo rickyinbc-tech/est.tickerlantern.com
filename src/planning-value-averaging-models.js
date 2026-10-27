@@ -1,5 +1,5 @@
 export const valueAveragingDefinitions={
-  valueAveraging:{title:'Compare value averaging with plain dollar-cost averaging from the same monthly savings through a crash',inputIssue:i=>i.vavCrash>=i.vavYears,fields:[
+  valueAveraging:{title:'Compare value averaging with plain dollar-cost averaging from the same monthly savings through a crash',inputIssue:i=>i.vavCrash>=i.vavYears?{message:'The crash must happen before the last year followed, so that its recovery year is inside the period.',fields:['vavCrash','vavYears']}:null,fields:[
     ['vavSave','Amount saved from each month’s pay for investing (CAD)',500,50,20000,50],
     ['vavBuffer','Cash already saved and set aside at the start (CAD)',3000,0,500000,500],
     ['vavTarget','Growth built into the value-averaging target path (% a year)',5,0,12,.25],

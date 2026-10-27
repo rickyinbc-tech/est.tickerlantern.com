@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { tbillYield, septemberCpi, tbillRows, returnPath, valuePlan } from '../src/planning-value-averaging-models.js';
-import { defaults, planningResult, validInputs } from '../src/planning-models.js';
+import { defaults, definitions, planningResult, validInputs } from '../src/planning-models.js';
 import { planningGuides } from '../src/planning-guides.js';
 const near=(a,b,tol=1e-9)=>assert.ok(Math.abs(a-b)<=Math.max(1,Math.abs(b))*tol,`${a} != ${b}`);
 const slug='value-averaging-vs-dollar-cost-averaging-cash-pot-after-crash';
@@ -40,6 +40,7 @@ test('a larger starting buffer removes shortfalls; no selling means no negative 
  assert.ok(valuePlan(d,{vavSell:0}).months.every(r=>r.trade>=0));
  assert.ok(valuePlan(d).months.some(r=>r.trade<0));
  assert.equal(validInputs('valueAveraging',{...d,vavCrash:10}),false);
+ assert.deepEqual(definitions.valueAveraging.inputIssue({...d,vavCrash:10}).fields,['vavCrash','vavYears']);assert.equal(definitions.valueAveraging.inputIssue(d),null);
  assert.equal(validInputs('valueAveraging',{...d,vavSell:.5}),false);
 });
 

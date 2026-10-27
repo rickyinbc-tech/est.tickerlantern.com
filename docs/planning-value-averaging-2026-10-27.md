@@ -25,3 +25,13 @@ Finding stated in the article: with target = expected return, VA buys more durin
 
 - `npm test`: 1,800 tests, 0 failures. `npm run zh:refresh`: missing 0; numeric guard kept English for 0 of 44,174. 115 Chinese units written directly and merged after prefix, tag-count, number and CJK checks (`qa/value-averaging-2026-10-27/`, ignored).
 - Built HTML: EN and ZH pages each 4 figures, 4 tables, 9 inputs; homepage, research index, Chinese home, search index and sitemap entries present (sitemap 720 URLs); `dist/research/planning-value-averaging-models.js` emitted and imported by `planning-models.js`.
+
+## Release status
+
+Pinned base `2b65a6ab` (origin/main at start, unchanged when re-fetched before committing). Article commit `bc110927` pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027d`) and deployed with `npx wrangler deploy` (4.153.0) from a clean detached checkout of `bc110927`; the deploy rebuild left no diff. Worker `tickerlantern-est`, version `5f846ec7-5746-4616-a10e-e9141801ccfe`. Before it the live sitemap had 716 URLs; the training-credit guide (`2b65a6ab`, pushed earlier but not deployed) went live in the same deploy.
+
+After that deploy: live sitemap 720 URLs = local `dist` 720, no differences, all 720 returned HTTP 200. New EN and ZH pages: 4 figures, 4 tables, 9 inputs, correct H1; listed on the homepage, research index, Chinese homepage and search index. SHA-256 of live `planning-value-averaging-models.js`, `planning-models.js`, `planning-ui.js`, `planning-withdraw-sequence-models.js` and `guides.css` matched local `dist`.
+
+Live browser check (built-in browser, public URL): defaults matched the tested values; typing a 40% crash recalculated to DCA $87,373.34 / VA $85,928.53 / 8 short months, matching the model; sell switch 0 gave VA $86,490.36 and the no-selling note; Restore example returned the defaults; 375 px and 1280 px had no horizontal page overflow, all four SVG charts fit (339 px / 1152 px). The first sell-switch keystroke was lost while the viewport was being resized in the same batch; a dispatched input event then updated correctly. Metric money values drop a trailing zero (`$11.7`), the site-wide formatter's existing behaviour.
+
+Follow-up: an impossible crash year (crash ≥ years) was rejected but not flagged on the field; the input issue now returns a message and flags both fields, like other modules. Committed and deployed as a second release (see git log).

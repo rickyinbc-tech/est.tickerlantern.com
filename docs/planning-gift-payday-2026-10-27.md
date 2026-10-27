@@ -30,3 +30,9 @@ All defaults reproduced with 40-digit Python Decimal arithmetic (`qa/planning-vi
 - `npm test`: 1770 tests, 0 failures. `npm run zh:refresh`: 0 missing units. 216 Chinese units written directly (no external translation service), inserted only after numguard agreement and identical-markup checks.
 - Built HTML: four figures, four data tables and the inputs on each English and Chinese page; homepage, research index and sitemap entries present.
 - Browser QA: starting a local static preview in the in-app browser was declined in this unattended run, so no browser pass of the local build is claimed.
+
+## Release status
+
+Pinned base `36439d49` (origin/main at start, unchanged when re-fetched before publishing). Source commit `f4bc0400` was pushed to `main` as a fast-forward on 27 October 2026. Before pushing, the live sitemap (662 URLs) was a strict subset of local `dist` (706): no live-only URLs; local-only were this batch's four URLs plus forty already on `main` but never deployed (including the 26 October balanced-fund joint-decline and fund tax-loss guides, TFSA asset location, missed best/worst months, fund income type, crash warnings, CPP pension sharing, Groceries and Essentials Benefit, Canada Disability Benefit, eligible dependant, spousal/child support, US withholding and inflation-taxed gains; English and Chinese).
+
+`npx wrangler deploy` was again blocked by the unattended run's permission policy (production deploy). After the push, the homepage, research index, Chinese homepage and existing guides returned 200; the new URLs returned 404. The next authorized `npx wrangler deploy` from current `main` (Wrangler rebuilds from source) will publish all forty-four URLs. After it, verify each URL, the module `planning-gift-payday-models.js`, the homepage/library/sitemap entries, and phone/desktop layouts.

@@ -30,3 +30,13 @@ labels do not overlap at phone width (same fix as the FHSA guide).
   +50k from 900k/950k/1.0M/1.45M/1.5M → 0/0/7,500/7,500/2,500; other buyer at 300k/400k/600k/1.1M/1.25M/1.4M.
 - `npm test` 1,841 passed; Python unittest 135 OK; `npm run zh:refresh` missing 0; 175 + 3 Chinese units written directly,
   merged after number and tag checks. Rebuilt on main 4b06bb43 (concurrent inflation-window and spousal loan guides).
+
+## Deployment (2026-10-27)
+Pushed cc9931ba and c758b418 to main (fast-forward from 4b06bb43) and deployed the existing `tickerlantern-est` Worker
+with `npx wrangler deploy` (versions 2103429d, then 31e46400; custom domains kept). Live EN and ZH routes 200 with 4
+figures, 7 inputs and no NaN; homepage, research index and Chinese homepage link the guide; live sitemap 738 URLs;
+live model modules (FTHB, RRSP, TFSA) SHA-256 matched dist. The same deploy put the pending inflation-window and spousal
+loan guides live (EN/ZH 200). A live 375px check found overlapping CAD price ticks on the two line charts; shortened to
+0/500k/1M/1.5M with the currency in the axis title (c758b418), rechecked with no overlaps and no horizontal scroll, and a
+typed price of CAD 1.25 million updated the metrics to the table values. canada.ca could not be reached from the shell
+in this run, so the CRA PDF links were not re-fetched live (local copies from earlier today are hashed).

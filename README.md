@@ -82,6 +82,10 @@ A TFSA staging guide follows a lump sum larger than TFSA room as it is moved in 
 in-kind moves and on the distributions of the part still waiting, and CRA's 2009–2026 limits by starting year; a
 crash-exit guide finds how far a taxable fund must fall before buying back pays for the capital gains tax and the
 taxed cash interest, with dated treasury bill and CPI data; see `docs/planning-tfsa-stage-exit-tax-2026-10-27.md`.
+A market-timing guide runs a 10-month moving-average exit rule on Statistics Canada's monthly S&P/TSX closes and
+3-month treasury bill auction yields from 1958 to 2023: smaller falls, frequent false alarms, a lead that depends on the
+assumed dividend yield and the start date, and taxes that turn it from ahead in a TFSA to behind in a taxable account;
+see `docs/planning-trend-rule-2026-10-27.md`.
 An inflation-window guide measures what a dollar kept over every overlapping 10, 20 or 30-year stretch since 1914 from
 Statistics Canada's CPI, and how often a steady return after fees and tax kept up; a spousal-investing guide compares a
 gift (attributed back), a TFSA gift and a loan at CRA's prescribed rate, with the 2021–2026 quarterly rates; see

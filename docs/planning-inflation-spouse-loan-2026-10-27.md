@@ -31,3 +31,22 @@ Two drafted claims were corrected before publishing after checking against the d
 - 832 calculator cases (defaults, every field at min and max, 800 random) produced no NaN, Infinity or undefined.
 - Local browser preview was declined by this unattended session; see the release section for live checks. No browser pass is claimed.
 - Known cosmetic limit kept as elsewhere on the site: the year input's hint shows "Range 1,914 to 2,000" because the shared form formats ranges with thousands separators.
+
+## Release status
+
+Pinned base `e458eac5` (origin/main at start, unchanged when re-fetched before pushing). Article commit `cefa32c2`
+pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027g` in the reused
+`tickerlantern-wealth-career-20261025` worktree).
+
+## Deployment (pending)
+
+`npx wrangler deploy` from the clean checkout of `cefa32c2` was blocked by this unattended session's permission policy
+(production deploy). The repository has no deploy-on-push workflow. On 2026-10-27 after the push: all four new EN/ZH
+routes returned 404; existing guides (FHSA over-contribution, crash-exit tax, inflation basics) and the homepage
+returned 200; the live sitemap had 732 URLs against 736 in local `dist`.
+
+Required action: from a clean checkout of `main` at `cefa32c2` or later, run `npx wrangler deploy` (no config change;
+custom domains kept). Then verify: the four new EN/ZH routes return their article with 4 figures and 4 tables;
+homepage, research index, Chinese homepage, search index and sitemap (736) list them; SHA-256 of live
+`planning-inflation-windows-models.js`, `planning-spouse-loan-models.js` and `planning-models.js` match `dist`; prior
+sitemap URLs still return 200; then exercise the inputs and check 375 px and 1280 px layouts in a browser.

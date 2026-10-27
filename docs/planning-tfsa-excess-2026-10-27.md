@@ -26,3 +26,14 @@ Route: `/research/tfsa-over-contribution-1-percent-monthly-tax-highest-excess-wi
   left in CAD 300; misread CAD 17,000 deposit CAD 1,200 + CAD 360, removed in March CAD 300; Gilles pattern CAD 160,
   1 January room CAD 7,700.
 - CRA age groups reconcile to the published totals within rounding (holders 19,322,840 vs 19,322,830).
+- `npm test` 1,805 passed; Python unittest 135 OK; `npm run zh:refresh` missing 0, numeric guard kept English for
+  0 of 44,344 units; 170 Chinese units written directly and merged after number and tag checks.
+- Built EN and ZH pages: 4 figures, 6 tables, 8 inputs, no NaN/undefined; homepage, research index, Chinese homepage,
+  search index and sitemap (722 URLs) entries present.
+
+## Deployment
+Pushed 797bf64f to main and deployed the existing `tickerlantern-est` Worker (version 498ba33d-4aca-4b8c-97de-9547388d2d74),
+keeping tickerlantern.com, www and est custom domains. Live checks 2026-10-27: EN and ZH routes 200 (4 figures,
+6 tables, 8 inputs), hub/home/zh home link present, live sitemap 722 = local, model module and `planning-models.js`
+SHA-256 match `dist`, all eight official sources 200. The local preview server was declined in this unattended run,
+so no visual desktop/mobile pass was made.

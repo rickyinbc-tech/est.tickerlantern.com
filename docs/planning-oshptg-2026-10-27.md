@@ -34,3 +34,11 @@ Route: `/research/ontario-senior-homeowners-property-tax-grant-oeptc-step-5-inco
   directly and merged through the number and tag guard.
 - Built-in browser could not open a local port in this unattended run (the usual 8764 belongs to another project's
   server and was left running); static checks only before deploy.
+
+## Deployment (2026-10-27)
+Pushed 1c9a2cef to main (fast-forward from concurrent 68d9e1c3) and deployed `tickerlantern-est` with
+`npx wrangler deploy` (version 3a4eb4d3; tickerlantern.com, www and est custom domains kept). Live EN and ZH 200 with
+5 figures and 5 inputs, no NaN; homepage, research index and Chinese homepage link the guide; live sitemap 744 = local;
+live `planning-oshptg-models.js` and `planning-models.js` SHA-256 match dist. The same deploy put the concurrent
+record-high and estate-account guides live (200). Live 375px check: no horizontal overflow; typing CAD 47,000 income
+updated the grant to CAD 100.40 and the total to CAD 1,153.58, matching the article table. No physical-phone test.

@@ -35,3 +35,6 @@ All defaults reproduced with 40-digit Python Decimal arithmetic (`qa/refund-payo
 ## Release status
 
 Pinned base `3854ca75` (origin/main at start, unchanged when re-fetched before publishing).
+Source commit `ac442f54` was pushed to `main` as a fast-forward on 27 October 2026. Before pushing, the live sitemap (662 URLs) was a strict subset of local `dist` (712): no live-only URLs; local-only were this batch's four URLs plus forty-six already on `main` but never deployed (earlier batches from 26–27 October, English and Chinese, including the Ontario trillium benefit guide).
+
+`npx wrangler deploy` was blocked by the unattended run's permission policy (production deploy), as in earlier runs; no workaround was attempted. After the push, the homepage, research index, Chinese homepage and existing guides returned 200; the new URLs and `planning-refund-payout-models.js` returned 404. The next authorized `npx wrangler deploy` from current `main` (Wrangler rebuilds from source) will publish all fifty URLs. After it, verify each URL, the module, homepage/library/sitemap entries, and phone/desktop layouts.

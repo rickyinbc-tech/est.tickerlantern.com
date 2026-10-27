@@ -79,6 +79,11 @@ An inflation-window guide measures what a dollar kept over every overlapping 10,
 Statistics Canada's CPI, and how often a steady return after fees and tax kept up; a spousal-investing guide compares a
 gift (attributed back), a TFSA gift and a loan at CRA's prescribed rate, with the 2021–2026 quarterly rates; see
 `docs/planning-inflation-spouse-loan-2026-10-27.md`.
+A record-high guide uses Statistics Canada's monthly S&P/TSX Composite closes (table 10-10-0125-01, January 1956 to
+September 2023) to compare what the index price did one to ten years after record months and after other months, with
+every fall below an old peak; an estate guide follows the same fund in a TFSA, an RRSP or RRIF and a taxable account to
+the final return, with the deemed disposition, full RRIF inclusion, probate and the spouse rollover; see
+`docs/planning-record-estate-2026-10-27.md`.
 A Lifelong Learning Plan guide applies CRA’s RRSP withdrawal limits, repayment-start
 rule and balance-over-years-left schedule, and prices a shortfall in tax and lost RRSP
 growth; see `docs/planning-llp-repay-2026-10-27.md`.

@@ -30,3 +30,9 @@ All defaults reproduced with 40-digit Python Decimal (`qa/planning-crash-withdra
 - Built HTML: English and Chinese pages each have 4 figures, 4 data tables and 8/9 inputs; homepage, research index, Chinese hub, search index and sitemap entries present; `dist/research/planning-crash-withdrawal-models.js` emitted.
 - 6,000 random valid input sets across both models: no exceptions, no non-finite chart values or metrics.
 - Local browser preview of `127.0.0.1` was denied in this unattended run, so no local browser pass is claimed.
+
+## Release status
+
+Pinned base `4be63962` (origin/main at start, unchanged when re-fetched before publishing). Source commit `d9ba024a` was pushed to `main` as a fast-forward on 26 October 2026. Before pushing, the live sitemap was a strict subset of local `dist`: no live-only URLs; 26 local-only URLs, which are this batch's four plus earlier guides already on `main` but never deployed (including the balanced-fund joint-decline, fund tax-loss, medical expense credit and disability credit transfer guides).
+
+`npx wrangler deploy` (Wrangler 4.153.0) was blocked again by the unattended run's permission policy (Production Deploy). After the push, the homepage, research index, Chinese hub and existing guides returned 200; the two new URLs returned 404. The next authorized `npx wrangler deploy` from current `main` (Wrangler rebuilds from source) will publish all 26 URLs. After it, verify each URL, the module `planning-crash-withdrawal-models.js`, homepage/library/sitemap entries, and phone/desktop layouts.

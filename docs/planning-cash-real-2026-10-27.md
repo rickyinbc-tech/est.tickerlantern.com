@@ -46,3 +46,21 @@ Rolling periods start at every month-end from the chosen first year with the ful
   NaN/undefined. Node render fuzz (17 cases incl. every field at min/max and periods that do not fit, 340 and 960 px):
   no NaN/Infinity/undefined; found and fixed a crash when the rolling period did not fit.
 - Local browser preview was declined in this unattended run; no browser pass is claimed.
+
+## Deployment (2026-10-27) — pending
+
+Pinned base `69c9435c` (origin/main at start; unchanged when re-fetched before pushing). Article commit `dd19d8b0`
+pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027m` in the reused
+`tickerlantern-wealth-career-20261025` worktree). `npx wrangler deploy` (tried first on unchanged main, before any
+edits) was refused again by this unattended session's permission policy (production deploy), so four guides are in
+main but not live: this one, the child care deduction guide (`d07778b2`), the moving-average exit rule guide
+(`310f0ced`) and the home accessibility / multigenerational renovation guide (`4ce4f0a9`). After the push this
+route returned 404 and the live sitemap still had 746 URLs (local dist: 754). Live homepage and a sample of 20
+existing sitemap URLs returned 200.
+
+Next step: from a clean checkout at current main, run `npx wrangler deploy` (rebuilds; keeps the tickerlantern.com,
+www and est custom domains), then check EN/ZH routes 200 for all four guides (4 figures and 4 tables here), homepage /
+research / ZH homepage links, sitemap count = dist, SHA-256 of live `planning-cash-real-models.js`,
+`planning-trend-rule-models.js`, `planning-home-reno-models.js` and `planning-models.js` against dist, all previous
+sitemap URLs 200, and a 375 px browser pass (setting the tax rate to 30 should show about CAD 10,284 in January 1956
+dollars for the taxed line).

@@ -59,6 +59,9 @@ hypothetical crash against pausing in cash until the old peak, and a
 non-registered fund withdrawal guide splits each redemption into returned cost
 and taxable gain under CRA's average-cost rule; see
 `docs/planning-crash-withdrawal-2026-10-26.md`.
+A spousal transfer guide works the 2026 Schedule 2 (line 32600) for a spouse's
+unused age, pension, disability and tuition amounts beside the line 30300
+spouse amount; see `docs/planning-spouse-transfer-2026-10-26.md`.
 A 2026 medical expense tax credit guide compares which spouse should claim, the
 12-month window and the refundable supplement; see `docs/planning-metc-claim-2026-10-26.md`.
 A Canada Disability Benefit guide applies the 2026–27 regulation formula, the

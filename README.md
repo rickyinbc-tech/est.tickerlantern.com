@@ -68,6 +68,9 @@ An FHSA over-contribution guide applies sections 207.01 and 207.021 to show why 
 1% tax on the highest monthly excess still charges the month of a withdrawal, what a designated withdrawal can fix and
 how a year-end excess reduces the next January's room, with CRA's 2024 FHSA statistics; see
 `docs/planning-fhsa-excess-2026-10-27.md`.
+A first-time home buyers' GST rebate guide applies Excise Tax Act subsection 254(2.1) to a new home bought from a
+builder: all federal GST back up to CAD 1 million (at most CAD 50,000), a 15% marginal rate on price between CAD 1 million
+and 1.5 million, what an upgrade costs, and the PBO's projected rebate counts; see `docs/planning-fthb-gst-2026-10-27.md`.
 A TFSA staging guide follows a lump sum larger than TFSA room as it is moved in each January, with the tax on
 in-kind moves and on the distributions of the part still waiting, and CRA's 2009–2026 limits by starting year; a
 crash-exit guide finds how far a taxable fund must fall before buying back pays for the capital gains tax and the

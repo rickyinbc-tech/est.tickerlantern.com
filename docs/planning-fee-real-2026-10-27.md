@@ -30,3 +30,8 @@ Edge cases exercised through the model: return below inflation (share shown as U
 ## Release status
 
 Pinned base `99c59849` (origin/main at start, unchanged when re-fetched before committing).
+Article commit `09933ead` pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027e`) and deployed with `npx wrangler deploy` (4.153.0) from a clean detached checkout of `09933ead`; the deploy rebuild left no diff. Worker `tickerlantern-est`, version `b43617ff-075e-4151-89c0-9e969d26f57c`. Before it the live sitemap had 722 URLs.
+
+After that deploy: live sitemap 724 URLs = local `dist` 724, no differences, all 724 returned HTTP 200 (prior pages included). New EN and ZH pages: 4 figures, 4 tables, 8 inputs, correct H1; listed on the homepage, research index, Chinese homepage and search index. SHA-256 of live `planning-fee-real-models.js`, `planning-models.js`, `planning-ui.js`, `planning-charts.js`, `planning-value-averaging-models.js`, `guides.css` and `planning.css` matched local `dist`.
+
+Live browser check (built-in browser, public URL): defaults matched the tested values; typing 4% inflation recalculated to 1.92% / 1.41% / −0.12%, share 106.00% (fee larger than the whole real return), CAD 190,027.71 / 154,479.10, matching the model and the article's heatmap text. 375 px and 1280 px had no horizontal page overflow; all four SVG charts fit (339 px / 1152 px); waterfall rendered with the three steps and total. A first check ran while the pane was hidden (zero-width viewport) and reported a spurious overflow; the emulated widths above are the valid result.

@@ -87,7 +87,7 @@ export function fthbMarginal(p,eligible){
 }
 
 const money=n=>n.toLocaleString('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0});
-const kTick=v=>v===0?'0':v>=1e6?'CAD '+(v/1e6).toLocaleString('en-CA',{maximumFractionDigits:2})+'M':'CAD '+(v/1e3)+'k';
+const kTick=v=>v===0?'0':v>=1e6?(v/1e6).toLocaleString('en-CA',{maximumFractionDigits:2})+'M':(v/1e3)+'k';
 
 export function fthbGstResult(kind,input){
   if(kind!=='fthbGst')throw Error('Unknown FTHB GST topic');
@@ -108,13 +108,13 @@ export function fthbGstResult(kind,input){
     ['Extra monthly mortgage payment for the added price and GST',p.extraPayment,'money']
   ],note,charts:[
     {id:'fg-pbo-funnel',type:'bar',evidence:'Official projection',unit:'count',unitLabel:'New homes, 2026 (projected) · count',title:'How many of the new homes completed in 2026 the PBO expects to get the first-time buyers’ rebate',rows:steps.map(r=>({label:r[0],value:r[2]})),source:PBO_FTHB.url,sourceLabel:'Parliamentary Budget Officer · Introducing GST rebates for first-time home buyers, Table 2',note:`A projection made in June 2025, not a count of claims. Of ${steps[0][2].toLocaleString('en-CA')} homes projected to be completed in 2026, the PBO expects ${steps[5][2].toLocaleString('en-CA')} (${(steps[5][2]/steps[0][2]*100).toFixed(1)}%) to receive the rebate. The largest cuts are homes built for rent and homes not bought as a primary residence (investors, non-residents, temporary residents and corporations cannot claim), then the step to first-time buyers: about 20% of qualifying sales in the PBO’s Canadian Housing Statistics Program data for three provinces. Over 2025 to 2030 it projects ${steps[5][7].toLocaleString('en-CA')} rebates averaging ${money(PBO_FTHB.average)}, costing about CAD 1.9 billion. The PBO assumed agreements after 26 May 2025; the law as enacted reaches back to 20 March 2025.`},
-    {id:'fg-levels',type:'line',evidence:'Rules applied to hypothetical prices',unit:'money',title:'Federal GST (or federal part of the HST), the rebates and the tax still payable, by price of the new home',xLabel:'Purchase price before tax',xTicks:[0,400000,800000,1200000,1600000].map(v=>({value:v,label:kTick(v)})),series:[
+    {id:'fg-levels',type:'line',evidence:'Rules applied to hypothetical prices',unit:'money',title:'Federal GST (or federal part of the HST), the rebates and the tax still payable, by price of the new home',xLabel:'Purchase price before tax (CAD)',xTicks:[0,500000,1000000,1500000].map(v=>({value:v,label:kTick(v)})),series:[
       {name:'GST at 5% of the price',dash:true,rows:grid.map(q=>({x:q,value:fthbGstTax(q)}))},
       {name:'Rebates for a first-time buyer',rows:grid.map(q=>({x:q,value:fthbRelief(q,true).total}))},
       {name:'Rebate for any other buyer (new housing rebate)',rows:grid.map(q=>({x:q,value:fthbRelief(q,false).total}))},
       {name:'GST still payable by a first-time buyer',rows:grid.map(q=>({x:q,value:fthbGstTax(q)-fthbRelief(q,true).total}))}],
       note:`Up to CAD 1 million a first-time buyer pays no federal GST: the two rebates together return all of it, and CAD 50,000 is the most. From CAD 1 million the rebate falls in a straight line to nil at CAD 1.5 million, while the tax keeps rising, so the GST payable climbs from CAD 0 to CAD 75,000 over that CAD 500,000. Any other buyer of a home they will live in gets at most CAD 6,300, and nothing at CAD 450,000 or more. ${e?`Your price, ${money(b.price)}: rebates ${money(b.total)}, GST payable ${money(b.net)}.`:`With your inputs you are not a first-time buyer, so the lower line applies: ${money(b.total)}.`}`},
-    {id:'fg-marginal',type:'line',evidence:'Rules applied to hypothetical prices',unit:'percent',title:'Federal sales tax on the next dollar of price: first-time buyer and other buyers',xLabel:'Purchase price before tax',xTicks:[0,400000,800000,1200000,1600000].map(v=>({value:v,label:kTick(v)})),series:[
+    {id:'fg-marginal',type:'line',evidence:'Rules applied to hypothetical prices',unit:'percent',title:'Federal sales tax on the next dollar of price: first-time buyer and other buyers',xLabel:'Purchase price before tax (CAD)',xTicks:[0,500000,1000000,1500000].map(v=>({value:v,label:kTick(v)})),series:[
       {name:'First-time buyer',rows:grid.map(q=>({x:q,value:fthbMarginal(q,true)}))},
       {name:'Other buyer living in the home',rows:grid.map(q=>({x:q,value:fthbMarginal(q,false)}))},
       {name:'Statutory GST rate',dash:true,rows:grid.map(q=>({x:q,value:R.gst}))}],

@@ -34,4 +34,12 @@ Route: `/research/fhsa-over-contribution-1-percent-highest-monthly-excess-design
   45,000 units; 170 Chinese units written directly, merged after number and tag checks.
 - Built EN and ZH pages: 4 figures, 7 tables, 10 inputs, no NaN/undefined; homepage, research index, Chinese homepage,
   search index and sitemap (732 URLs) entries present.
-- Local browser preview was declined in this unattended run, so desktop/mobile screenshots were not taken locally.
+- Local browser preview was declined in this unattended run; checks were done on the live page instead.
+
+## Deployment (2026-10-27)
+Pushed 70d6e1c2 and 4cc9c206 to main (fast-forward from af529b21) and deployed the existing `tickerlantern-est` Worker
+with `npx wrangler deploy` (version 4ad2c7a6; custom domains kept). Live EN and ZH routes 200 with 4 figures, 10 inputs
+and no NaN; homepage, research index and Chinese homepage link the guide; live sitemap 732 URLs; live model module
+SHA-256 matched dist. A live 375px check found overlapping month ticks on the ledger chart; reduced to five ticks
+(4cc9c206) and rechecked. The same deploy also put the earlier pending RRSP over-contribution, TFSA staging and
+crash-exit guides live (all EN/ZH routes 200).

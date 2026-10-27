@@ -29,9 +29,12 @@ Route: `/research/rrsp-over-contribution-2000-cushion-1-percent-month-end-tax-t1
 - Built EN and ZH pages: 4 figures, 6 tables, 10 inputs, no NaN/undefined; homepage, research index, Chinese homepage,
   search index and sitemap (726 URLs) entries present.
 
-## Deployment (pending)
+## Deployment (pending at first; now live)
 Pushed 9a73a392 to main (fast-forward from 1599daee). `npx wrangler deploy` for the existing `tickerlantern-est`
 Worker was blocked by this unattended session's permission policy, so the route is not live yet: on 2026-10-27 the EN
 and ZH routes returned 404 and the live sitemap had 724 URLs against 726 locally. Required action: run `npx wrangler deploy`
 from this checkout (no config change; custom domains kept), then verify both routes, hub links, sitemap 726 and the
 model module hash. Live desktop/mobile visual checks are still to do.
+
+Deployed on 2026-10-27 by the next run (wrangler version d1e0204c): EN and ZH routes 200 with 4 figures, hub link present,
+live sitemap 730 matched local, model module 200.

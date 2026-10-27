@@ -46,6 +46,7 @@ import { locationTimingGuides } from './planning-location-timing-guides.js';
 import { characterSignalGuides } from './planning-character-signal-guides.js';
 import { shockHarvestGuides } from './planning-shock-harvest-guides.js';
 import { otbComponentsGuides } from './planning-otb-components-guides.js';
+import { llpRepayGuides } from './planning-llp-repay-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
 import { refundPayoutGuides } from './planning-refund-payout-guides.js';
 import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
@@ -291,6 +292,7 @@ export const planningGuides = [
   ...giftPaydayGuides,
   ...refundPayoutGuides,
   ...otbComponentsGuides,
+  ...llpRepayGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,
   ...fuelMixGuides,

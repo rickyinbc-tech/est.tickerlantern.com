@@ -59,6 +59,9 @@ hypothetical crash against pausing in cash until the old peak, and a
 non-registered fund withdrawal guide splits each redemption into returned cost
 and taxable gain under CRA's average-cost rule; see
 `docs/planning-crash-withdrawal-2026-10-26.md`.
+An eligible dependant guide works the 2026 line 30400 amount for single
+claimants, the infirmity addition and line 30425 top-up, and the claimant's tax
+capacity; see `docs/planning-eligible-dependant-2026-10-26.md`.
 A spousal transfer guide works the 2026 Schedule 2 (line 32600) for a spouse's
 unused age, pension, disability and tuition amounts beside the line 30300
 spouse amount; see `docs/planning-spouse-transfer-2026-10-26.md`.

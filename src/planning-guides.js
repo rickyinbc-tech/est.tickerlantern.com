@@ -49,6 +49,7 @@ import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
 import { metcClaimGuides } from './planning-metc-claim-guides.js';
 import { dtcTransferGuides } from './planning-dtc-transfer-guides.js';
 import { limitDistributionGuides } from './planning-limit-distribution-guides.js';
+import { eligibleDependantGuides } from './planning-eligible-dependant-guides.js';
 import { spouseTransferGuides } from './planning-spouse-transfer-guides.js';
 import { fuelMixGuides } from './planning-fuel-mix-guides.js';
 import { taperGuides } from './planning-taper-guides.js';
@@ -273,6 +274,7 @@ export const planningGuides = [
   ...contributionTaxCashGuides,
   ...contributionEscalationGuides,
   ...characterSignalGuides,
+  ...eligibleDependantGuides,
   ...limitDistributionGuides,
   ...spouseTransferGuides,
   ...dtcTransferGuides,

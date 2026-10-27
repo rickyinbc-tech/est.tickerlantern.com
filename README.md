@@ -59,6 +59,10 @@ hypothetical crash against pausing in cash until the old peak, and a
 non-registered fund withdrawal guide splits each redemption into returned cost
 and taxable gain under CRA's average-cost rule; see
 `docs/planning-crash-withdrawal-2026-10-26.md`.
+A support-payments guide splits a year's payments into child and spousal
+support under the priority rule, prices the line 22000 deduction against the
+line 12800 inclusion and the year-of-separation line 30400 choice; see
+`docs/planning-support-payments-2026-10-26.md`.
 An eligible dependant guide works the 2026 line 30400 amount for single
 claimants, the infirmity addition and line 30425 top-up, and the claimant's tax
 capacity; see `docs/planning-eligible-dependant-2026-10-26.md`.

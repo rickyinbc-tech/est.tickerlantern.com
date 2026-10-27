@@ -29,3 +29,10 @@ Route: `/research/child-care-expense-deduction-line-21400-lower-income-spouse-cc
   directly, number/tag guard 0 rejections; `zh:refresh` missing 0.
 - Local built-in browser at 375px (EN and ZH): 5 figures, 8 inputs, no NaN, no horizontal overflow; typing CAD 15,000
   earned income recalculated to 10,000 / 0 / 1,181.72 (matches the article table).
+
+## Deployment (2026-10-27) — pending
+Pushed d07778b2 to main (fast-forward from 47c913dc). `npx wrangler deploy` for the existing `tickerlantern-est` Worker
+was refused by this unattended session's permission policy (production deploy), so the guide is in main but not live:
+the live route returned 404 after the push. Next step: from this checkout at main, run `npx wrangler deploy` (keeps the
+tickerlantern.com, www and est custom domains), then check EN/ZH 200, hub links, sitemap count and the
+`planning-ccd-models.js` hash.

@@ -50,6 +50,7 @@ import { shockHarvestGuides } from './planning-shock-harvest-guides.js';
 import { otbComponentsGuides } from './planning-otb-components-guides.js';
 import { llpRepayGuides } from './planning-llp-repay-guides.js';
 import { ctcClaimGuides } from './planning-ctc-claim-guides.js';
+import { tfsaExcessGuides } from './planning-tfsa-excess-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
 import { refundPayoutGuides } from './planning-refund-payout-guides.js';
 import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
@@ -299,6 +300,7 @@ export const planningGuides = [
   ...otbComponentsGuides,
   ...llpRepayGuides,
   ...ctcClaimGuides,
+  ...tfsaExcessGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,
   ...fuelMixGuides,

@@ -52,6 +52,9 @@ A balanced-fund guide splits a year when stocks and bonds fall together under
 rising rates and inflation, with dated CPI, policy-rate and 10-year yield data,
 and a tax-loss guide prices selling a fund at a loss against the superficial loss
 rule; see `docs/planning-shock-harvest-2026-10-26.md`.
+A TFSA over-contribution guide follows the Income Tax Act’s excess TFSA amount month by month, prices the
+1%-a-month tax on the highest excess by removal month and shows why a withdrawal does not shelter a same-year
+re-deposit, with CRA’s 2024 TFSA statistics; see `docs/planning-tfsa-excess-2026-10-27.md`.
 A Canada training credit guide applies section 122.91, Schedule 11 and CRA's 2024 claim statistics to
 show how the CAD 250 yearly limit builds up and how much of a course comes back; see
 `docs/planning-ctc-claim-2026-10-27.md`.

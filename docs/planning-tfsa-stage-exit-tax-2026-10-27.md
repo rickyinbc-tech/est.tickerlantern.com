@@ -29,4 +29,21 @@ Exit defaults (100,000 value, 60,000 ACB, 40%, 2.4% cash, 12 months, −20% buy-
 
 ## Release status
 
-Pinned base `eee7bd12` (origin/main at start). Release details are recorded in the follow-up commit.
+Pinned base `eee7bd12` (origin/main at start, unchanged when re-fetched before pushing). Article commit `2ff49fc2`
+pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027f`). It also carries the RRSP
+over-contribution guide (`9a73a392`), which was pushed earlier but not deployed.
+
+## Deployment (pending)
+
+`npx wrangler deploy` (4.153.0) from a clean detached checkout of `2ff49fc2` was blocked by this unattended
+session's permission policy (production deploy), the same block recorded for the RRSP over-contribution guide. The
+repository has no deploy-on-push workflow. On 2026-10-27 after the push: both new EN routes returned 404, an existing
+guide (`fund-fee-share-of-real-return-after-inflation`) returned 200, and the live sitemap had 724 URLs against 730 in
+local `dist` (4 new EN/ZH pages here plus 2 for the RRSP guide).
+
+Required action: from a clean checkout of `main` at `2ff49fc2` or later, run `npx wrangler deploy` (no config change;
+custom domains kept). Then verify: the six new EN/ZH routes return their article with 4 figures and 4 tables; homepage,
+research index, Chinese homepage, search index and sitemap (730) list them; SHA-256 of live
+`planning-tfsa-stage-models.js`, `planning-exit-tax-models.js`, `planning-rrsp-excess-models.js` and
+`planning-models.js` match `dist`; every sitemap URL returns 200; then exercise the inputs and check 375 px and
+1280 px layouts in a browser. Local browser preview was also declined in this session, so no browser pass is claimed.

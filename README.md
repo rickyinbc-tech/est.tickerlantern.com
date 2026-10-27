@@ -62,6 +62,9 @@ see `docs/planning-oshptg-2026-10-27.md`.
 A child care expense deduction guide applies CRA’s three limits (CAD 8,000 / 5,000 per child, two-thirds of the lower
 earner’s earned income, amount paid) and adds the July 2026 to June 2027 CCB increase from the lower family income;
 see `docs/planning-ccd-2026-10-27.md`.
+A home accessibility versus multigenerational renovation credit guide splits a renovation between the HATC (CAD 20,000),
+the refundable MHRTC (CAD 50,000) and the medical expense credit under 2025 and 2026 rules, with CRA's 2018–2023 claim
+statistics; see `docs/planning-home-reno-2026-10-27.md`.
 A TFSA over-contribution guide follows the Income Tax Act’s excess TFSA amount month by month, prices the
 1%-a-month tax on the highest excess by removal month and shows why a withdrawal does not shelter a same-year
 re-deposit, with CRA’s 2024 TFSA statistics; see `docs/planning-tfsa-excess-2026-10-27.md`.

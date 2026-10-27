@@ -64,6 +64,10 @@ show how the CAD 250 yearly limit builds up and how much of a course comes back;
 An RRSP over-contribution guide applies sections 204.1 and 204.2 to show where the CAD 2,000 cushion fits, why the
 1% tax is measured at each month-end, how withdrawal timing and CRA's default months change it, with Statistics
 Canada's 2000–2023 contributor series; see `docs/planning-rrsp-excess-2026-10-27.md`.
+A TFSA staging guide follows a lump sum larger than TFSA room as it is moved in each January, with the tax on
+in-kind moves and on the distributions of the part still waiting, and CRA's 2009–2026 limits by starting year; a
+crash-exit guide finds how far a taxable fund must fall before buying back pays for the capital gains tax and the
+taxed cash interest, with dated treasury bill and CPI data; see `docs/planning-tfsa-stage-exit-tax-2026-10-27.md`.
 A Lifelong Learning Plan guide applies CRA’s RRSP withdrawal limits, repayment-start
 rule and balance-over-years-left schedule, and prices a shortfall in tax and lost RRSP
 growth; see `docs/planning-llp-repay-2026-10-27.md`.

@@ -52,3 +52,18 @@ running peak (record-high module). Phase-in longer than the holding period is re
 - Built-in browser on a local static server (port 8791): EN at 375 px, 4 SVG charts, no horizontal overflow; changing
   years to 5 updated metrics (753, 121.31%, 77.62%, worst 2004-02); years 1 + phase 24 showed the field error; ZH page at
   1024 px renders 4 charts. Phone x-axis tick "2020" clipped at the right edge was fixed by limiting ticks to the data.
+
+## Deployment (2026-10-27)
+
+Pinned base `c1966e1c` (origin/main at start, unchanged when re-fetched before pushing and again before deploying).
+Article commit `8d9223d7` pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027j` in the reused
+`tickerlantern-wealth-career-20261025` worktree), then `npx wrangler deploy` from that clean checkout: version
+145f04c1-a173-417c-a84c-e6997aa9a065; tickerlantern.com, www and est custom domains kept.
+
+Live checks: EN and ZH routes 200 with 4 figures and 4 tables; homepage, research index and Chinese homepage link the
+guide; search index lists it; live sitemap 746 URLs = local dist; SHA-256 of live `planning-tsx-monthly-models.js`,
+`planning-record-high-models.js`, `planning-models.js`, `planning-ui.js` and `planning-charts.js` match dist; all 744
+URLs of the previous sitemap return 200. Live at 375 px: 4 SVG charts, no horizontal overflow, no NaN; typing 5 years
+updated the metrics to 753 starts, CAD 30,000, 121.31%, 77.62% and the worst chart to 2004-02, matching the model.
+(Synthetic script events did not trigger the live update; real typing did.) No physical-phone test. Site-wide CSP
+console messages about inline legend styles and the Cloudflare beacon pre-exist and are unchanged.

@@ -64,6 +64,10 @@ show how the CAD 250 yearly limit builds up and how much of a course comes back;
 An RRSP over-contribution guide applies sections 204.1 and 204.2 to show where the CAD 2,000 cushion fits, why the
 1% tax is measured at each month-end, how withdrawal timing and CRA's default months change it, with Statistics
 Canada's 2000–2023 contributor series; see `docs/planning-rrsp-excess-2026-10-27.md`.
+An FHSA over-contribution guide applies sections 207.01 and 207.021 to show why there is no cushion, why the
+1% tax on the highest monthly excess still charges the month of a withdrawal, what a designated withdrawal can fix and
+how a year-end excess reduces the next January's room, with CRA's 2024 FHSA statistics; see
+`docs/planning-fhsa-excess-2026-10-27.md`.
 A TFSA staging guide follows a lump sum larger than TFSA room as it is moved in each January, with the tax on
 in-kind moves and on the distributions of the part still waiting, and CRA's 2009–2026 limits by starting year; a
 crash-exit guide finds how far a taxable fund must fall before buying back pays for the capital gains tax and the

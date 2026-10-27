@@ -55,6 +55,10 @@ rule; see `docs/planning-shock-harvest-2026-10-26.md`.
 A Lifelong Learning Plan guide applies CRA’s RRSP withdrawal limits, repayment-start
 rule and balance-over-years-left schedule, and prices a shortfall in tax and lost RRSP
 growth; see `docs/planning-llp-repay-2026-10-27.md`.
+A balanced-fund withdrawal guide follows fixed monthly withdrawals through a
+crash in the first year, the last years or not at all (same returns, different
+order), with dated September CPI and a cash-reserve trade-off; see
+`docs/planning-withdraw-sequence-2026-10-27.md`.
 An Ontario trillium benefit guide splits the 2026–27 payment into the OEPTC, OSTC
 and NOEC using CRA's 2026 calculation sheets and prices the single June payment
 option; see `docs/planning-otb-components-2026-10-27.md`.

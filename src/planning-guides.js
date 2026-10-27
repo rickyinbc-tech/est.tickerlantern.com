@@ -1,3 +1,4 @@
+import { withdrawSequenceGuides } from './planning-withdraw-sequence-guides.js';
 import { offsetAccountGuides } from './planning-offset-account-guides.js';
 import { multipleJobholderGuides } from './planning-multiple-jobholder-guides.js';
 import { utilityEqualGuides } from './planning-utility-equal-guides.js';
@@ -290,6 +291,7 @@ export const planningGuides = [
   ...crashWithdrawalGuides,
   ...shockHarvestGuides,
   ...giftPaydayGuides,
+  ...withdrawSequenceGuides,
   ...refundPayoutGuides,
   ...otbComponentsGuides,
   ...llpRepayGuides,

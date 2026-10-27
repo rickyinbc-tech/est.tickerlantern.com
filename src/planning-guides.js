@@ -61,6 +61,7 @@ import { tfsaExcessGuides } from './planning-tfsa-excess-guides.js';
 import { rrspExcessGuides } from './planning-rrsp-excess-guides.js';
 import { fhsaExcessGuides } from './planning-fhsa-excess-guides.js';
 import { fthbGstGuides } from './planning-fthb-gst-guides.js';
+import { oshptgGuides } from './planning-oshptg-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
 import { refundPayoutGuides } from './planning-refund-payout-guides.js';
 import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
@@ -320,6 +321,7 @@ export const planningGuides = [
   ...tfsaExcessGuides,
   ...rrspExcessGuides,
   ...fthbGstGuides,
+  ...oshptgGuides,
   ...fhsaExcessGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,

@@ -55,6 +55,9 @@ rule; see `docs/planning-shock-harvest-2026-10-26.md`.
 A fee-versus-real-return guide measures a fund fee against the return left after inflation, with
 annual-average CPI inflation since 1996 and a saving plan in today's dollars; see
 `docs/planning-fee-real-2026-10-27.md`.
+An Ontario senior homeowners' property tax grant guide computes the 2026 grant (up to CAD 500, −3.33% over CAD 35,000 or
+45,000), CRA's Step 5 cut to the senior OEPTC, the 5.33% band on extra income and CAD 500 since 2010 in Ontario prices;
+see `docs/planning-oshptg-2026-10-27.md`.
 A TFSA over-contribution guide follows the Income Tax Act’s excess TFSA amount month by month, prices the
 1%-a-month tax on the highest excess by removal month and shows why a withdrawal does not shelter a same-year
 re-deposit, with CRA’s 2024 TFSA statistics; see `docs/planning-tfsa-excess-2026-10-27.md`.

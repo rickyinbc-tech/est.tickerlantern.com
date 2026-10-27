@@ -28,3 +28,13 @@ Defaults ($500,000; 4.5%; +2%/yr; 5%; −25% then +47%; 1-year reserve at 3%; 30
 ## Release status
 
 Pinned base `97b55ec7` (origin/main at start, unchanged when re-fetched before committing).
+Source commit `f279c303` was pushed to `main` as a fast-forward on 27 October 2026 (branch `claude/planning-visual-20261027c`).
+
+Before this deploy the live sitemap had 662 URLs; every earlier batch since 25–26 October had been pushed to `main` but its deploy was blocked. `npx wrangler deploy` from a clean checkout of `f279c303` succeeded this run (Worker `tickerlantern-est`, version `1c321dbc-0a5e-4ff2-b7a4-56c4be6d5ba5`; 627 new files uploaded), so it published this guide and the 54 earlier pending URLs at once.
+
+After deployment:
+- Live sitemap 716 URLs = local `dist` 716; no live-only or local-only URLs; all 716 returned HTTP 200.
+- New EN and ZH pages: 4 figures, 4 tables, 8 inputs each; correct H1; listed on the homepage, research index, Chinese homepage and search index.
+- SHA-256 of live `planning-withdraw-sequence-models.js`, `planning-models.js`, `planning-ui.js` and three earlier batch modules matched local `dist` byte for byte.
+- Earlier guides (LLP repayment, T-series, paycheque contributions through a crash, US withholding) returned 200.
+- Live browser check (built-in browser, public URL): defaults matched the tested values; changing the crash to 40% recalculated (crash year 1 → $163,669.27, crash year 29 → $199,106.50, reserve → $198,590.16); 375 px phone and 1024 px desktop had no horizontal page overflow; all four SVG charts rendered with data tables. A local preview server was declined, so the check was on the live site only.

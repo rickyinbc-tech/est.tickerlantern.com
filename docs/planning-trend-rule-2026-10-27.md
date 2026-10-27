@@ -50,3 +50,18 @@ history).
 - Node fuzz (81 cases incl. every field at min/max, rendered at 340 and 960 px): no NaN/Infinity/undefined.
 - Local browser preview was not available in this unattended run (server start declined); browser checks were done
   on the live site after deployment (below).
+
+## Deployment (2026-10-27) — pending
+
+Pinned base `b6d86f73` (origin/main at start, unchanged when re-fetched before pushing). Article commit `310f0ced`
+pushed to `main` as a fast-forward (branch `claude/planning-visual-20261027k` in the reused
+`tickerlantern-wealth-career-20261025` worktree). `npx wrangler deploy` was refused by this unattended session's
+permission policy, so the guide is in main but not live: after the push the live route returned 404 and the live
+sitemap still had 746 URLs (without this guide or the child care guide `d07778b2`, also pending). Prior live pages
+checked (monthly-saving guide 200) are unaffected.
+
+Next step: from a clean checkout at current main, run `npx wrangler deploy` (rebuilds from source; keeps the
+tickerlantern.com, www and est custom domains), then check EN/ZH routes 200 with 4 figures and 4 tables, homepage /
+research / ZH homepage links, search index, sitemap count = dist, SHA-256 of live `planning-trend-rule-models.js`,
+`planning-record-high-models.js`, `planning-models.js`, `planning-ui.js`, `planning-charts.js` against dist, all
+previous sitemap URLs 200, and a 375 px browser pass (typing 2009 as first year should show CAD 30,094 vs 16,507).

@@ -66,6 +66,7 @@ import { fthbGstGuides } from './planning-fthb-gst-guides.js';
 import { oshptgGuides } from './planning-oshptg-guides.js';
 import { ccdGuides } from './planning-ccd-guides.js';
 import { homeRenoGuides } from './planning-home-reno-guides.js';
+import { rrspFhsaGuides } from './planning-rrsp-fhsa-guides.js';
 import { cashRealGuides } from './planning-cash-real-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
 import { refundPayoutGuides } from './planning-refund-payout-guides.js';
@@ -330,6 +331,7 @@ export const planningGuides = [
   ...fthbGstGuides,
   ...oshptgGuides,
   ...homeRenoGuides,
+  ...rrspFhsaGuides,
   ...cashRealGuides,
   ...ccdGuides,
   ...fhsaExcessGuides,

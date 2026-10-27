@@ -62,6 +62,9 @@ see `docs/planning-oshptg-2026-10-27.md`.
 A child care expense deduction guide applies CRA’s three limits (CAD 8,000 / 5,000 per child, two-thirds of the lower
 earner’s earned income, amount paid) and adds the July 2026 to June 2027 CCB increase from the lower family income;
 see `docs/planning-ccd-2026-10-27.md`.
+An RRSP-to-FHSA transfer versus Home Buyers’ Plan guide compares cash-only, top-up and transfer-first uses of FHSA room
+before a purchase, the lost deduction, the CAD 60,000 HBP and its 15-year repayments, with CRA’s 2024 FHSA withdrawals;
+see `docs/planning-rrsp-fhsa-2026-10-27.md`.
 A home accessibility versus multigenerational renovation credit guide splits a renovation between the HATC (CAD 20,000),
 the refundable MHRTC (CAD 50,000) and the medical expense credit under 2025 and 2026 rules, with CRA's 2018–2023 claim
 statistics; see `docs/planning-home-reno-2026-10-27.md`.

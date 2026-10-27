@@ -34,3 +34,15 @@ from `planning-metc-claim-models.js`.
   Node boundary fuzz (every field at min and max, 17 valid cases): finite.
 - Local browser preview was declined in this unattended run; browser checks remain for the live site.
 - Known site-wide cosmetic: the input help text formats year ranges with a thousands separator ("2,025 to 2,026").
+
+## Deployment (2026-10-27) — pending
+Pinned base `33162659` (origin/main at start; unchanged when re-fetched before pushing). Article commit `4ce4f0a9`
+pushed to `main` as a fast-forward. `npx wrangler deploy` for the existing `tickerlantern-est` Worker was refused by
+this unattended session's permission policy (production deploy), so three guides are in main but not live: this one,
+the child care deduction guide (`d07778b2`) and the moving-average exit rule guide (`310f0ced`) all return 404, and
+the live sitemap still has 746 URLs (local dist: 752). The live homepage still returns 200.
+
+Next step: from a clean checkout at current main, run `npx wrangler deploy` (rebuilds; keeps the tickerlantern.com,
+www and est custom domains), then check EN/ZH routes 200 for all three guides, 6 figures here, homepage / research /
+ZH homepage links, sitemap count = dist, SHA-256 of live `planning-home-reno-models.js` and `planning-models.js`
+against dist, and a 375 px browser pass (setting tax owed to 1,000 should show CAD 8,000 best vs 7,000 all-in).

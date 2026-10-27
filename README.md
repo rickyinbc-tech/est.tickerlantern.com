@@ -52,6 +52,9 @@ A balanced-fund guide splits a year when stocks and bonds fall together under
 rising rates and inflation, with dated CPI, policy-rate and 10-year yield data,
 and a tax-loss guide prices selling a fund at a loss against the superficial loss
 rule; see `docs/planning-shock-harvest-2026-10-26.md`.
+An Ontario trillium benefit guide splits the 2026–27 payment into the OEPTC, OSTC
+and NOEC using CRA's 2026 calculation sheets and prices the single June payment
+option; see `docs/planning-otb-components-2026-10-27.md`.
 A tax guide compares giving non-registered fund units to charity in kind with
 selling first, using CRA's zero inclusion rate and provincial credit rates, and a
 TFSA timing guide separates a January deposit of money already saved from

@@ -61,6 +61,9 @@ re-deposit, with CRA’s 2024 TFSA statistics; see `docs/planning-tfsa-excess-20
 A Canada training credit guide applies section 122.91, Schedule 11 and CRA's 2024 claim statistics to
 show how the CAD 250 yearly limit builds up and how much of a course comes back; see
 `docs/planning-ctc-claim-2026-10-27.md`.
+An RRSP over-contribution guide applies sections 204.1 and 204.2 to show where the CAD 2,000 cushion fits, why the
+1% tax is measured at each month-end, how withdrawal timing and CRA's default months change it, with Statistics
+Canada's 2000–2023 contributor series; see `docs/planning-rrsp-excess-2026-10-27.md`.
 A Lifelong Learning Plan guide applies CRA’s RRSP withdrawal limits, repayment-start
 rule and balance-over-years-left schedule, and prices a shortfall in tax and lost RRSP
 growth; see `docs/planning-llp-repay-2026-10-27.md`.

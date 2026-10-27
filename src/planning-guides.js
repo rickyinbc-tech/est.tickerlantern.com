@@ -52,6 +52,7 @@ import { llpRepayGuides } from './planning-llp-repay-guides.js';
 import { ctcClaimGuides } from './planning-ctc-claim-guides.js';
 import { feeRealGuides } from './planning-fee-real-guides.js';
 import { tfsaExcessGuides } from './planning-tfsa-excess-guides.js';
+import { rrspExcessGuides } from './planning-rrsp-excess-guides.js';
 import { giftPaydayGuides } from './planning-gift-payday-guides.js';
 import { refundPayoutGuides } from './planning-refund-payout-guides.js';
 import { crashWithdrawalGuides } from './planning-crash-withdrawal-guides.js';
@@ -303,6 +304,7 @@ export const planningGuides = [
   ...ctcClaimGuides,
   ...feeRealGuides,
   ...tfsaExcessGuides,
+  ...rrspExcessGuides,
   ...locationTimingGuides,
   ...fundDisciplineGuides,
   ...fuelMixGuides,

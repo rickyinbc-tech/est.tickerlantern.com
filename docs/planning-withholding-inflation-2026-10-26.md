@@ -29,4 +29,8 @@ Inflation gain (defaults $10,000, 4% real, 2.5% inflation, 20 years, 29.65%): no
 
 ## Release status
 
-Pinned base `39b32512` (origin/main at start and unchanged when re-fetched before commit). See the release section appended after the push/deploy attempt.
+Pinned base `39b32512` (origin/main at start, unchanged when re-fetched before pushing). Source commit `103475c1` was pushed to `main` as a fast-forward on 26 October 2026 (branch `claude/fund-planning-20261026c` in this checkout). Before the deploy attempt the live sitemap (662 URLs) was a strict subset of local `dist` (700): no live-only URLs; 38 local-only URLs = this batch's four (EN + ZH) and 34 from earlier batches already on `main` but never deployed.
+
+`npx wrangler deploy` was denied again by the unattended run's permission policy (Production Deploy); it was not retried or worked around. After the push the homepage, research index and Chinese hub returned 200, existing guides checked (market timing, balanced-fund crash) returned 200, and the new URLs, `planning-withholding-inflation-models.js` and earlier undeployed guides (e.g. the TFSA indexation guide) returned 404. No browser pass of the new pages: the local preview server was declined and the pages are not live.
+
+Next authorized step: from a clean checkout of current `main`, run `npx wrangler deploy` (it rebuilds from source), then verify every local-only URL, `planning-withholding-inflation-models.js`, homepage/library/sitemap entries and phone/desktop layouts.

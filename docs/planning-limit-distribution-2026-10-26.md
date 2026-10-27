@@ -23,3 +23,11 @@ Pre-distribution (defaults $20,000, 8%, 75% gains, 29.65%, 10 years, 5% growth, 
 
 - `npm test`: 1,750 tests, 0 failures. `npm run zh:refresh`: missing 0 units; numeric guard kept English for 0 of 42,926. 237 Chinese units written directly (no external service), merged after numguard and identical-markup checks (`qa/planning-limit-distribution-2026-10-26/merge_zh.py`, ignored).
 - Built HTML: EN and ZH pages each 4 figures and 4 data tables (3 and 7 inputs); homepage, research index, Chinese home, search index and sitemap entries present; `dist/research/planning-limit-distribution-models.js` emitted.
+
+## Release status
+
+Pinned base `bdae0630` (origin/main at start, unchanged when re-fetched before publishing). Source commit `7d0200da` was pushed to `main` as a fast-forward on 26 October 2026 (the same commit was also pushed as branch `claude/fund-planning-20261026b`). Before pushing, the live sitemap (662 URLs) was a strict subset of local `dist` (694): no live-only URLs; 32 local-only URLs = this batch's four (EN + ZH), the spousal credit transfer pair and the 26 from earlier batches already on `main` but never deployed.
+
+`npx wrangler deploy` (Wrangler 4.153.0, authenticated) was blocked again by the unattended run's permission policy (Production Deploy). The repository has no deploy workflow (`.github/workflows/index-data.yml` only). After the push the homepage, research index and Chinese hub returned 200; the new URLs and earlier undeployed guides returned 404. No browser pass of the new pages was possible: the in-app browser cannot open a local preview, and the pages are not live.
+
+Next authorized step: from a clean checkout of current `main`, run `npx wrangler deploy` (it rebuilds from source), then verify every local-only URL, `planning-limit-distribution-models.js`, homepage/library/sitemap entries and phone/desktop layouts.

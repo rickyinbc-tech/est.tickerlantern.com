@@ -57,8 +57,11 @@ test('TTM fallback cannot replace a usable forward mean or accept CAPE, medians,
 });
 
 test('feed validation rejects unverified TTM fallback fields rather than publishing them',()=>{
- const f=structuredClone(feed),row=trailingRow();f.indices[0]=row;assert.doesNotThrow(()=>validateFeed(f,now));
- for(const patch of [{verification:'unverified'},{indexId:'eafe'},{currentAsOf:'2099-01-01'}]){const broken=structuredClone(f);Object.assign(broken.indices[0].trailingValuation,patch);assert.throws(()=>validateFeed(broken,now));}
+ // The feed is refreshed before this test in CI, so its publication and check
+ // timestamps must be validated against the actual clock, not the fixed model
+ // clock used by the synthetic scenario tests above.
+ const f=structuredClone(feed),row=trailingRow(),validationNow=new Date();f.publishedAt=validationNow.toISOString();f.indices[0]=row;assert.doesNotThrow(()=>validateFeed(f,validationNow));
+ for(const patch of [{verification:'unverified'},{indexId:'eafe'},{currentAsOf:'2099-01-01'}]){const broken=structuredClone(f);Object.assign(broken.indices[0].trailingValuation,patch);assert.throws(()=>validateFeed(broken,validationNow));}
 });
 
 test('manual exit and paused scenarios stay protected; source restoration uses the correct converted TTM exit',()=>{

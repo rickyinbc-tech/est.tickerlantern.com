@@ -3,7 +3,9 @@ import { validateFeed } from './index-data.js';
 import { isNotesResearchPath, handleNotesResearch } from './notes-research.js';
 import { enrichSearchNavigation } from './search-navigation.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
-const MAX_BYTES = 2_000_000;
+// The full, provenance-rich snapshot now exceeds 2 MB. Keep a bounded limit
+// with room for normal growth so a valid refresh cannot silently fall back.
+const MAX_BYTES = 4_000_000;
 async function verified(response, { githubRaw = false } = {}) {
   // The fixed raw.githubusercontent.com JSON URL is served as text/plain.
   // That transport still passes JSON parsing and the complete feed contract.

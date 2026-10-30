@@ -28,6 +28,19 @@ test('API uses the current published GitHub snapshot without application redeplo
   const response=await worker.fetch(request(),{});
   assert.equal(response.status,200);assert.equal((await response.json()).transport,'github');
 });
+test('API accepts a valid refreshed snapshot larger than two million characters but rejects oversized responses',async t=>{
+  const current=snapshot();
+  current.testPadding='x'.repeat(Math.max(0,2_200_000-JSON.stringify(current).length));
+  let body=JSON.stringify(current);
+  assert.ok(body.length>2_000_000 && body.length<4_000_000);
+  t.mock.method(globalThis,'fetch',async()=>new Response(body,{headers:{'Content-Type':'text/plain'}}));
+  let response=await worker.fetch(request(),{});
+  assert.equal(response.status,200);
+  assert.equal((await response.json()).transport,'github');
+  body=' '.repeat(4_000_001);
+  response=await worker.fetch(request(),{});
+  assert.equal(response.status,503);
+});
 test('upstream failure retains a validated bundled snapshot and identifies fallback',async t=>{
   t.mock.method(globalThis,'fetch',async()=>{throw new Error('Unavailable');});
   const env={ASSETS:{fetch:async()=>Response.json(snapshot('2026-10-01T00:00:00Z'))}};

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-10-30T15:40:54Z",
-  "sourceCheckAt": "2026-10-30T15:39:30Z",
+  "publishedAt": "2026-10-31T02:28:27Z",
+  "sourceCheckAt": "2026-10-31T02:26:43Z",
   "refreshCadence": "Daily at 23:15 UTC plus daily scheduled browser source checks",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
@@ -24,7 +24,7 @@
         "japan"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -37,7 +37,7 @@
         "world"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -50,7 +50,7 @@
         "uk"
       ],
       "status": "partial",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique explicitly labelled historical-mean table",
       "discoveryIssues": [
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table",
@@ -65,7 +65,7 @@
         "japan"
       ],
       "status": "retained",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is overdue (48-hour limit)",
       "discoveryIssues": [
         "Discovery failed: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR",
@@ -78,7 +78,7 @@
         "stoxx600"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -92,7 +92,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -102,7 +102,7 @@
         "tsx"
       ],
       "status": "partial",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": "Candidate https://cumberlandprivate.com/wp-content/uploads/2026/10/North-American-Strategy-Review-October-2026.pdf failed: Expected exactly one Cumberland TSX ten-year BF12 mean table; Candidate https://cumberlandprivate.com/wp-content/uploads/2026/07/Cumberland-North-American-Strategy-Review-June-2026.pdf failed: Expected exactly one Cumberland TSX ten-year BF12 mean table",
       "discoveryIssues": [
         "Candidate https://cumberlandprivate.com/wp-content/uploads/2026/10/North-American-Strategy-Review-October-2026.pdf failed: Expected exactly one Cumberland TSX ten-year BF12 mean table",
@@ -116,7 +116,7 @@
         "nikkei225"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -126,7 +126,7 @@
         "csi300"
       ],
       "status": "retained",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": "Truncated PDF or non-PDF response",
       "discoveryIssues": []
     },
@@ -137,7 +137,7 @@
         "hangseng"
       ],
       "status": "retained",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
       "discoveryIssues": [
         "Discovery failed: Publisher returned HTTP 403; browser fallback stopped",
@@ -150,7 +150,7 @@
         "csi300"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -160,7 +160,7 @@
         "sp500"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -170,7 +170,7 @@
         "tsx"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -180,7 +180,7 @@
         "ftse100"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -190,7 +190,7 @@
         "hangseng"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     },
@@ -200,7 +200,7 @@
         "csi300"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null,
       "discoveryIssues": []
     }
@@ -217,27 +217,27 @@
       "adapter": "factset",
       "forwardPE": 18.7,
       "mean10YearForwardPE": 19.1,
-      "dividendYield": 1.09,
-      "asOf": "2026-10-23",
-      "meanAsOf": "2026-10-23",
+      "dividendYield": 1.1,
+      "asOf": "2026-10-30",
+      "meanAsOf": "2026-10-30",
       "meanMethod": "FactSet reported 10-year average; underlying sampling frequency not specified in the article",
       "source": {
         "publisher": "FactSet",
         "checkOwner": "primary:factset",
-        "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+        "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-30T15:39:30Z",
-        "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+        "checkedAt": "2026-10-31T02:26:43Z",
+        "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily",
-        "publicationDate": "2026-10-23",
+        "publicationDate": "2026-10-30",
         "dateBasis": "article-publication-date; metric observation date not separately disclosed"
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -248,20 +248,20 @@
       "meanSource": {
         "publisher": "FactSet",
         "checkOwner": "primary:factset",
-        "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+        "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
         "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
         "page": null,
-        "checkedAt": "2026-10-30T15:39:30Z",
-        "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+        "checkedAt": "2026-10-31T02:26:43Z",
+        "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Weekly research; checked daily",
-        "publicationDate": "2026-10-23",
+        "publicationDate": "2026-10-30",
         "dateBasis": "article-publication-date; metric observation date not separately disclosed"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -275,34 +275,34 @@
         "forecastType": "consensus",
         "periodBasis": "calendar-year",
         "method": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
-        "asOf": "2026-10-23",
+        "asOf": "2026-10-30",
         "estimates": [
           {
             "year": 2026,
-            "growth": 33.1,
+            "growth": 32.9,
             "periodLabel": "2026 annual earnings estimate"
           },
           {
             "year": 2027,
-            "growth": 16.0,
+            "growth": 16.3,
             "periodLabel": "2027 annual earnings estimate"
           }
         ],
         "source": {
           "publisher": "FactSet",
           "checkOwner": "growth:factset",
-          "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_102326.pdf",
+          "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
           "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
-          "page": 14,
-          "sha256": "fcdb208600fd9ab5a270e2e244aa462414bcb262b200c89dac2885428390adf1",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "page": 16,
+          "sha256": "a3baf00b580afc76a4e95bd2699bf70ad2287002b281f603825a40ba46baeb34",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -324,7 +324,7 @@
           "definitionId": "factset:forwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-23",
+          "observationDate": "2026-10-30",
           "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
           "rawReportedLabel": "Forward 12-month P/E ratio",
           "rawReportedValue": 18.7,
@@ -334,23 +334,23 @@
           "evidence": {
             "publisher": "FactSet",
             "publicationHost": "insight.factset.com",
-            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
             "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
             "page": null,
             "location": "bounded paragraph beginning The forward12-month P/E ratio; current and10-year values in the same paragraph",
-            "observationDate": "2026-10-23",
+            "observationDate": "2026-10-30",
             "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
-            "publicationDate": "2026-10-23",
+            "publicationDate": "2026-10-30",
             "priceDate": null,
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
+            "latestAcceptedChange": "2026-10-31T02:26:43Z",
             "parserVersion": "index-fundamentals-2",
-            "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+            "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "FactSet"
@@ -385,7 +385,7 @@
           "definitionId": "factset:mean10YearForwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-23",
+          "observationDate": "2026-10-30",
           "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
           "rawReportedLabel": "10-year average of Forward 12-month P/E ratio",
           "rawReportedValue": 19.1,
@@ -395,23 +395,23 @@
           "evidence": {
             "publisher": "FactSet",
             "publicationHost": "insight.factset.com",
-            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
             "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
             "page": null,
             "location": "bounded paragraph beginning The forward12-month P/E ratio; current and10-year values in the same paragraph",
-            "observationDate": "2026-10-23",
+            "observationDate": "2026-10-30",
             "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
-            "publicationDate": "2026-10-23",
+            "publicationDate": "2026-10-30",
             "priceDate": null,
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
+            "latestAcceptedChange": "2026-10-31T02:26:43Z",
             "parserVersion": "index-fundamentals-2",
-            "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+            "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "FactSet"
@@ -445,7 +445,7 @@
             "windowYears": 10,
             "windowStart": null,
             "windowEnd": null,
-            "referenceDate": "2026-10-23",
+            "referenceDate": "2026-10-30",
             "windowEndpointBasis": "reference date known; precise sampled endpoints not separately disclosed",
             "samplingFrequency": "not disclosed",
             "observationTreatment": "not disclosed",
@@ -458,10 +458,10 @@
           "definitionId": "ssga-index-yield:dividendYield",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-28",
+          "observationDate": "2026-10-29",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "Dividend Yield",
-          "rawReportedValue": 1.09,
+          "rawReportedValue": 1.1,
           "units": "percent",
           "precisionDecimals": 2,
           "classification": "published-dividend-statistic",
@@ -472,19 +472,19 @@
             "discoveryUrl": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
             "page": null,
             "location": "Yields section; Index Dividend Yield, not fund distribution yield or SEC yield",
-            "observationDate": "2026-10-28",
+            "observationDate": "2026-10-29",
             "dateBasis": "explicit-observation-date",
             "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
-            "latestAcceptedChange": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
+            "latestAcceptedChange": "2026-10-31T02:26:43Z",
             "parserVersion": "index-dividend-anchors-1",
-            "sha256": "d7d40f6efc6b9eb4706ad0da80cdbd7ea0a902296829bc45da802c86282b14a4",
+            "sha256": "b724768abd68edef9c702ccb534db06f76dccd7c8a0bd3e009373dfe0970bb4d",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "State Street Investment Management"
@@ -519,18 +519,18 @@
           "definitionId": "factset:growthForecast",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "published-forecast",
-          "observationDate": "2026-10-23",
+          "observationDate": "2026-10-30",
           "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
           "rawReportedLabel": "annual EPS growth forecast",
           "rawReportedValue": [
             {
               "year": 2026,
-              "value": 33.1,
+              "value": 32.9,
               "periodLabel": "2026 annual earnings estimate"
             },
             {
               "year": 2027,
-              "value": 16.0,
+              "value": 16.3,
               "periodLabel": "2027 annual earnings estimate"
             }
           ],
@@ -540,23 +540,23 @@
           "evidence": {
             "publisher": "FactSet",
             "publicationHost": "advantage.factset.com",
-            "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_102326.pdf",
+            "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
             "discoveryUrl": "https://insight.factset.com/topic/earnings/rss.xml",
-            "page": 14,
+            "page": 16,
             "location": "CY annual earnings-growth paragraphs; forecast years explicitly checked",
-            "observationDate": "2026-10-23",
+            "observationDate": "2026-10-30",
             "dateBasis": "publication-date-only; separate price/consensus vintage not disclosed",
-            "publicationDate": "2026-10-23",
+            "publicationDate": "2026-10-30",
             "priceDate": null,
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
+            "latestAcceptedChange": "2026-10-31T02:28:27Z",
             "parserVersion": "annual-growth-1",
-            "sha256": "fcdb208600fd9ab5a270e2e244aa462414bcb262b200c89dac2885428390adf1",
+            "sha256": "a3baf00b580afc76a4e95bd2699bf70ad2287002b281f603825a40ba46baeb34",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "FactSet"
@@ -612,26 +612,26 @@
       },
       "metricRawValues": {
         "forwardPE": 18.7,
-        "dividendYield": 1.09
+        "dividendYield": 1.1
       },
-      "yieldAsOf": "2026-10-28",
+      "yieldAsOf": "2026-10-29",
       "yieldSource": {
         "publisher": "State Street Investment Management",
         "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
         "discoveryUrl": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
-        "sha256": "d7d40f6efc6b9eb4706ad0da80cdbd7ea0a902296829bc45da802c86282b14a4",
+        "sha256": "b724768abd68edef9c702ccb534db06f76dccd7c8a0bd3e009373dfe0970bb4d",
         "parserVersion": "index-dividend-anchors-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
         "location": "Yields section; Index Dividend Yield, not fund distribution yield or SEC yield",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "ssga-index-yield",
         "page": null
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -671,7 +671,7 @@
       },
       "sync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -712,7 +712,7 @@
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -745,15 +745,15 @@
           "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily/2026/latest-07102026.html",
           "discoveryUrl": "https://www.ubs.com/global/en.sitemap.xml",
           "page": null,
-          "sha256": "8ce9d6dd821a4c80dec28d32031394589ec8c16c3c94215079d783b54cd5a0c6",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "sha256": "26086dfd2dd1ee0b61f7ce96f576c3e9905ce551fdd1dc7cc5dd014d4e67f73c",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -796,7 +796,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -857,7 +857,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -930,7 +930,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -1001,12 +1001,12 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
-            "sha256": "8ce9d6dd821a4c80dec28d32031394589ec8c16c3c94215079d783b54cd5a0c6",
+            "sha256": "26086dfd2dd1ee0b61f7ce96f576c3e9905ce551fdd1dc7cc5dd014d4e67f73c",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "UBS Chief Investment Office"
@@ -1066,7 +1066,7 @@
       },
       "yieldSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -1109,7 +1109,7 @@
       },
       "sync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -1150,7 +1150,7 @@
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -1162,7 +1162,7 @@
       },
       "growthSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:40:54Z",
+        "lastAttempt": "2026-10-31T02:28:27Z",
         "lastSuccess": "2026-10-23T06:51:42Z",
         "error": "Publisher robots policy unavailable",
         "ownerId": "growth:firsteagle",
@@ -1199,7 +1199,7 @@
         },
         "sync": {
           "status": "retained",
-          "lastAttempt": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
           "lastSuccess": "2026-10-23T06:51:42Z",
           "error": "Publisher robots policy unavailable",
           "ownerId": "growth:firsteagle",
@@ -1247,7 +1247,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -1308,7 +1308,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -1381,7 +1381,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -1452,7 +1452,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Publisher robots policy unavailable",
-            "lastAttempt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
             "lastSuccess": "2026-10-23T06:51:42Z",
             "checkedAt": "2026-10-23T06:51:42Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -1517,7 +1517,7 @@
       },
       "yieldSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -1551,7 +1551,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "raymond-james-tsx",
         "page": 20,
         "dateBasis": "explicit-observation-date",
@@ -1559,8 +1559,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -1577,13 +1577,13 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "cumberland-tsx",
         "page": 7
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T07:28:55Z",
         "error": "Candidate https://cumberlandprivate.com/wp-content/uploads/2026/10/North-American-Strategy-Review-October-2026.pdf failed: Expected exactly one Cumberland TSX ten-year BF12 mean table; Candidate https://cumberlandprivate.com/wp-content/uplo",
         "metrics": [
@@ -1615,14 +1615,14 @@
           "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
           "page": 6,
           "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -1665,9 +1665,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "12d105564453271a9714439583bb7f8ca498ad9524e7ce579ddb5a3e30fc194b",
@@ -1726,9 +1726,9 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Candidate https://cumberlandprivate.com/wp-content/uploads/2026/10/North-American-Strategy-Review-October-2026.pdf failed: Expected exactly one Cumberland TSX ten-year BF12 mean table; Candidate https://cumberlandprivate.com/wp-content/uplo",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T07:28:55Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "d23ba9b448a801876cd1fe7ecf7f7b1033410bfec3397c1bd3ef76d67c5dfd15",
@@ -1778,7 +1778,7 @@
           "definitionId": "tsx-reported-yield:dividendYield",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-29",
+          "observationDate": "2026-10-30",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "Dividend Yield",
           "rawReportedValue": 2.1,
@@ -1788,23 +1788,23 @@
           "evidence": {
             "publisher": "Carolann Steinhoff / Bloomberg Automation",
             "publicationHost": "carolannsteinhoff.com",
-            "url": "https://carolannsteinhoff.com/october-29-2026newsletter/",
+            "url": "https://carolannsteinhoff.com/october-30-2026newsletter/",
             "discoveryUrl": "https://carolannsteinhoff.com/feed/",
             "page": null,
             "location": "Canada / Bloomberg Automation market-close section; exact S&P/TSX Composite trailing-12-month dividend yield",
-            "observationDate": "2026-10-29",
+            "observationDate": "2026-10-30",
             "dateBasis": "explicit-observation-date",
             "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
-            "latestAcceptedChange": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
+            "latestAcceptedChange": "2026-10-31T02:26:43Z",
             "parserVersion": "index-dividend-anchors-1",
-            "sha256": "5dcfc5a6e7d0ae5fcf48f3ee869833d1d869367ea2cb0fff8147eb90e82feba0",
+            "sha256": "61256e8bfeeaa0571720ed1805da1dbbe85a586afb0af460109bb311ac0c93fb",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Carolann Steinhoff / Bloomberg Automation"
@@ -1871,9 +1871,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
@@ -1934,24 +1934,24 @@
         "forwardPE": 15.6,
         "dividendYield": 2.1
       },
-      "yieldAsOf": "2026-10-29",
+      "yieldAsOf": "2026-10-30",
       "yieldSource": {
         "publisher": "Carolann Steinhoff / Bloomberg Automation",
-        "url": "https://carolannsteinhoff.com/october-29-2026newsletter/",
+        "url": "https://carolannsteinhoff.com/october-30-2026newsletter/",
         "discoveryUrl": "https://carolannsteinhoff.com/feed/",
-        "sha256": "5dcfc5a6e7d0ae5fcf48f3ee869833d1d869367ea2cb0fff8147eb90e82feba0",
+        "sha256": "61256e8bfeeaa0571720ed1805da1dbbe85a586afb0af460109bb311ac0c93fb",
         "parserVersion": "index-dividend-anchors-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
         "location": "Canada / Bloomberg Automation market-close section; exact S&P/TSX Composite trailing-12-month dividend yield",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "tsx-reported-yield",
         "page": null
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -1980,7 +1980,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily",
@@ -1989,8 +1989,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -2005,7 +2005,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-canada-index-cad-net.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -2020,13 +2020,13 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T07:28:55Z",
         "error": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
         "metrics": [
@@ -2063,14 +2063,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -2113,9 +2113,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
@@ -2175,9 +2175,9 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T07:28:55Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "14c554da29efe7508c0436b025a1e87347af52715c32127a857f8cdaf9ce63ec",
@@ -2248,9 +2248,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "683f201a294fa4e12be42e3d92349b9b89f213312cb579e9ffd7a70d9f0111d8",
@@ -2325,9 +2325,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
@@ -2382,8 +2382,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -2423,7 +2423,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 31,
         "dateBasis": "explicit-observation-date",
@@ -2431,8 +2431,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -2446,7 +2446,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -2461,14 +2461,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -2504,14 +2504,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -2554,9 +2554,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -2615,9 +2615,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "03e5d762826cf91c95b7fb3f28d921f5eb055f1f7a7269c24370fa744c5df0fd",
@@ -2688,9 +2688,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
@@ -2765,9 +2765,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
@@ -2831,8 +2831,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -2861,7 +2861,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily",
@@ -2870,8 +2870,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -2886,7 +2886,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -2901,14 +2901,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -2944,14 +2944,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -2994,9 +2994,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
@@ -3056,9 +3056,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "03e5d762826cf91c95b7fb3f28d921f5eb055f1f7a7269c24370fa744c5df0fd",
@@ -3129,9 +3129,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
@@ -3206,9 +3206,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
@@ -3272,8 +3272,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -3303,7 +3303,7 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily",
@@ -3312,8 +3312,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -3328,7 +3328,7 @@
         "url": "https://www.msci.com/documents/10199/4753a237-7f5a-4ef6-9f2b-9f46245402e6",
         "discoveryUrl": "https://www.msci.com/www/fact-sheet/msci-eafe-index/05694439",
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -3343,13 +3343,13 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T07:28:55Z",
         "error": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
         "metrics": [
@@ -3381,14 +3381,14 @@
           "discoveryUrl": "https://www.nbinvestments.ca/perspectives.html",
           "page": 6,
           "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -3431,9 +3431,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
@@ -3493,9 +3493,9 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T07:28:55Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "14c554da29efe7508c0436b025a1e87347af52715c32127a857f8cdaf9ce63ec",
@@ -3566,9 +3566,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "63d4aeb9816095e9c922b6156ce4f437094c89560f759a657f5a266a85d365e2",
@@ -3638,9 +3638,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "4e54ed385ed551638fa64670d8819685a1a4e264997d0e777115000071f03f88",
@@ -3695,8 +3695,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -3736,7 +3736,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 31,
         "dateBasis": "explicit-observation-date",
@@ -3744,8 +3744,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -3759,7 +3759,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-acwi.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -3774,14 +3774,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -3817,14 +3817,14 @@
           "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
           "page": 19,
           "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -3867,9 +3867,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -3928,9 +3928,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "03e5d762826cf91c95b7fb3f28d921f5eb055f1f7a7269c24370fa744c5df0fd",
@@ -4001,9 +4001,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "2fda2470b0b920c3f09d654b4828063c7d3d6dce3bc6c9f42179b5ff3084ccf8",
@@ -4078,9 +4078,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
@@ -4144,8 +4144,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -4176,7 +4176,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 31,
         "dateBasis": "explicit-observation-date",
@@ -4184,8 +4184,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -4199,7 +4199,7 @@
         "url": "https://www.msci.com/documents/10199/a8a34a67-5439-44f1-909a-ba982cb8ca52",
         "discoveryUrl": "https://www.msci.com/www/index-factsheets/msci-europe-index/06272422",
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "9ac90a1c99cad6f0f941bda76e52d7dfb34d3268ee6fe8661818b28a76cd2fbf",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -4214,14 +4214,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "msci-reference",
         "page": 7
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -4257,14 +4257,14 @@
           "discoveryUrl": "https://www.nbc.ca/content/dam/bnc/taux-analyses/analyse-eco/mensuel/monthly-equity-monitor.pdf",
           "page": 3,
           "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -4307,9 +4307,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -4368,9 +4368,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "03e5d762826cf91c95b7fb3f28d921f5eb055f1f7a7269c24370fa744c5df0fd",
@@ -4441,9 +4441,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "9ac90a1c99cad6f0f941bda76e52d7dfb34d3268ee6fe8661818b28a76cd2fbf",
@@ -4518,9 +4518,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "15250064417bc5630041055bd4ee0d942004479a52b2cc65ce294b565b00fa4a",
@@ -4584,8 +4584,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -4614,7 +4614,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily",
@@ -4623,8 +4623,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -4639,7 +4639,7 @@
         "url": "https://www.msci.com/documents/10199/255599/msci-unitedkingdom-index.pdf",
         "discoveryUrl": null,
         "page": 1,
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
         "parserVersion": "index-fundamentals-2",
         "frequency": "Monthly factsheet; checked daily"
@@ -4654,13 +4654,13 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "segal-reference",
         "page": 3
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T07:28:55Z",
         "error": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
         "metrics": [
@@ -4697,14 +4697,14 @@
           "discoveryUrl": "https://www.hartfordfunds.com/insights/market-perspectives/global-macro-analysis/market-view-snapshot.html",
           "page": 19,
           "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -4747,9 +4747,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
@@ -4809,9 +4809,9 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table; Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T07:28:55Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "14c554da29efe7508c0436b025a1e87347af52715c32127a857f8cdaf9ce63ec",
@@ -4882,9 +4882,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-fundamentals-2",
             "sha256": "9b51ae7eb7a6a240ac54799d5c3775295e9977273068679cfb9c9c6c2b9636d1",
@@ -4959,9 +4959,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "072ae3b7dfb181ca0d71039145bd695591c64c72d6316ac0b9b03751ee436c26",
@@ -5016,8 +5016,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -5066,7 +5066,7 @@
       },
       "sync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T20:07:43Z",
         "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
         "metrics": [
@@ -5092,7 +5092,7 @@
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T20:07:43Z",
         "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
         "metrics": [
@@ -5125,14 +5125,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -5175,7 +5175,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T20:07:43Z",
             "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -5236,7 +5236,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T20:07:43Z",
             "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -5309,9 +5309,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-dividend-anchors-1",
             "sha256": "a40c3932d691e7946be216651821d48867883fadac9bed1d1c05868db1efdd6e",
@@ -5381,9 +5381,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
@@ -5454,14 +5454,14 @@
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
         "location": "Month-end factsheet; Index Characteristics; FTSE 100 column; Dividend Yield %",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "ftse-index-yield",
         "page": 3
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -5493,15 +5493,15 @@
         "sha256": "7a39c457ae882999bea171f4843ff74f4445e2215fc5f48cd6aa05b891a7f480",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "lseg-stoxx",
         "dateBasis": "explicit-observation-date",
         "publicationDate": null
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -5520,13 +5520,13 @@
         "sha256": "7a39c457ae882999bea171f4843ff74f4445e2215fc5f48cd6aa05b891a7f480",
         "parserVersion": "lseg-stoxx-printed-labels-1",
         "frequency": "Weekly research; checked daily",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "lseg-stoxx"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -5558,14 +5558,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -5608,9 +5608,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "lseg-stoxx-printed-labels-1",
             "sha256": "7a39c457ae882999bea171f4843ff74f4445e2215fc5f48cd6aa05b891a7f480",
@@ -5669,9 +5669,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "lseg-stoxx-printed-labels-1",
             "sha256": "7a39c457ae882999bea171f4843ff74f4445e2215fc5f48cd6aa05b891a7f480",
@@ -5814,9 +5814,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
@@ -5924,7 +5924,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 31,
         "dateBasis": "explicit-observation-date",
@@ -5932,8 +5932,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -5971,7 +5971,7 @@
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -6004,14 +6004,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 30,
           "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -6054,9 +6054,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -6115,7 +6115,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -6188,7 +6188,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-26T06:24:32Z",
             "checkedAt": "2026-10-26T06:24:32Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -6259,9 +6259,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-30T15:40:54Z",
             "parserVersion": "annual-growth-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -6324,7 +6324,7 @@
       },
       "yieldSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-26T06:24:32Z",
         "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
         "metrics": [
@@ -6357,7 +6357,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "raymond-james-tsx",
         "page": 21,
         "dateBasis": "explicit-observation-date",
@@ -6365,8 +6365,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -6381,17 +6381,17 @@
         "discoveryUrl": "https://www.ig.com/sg/news-and-trade-ideas/Asia-stock-market-outlook-for-2026-251209",
         "page": null,
         "publishedAt": "2025-12-22",
-        "sha256": "fffc1d032388a6b6058bcfa4438c8068a78c67e577d805bee327dc3a40c8917b",
+        "sha256": "45b19c8156a05d35ff7405ebb76e291d2d3048feaf71791e1947023d675ea1ac",
         "parserVersion": "ig-asia-outlook-1",
         "frequency": "Dated research outlook; article revisions checked daily",
         "syncMode": "dated-reference",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "ig-asia-reference"
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -6422,14 +6422,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 14,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -6472,9 +6472,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "12d105564453271a9714439583bb7f8ca498ad9524e7ce579ddb5a3e30fc194b",
@@ -6533,12 +6533,12 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "ig-asia-outlook-1",
-            "sha256": "fffc1d032388a6b6058bcfa4438c8068a78c67e577d805bee327dc3a40c8917b",
+            "sha256": "45b19c8156a05d35ff7405ebb76e291d2d3048feaf71791e1947023d675ea1ac",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "IG research; exact Nikkei valuation vendor not explicitly assigned in this section"
@@ -6678,9 +6678,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
@@ -6788,7 +6788,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37,
         "dateBasis": "explicit-observation-date",
@@ -6796,8 +6796,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -6815,7 +6815,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -6829,14 +6829,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -6869,14 +6869,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -6919,9 +6919,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -6979,9 +6979,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -7052,9 +7052,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -7123,9 +7123,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-30T15:40:54Z",
             "parserVersion": "annual-growth-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -7186,8 +7186,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -7229,7 +7229,7 @@
       },
       "sync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T20:07:43Z",
         "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
         "metrics": [
@@ -7255,7 +7255,7 @@
       },
       "meanSync": {
         "status": "retained",
-        "lastAttempt": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
         "lastSuccess": "2026-10-23T20:07:43Z",
         "error": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
         "metrics": [
@@ -7288,14 +7288,14 @@
           "discoveryUrl": "https://emea.amova-am.com/api/insight/searchandfilter?page=1&pagesize=500&investortype=institutional&country=&lang=en",
           "page": 15,
           "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -7338,7 +7338,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T20:07:43Z",
             "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -7399,7 +7399,7 @@
             "estimateVintage": null,
             "checkStatus": "retained",
             "failureSummary": "Discovery: Publisher returned HTTP 403; browser fallback stopped; Report: Publisher returned HTTP 403; browser fallback stopped; Scheduled-browser verification is overdue (48-hour limit)",
-            "lastAttempt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
             "lastSuccess": "2026-10-23T20:07:43Z",
             "checkedAt": "2026-10-23T20:07:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
@@ -7472,9 +7472,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-dividend-anchors-1",
             "sha256": "873c6c57819ab01378babb44651a8743f22e4bd427dce2049a55b9bb72e2133b",
@@ -7544,9 +7544,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
             "sha256": "f69db7b8b25f72f359ed9b386d43f8f541ade11bacb012caa9d11796ef739dde",
@@ -7617,14 +7617,14 @@
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
         "location": "Month-end factsheet; Index Fundamentals; HSI row; Dividend Yield (%)",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "hsi-index-yield",
         "page": 1
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -7655,7 +7655,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 31,
         "dateBasis": "explicit-observation-date",
@@ -7663,8 +7663,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE"
@@ -7677,19 +7677,19 @@
         "publisher": "CICC Research / Wind",
         "url": "https://www.sohu.com/a/1092734089_120109837",
         "discoveryUrl": "https://www.sohu.com/a/1092734089_120109837",
-        "sha256": "7b27b4069aadcbf8210583c7866e9143458e55e6fd8999e4c0265217c77b685b",
+        "sha256": "34375e9efc37b0777e0c428577057260ed522884e219258b71cde2d8195c58e0",
         "parserVersion": "cicc-valuation-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "dated-reference",
         "publicationDate": "2026-10-26",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "cicc-reference",
         "page": null
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "mean10YearForwardPE"
@@ -7724,8 +7724,8 @@
           "url": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
           "discoveryUrl": "https://fsm.global/sg/article/rcms370440/policy-support-and-valuation-re-rating-signal-it-is-time-to-revisit-ch",
           "page": null,
-          "sha256": "70d2ee3701dad52808518ce768b8232ff8232d3fb33b4d1082a7672b5a0b7524",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "sha256": "0a11eec2af3578397368f6a2efb6e1005e27a0f8459e47256ea5326bffc629c9",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Dated article revision check daily",
           "contentUrl": "https://fsm.global/sg/rest/article/get-rcms-article-details?paramArticleId=370440&paramPlatformId=SGFSM",
@@ -7733,8 +7733,8 @@
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -7777,9 +7777,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -7837,12 +7837,12 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "cicc-valuation-1",
-            "sha256": "7b27b4069aadcbf8210583c7866e9143458e55e6fd8999e4c0265217c77b685b",
+            "sha256": "34375e9efc37b0777e0c428577057260ed522884e219258b71cde2d8195c58e0",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Wind / CICC Research"
@@ -7910,9 +7910,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "index-dividend-anchors-1",
             "sha256": "352b19f410b28004ee61b39e51b13d4ba28861849d52b15abce5a19154adf75e",
@@ -7987,12 +7987,12 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-26T11:03:14Z",
             "parserVersion": "annual-growth-1",
-            "sha256": "70d2ee3701dad52808518ce768b8232ff8232d3fb33b4d1082a7672b5a0b7524",
+            "sha256": "0a11eec2af3578397368f6a2efb6e1005e27a0f8459e47256ea5326bffc629c9",
             "transport": "publisher-http",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "FSM Global / iFAST Financial Research; underlying iFinD"
@@ -8061,14 +8061,14 @@
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-report",
         "location": "Month-end factsheet; Fundamental table; Yield row; exact CSI 300 / 000300",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "csi-index-yield",
         "page": 1
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "dividendYield"
@@ -8099,7 +8099,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37,
         "dateBasis": "explicit-observation-date",
@@ -8107,8 +8107,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8126,7 +8126,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -8140,14 +8140,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8180,14 +8180,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -8230,9 +8230,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8290,9 +8290,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8363,9 +8363,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8434,9 +8434,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-30T15:40:54Z",
             "parserVersion": "annual-growth-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8497,8 +8497,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8531,7 +8531,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37,
         "dateBasis": "explicit-observation-date",
@@ -8539,8 +8539,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8558,7 +8558,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -8572,14 +8572,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8612,14 +8612,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -8662,9 +8662,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8722,9 +8722,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8795,9 +8795,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8866,9 +8866,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-30T15:40:54Z",
             "parserVersion": "annual-growth-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -8929,8 +8929,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8963,7 +8963,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37,
         "dateBasis": "explicit-observation-date",
@@ -8971,8 +8971,8 @@
       },
       "sync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -8990,7 +8990,7 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
@@ -9004,14 +9004,14 @@
         "parserVersion": "supplemental-sources-1",
         "frequency": "Publisher research; checked daily",
         "syncMode": "rolling-document",
-        "checkedAt": "2026-10-30T15:39:30Z",
+        "checkedAt": "2026-10-31T02:26:43Z",
         "adapterId": "jpm-daily",
         "page": 37
       },
       "meanSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -9044,14 +9044,14 @@
           "discoveryUrl": "https://am.jpmorgan.com/content/dam/jpm-am-aem/asiapacific/regional/en/insights/market-insights/daily-guide-updated.pdf",
           "page": 37,
           "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
-          "checkedAt": "2026-10-30T15:40:54Z",
+          "checkedAt": "2026-10-31T02:28:27Z",
           "parserVersion": "annual-growth-1",
           "frequency": "Latest public publication checked daily"
         },
         "sync": {
           "status": "ok",
-          "lastAttempt": "2026-10-30T15:40:54Z",
-          "lastSuccess": "2026-10-30T15:40:54Z",
+          "lastAttempt": "2026-10-31T02:28:27Z",
+          "lastSuccess": "2026-10-31T02:28:27Z",
           "error": null
         }
       },
@@ -9094,9 +9094,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -9154,9 +9154,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -9227,9 +9227,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:39:30Z",
-            "lastSuccess": "2026-10-30T15:39:30Z",
-            "checkedAt": "2026-10-30T15:39:30Z",
+            "lastAttempt": "2026-10-31T02:26:43Z",
+            "lastSuccess": "2026-10-31T02:26:43Z",
+            "checkedAt": "2026-10-31T02:26:43Z",
             "latestAcceptedChange": "2026-10-30T15:39:30Z",
             "parserVersion": "supplemental-sources-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -9298,9 +9298,9 @@
             "estimateVintage": null,
             "checkStatus": "ok",
             "failureSummary": null,
-            "lastAttempt": "2026-10-30T15:40:54Z",
-            "lastSuccess": "2026-10-30T15:40:54Z",
-            "checkedAt": "2026-10-30T15:40:54Z",
+            "lastAttempt": "2026-10-31T02:28:27Z",
+            "lastSuccess": "2026-10-31T02:28:27Z",
+            "checkedAt": "2026-10-31T02:28:27Z",
             "latestAcceptedChange": "2026-10-30T15:40:54Z",
             "parserVersion": "annual-growth-1",
             "sha256": "6f2f02ad9518b35aefa3dd037389901b7e0ca0af287ca467ee2a36f281dc8cca",
@@ -9361,8 +9361,8 @@
       },
       "yieldSync": {
         "status": "ok",
-        "lastAttempt": "2026-10-30T15:39:30Z",
-        "lastSuccess": "2026-10-30T15:39:30Z",
+        "lastAttempt": "2026-10-31T02:26:43Z",
+        "lastSuccess": "2026-10-31T02:26:43Z",
         "error": null,
         "metrics": [
           "forwardPE",
@@ -9373,10 +9373,10 @@
       }
     }
   ],
-  "growthCheckAt": "2026-10-30T15:40:54Z",
+  "growthCheckAt": "2026-10-31T02:28:27Z",
   "growthRefresh": {
     "parserVersion": "annual-growth-1",
-    "checkedAt": "2026-10-30T15:40:54Z",
+    "checkedAt": "2026-10-31T02:28:27Z",
     "successfulIndices": [
       "sp500",
       "nasdaq100",
@@ -9408,8 +9408,8 @@
   },
   "definitionRegistryVersion": "source-definitions-2026-10-26.1",
   "modelConventionVersion": "tickerlantern-annual-forward-anchor-v2",
-  "snapshotId": "3a17cda3721d68e32dcee9ef30a9c68a04229247232d7b3d72222bd6ae61825f",
-  "snapshotVersion": 10,
+  "snapshotId": "947b5b0f41622db81824f75c8fcfbac26e17ad0ebf6811cc32d5052f3c2901bf",
+  "snapshotVersion": 12,
   "changeHistory": [
     {
       "snapshotId": "0f351cbc35c8c9f5927c30263efbb5ffdab58fc2e9564761ff3b88a46d1dd07d",
@@ -40213,13 +40213,476 @@
           "reason": "growth-publisher-refresh"
         }
       ]
+    },
+    {
+      "snapshotId": "9da089520afb8f0b54a9c583fc9f8e6b1ca2e1ca5f5314e7b25451d3a8e78b35",
+      "snapshotVersion": 11,
+      "acceptedAt": "2026-10-31T02:26:43Z",
+      "reason": "valuation-publisher-refresh",
+      "changes": [
+        {
+          "benchmark": "sp500",
+          "metric": "forwardPE",
+          "old": {
+            "value": 18.7,
+            "observationDate": "2026-10-23",
+            "method": null,
+            "definitionId": "factset:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "analyst-consensus forecast earnings; adjusted/reported treatment not established by the cited paragraph",
+              "aggregation": "same published index forward-P/E series; constituent aggregation not disclosed in the article",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026"
+          },
+          "new": {
+            "value": 18.7,
+            "observationDate": "2026-10-30",
+            "method": null,
+            "definitionId": "factset:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "analyst-consensus forecast earnings; adjusted/reported treatment not established by the cited paragraph",
+              "aggregation": "same published index forward-P/E series; constituent aggregation not disclosed in the article",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "FactSet",
+              "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+              "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+              "parserVersion": "index-fundamentals-2",
+              "checkedAt": "2026-10-30T15:39:30Z",
+              "publicationDate": "2026-10-23",
+              "dateBasis": "article-publication-date; metric observation date not separately disclosed"
+            },
+            "newSource": {
+              "publisher": "FactSet",
+              "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
+              "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
+              "parserVersion": "index-fundamentals-2",
+              "checkedAt": "2026-10-31T02:26:43Z",
+              "publicationDate": "2026-10-30",
+              "dateBasis": "article-publication-date; metric observation date not separately disclosed"
+            }
+          },
+          "reason": "valuation-publisher-refresh"
+        },
+        {
+          "benchmark": "sp500",
+          "metric": "mean10YearForwardPE",
+          "old": {
+            "value": 19.1,
+            "observationDate": "2026-10-23",
+            "method": "FactSet reported 10-year average; underlying sampling frequency not specified in the article",
+            "definitionId": "factset:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "analyst-consensus forecast earnings; adjusted/reported treatment not established by the cited paragraph",
+              "aggregation": "same published index forward-P/E series; constituent aggregation not disclosed in the article",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026"
+          },
+          "new": {
+            "value": 19.1,
+            "observationDate": "2026-10-30",
+            "method": "FactSet reported 10-year average; underlying sampling frequency not specified in the article",
+            "definitionId": "factset:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "analyst-consensus forecast earnings; adjusted/reported treatment not established by the cited paragraph",
+              "aggregation": "same published index forward-P/E series; constituent aggregation not disclosed in the article",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "FactSet",
+              "url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026",
+              "sha256": "d9fcf37d9f638dacfcbbbbbae7e3b7dc2a0104efa7db60115460bbe55035bb91",
+              "parserVersion": "index-fundamentals-2",
+              "checkedAt": "2026-10-30T15:39:30Z",
+              "publicationDate": "2026-10-23",
+              "dateBasis": "article-publication-date; metric observation date not separately disclosed"
+            },
+            "newSource": {
+              "publisher": "FactSet",
+              "url": "https://insight.factset.com/sp-500-earnings-season-update-october-30-2026",
+              "sha256": "00a35c10c7eaad987a7e5f0fe87f551e92c1d063861b69627d63a1ae47fc0033",
+              "parserVersion": "index-fundamentals-2",
+              "checkedAt": "2026-10-31T02:26:43Z",
+              "publicationDate": "2026-10-30",
+              "dateBasis": "article-publication-date; metric observation date not separately disclosed"
+            }
+          },
+          "reason": "valuation-publisher-refresh"
+        },
+        {
+          "benchmark": "sp500",
+          "metric": "dividendYield",
+          "old": {
+            "value": 1.09,
+            "observationDate": "2026-10-28",
+            "method": null,
+            "definitionId": "ssga-index-yield:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+              "taxTreatment": "indicated annual yield; gross/net withholding not separately specified",
+              "horizon": "published dividend anchor; construction as recorded",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "State Street Investment Management",
+            "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy"
+          },
+          "new": {
+            "value": 1.1,
+            "observationDate": "2026-10-29",
+            "method": null,
+            "definitionId": "ssga-index-yield:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "weighted average indicated annual dividends divided by price for the S&P 500 benchmark; not the SPY fund distribution yield",
+              "taxTreatment": "indicated annual yield; gross/net withholding not separately specified",
+              "horizon": "published dividend anchor; construction as recorded",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "State Street Investment Management",
+            "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "State Street Investment Management",
+              "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
+              "sha256": "d7d40f6efc6b9eb4706ad0da80cdbd7ea0a902296829bc45da802c86282b14a4",
+              "parserVersion": "index-dividend-anchors-1",
+              "checkedAt": "2026-10-30T15:39:30Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "State Street Investment Management",
+              "url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy",
+              "sha256": "b724768abd68edef9c702ccb534db06f76dccd7c8a0bd3e009373dfe0970bb4d",
+              "parserVersion": "index-dividend-anchors-1",
+              "checkedAt": "2026-10-31T02:26:43Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "valuation-publisher-refresh"
+        },
+        {
+          "benchmark": "tsx",
+          "metric": "dividendYield",
+          "old": {
+            "value": 2.1,
+            "observationDate": "2026-10-29",
+            "method": null,
+            "definitionId": "tsx-reported-yield:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+              "taxTreatment": "gross/net not separately disclosed",
+              "horizon": "published dividend anchor; construction as recorded",
+              "identity": "tsx",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Carolann Steinhoff / Bloomberg Automation",
+            "url": "https://carolannsteinhoff.com/october-29-2026newsletter/"
+          },
+          "new": {
+            "value": 2.1,
+            "observationDate": "2026-10-30",
+            "method": null,
+            "definitionId": "tsx-reported-yield:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "trailing 12-month dividend yield of the exact S&P/TSX Composite as reported in the dated Bloomberg market-close text",
+              "taxTreatment": "gross/net not separately disclosed",
+              "horizon": "published dividend anchor; construction as recorded",
+              "identity": "tsx",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Carolann Steinhoff / Bloomberg Automation",
+            "url": "https://carolannsteinhoff.com/october-30-2026newsletter/"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Carolann Steinhoff / Bloomberg Automation",
+              "url": "https://carolannsteinhoff.com/october-29-2026newsletter/",
+              "sha256": "5dcfc5a6e7d0ae5fcf48f3ee869833d1d869367ea2cb0fff8147eb90e82feba0",
+              "parserVersion": "index-dividend-anchors-1",
+              "checkedAt": "2026-10-30T15:39:30Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Carolann Steinhoff / Bloomberg Automation",
+              "url": "https://carolannsteinhoff.com/october-30-2026newsletter/",
+              "sha256": "61256e8bfeeaa0571720ed1805da1dbbe85a586afb0af460109bb311ac0c93fb",
+              "parserVersion": "index-dividend-anchors-1",
+              "checkedAt": "2026-10-31T02:26:43Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "valuation-publisher-refresh"
+        }
+      ]
+    },
+    {
+      "snapshotId": "947b5b0f41622db81824f75c8fcfbac26e17ad0ebf6811cc32d5052f3c2901bf",
+      "snapshotVersion": 12,
+      "acceptedAt": "2026-10-31T02:28:27Z",
+      "reason": "growth-publisher-refresh",
+      "changes": [
+        {
+          "benchmark": "sp500",
+          "metric": "growthForecast",
+          "old": {
+            "asOf": "2026-10-23",
+            "periodBasis": "calendar-year",
+            "forecastType": "consensus",
+            "epsBasis": null,
+            "method": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
+            "estimates": [
+              {
+                "year": 2026,
+                "growth": 33.1,
+                "periodLabel": "2026 annual earnings estimate"
+              },
+              {
+                "year": 2027,
+                "growth": 16.0,
+                "periodLabel": "2027 annual earnings estimate"
+              }
+            ],
+            "horizonNote": null,
+            "definitionId": "factset:growthForecast",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "published-forecast",
+            "economicDefinition": {
+              "earningsBasis": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
+              "aggregation": "not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "calendar-year",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "approximate-scenario-growth"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_102326.pdf"
+          },
+          "new": {
+            "asOf": "2026-10-30",
+            "periodBasis": "calendar-year",
+            "forecastType": "consensus",
+            "epsBasis": null,
+            "method": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
+            "estimates": [
+              {
+                "year": 2026,
+                "growth": 32.9,
+                "periodLabel": "2026 annual earnings estimate"
+              },
+              {
+                "year": 2027,
+                "growth": 16.3,
+                "periodLabel": "2027 annual earnings estimate"
+              }
+            ],
+            "horizonNote": null,
+            "definitionId": "factset:growthForecast",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "published-forecast",
+            "economicDefinition": {
+              "earningsBasis": "FactSet bottom-up S&P 500 index annual earnings-growth estimates, explicitly labelled CY. Calendar-year growth is a scenario input alongside separately dated forward-12-month P/E.",
+              "aggregation": "not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "calendar-year",
+              "identity": "sp500",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "approximate-scenario-growth"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "FactSet",
+            "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "FactSet",
+              "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_102326.pdf",
+              "sha256": "fcdb208600fd9ab5a270e2e244aa462414bcb262b200c89dac2885428390adf1",
+              "parserVersion": "annual-growth-1",
+              "checkedAt": "2026-10-30T15:40:54Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "FactSet",
+              "url": "https://advantage.factset.com/hubfs/Website/Resources%20Section/Research%20Desk/Earnings%20Insight/EarningsInsight_103026.pdf",
+              "sha256": "a3baf00b580afc76a4e95bd2699bf70ad2287002b281f603825a40ba46baeb34",
+              "parserVersion": "annual-growth-1",
+              "checkedAt": "2026-10-31T02:28:27Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "growth-publisher-refresh"
+        }
+      ]
     }
   ],
   "pipelineRun": {
-    "event": "workflow_dispatch",
-    "runId": "41082625682",
-    "url": "https://github.com/rickyinbc-tech/est.tickerlantern.com/actions/runs/41082625682",
-    "checkedAt": "2026-10-30T15:40:54Z"
+    "event": "schedule",
+    "runId": "41159985624",
+    "url": "https://github.com/rickyinbc-tech/est.tickerlantern.com/actions/runs/41159985624",
+    "checkedAt": "2026-10-31T02:28:27Z"
   },
   "statusMetadataRepair": {
     "appliedAt": "2026-10-23T10:22:07Z",
@@ -40247,7 +40710,7 @@
         "sp500"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40258,7 +40721,7 @@
         "em"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40267,7 +40730,7 @@
         "msci-canada"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40276,7 +40739,7 @@
         "eafe"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40285,7 +40748,7 @@
         "europe"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40294,7 +40757,7 @@
         "uk"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40303,7 +40766,7 @@
         "japan"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40312,7 +40775,7 @@
         "china"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40321,7 +40784,7 @@
         "india"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40330,7 +40793,7 @@
         "asia-ex-japan"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     },
     {
@@ -40339,8 +40802,9 @@
         "australia"
       ],
       "status": "ok",
-      "checkedAt": "2026-10-30T15:39:30Z",
+      "checkedAt": "2026-10-31T02:26:43Z",
       "error": null
     }
-  ]
+  ],
+  "lastScheduledCheckAt": "2026-10-31T02:28:27Z"
 }

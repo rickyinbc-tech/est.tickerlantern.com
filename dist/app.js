@@ -52,6 +52,7 @@ function rememberScenario() {
 function renderGrowthEditor() {
   $('years').value = HOLDING_YEARS;
   const sourced = $('growthMode').value === 'source', annual = $('growthMode').value !== 'constant', years = HOLDING_YEARS;
+  $('growth-precision-note').hidden = !sourced || !sourceFollowing;
   const path = fiveYearGrowthPath(selectedIndex(), new Date(), growthOverrides);
   $('annual-growth-panel').hidden = !annual;
   const forecast = selectedIndex()?.growthForecast;
@@ -80,7 +81,13 @@ function renderGrowthEditor() {
     const point = path.points[i];
     const custom = sourced && Object.hasOwn(growthOverrides,growthStartYear+i);
     input.closest('.annual-growth-field').querySelector('label').textContent = sourced ? `Year ${i+1}${!sourceFollowing ? ' · saved assumption' : custom ? ' · your assumption' : point.basis==='calendar-to-forward model' ? ' · timing model' : ' · long-term projection'}` : `Year ${i + 1} EPS growth`;
-    if (input !== document.activeElement || sourced && !custom) input.value = annualGrowth[i];
+    if (input !== document.activeElement || sourced && !custom) {
+      // Format derived rates for legibility without changing the model's stored
+      // precision or a reader's own entered assumptions.
+      const value = annualGrowth[i];
+      input.value = sourced && sourceFollowing && !custom && typeof value === 'number' && Number.isFinite(value)
+        ? String(Number(value.toFixed(4))) : value;
+    }
   }
 }
 

@@ -132,6 +132,27 @@ function canonical(html, zhPath) {
 }
 
 function zhDocument(html, enPath, zhPath, fallback, dict) {
+  // The translated homepage is maintained separately from the English build.
+  // Match its preview to the English homepage while keeping the library intact.
+  if (enPath === '/' && !fallback) {
+    const original = html;
+    html = html.replace(/(<section\b[^>]*\bid="research-library"[^>]*>[\s\S]*?<div class="valuation-columns">)([\s\S]*?)(<\/div><\/section>)/, (match, start, cards, end) => {
+      const articles = cards.match(/<article>[\s\S]*?<\/article>/g);
+      if (!articles || articles.length < 6) throw new Error('Chinese homepage research preview is missing its guide cards');
+      return start + articles.slice(0, 6).join('') + end;
+    });
+    if (html === original) throw new Error('Chinese homepage research section was not found');
+  }
+  if (enPath === '/research/' && !fallback) {
+    const original = html;
+    html = html.replace(/(<section\b[^>]*\bid="planning-guides"[^>]*>)([\s\S]*?)(<\/section>)/, (match, start, content, end) => {
+      const cards = [...content.matchAll(/<article class="planning-topic">[\s\S]*?<\/article>/g)];
+      if (cards.length <= 12) throw new Error('Chinese planning library is missing its guide cards');
+      const remaining = cards[12].index;
+      return start + content.slice(0, remaining) + '<details class="planning-more"><summary>查看更多财务规划指南</summary>' + content.slice(remaining) + '</details>' + end;
+    });
+    if (html === original) throw new Error('Chinese planning library was not found');
+  }
   if (!html.includes('lang="zh-Hans"')) html = html.replace(/<html lang="en"/, `<html lang="zh-Hans" data-zh-dict="/zh-locales/${dict}.json"${fallback ? ' data-zh-fallback="true"' : ''}`);
   html = canonical(html, zhPath);
   html = rewriteInternal(html);

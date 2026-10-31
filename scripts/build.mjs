@@ -18,7 +18,9 @@ let html = await readFile('src/index.html', 'utf8');
 html = html.replace('{{INDEX_EXPLORER}}', await readFile('src/index-explorer.html', 'utf8'));
 const feed = validateFeed(JSON.parse(await readFile('data/indices.json', 'utf8')));
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-html = html.replace('{{RESEARCH_GUIDES}}', planningGuides.map(guide => `<article><h3><a href="/research/${guide.slug}">${esc(guide.title)}</a></h3><p>${esc(guide.description)}</p></article>`).join(''));
+// The full catalogue lives in /research/ and search. Keep the homepage a
+// manageable preview so the methodology and footer remain easy to reach.
+html = html.replace('{{RESEARCH_GUIDES}}', planningGuides.slice(0, 6).map(guide => `<article><h3><a href="/research/${guide.slug}">${esc(guide.title)}</a></h3><p>${esc(guide.description)}</p></article>`).join(''));
 html = html.replaceAll('{{PLANNING_GUIDE_COUNT}}',planningGuides.length).replaceAll('{{PLANNING_CHART_COUNT}}',planningChartCount);
 const metric = value => value == null ? '—' : value.toFixed(2) + '×';
 const dated = value => value ? new Date(value).toLocaleDateString('en-GB', { timeZone: value.includes('T') ? 'America/Vancouver' : 'UTC', day:'numeric', month:'short', year:'numeric' }) : 'Not connected';

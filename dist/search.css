@@ -8,3 +8,4 @@
 @media print{.home-search,.search-controls,.search-form,.search-more,.search-footer{display:none}}
 
 .search-has-query .search-main{margin-top:30px}.search-has-query .search-opening h1{font-size:32px;line-height:1.2;letter-spacing:-.5px;margin:16px 0 24px}.search-has-query .search-opening h1 br{display:none}.search-has-query .search-opening>p{display:none}
+@media(max-width:760px){.tl-header__inner{flex-wrap:nowrap;gap:8px}.tl-header .tl-search-link span{display:none}.tl-header .tl-menu summary{padding-left:10px;padding-right:10px}}

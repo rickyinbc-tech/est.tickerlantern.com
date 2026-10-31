@@ -1,4 +1,5 @@
 import { nextForecastYear } from './growth-data.js';
+import { metricHealth } from './update-status.js';
 
 export const HOLDING_YEARS = 5;
 export const GROWTH_POLICY = Object.freeze({
@@ -89,7 +90,13 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
   const forecast=row?.growthForecast,allowed=row?.metricDefinitions?.growthForecast?.permittedUse;
   const estimates=new Map((forecast?.estimates || []).map(p=>[p.year,p]));
   const forwardHorizon=row?.metricDefinitions?.forwardPE?.economic?.horizon;
-  const bridgeEligible=!!(recorded && ['calendar-year','publisher-year'].includes(forecast?.periodBasis)
+  // Vintage check against the paired valuation date (not the wall clock, so a snapshot's
+  // scenario stays deterministic): a forecast older than its own source window at the
+  // valuation date, or superseded / under definition review, stays visible as a dated
+  // reference but no longer seeds the default scenario.
+  const growthHealth=forecast?.estimates?.length && recorded ? metricHealth(row,'growthForecast',new Date(recorded+'T00:00:00Z')) : null;
+  const forecastExpired=!!(growthHealth && (growthHealth.observationStale || growthHealth.superseded || growthHealth.definitionReview));
+  const bridgeEligible=!!(recorded && !forecastExpired && ['calendar-year','publisher-year'].includes(forecast?.periodBasis)
     && ['rolling-12m','forward-unspecified'].includes(forwardHorizon)
     && allowed?.includes('approximate-scenario-growth')
     && Array.from({length:6},(_,i)=>startYear+i).some(year=>estimates.has(year)));
@@ -127,9 +134,10 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
   });
   const mappingReason=bridgeError ? `${bridgeError} No affected return is calculated.` : bridge
     ? `${bridgeQuality==='explicit-calendar-ntm'?'Explicit calendar-year estimates':'Annual source estimates under disclosed period assumptions'} inform a uniform-accrual NTM timing model. Entry forward earnings already include much of next calendar year; six calendar inputs produce five annual transitions. Missing calendar years use the sourced long-term EPS proxy. ${bridgeAssumptions.slice(1).join(' ')}`
+    : forecastExpired && longTerm ? `The published ${forecast.asOf} estimates ${[growthHealth.observationStale ? `were older than their source cadence allows at the ${recorded} valuation date` : null, growthHealth.superseded ? 'are marked superseded' : null, growthHealth.definitionReview ? 'require definition review' : null].filter(Boolean).join(' and ')} and remain visible as a dated reference only; the default uses a ${longTerm.growth}% derived long-term EPS scenario based on Invesco’s ${longTerm.benchmark} proxy.`
     : longTerm ? `Published estimates remain visible with their original periods. Their growth measurement interval cannot support an annual bridge; the default uses a ${longTerm.growth}% derived long-term EPS scenario based on Invesco’s ${longTerm.benchmark} proxy.`
     : 'No sourced long-term EPS projection is connected for this benchmark.';
   return {startYear,coveredYears:calendarInputs.filter(p=>p.published).length,rates:points.map(p=>p.growth),points,
     anchor,longTerm,bridge:!!bridge,bridgeQuality,bridgeAssumptions,bridgeError,calendarInputs,elapsedFraction,sourceLinked:!!longTerm,scenarioDate:recorded,
-    mappingReason,missingYears:points.filter(p=>p.growth==='').map(p=>p.year)};
+    forecastExpired,mappingReason,missingYears:points.filter(p=>p.growth==='').map(p=>p.year)};
 }

@@ -8,10 +8,13 @@ import {DEFAULTS,project,annualCSV} from '../src/model.js';
 const now=new Date('2026-10-23T12:00:00Z');
 const feed=JSON.parse(readFileSync(new URL('../data/indices.json',import.meta.url)));
 const row=id=>feed.indices.find(r=>r.id===id);
+// Independent freshness rule: a forecast older than its declared observation window at the paired valuation date
+// is a dated reference only and must not seed the default scenario.
+const expired=r=>{const max=r.metricDefinitions?.growthForecast?.freshnessPolicy?.observationMaxAgeDays;return Number.isFinite(max)&&(Date.parse(r.asOf+'T00:00:00Z')-Date.parse(r.growthForecast.asOf+'T00:00:00Z'))/86400000>max;};
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 const expected=Object.fromEntries(feed.indices.map(r=>{
  const lt=longTermGrowth(r.id).growth;
- if(r.growthForecast.periodBasis==='forecast-horizon')return [r.id,Array(5).fill(lt)];
+ if(r.growthForecast.periodBasis==='forecast-horizon'||expired(r))return [r.id,Array(5).fill(lt)];
  // Independent endpoint construction: NTM earnings at every valuation date
  // are the two adjacent calendar EPS levels weighted by the remaining year.
  const y=+r.asOf.slice(0,4),elapsed=(Date.parse(r.asOf)-Date.UTC(y,0,1))/(Date.UTC(y+1,0,1)-Date.UTC(y,0,1));
@@ -27,7 +30,7 @@ test('all 21 indices use period-aware forward transitions or sourced long-term s
  assert.equal(feed.indices.length,21);assert.equal(Object.keys(GROWTH_ANCHORS).length,21);
  for(const r of feed.indices){
   const before=structuredClone(r.growthForecast),p=fiveYearGrowthPath(r,now),a=baselineAssessment(r,now);
-  closeRates(p.rates,expected[r.id]);assert.equal(p.sourceLinked,true);assert.equal(p.bridge,r.growthForecast.periodBasis!=='forecast-horizon');
+  closeRates(p.rates,expected[r.id]);assert.equal(p.sourceLinked,true);assert.equal(p.bridge,r.growthForecast.periodBasis!=='forecast-horizon'&&!expired(r));assert.equal(p.forecastExpired,expired(r));
   assert.equal(p.scenarioDate,r.asOf);assert.equal(p.startYear,+r.asOf.slice(0,4)+1);assert.deepEqual(p.missingYears,[]);
   assert.equal(p.points.length,5);assert.ok(p.points.every(x=>x.policyVersion===GROWTH_POLICY.version));
   assert.deepEqual(r.growthForecast,before);
@@ -129,4 +132,36 @@ test('five-year worked example independently reconciles annual cash-flow timing'
 test('calendar bridge utility still spans five forward transitions',()=>{
  const calendar=[10,20,-5,7,4,3];assert.equal(calendarToForwardRates(calendar,.4).rates.length,5);assert.deepEqual(calendarToForwardRates(calendar,0).rates.map(x=>+x.toFixed(10)),calendar.slice(0,5));
  for(const invalid of [[],Array(5).fill(6),[6,6,6,6,6,-100]])assert.throws(()=>calendarToForwardRates(invalid,.4));
+});
+
+test('an expired published forecast stays a dated reference and falls back to the long-term scenario',()=>{
+ const base=row('csi300'),lt=longTermGrowth('csi300').growth;
+ const fresh=structuredClone(base);fresh.growthForecast.asOf='2026-10-01';
+ const freshPath=fiveYearGrowthPath(fresh,now);assert.equal(freshPath.forecastExpired,false);assert.equal(freshPath.bridge,true);
+ const stale=structuredClone(base);stale.growthForecast.asOf='2026-05-14';
+ const before=structuredClone(stale.growthForecast),p=fiveYearGrowthPath(stale,now);
+ assert.equal(p.forecastExpired,true);assert.equal(p.bridge,false);
+ assert.deepEqual(p.rates,Array(5).fill(lt));assert.ok(p.points.every(x=>x.basis==='long-term EPS projection'));
+ assert.match(p.mappingReason,/2026-05-14 estimates were older than their source cadence allows at the 2026-10-29 valuation date/);
+ assert.equal(fiveYearGrowthPath(stale,new Date('2030-01-10')).forecastExpired,true);
+ assert.deepEqual(stale.growthForecast,before);
+ // Reader overrides remain protected even when the source forecast has expired.
+ assert.equal(fiveYearGrowthPath(stale,now,{2027:9}).points[0].growth,9);
+});
+
+test('forecast disqualification explains supersession and definition review accurately',()=>{
+ const superseded=structuredClone(row('csi300'));
+ superseded.growthForecast.asOf='2026-10-01';
+ superseded.growthForecast.sync={status:'superseded'};
+ const supersededPath=fiveYearGrowthPath(superseded,now);
+ assert.equal(supersededPath.bridge,false);
+ assert.match(supersededPath.mappingReason,/marked superseded/);
+ assert.doesNotMatch(supersededPath.mappingReason,/older than their source cadence/);
+ const review=structuredClone(row('csi300'));
+ review.growthForecast.asOf='2026-10-01';
+ review.metricDefinitions.growthForecast.evidenceStatus='definition-review-required';
+ const reviewPath=fiveYearGrowthPath(review,now);
+ assert.equal(reviewPath.bridge,false);
+ assert.match(reviewPath.mappingReason,/require definition review/);
+ assert.doesNotMatch(reviewPath.mappingReason,/older than their source cadence/);
 });

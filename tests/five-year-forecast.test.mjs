@@ -142,7 +142,7 @@ test('an expired published forecast stays a dated reference and falls back to th
  const before=structuredClone(stale.growthForecast),p=fiveYearGrowthPath(stale,now);
  assert.equal(p.forecastExpired,true);assert.equal(p.bridge,false);
  assert.deepEqual(p.rates,Array(5).fill(lt));assert.ok(p.points.every(x=>x.basis==='long-term EPS projection'));
- assert.match(p.mappingReason,/2026-05-14 estimates were older than their source cadence allows at the 2026-10-29 valuation date/);
+ assert.ok(p.mappingReason.includes(`2026-05-14 estimates were older than their source cadence allows at the ${base.asOf} valuation date`),p.mappingReason);
  assert.equal(fiveYearGrowthPath(stale,new Date('2030-01-10')).forecastExpired,true);
  assert.deepEqual(stale.growthForecast,before);
  // Reader overrides remain protected even when the source forecast has expired.

@@ -2,9 +2,14 @@
 
 Audited 23 October 2026 · `tickerlantern-forward-timing-v2`.
 
-[Numbers audit 26 Oct](docs/numbers-audit-2026-10-26.md) · [Full audit](docs/full-model-audit-2026-10-23.md) · [Five-year timing and all anchors](docs/five-year-forecast-policy.md) · [Dividend policy](docs/dividend-policy.md).
+[Numbers audit 26 Oct](docs/numbers-audit-2026-10-26.md) · [Full audit](docs/full-model-audit-2026-10-23.md) · [Ten-year timing and all anchors](docs/five-year-forecast-policy.md) · [Dividend policy](docs/dividend-policy.md).
 
-The website compares 21 exact benchmarks and always models five holding years. It supports conditional scenario exploration, not an underwritten point forecast or a uniform return ranking. Source observations retain their dates, definitions and freshness warnings.
+The website compares 21 exact benchmarks and always models ten holding years. It supports conditional scenario exploration, not an underwritten point forecast or a uniform return ranking. Source observations retain their dates, definitions and freshness warnings.
+
+
+## Ten-year holding period (8 November 2026)
+
+The index workbench, the 21-benchmark comparison, the sensitivity grid, the fixed teaching example and both CSV exports now use a ten-year holding period (policy `tickerlantern-forward-bridge-long-term-ten-year-v7`). Eleven calendar inputs feed ten NTM transitions. Long-term EPS proxies use Invesco's 2026 CMA Q3 update (estimates as of 30 June 2026), whose 10-year horizon matches the holding period. Saved browser scenarios migrate automatically; custom yearly paths keep every edited year and fill added years with the custom constant rate. See [docs/five-year-forecast-policy.md](docs/five-year-forecast-policy.md) (file name retained for existing links).
 
 ## Run and verify
 
@@ -440,7 +445,7 @@ Tests cover all benchmark defaults, protected custom inputs, source changes, leg
 
 `src/model.js` owns the synthetic annual price, distribution, cash-flow IRR and reinvestment arithmetic. Starting wealth is 100; synthetic initial forward earnings are `100 / entry PE`. Exactly five annual factors reach terminal earnings. Dividends use the prior earnings anchor, with annual year-end reinvestment and zero interest on uninvested cash. The fixed 25× to 20×, 6% growth, 30% payout teaching example is separate from the active benchmark. No official index level, EPS series, daily total return, investor FX, taxes, fees or drawdown distribution is replicated.
 
-`src/five-year-growth.js` permits a uniform-accrual calendar-to-forward bridge only where CY growth, rolling-12-month valuation and a recorded valuation date are explicit. This currently applies to S&P 500 and MSCI Japan. The recorded date is a timing proxy where separately observed market/estimate dates are undisclosed. Six underlying CY rates create five forward-earnings transitions, never six holding years. All derived rates are labeled model estimates. The other 19 benchmarks use their own editorial normalized EPS assumptions; published estimates remain separately visible as context. No generic CY/FY/publisher-horizon conversion is presumed.
+`src/five-year-growth.js` permits a uniform-accrual calendar-to-forward bridge only where CY growth, rolling-12-month valuation and a recorded valuation date are explicit. This currently applies to S&P 500 and MSCI Japan. The recorded date is a timing proxy where separately observed market/estimate dates are undisclosed. Eleven underlying CY rates create ten forward-earnings transitions over the ten-year holding period, never eleven holding years. All derived rates are labeled model estimates. The other 19 benchmarks use their own editorial normalized EPS assumptions; published estimates remain separately visible as context. No generic CY/FY/publisher-horizon conversion is presumed.
 
 `src/dividend-policy.js` calibrates an eligible cash-dividend anchor to the synthetic earnings denominator: payout percent equals source dividend-anchor percent times active entry P/E. This is not a publisher-reported payout or a matched-period D/E statistic. Twenty defaults have eligible anchors. STOXX 600’s 2.8% net-return-spread reference cannot seed cash dividends; its default cash model is unavailable until the reader supplies an explicit assumption. The universe CSV retains all 126 entry/year rows, including six explicitly unavailable STOXX rows with blank computed results.
 

@@ -43,9 +43,9 @@ test('TTM fallback values current trailing EPS and uses terminal trailing EPS wi
  const input=scenarioInputs(row,undefined,{},true,now),ref=valuationReference(row,input),m=project(input);
  assert.equal(ref.type,'trailing-fallback');assert.equal(ref.earningsBasis,'trailing-12m');
  close(ref.normalizedCurrentEPS,4);close(ref.normalizedReferenceValue,80);
- close(input.exitPE,20/1.0804);close(m.last.price,20*m.points[4].eps);
+ close(input.exitPE,20/1.0798);close(m.last.price,20*m.points[9].eps);
  assert.ok(Math.abs(m.last.price-20*m.last.eps)>1);
- const next=scenarioInputs(row,{...input,growthOverrides:{2031:30}}, {},true,now),changed=project(next);
+ const next=scenarioInputs(row,{...input,growthOverrides:{2036:30}}, {},true,now),changed=project(next);
  close(next.exitPE,20/1.3);close(changed.last.price,m.last.price);close(changed.cashIRR,m.cashIRR);
 });
 
@@ -75,7 +75,7 @@ test('manual exit and paused scenarios stay protected; source restoration uses t
 test('CSV exports historical basis, current EPS normalization and terminal conversion as exit provenance',()=>{
  const row=trailingRow(),input=scenarioInputs(row,undefined,{},true,now),m=project(input),rows=csv(annualCSV(m,row.growthForecast,{exitMetric:exitMetricProvenance(row,m.input)}));
  const at=rows[0].indexOf('Exit metric provenance');for(const record of rows.slice(1)){
-  const ref=JSON.parse(record[at]).reference;assert.equal(ref.type,'trailing-fallback');assert.equal(ref.historicalPE,20);assert.equal(ref.currentPE,25);close(ref.normalizedReferenceValue,80);close(ref.exitPE,20/1.0804);assert.equal(ref.currentSource.publisher,evidence.publisher);
+  const ref=JSON.parse(record[at]).reference;assert.equal(ref.type,'trailing-fallback');assert.equal(ref.historicalPE,20);assert.equal(ref.currentPE,25);close(ref.normalizedReferenceValue,80);close(ref.exitPE,20/1.0798);assert.equal(ref.currentSource.publisher,evidence.publisher);
  }
  const all=csv(fiveYearCSV(feed,now)),header=all[0],id=header.indexOf('Benchmark ID'),provenance=header.indexOf('Exit metric provenance');
  for(const record of all.slice(1).filter(x=>x[id]==='stoxx600'))assert.equal(JSON.parse(record[provenance]).reference.type,'matched-forward');

@@ -25,7 +25,7 @@ test('yield convention grows its initial dividend with the actual prior EPS path
 });
 
 test('a constant annual path matches the single-rate model', () => {
-  const yearly = project({ ...DEFAULTS, growthMode: 'annual', annualGrowth: Array(5).fill(6) });
+  const yearly = project({ ...DEFAULTS, growthMode: 'annual', annualGrowth: Array(DEFAULTS.years).fill(6) });
   const flat = project(DEFAULTS);
   close(yearly.last.price, flat.last.price);
   close(yearly.cashIRR, flat.cashIRR);

@@ -19,7 +19,7 @@
     "entry": "Valuation date t=0. F0=100/entryPE is a synthetic normalized forward earnings anchor. In the illustrative NTM convention it covers approximately holding year 1; it is not an independently verified official index EPS value.",
     "followingValuations": "At each valuation date t, Ft=F(t-1)*(1+g_t). Exactly t growth factors are applied after t elapsed holding years. Ft represents the following earnings period, approximately holding year t+1 under the illustrative NTM convention.",
     "terminal": "At exit n, Pn=exitPE*Fn. The forward anchor represents earnings following exit. Do not add another growth factor because F0 was already forward-looking.",
-    "publisherYearMapping": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Six CY growth inputs generate five NTM transitions. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
+    "publisherYearMapping": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Eleven CY growth inputs generate ten NTM transitions over the ten-year holding period. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
     "valuationPath": "Mt=entryPE*(exitPE/entryPE)^(t/n), a positive geometric interpolation. Intermediate multiples are assumptions, not sourced forecasts.",
     "dividend": "At year end t, per-original-unit Dt=payout*F(t-1), or D1=100*initialYield with Dt=D1*F(t-1)/F0 in yield mode.",
     "cash": "Cash-held wealth Wcash(t)=Pt+sum(D1..Dt), no cash interest. Cash dividends are those on one original unit; investor cash flows are -100, D1, ..., Dn+Pn.",
@@ -90,7 +90,7 @@
       "value": "modeled annual NTM transitions from source CY levels and sourced long-term EPS projections",
       "units": "percent over the publisher's labeled period",
       "classification": "source fact plus explicit modeling assumptions",
-      "definition": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Six CY growth inputs generate five NTM transitions. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
+      "definition": "Annual CY/publisher-year estimates inform a uniform-accrual calendar-to-forward bridge. Eleven CY growth inputs generate ten NTM transitions over the ten-year holding period. Calendar alignment for publisher-year estimates and NTM interpretation of unspecified forward horizons are separately disclosed model assumptions. Unsupported fiscal/forecast-horizon intervals remain raw reference observations. Missing calendar inputs use sourced long-term EPS proxies; no source rate is capped, faded or replayed as raw NTM growth.",
       "permittedUse": "Retain the original source period and consensus/house classification. Named-year scenario inputs and derived long-term EPS projections carry separate source provenance."
     },
     {
@@ -135,11 +135,11 @@
     },
     {
       "id": "holding-period",
-      "value": 5,
+      "value": 10,
       "units": "integer years",
       "classification": "fixed workbench policy",
-      "definition": "All benchmark and manual workbench scenarios use five elapsed holding years. The generic engine supports other whole-year horizons for verification.",
-      "permittedUse": "Fixed five-year workbench and exports."
+      "definition": "All benchmark and manual workbench scenarios use ten elapsed holding years, matching the 10-year horizon of the sourced long-term EPS proxy. The generic engine supports other whole-year horizons for verification.",
+      "permittedUse": "Fixed ten-year workbench and exports."
     },
     {
       "id": "normalized-starting-wealth",
@@ -234,7 +234,7 @@
       "value": "eligible sourced fields or labeled fallback policy",
       "units": "per active field",
       "classification": "application policy",
-      "definition": "Source following updates eligible untouched fields only. An unlocked model payout recalibrates to the source dividend anchor and active entry PE. Historical exit requires compatibility approval; otherwise the unedited exit follows active entry. Reset clears only the selected benchmark overrides and restores its five-year forecast and dividend defaults. Restore dividend defaults clears dividend overrides. Protected reader inputs remain separate. Unedited legacy 30% payouts migrate; explicit custom payouts survive.",
+      "definition": "Source following updates eligible untouched fields only. An unlocked model payout recalibrates to the source dividend anchor and active entry PE. Historical exit requires compatibility approval; otherwise the unedited exit follows active entry. Reset clears only the selected benchmark overrides and restores its ten-year forecast and dividend defaults. Restore dividend defaults clears dividend overrides. Protected reader inputs remain separate. Unedited legacy 30% payouts migrate; explicit custom payouts survive.",
       "permittedUse": "Source-linked educational scenario; protected reader inputs remain assumptions and are not evidence of a source update."
     },
     {
@@ -247,7 +247,7 @@
     }
   ],
   "dividendPolicyVersion": "benchmark-dividend-anchor-v1",
-  "growthPolicyVersion": "tickerlantern-forward-bridge-long-term-v6",
+  "growthPolicyVersion": "tickerlantern-forward-bridge-long-term-ten-year-v7",
   "valuationPolicyVersion": "historical-earnings-reference-v2",
   "valuationReferencePolicy": {
     "priority": [

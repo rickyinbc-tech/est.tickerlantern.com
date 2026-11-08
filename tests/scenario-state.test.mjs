@@ -8,22 +8,22 @@ const row = { forwardPE: 18, mean10YearForwardPE: 16, dividendYield: 2 };
 test('a different benchmark starts with its own defaults rather than the previous growth and horizon', () => {
   const next = switchScenario(row, undefined, {});
   assert.equal(next.growth, 6);
-  assert.equal(next.years, 5);
+  assert.equal(next.years, 10);
   assert.equal(next.entryPE, 18);
 });
 test('revisiting a benchmark restores its own complete annual schedule and horizon', () => {
   const saved = { ...DEFAULTS, growth: 9, years: 3, growthMode: 'annual', annualGrowth: [10, -5, 20] };
   const next = switchScenario(row, saved, { growthMode: true, annualGrowth: true, years: true });
-  assert.deepEqual(next.annualGrowth, [10, -5, 20, 9, 9]);
+  assert.deepEqual(next.annualGrowth, [10, -5, 20, 9, 9, 9, 9, 9, 9, 9]);
   assert.equal(next.growthMode, 'annual');
-  assert.equal(next.years, 5);
+  assert.equal(next.years, 10);
 });
 test('source refresh and source restore protect the annual schedule and custom payout', () => {
   const saved = { ...DEFAULTS, growthMode: 'annual', annualGrowth: [10, -5, 20], payout: 40 };
   const locks = restoreSourceLocks({ entryPE: true, growth: true, annualGrowth: true, payout: true });
   assert.deepEqual(locks, { growth: true, annualGrowth: true, payout: true });
   const next = scenarioInputs(row, saved, locks);
-  assert.deepEqual(next.annualGrowth, [10, -5, 20, 6, 6]);
+  assert.deepEqual(next.annualGrowth, [10, -5, 20, 6, 6, 6, 6, 6, 6, 6]);
   assert.equal(next.payout, 40);
   assert.equal(next.entryPE, 18);
 });
@@ -52,20 +52,21 @@ test('legacy paused source paths migrate once and preserve only named yearly rea
   const source={id:'nasdaq100',asOf:'2025-09-30',forwardPE:20,dividendYield:1,growthForecast:{periodBasis:'publisher-year',forecastType:'consensus',asOf:'2025-09-30',source:{publisher:'Fixture',url:'https://example.com/source'},estimates:[{year:2026,growth:28},{year:2027,growth:18}]}};
   const legacy={...DEFAULTS,growthMode:'source',growthStartYear:2027,annualGrowth:[28,18],growthOverrides:{2027:9},years:2,growthPolicyVersion:'tickerlantern-five-year-fade-v1'};
   const migrated=scenarioInputs(source,legacy,{},false,new Date('2026-10-23T12:00:00Z'));
-  assert.equal(migrated.years,5);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
-  assert.equal(migrated.growthStartYear,2026);assert.deepEqual(migrated.annualGrowth,[8.04,9,8.04,8.04,8.04]);
+  assert.equal(migrated.years,10);assert.equal(migrated.growthPolicyVersion,GROWTH_POLICY.version);
+  assert.equal(migrated.growthStartYear,2026);assert.deepEqual(migrated.annualGrowth,[7.98,9,...Array(8).fill(7.98)]);
   assert.deepEqual(migrated.growthOverrides,{2027:9});assert.deepEqual(migrated.growthPlan,[]);
   const changed={...source,asOf:'2027-01-15',growthForecast:{...source.growthForecast,estimates:[{year:2028,growth:45}]}};
   const frozen=scenarioInputs(changed,migrated,{},false,new Date('2028-01-01'));
-  assert.equal(frozen.growthStartYear,2026);assert.deepEqual(frozen.annualGrowth,[8.04,9,8.04,8.04,8.04]);
+  assert.equal(frozen.growthStartYear,2026);assert.deepEqual(frozen.annualGrowth,[7.98,9,...Array(8).fill(7.98)]);
 });
 
 test('timing-policy migration never rewrites custom constant or annual scenarios',()=>{
   for(const following of [true,false]){
     const constant=scenarioInputs({...row,id:'nasdaq100'}, {...DEFAULTS,growth:3,growthMode:'constant',growthPolicyVersion:'old'}, {growth:true,growthMode:true}, following);
-    assert.equal(constant.growthMode,'constant');assert.equal(constant.growth,3);assert.equal(constant.years,5);
+    assert.equal(constant.growthMode,'constant');assert.equal(constant.growth,3);assert.equal(constant.years,10);
     const annual=scenarioInputs({...row,id:'nasdaq100'}, {...DEFAULTS,growth:3,growthMode:'annual',annualGrowth:[-5,4,8,2,1],growthPolicyVersion:'old'}, {growthMode:true,annualGrowth:true}, following);
-    assert.equal(annual.growthMode,'annual');assert.deepEqual(annual.annualGrowth,[-5,4,8,2,1]);
+    assert.equal(annual.growthMode,'annual');// Saved five-year custom paths keep every edited year; added years use the custom constant rate.
+    assert.deepEqual(annual.annualGrowth,[-5,4,8,2,1,3,3,3,3,3]);
   }
 });
 

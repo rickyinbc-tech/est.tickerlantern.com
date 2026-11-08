@@ -14,10 +14,10 @@ export const MODEL_CONVENTIONS = Object.freeze({
   cashInterestPercent: 0,
   returnBasis: 'nominal; before taxes, fees and trading costs',
   currencyBasis: 'normalized currency-neutral illustration; no FX translation or hedging',
-  growthMapping: 'forward-bridge-long-term-v6: annual CY/publisher-year forecasts inform a uniform-accrual calendar-to-forward model; inferred calendar alignment and unspecified NTM horizons remain disclosed assumptions; unsupported horizon series use a derived sourced long-term EPS scenario; published rates remain visible uncapped, not replayed as NTM growth',
+  growthMapping: 'forward-bridge-long-term-ten-year-v7: ten holding years; annual CY/publisher-year forecasts inform a uniform-accrual calendar-to-forward model; inferred calendar alignment and unspecified NTM horizons remain disclosed assumptions; unsupported horizon series use a derived sourced long-term EPS scenario; published rates remain visible uncapped, not replayed as NTM growth',
   exclusions: 'no separate buyback return; no independently forecast EPS series; no official daily total-return replication'
 });
-export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 5, dividendMode: 'payout', dividendYield: 1.2 });
+export const DEFAULTS = Object.freeze({ growth: 6, growthMode: 'constant', growthStartYear: null, annualGrowth: Object.freeze([]), entryPE: 25, exitPE: 20, payout: 30, years: 10, dividendMode: 'payout', dividendYield: 1.2 });
 export const BOUNDS = Object.freeze({ growth: [-99, 1000], entryPE: [1, 100], exitPE: [1, 100], payout: [0, 100], years: [1, 20] });
 
 export function validate(input) {
@@ -32,7 +32,7 @@ export function validate(input) {
   if (input.growthMode === 'source' && (!Number.isInteger(+input.growthStartYear) || +input.growthStartYear < 2020 || +input.growthStartYear > 2100)) errors.growthMode = 'Published forecast year is unavailable.';
   if (['annual', 'source'].includes(input.growthMode) && !errors.years) {
     const rates = input.annualGrowth;
-    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = input.growthMode === 'source' ? `Enter a rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for each uncovered year, the holding period stays five years. Published estimates are not automatically replayed.` : `Enter an EPS growth rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for every year.`;
+    if (!Array.isArray(rates) || rates.length < +input.years || Array.from({ length: +input.years }, (_, i) => rates[i]).some(rate => rate === '' || rate == null || !Number.isFinite(+rate) || +rate < BOUNDS.growth[0] || +rate > BOUNDS.growth[1])) errors.annualGrowth = input.growthMode === 'source' ? `Enter a rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for each uncovered year, the holding period stays ten years. Published estimates are not automatically replayed.` : `Enter an EPS growth rate between ${BOUNDS.growth[0]}% and ${BOUNDS.growth[1]}% for every year.`;
   }
   if (input.dividendMode && !['payout', 'yield'].includes(input.dividendMode)) errors.dividendMode = 'Select a dividend convention.';
   if (input.dividendMode === 'yield' && (input.dividendYield === '' || input.dividendYield == null || !Number.isFinite(+input.dividendYield) || +input.dividendYield < 0 || +input.dividendYield > 15)) errors.dividendYield = 'Enter an initial yield between 0 and 15%.';

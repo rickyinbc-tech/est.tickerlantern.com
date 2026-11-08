@@ -22,10 +22,10 @@ test('20 accepted cash anchors have individual payouts; the STOXX reference does
    assert.match(assessment.reason,/cash-dividend anchor/);continue;
   }
   assert.ok(r.metricDefinitions.dividendYield.permittedUse.includes('first-payment-anchor'));
-  const m=baselineForecast(r,now);assert.equal(m.input.dividendMode,'payout');assert.equal(m.input.years,5);
+  const m=baselineForecast(r,now);assert.equal(m.input.dividendMode,'payout');assert.equal(m.input.years,10);
   payouts.push(m.input.payout);close(m.points[1].dividend,r.dividendYield);
   // Independently check every later distribution against the prior EPS factor.
-  let factor=1;for(let i=1;i<=5;i++){close(m.points[i].dividend,r.dividendYield*factor);factor*=1+m.input.annualGrowth[i-1]/100;}
+  let factor=1;for(let i=1;i<=10;i++){close(m.points[i].dividend,r.dividendYield*factor);factor*=1+m.input.annualGrowth[i-1]/100;}
   const alternative=project({...m.input,dividendMode:'yield',dividendYield:r.dividendYield});
   close(m.cashIRR,alternative.cashIRR);close(m.last.cashWealth,alternative.last.cashWealth);close(m.reinvestedCAGR,alternative.reinvestedCAGR);
  }
@@ -65,7 +65,7 @@ test('missing, invalid or withdrawn dividend inputs remain blank, distinguishabl
  const zero=scenarioInputs({...row('sp500'),dividendYield:0},undefined,{},true,now);
  assert.equal(zero.payout,0);assert.equal(project(zero).last.cumulativeDividend,0);
  const blank={...feed,indices:[{...row('sp500'),dividendYield:null}]},records=csv(fiveYearCSV(blank,now));
- const status=records[0].indexOf('Model status');assert.equal(records.length,7);
+ const status=records[0].indexOf('Model status');assert.equal(records.length,12);
  for(const record of records.slice(1)){
   assert.equal(record[status],'unavailable');
   assert.equal(record[records[0].indexOf('Payout percent')],'');
@@ -76,7 +76,7 @@ test('missing, invalid or withdrawn dividend inputs remain blank, distinguishabl
 
 test('a reader can explicitly supply a cash payout for a reference-only benchmark',()=>{
  const r=row('stoxx600'),custom=scenarioInputs(r,{...DEFAULTS,payout:30},{payout:true},true,now);
- assert.equal(custom.payout,30);assert.equal(custom.years,5);
+ assert.equal(custom.payout,30);assert.equal(custom.years,10);
  const model=project(custom);assert.ok(model.last.cumulativeDividend>0);
  assert.equal(payoutProvenance(r,custom,{payout:true},true,now).classification,'user-assumption');
 });
@@ -88,9 +88,9 @@ test('CSV labels calibrated payouts as model inputs with separate yield and earn
  const records=csv(annualCSV(m,r.growthForecast,{payoutMetric:evidence}));const at=records[0].indexOf('Payout metric provenance');
  assert.ok(Math.abs(JSON.parse(records[1][at]).value-r.dividendYield*r.forwardPE)<=5e-4);
  const all=csv(fiveYearCSV(feed,now)),payout=all[0].indexOf('Payout percent'),id=all[0].indexOf('Benchmark ID');
- assert.equal(all.length,127);
+ assert.equal(all.length,232);
  for(const r of feed.indices){
-  const records=all.slice(1).filter(v=>v[id]===r.id);assert.equal(records.length,6);
+  const records=all.slice(1).filter(v=>v[id]===r.id);assert.equal(records.length,11);
   if(r.id==='stoxx600'){
    const status=all[0].indexOf('Model status');
    assert.ok(records.every(record=>record[status]==='unavailable' && record[payout]==='' && record[at]===''));

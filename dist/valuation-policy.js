@@ -55,7 +55,7 @@ export function valuationReference(row, input={}) {
   }
   if(eligibleTTMReference(row)) {
     const t=row.trailingValuation;
-    const rates=input.annualGrowth,years=Number(input.years || 5);
+    const rates=input.annualGrowth,years=Number(input.years || 10);
     const terminalGrowth=Number(input.growthMode==='constant' ? input.growth : rates?.[years-1]);
     // F_n is next-period earnings at exit; trailing earnings at exit are F_(n-1).
     // Thus M_TTM * F_(n-1) = [M_TTM/(1+g_n)] * F_n. No direct TTM/Fwd mixing.

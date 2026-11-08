@@ -20,13 +20,14 @@ test('independently derived published teaching examples retain their exact timin
   const one = project({ ...DEFAULTS, entryPE: 20, exitPE: 20, growth: 6, payout: 30, years: 1 });
   close(one.initialEPS, 5); close(one.last.eps, 5.3); close(one.last.price, 106);
   close(one.last.dividend, 1.5); close(one.cashIRR, .075); close(one.last.cashWealth, 107.5);
-  const five = project(DEFAULTS);
-  // Independently evaluated with 60-digit Decimal arithmetic: fifth root for price,
-  // bisection of -100 + sum(1.2*1.06^(t-1)/(1+r)^t) + terminal/(1+r)^5.
-  close(five.priceCAGR * 100, 1.3733649777439205, 1e-10);
-  close(five.cashIRR * 100, 2.6865056300111594, 1e-9);
-  close(five.last.price, 100 * 1.06 ** 5 * .8);
-  close(five.last.cumulativeDividend, 1.2 * (1 + 1.06 + 1.06 ** 2 + 1.06 ** 3 + 1.06 ** 4));
+  const ten = project(DEFAULTS);
+  assert.equal(ten.input.years, 10);
+  // Independently evaluated with 60-digit Decimal arithmetic: tenth root for price,
+  // bisection of -100 + sum(1.2*1.06^(t-1)/(1+r)^t) + terminal/(1+r)^10.
+  close(ten.priceCAGR * 100, 3.6608734655504221, 1e-10);
+  close(ten.cashIRR * 100, 4.9872483709829542, 1e-9);
+  close(ten.last.price, 100 * 1.06 ** 10 * .8);
+  close(ten.last.cumulativeDividend, 1.2 * Array.from({ length: 10 }, (_, t) => 1.06 ** t).reduce((a, b) => a + b, 0));
 });
 
 test('declining prices demonstrate cash-held and reinvested results are distinct', () => {
@@ -47,7 +48,7 @@ test('declining prices demonstrate cash-held and reinvested results are distinct
 });
 
 test('yield and payout equivalence applies only under the same annual convention', () => {
-  const payout = project({ ...DEFAULTS, growthMode: 'annual', annualGrowth: [10, -5, 8, 0, -2] });
+  const payout = project({ ...DEFAULTS, growthMode: 'annual', annualGrowth: [10, -5, 8, 0, -2, 3, 7, -1, 4, 5] });
   const yieldModel = project({ ...payout.input, dividendMode: 'yield', dividendYield: 1.2 });
   payout.points.forEach((point, i) => {
     close(point.dividend, yieldModel.points[i].dividend);
@@ -122,7 +123,7 @@ test('CSV reproduces full precision assumptions and identifies scenario and sour
   assert.equal(+named['Entry PE assumption'], input.entryPE); assert.equal(+named['Exit PE assumption'], input.exitPE);
   assert.deepEqual(JSON.parse(named['Entry metric provenance']), context.entryMetric);
   assert.deepEqual(JSON.parse(named['Scenario protection metadata']).locks, context.locks);
-  assert.deepEqual(rows.slice(2).map(row => +row.at(-1)), Array(5).fill(input.growth));
+  assert.deepEqual(rows.slice(2).map(row => +row.at(-1)), Array(10).fill(input.growth));
   const rebuilt = project({ ...DEFAULTS, entryPE: +named['Entry PE assumption'], exitPE: +named['Exit PE assumption'], years: +named['Holding years'], payout: +named['Payout percent'], growthMode: 'annual', annualGrowth: rows.slice(2).map(row => +row.at(-1)) });
   close(rebuilt.last.price, +rows.at(-1)[3]); close(rebuilt.last.reinvestedWealth, +rows.at(-1)[7]);
 });

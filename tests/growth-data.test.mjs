@@ -9,8 +9,11 @@ const now = new Date('2026-10-22T20:00:00Z');
 const row = { id:'sp500', asOf:'2026-10-15', dividendYield:1.2, historicalCompatibility:{outcome:'compatible',allowComparison:true,allowExitDefault:true,reasons:['Synthetic compatible fixture']}, forwardPE: 20, mean10YearForwardPE: 18, metricDefinitions:{forwardPE:{economic:{horizon:'rolling-12m'},evidence:{dateBasis:'explicit-observation-date'}},growthForecast:{permittedUse:['display','approximate-scenario-growth']}}, growthForecast: { asOf: '2026-10-15', forecastType: 'consensus', periodBasis: 'calendar-year', source: { url: 'https://example.com/forecasts', publisher: 'Test publisher' }, estimates: [{ year: 2026, growth: 32.8 }, { year: 2027, growth: 28 }, { year: 2028, growth: 12 }] } };
 const close = (actual, expected) => assert.ok(Math.abs(actual-expected)<1e-10,`${actual} != ${expected}`);
 const closeRates = (actual, expected) => { assert.equal(actual.length,expected.length); actual.forEach((v,i)=>close(v,expected[i])); };
-// Independently calculated from six CY levels and w=287/365.
-const projectedRates = [14.802227411532254,8.813282595633897,8.04,8.04,8.04];
+// Independent NTM bridge: CY levels compound named rates; F_i=(1-w)CY_i+w*CY_(i+1).
+const bridge=(calendar,w)=>{const levels=[1];for(const g of calendar)levels.push(levels.at(-1)*(1+g/100));const f=calendar.map((_,i)=>(1-w)*levels[i]+w*levels[i+1]);return f.slice(1).map((v,i)=>(v/f[i]-1)*100);};
+const LT=7.98; // Invesco US large cap: 3.93 real + 2.26 inflation + 1.79 buyback.
+// Eleven CY levels (2027-2037) and w=287/365 produce ten forward transitions.
+const projectedRates = bridge([28,12,...Array(9).fill(LT)],287/365);
 
 test('published growth begins with the next year and never repeats missing estimates', () => {
   const path = sourceGrowthPath(row, 5, now);
@@ -23,23 +26,23 @@ test('published growth begins with the next year and never repeats missing estim
 
 test('source-following scenarios use published years and a sourced long-term projection', () => {
   const input = switchScenario(row, undefined, {}, true, now);
-  assert.equal(input.growthMode,'source');assert.equal(input.years,5);
+  assert.equal(input.growthMode,'source');assert.equal(input.years,10);
   closeRates(input.annualGrowth,projectedRates);assert.equal(input.growthStartYear,2027);
   assert.equal(input.growthPolicyVersion,GROWTH_POLICY.version);
   assert.equal(input.growthPlan[0].sourceEvidence.asOf,'2026-10-15');
-  assert.equal(input.growthPlan[2].sourceEvidence.asOf,'2025-12-31');
-  close(project(input).last.price,100*((1-287/365)*1.28*1.12*1.0804**3+(287/365)*1.28*1.12*1.0804**4)/((1-287/365)+(287/365)*1.28)*.9);
+  assert.equal(input.growthPlan[2].sourceEvidence.asOf,'2026-06-30');
+  close(project(input).last.price,100*((1-287/365)*1.28*1.12*1.0798**8+(287/365)*1.28*1.12*1.0798**9)/((1-287/365)+(287/365)*1.28)*.9);
   closeRates(switchScenario(row,undefined,{},true,new Date('2028-10-01')).annualGrowth,projectedRates);
 });
 
-test('a source refresh flows into linked rates while custom growth stays protected at five years', () => {
+test('a source refresh flows into linked rates while custom growth stays protected at ten years', () => {
   const linked = switchScenario(row, undefined, {}, true, now);
   const changed = { ...row, growthForecast: { ...row.growthForecast, estimates: [{ year: 2027, growth: 30 }, { year: 2028, growth: 10 }] } };
-  closeRates(scenarioInputs(changed,linked,{},true,now).annualGrowth,[13.458213256484154,8.42831597663194,8.04,8.04,8.04]);
+  closeRates(scenarioInputs(changed,linked,{},true,now).annualGrowth,bridge([30,10,...Array(9).fill(LT)],287/365));
   assert.deepEqual(sourceGrowthPath(changed,2,now).rates,[30,10]);
   const custom = { ...DEFAULTS, growthMode: 'annual', annualGrowth: [7, 8, 9], years: 3 };
-  assert.deepEqual(scenarioInputs(changed, custom, { growthMode: true, annualGrowth: true, years: true }, true, now).annualGrowth, [7, 8, 9, 6, 6]);
-  const extended = scenarioInputs(row, { ...linked, years: 5 }, { years: true }, true, now);
+  assert.deepEqual(scenarioInputs(changed, custom, { growthMode: true, annualGrowth: true, years: true }, true, now).annualGrowth, [7, 8, 9, 6, 6, 6, 6, 6, 6, 6]);
+  const extended = scenarioInputs(row, { ...linked, years: 10 }, { years: true }, true, now);
   closeRates(extended.annualGrowth,projectedRates);
   assert.equal(validate(extended).annualGrowth, undefined);
 });
@@ -51,7 +54,7 @@ test('publisher periods preserve forecasts while unsupported periods use long-te
   }
   for(const patch of [{asOf:undefined},{growthForecast:{...row.growthForecast,periodBasis:'quarterly'}},{growthForecast:{...row.growthForecast,periodBasis:'fiscal-year'}},{metricDefinitions:{...row.metricDefinitions,growthForecast:{permittedUse:['display']}}}]){
     const input=scenarioInputs({...row,...patch},undefined,{},true,now);
-    assert.deepEqual(input.annualGrowth,Array(5).fill(8.04));assert.ok(input.growthPlan.every(point=>point.basis==='long-term EPS projection'));
+    assert.deepEqual(input.annualGrowth,Array(10).fill(7.98));assert.ok(input.growthPlan.every(point=>point.basis==='long-term EPS projection'));
   }
 });
 

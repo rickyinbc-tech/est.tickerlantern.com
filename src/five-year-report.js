@@ -1,5 +1,6 @@
 import { project, annualCSV, ANNUAL_CSV_HEADER, validate, MODEL_CONVENTION_VERSION } from './model.js';
 import { scenarioInputs } from './scenario-state.js';
+import { HOLDING_YEARS } from './five-year-growth.js';
 import { exitMetricProvenance } from './valuation-policy.js';
 import { metricProvenance } from './update-status.js';
 import { payoutProvenance } from './dividend-policy.js';
@@ -17,9 +18,9 @@ export const baselineForecast = (row, now=new Date()) => baselineAssessment(row,
 function unavailableRows(row,feed,assessment,now) {
   const columns=ANNUAL_CSV_HEADER.split(',');
   const cell=v=> /[,"\n\r]/.test(String(v??'')) ? '"'+String(v).replaceAll('"','""')+'"' : v??'';
-  return Array.from({length:6},(_,year)=>{
+  return Array.from({length:HOLDING_YEARS+1},(_,year)=>{
     const fields={'Year':year,'Benchmark ID':row.id,'Snapshot ID':feed.snapshotId,'Snapshot version':feed.snapshotVersion,
-      'Snapshot published at':feed.publishedAt,'Holding years':5,'Model convention version':MODEL_CONVENTION_VERSION,
+      'Snapshot published at':feed.publishedAt,'Holding years':HOLDING_YEARS,'Model convention version':MODEL_CONVENTION_VERSION,
       'Model status':'unavailable','Unavailable reason':assessment.reason,'Health evaluated at':now.toISOString(),
       'Entry PE assumption':assessment.input.entryPE,'Exit PE assumption':assessment.input.exitPE,
       'Growth mode':assessment.input.growthMode,'Dividend convention':assessment.input.dividendMode,
@@ -32,7 +33,7 @@ function unavailableRows(row,feed,assessment,now) {
   });
 }
 
-// Export each benchmark's six valuation dates (entry + five year ends), using
+// Export each benchmark's eleven valuation dates (entry + ten year ends), using
 // current loaded source data and the same default engine as the comparison.
 export function fiveYearCSV(feed, now = new Date()) {
   const output = [];

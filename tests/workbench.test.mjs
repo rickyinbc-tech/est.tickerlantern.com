@@ -39,26 +39,26 @@ test('source refresh updates unlocked inputs and protects edits', () => {
   const custom={...DEFAULTS,entryPE:17,exitPE:19,growth:9,years:8,dividendYield:3};
   const next=scenarioInputs(em,custom,{entryPE:true,dividendYield:true,growth:true,years:true});
   assert.equal(next.entryPE,17);assert.equal(next.exitPE,12.25);assert.equal(next.dividendYield,3);
-  assert.equal(next.growth,9);assert.equal(next.years,5);
-  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:5,payout:34.34,dividendPolicyVersion:'benchmark-dividend-anchor-v1',growthPolicyVersion:GROWTH_POLICY.version});
+  assert.equal(next.growth,9);assert.equal(next.years,10);
+  assert.deepEqual(scenarioInputs(em,custom,{},false),{...custom,years:10,payout:34.34,dividendPolicyVersion:'benchmark-dividend-anchor-v1',growthPolicyVersion:GROWTH_POLICY.version});
 });
 test('a new missing benchmark gets labelled defaults, never prior valuations', () => {
   const next=switchScenario({},undefined);
   assert.equal(next.entryPE,DEFAULTS.entryPE);assert.equal(next.exitPE,DEFAULTS.entryPE);
   assert.equal(next.dividendYield,DEFAULTS.dividendYield);assert.equal(next.dividendMode,'payout');
-  assert.equal(next.growth,6); assert.equal(next.years,5);
+  assert.equal(next.growth,6); assert.equal(next.years,10);
   assert.equal(fieldBasis('entryPE',{}),'default');assert.equal(fieldBasis('exitPE',{}),'fallback');
 });
 test('saved benchmark edits restore with its own growth and horizon', () => {
   const next=switchScenario(em,{...DEFAULTS,entryPE:17,exitPE:19,growth:2,years:4},{entryPE:true,exitPE:true,growth:true,years:true});
-  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,2);assert.equal(next.years,5);
+  assert.equal(next.entryPE,17);assert.equal(next.exitPE,19);assert.equal(next.growth,2);assert.equal(next.years,10);
 });
 test('restore source clears only source fields and keeps payout edits', () => {
   const locks=restoreSourceLocks({entryPE:true,exitPE:true,dividendMode:true,dividendYield:true,payout:true});
   assert.deepEqual(locks,{payout:true});
   const next=scenarioInputs(em,{...DEFAULTS,payout:44,growth:9,years:8},{...locks,growth:true,years:true});
   assert.equal(next.entryPE,8.9);assert.equal(next.exitPE,12.25);assert.equal(next.payout,44);
-  assert.equal(next.growth,9);assert.equal(next.years,5);
+  assert.equal(next.growth,9);assert.equal(next.years,10);
 });
 test('presets change only their declared active assumptions', () => {
   const input=scenarioInputs(em,{...DEFAULTS,growth:9,years:8},{growth:true,years:true});
@@ -81,8 +81,8 @@ test('provenance distinguishes source, historical, fallback, default and custom'
   assert.equal(fieldBasis('growth',withPublished),'modeled');
 });
 test('compression reference, constant price CAGR and exported endpoints agree', () => {
-  const m=project(DEFAULTS);close(m.priceCAGR,1.06*(20/25)**.2-1);
-  assert.equal((m.priceCAGR*100).toFixed(2),'1.37');assert.equal((m.cashIRR*100).toFixed(2),'2.69');
+  const m=project(DEFAULTS);close(m.priceCAGR,1.06*(20/25)**.1-1);
+  assert.equal((m.priceCAGR*100).toFixed(2),'3.66');assert.equal((m.cashIRR*100).toFixed(2),'4.99');
   for(const growth of [-15,0,20]) close(project({...DEFAULTS,growth,exitPE:25}).priceCAGR,growth/100);
   const last=annualCSV(m).split('\n').at(-1).split(',').map(Number);
   for(const [i,key] of [[3,'price'],[6,'cashWealth'],[7,'reinvestedWealth']])assert.ok(Math.abs(last[i]-m.last[key])<1e-7);

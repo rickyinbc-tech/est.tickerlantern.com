@@ -1,35 +1,42 @@
 import { nextForecastYear } from './growth-data.js';
 import { metricHealth } from './update-status.js';
 
-export const HOLDING_YEARS = 5;
+export const HOLDING_YEARS = 10;
+// A horizon of n holding years needs n + 1 calendar growth inputs (n + 2 annual
+// EPS levels) to produce n + 1 NTM anchors and n forward transitions.
+export const CALENDAR_INPUTS = HOLDING_YEARS + 1;
 export const GROWTH_POLICY = Object.freeze({
-  version: 'tickerlantern-forward-bridge-long-term-v6',
-  reviewedAt: '2026-10-23',
-  methodologyUrl: 'https://www.invesco.com/content/dam/invesco/apac/en/pdf/insights/2026/april/2026-invesco-capital-market-assumptions-usd-q1-2026.pdf#page=7',
-  method: 'Preserve all published forecasts uncapped as reference observations. Annual calendar/publisher-year forecasts can inform a uniform-accrual calendar-to-forward bridge. Publisher-year calendar alignment and unspecified forward horizons are separate disclosed model assumptions. Six calendar growth inputs produce five forward-anchor transitions. Missing calendar years and unbridgeable publisher/fiscal/horizon series use a derived sourced long-term nominal EPS scenario. The bridge, regional mappings and long-term projections are model assumptions, not publisher forecasts for holding years. Buybacks enter EPS once; dividends and exit P/E remain separate.'
+  version: 'tickerlantern-forward-bridge-long-term-ten-year-v7',
+  reviewedAt: '2026-11-08',
+  methodologyUrl: 'https://www.invesco.com/content/dam/invesco/emea/en/pdf/invesco-capital-market-assumption-usd.pdf#page=7',
+  method: 'Preserve all published forecasts uncapped as reference observations. Annual calendar/publisher-year forecasts can inform a uniform-accrual calendar-to-forward bridge. Publisher-year calendar alignment and unspecified forward horizons are separate disclosed model assumptions. Eleven calendar growth inputs produce ten forward-anchor transitions over the ten-year holding period. Missing calendar years and unbridgeable publisher/fiscal/horizon series use a derived sourced long-term nominal EPS scenario. The bridge, regional mappings and long-term projections are model assumptions, not publisher forecasts for holding years. Buybacks enter EPS once; dividends and exit P/E remain separate.'
 });
 
 export const LONG_TERM_SOURCE = Object.freeze({
-  publisher:'Invesco Solutions', title:'2026 Capital Market Assumptions, Q1 update',
-  url:GROWTH_POLICY.methodologyUrl, asOf:'2025-12-31', checkedAt:'2026-10-23', horizonYears:10,
+  publisher:'Invesco Solutions', title:'2026 Capital Market Assumptions, Q3 update',
+  url:GROWTH_POLICY.methodologyUrl, asOf:'2026-06-30', checkedAt:'2026-11-08', horizonYears:10,
   pdfPages:Object.freeze([7,11]),
-  sha256:'28faab4574d491474f4eac99fc734e5c4615ec320793bcc2f0c264dc5b70ee7b',
+  // Figure 4a values were read from the published PDF on 2026-11-08; the hosted
+  // runner cannot download it, so the file hash is recorded on the next desktop check.
+  sha256:null,
+  supersedes:Object.freeze({title:'2026 Capital Market Assumptions, Q1 update',asOf:'2025-12-31',sha256:'28faab4574d491474f4eac99fc734e5c4615ec320793bcc2f0c264dc5b70ee7b'}),
   application:'Derived nominal EPS proxy: real earnings growth + inflation + buyback effect, using the additive building-block approximation. Exclude source dividends, valuation and FX components; they are not extra returns in this model.'
 });
 
-// Figure 4a, p. 7. The earnings component is real; buyback effects are separate.
+// Figure 4a, p. 7 (estimates as of 30 Jun 2026). The earnings component is real;
+// buyback effects are separate. Invesco's horizon is 10 years, matching the holding period.
 // No source-published total-return forecast is put into an EPS growth field.
 export const LONG_TERM_REGIONS = Object.freeze(Object.fromEntries([
-  ['us-large','US large cap',4.01,2.19,1.84],
-  ['us-small','US small cap',2.43,2.19,0.99],
-  ['canada','Canada equity',2.99,1.95,0.73],
-  ['global','Global equity',3.92,2.14,1.01],
-  ['global-ex-us','Global ex-US equity',3.82,1.97,0.13],
-  ['europe','Europe equity',4.24,1.79,0.54],
-  ['uk','UK equity',6.06,2.24,0.82],
-  ['japan','Japan equity',4.30,2.00,0.89],
-  ['em','EM equity',3.73,2.24,-0.31],
-  ['china','China equity',1.40,1.75,-0.55]
+  ['us-large','US large cap',3.93,2.26,1.79],
+  ['us-small','US small cap',2.60,2.26,1.05],
+  ['canada','Canada equity',2.08,2.02,0.80],
+  ['global','Global equity',3.76,2.17,1.13],
+  ['global-ex-us','Global ex-US equity',3.56,2.07,0.41],
+  ['europe','Europe equity',4.06,1.84,0.56],
+  ['uk','UK equity',5.19,2.14,0.82],
+  ['japan','Japan equity',4.30,2.01,0.91],
+  ['em','EM equity',3.44,2.16,-0.02],
+  ['china','China equity',1.37,1.82,-0.60]
 ].map(([id,benchmark,realEarningsGrowth,inflation,buybackYield])=>{
   const growth=+(realEarningsGrowth+inflation+buybackYield).toFixed(2);
   return [id,Object.freeze({benchmark,growth,components:Object.freeze({realEarningsGrowth,inflation,buybackYield}),
@@ -71,13 +78,13 @@ export const GROWTH_ANCHORS = Object.freeze(Object.fromEntries(Object.keys(INDEX
   const value=longTermGrowth(id);return [id,Object.freeze({growth:value.growth,rationale:value.rationale})];
 })));
 
-// Six calendar growth inputs create seven annual EPS levels and six NTM
+// Eleven calendar growth inputs create twelve annual EPS levels and eleven NTM
 // anchors. Uniform accrual is an explicit model assumption, not reported EPS.
 export function calendarToForwardRates(calendarRates, elapsedFraction) {
-  if (calendarRates.length !== 6 || !Number.isFinite(elapsedFraction) || elapsedFraction<0 || elapsedFraction>1 || calendarRates.some(g=>!Number.isFinite(g)||g<=-100)) throw new Error('Invalid calendar earnings bridge.');
+  if (calendarRates.length !== CALENDAR_INPUTS || !Number.isFinite(elapsedFraction) || elapsedFraction<0 || elapsedFraction>1 || calendarRates.some(g=>!Number.isFinite(g)||g<=-100)) throw new Error('Invalid calendar earnings bridge.');
   const levels=[1];
   for (const g of calendarRates) levels.push(levels.at(-1)*(1+g/100));
-  const forward=Array.from({length:6},(_,i)=>(1-elapsedFraction)*levels[i]+elapsedFraction*levels[i+1]);
+  const forward=Array.from({length:CALENDAR_INPUTS},(_,i)=>(1-elapsedFraction)*levels[i]+elapsedFraction*levels[i+1]);
   return {rates:forward.slice(1).map((f,i)=>(f/forward[i]-1)*100),levels,forward};
 }
 
@@ -99,14 +106,14 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
   const bridgeEligible=!!(recorded && !forecastExpired && ['calendar-year','publisher-year'].includes(forecast?.periodBasis)
     && ['rolling-12m','forward-unspecified'].includes(forwardHorizon)
     && allowed?.includes('approximate-scenario-growth')
-    && Array.from({length:6},(_,i)=>startYear+i).some(year=>estimates.has(year)));
+    && Array.from({length:CALENDAR_INPUTS},(_,i)=>startYear+i).some(year=>estimates.has(year)));
   const bridgeAssumptions=bridgeEligible ? [
     'Uniform earnings accrual within every modeled calendar year.',
     ...(forecast.periodBasis==='publisher-year' ? ['Treat publisher annual year labels as calendar years; the source does not establish calendar/fiscal aggregation.'] : []),
     ...(forwardHorizon==='forward-unspecified' ? ['Treat the source forward earnings denominator as rolling NTM for this scenario; the publisher does not disclose its horizon.'] : [])
   ] : [];
   const bridgeQuality=bridgeEligible ? bridgeAssumptions.length===1 ? 'explicit-calendar-ntm' : 'assumed-period-alignment' : null;
-  const calendarInputs=bridgeEligible ? Array.from({length:6},(_,i)=>{
+  const calendarInputs=bridgeEligible ? Array.from({length:CALENDAR_INPUTS},(_,i)=>{
     const year=startYear+i,published=estimates.get(year);
     return {year,growth:published?.growth ?? longTerm?.growth,published:!!published,
       periodLabel:published?.periodLabel || `Calendar year ${year} long-term extension`,
@@ -126,14 +133,14 @@ export function fiveYearGrowthPath(row, now = new Date(), overrides = {}) {
         asOf:informed?forecast.asOf:longTerm.asOf,publishedForYear:false,derived:true,
         periodBasis:'modeled-rolling-12m',elapsedFraction,calendarInputs,bridgeQuality,bridgeAssumptions,
         formula:'F_i=(1-w)*CY_i+w*CY_(i+1); g_i=F_i/F_(i-1)-1. CY levels compound their named annual growth rates.',
-        application:'Uniform earnings accrual and a six-calendar-year extension are model assumptions. Raw source rates are not replayed as NTM growth.'}
+        application:'Uniform earnings accrual and an eleven-calendar-year extension are model assumptions. Raw source rates are not replayed as NTM growth.'}
       : longTerm ? {...longTerm,publishedForYear:false,derived:true} : {publishedForYear:false};
     return {year,growth,basis:custom?'custom assumption':bridgeError?'unavailable':informed?'calendar-to-forward model':longTerm?'long-term EPS projection':'unavailable',
       periodLabel:`Holding year ${i+1}${informed?' · modeled NTM transition':''}`,policyVersion:GROWTH_POLICY.version,reviewedAt:GROWTH_POLICY.reviewedAt,
       scenarioDate:recorded,terminalGrowth:longTerm?.growth,method:GROWTH_POLICY.method,sourceEvidence};
   });
   const mappingReason=bridgeError ? `${bridgeError} No affected return is calculated.` : bridge
-    ? `${bridgeQuality==='explicit-calendar-ntm'?'Explicit calendar-year estimates':'Annual source estimates under disclosed period assumptions'} inform a uniform-accrual NTM timing model. Entry forward earnings already include much of next calendar year; six calendar inputs produce five annual transitions. Missing calendar years use the sourced long-term EPS proxy. ${bridgeAssumptions.slice(1).join(' ')}`
+    ? `${bridgeQuality==='explicit-calendar-ntm'?'Explicit calendar-year estimates':'Annual source estimates under disclosed period assumptions'} inform a uniform-accrual NTM timing model. Entry forward earnings already include much of next calendar year; eleven calendar inputs produce ten annual transitions. Missing calendar years use the sourced long-term EPS proxy. ${bridgeAssumptions.slice(1).join(' ')}`
     : forecastExpired && longTerm ? `The published ${forecast.asOf} estimates ${[growthHealth.observationStale ? `were older than their source cadence allows at the ${recorded} valuation date` : null, growthHealth.superseded ? 'are marked superseded' : null, growthHealth.definitionReview ? 'require definition review' : null].filter(Boolean).join(' and ')} and remain visible as a dated reference only; the default uses a ${longTerm.growth}% derived long-term EPS scenario based on Invesco’s ${longTerm.benchmark} proxy.`
     : longTerm ? `Published estimates remain visible with their original periods. Their growth measurement interval cannot support an annual bridge; the default uses a ${longTerm.growth}% derived long-term EPS scenario based on Invesco’s ${longTerm.benchmark} proxy.`
     : 'No sourced long-term EPS projection is connected for this benchmark.';

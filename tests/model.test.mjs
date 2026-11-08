@@ -10,16 +10,16 @@ test('one-year discussion example: 6% price gain plus 1.5% dividend equals 7.5%'
 });
 test('EPS and exit multiple independently reproduce terminal price', () => {
   const m = project();
-  close(m.last.price, 100 * 1.06 ** 5 * (20 / 25));
-  close(1 + m.priceCAGR, 1.06 * (.8 ** .2));
-  close(m.last.cumulativeDividend, 1.2 * (1.06 ** 5 - 1) / .06);
+  close(m.last.price, 100 * 1.06 ** 10 * (20 / 25));
+  close(1 + m.priceCAGR, 1.06 * (.8 ** .1));
+  close(m.last.cumulativeDividend, 1.2 * (1.06 ** 10 - 1) / .06);
   close(m.last.cashWealth, m.last.price + m.last.cumulativeDividend);
   close(100 + m.epsGain + m.multipleImpact + m.last.cumulativeDividend, m.last.cashWealth);
 });
 test('calculated IRR gives zero NPV and includes each dividend once', () => {
   const m = project();
   close(m.cashflows.reduce((sum, amount, i) => sum + amount / (1 + m.cashIRR) ** i, 0), 0, 1e-9);
-  assert.equal(m.cashflows.length, 6);
+  assert.equal(m.cashflows.length, 11);
   close(m.cashflows.at(-1), m.last.dividend + m.last.price);
   close(m.cashflows.slice(1).reduce((a, b) => a + b, 0), m.last.cashWealth);
 });
@@ -55,7 +55,7 @@ test('sensitivity uses exact model and keeps non-grid assumptions fixed', () => 
 });
 test('export contains entry plus each annual cash flow and terminal wealth', () => {
   const m = project(); const rows = annualCSV(m).split('\n');
-  assert.equal(rows.length, 7); assert.equal(rows[1].split(',')[3], '100');
+  assert.equal(rows.length, 12); assert.equal(rows[1].split(',')[3], '100');
   close(+rows.at(-1).split(',')[6], m.last.cashWealth, 1e-7);
 });
 test('IRR matches an independent simple cash-flow case', () => {

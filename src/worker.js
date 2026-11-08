@@ -61,7 +61,7 @@ export default {
     }
     if (isNotesResearchPath(url.pathname)) {
       const response = await handleNotesResearch(request, env);
-      return enrichSearchNavigation(enrichStudyHTML(response, url.pathname));
+      return enrichSearchNavigation(enrichStudyHTML(response, url.pathname), url.pathname);
     }
     if (url.pathname !== '/api/indices') {
       const response = await env.ASSETS.fetch(request);

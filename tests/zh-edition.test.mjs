@@ -72,3 +72,9 @@ test('Chinese pages link to the Chinese structured-note and GIC pages',async()=>
  assert.match(html,/href="\/zh\/gics"/);
  assert.doesNotMatch(html,/href="\/(?:notes|gics)\b/);
 });
+
+test('Chinese study pages get the Chinese search entry',async()=>{
+ const {zhSearchLink}=await import('../src/search-navigation.js');
+ assert.match(zhSearchLink,/href="\/zh\/search"/);
+ assert.match(zhSearchLink,/<span>搜索<\/span>/);
+});

@@ -165,11 +165,39 @@ for url, path in page_files():
     page_keys[key] = {key: pairs[key] for key in sorted(keys)}
     frequency.update(keys)
 
+# The structured-note study is rendered entirely in the browser, so it has no
+# static page; its captured strings form their own dictionary. Generic machine
+# translation reads its vocabulary as everyday words ("note" → 笔记, "call" →
+# 呼叫), and every amount in the study is in Canadian dollars.
+NOTES_FIXES = (
+    ("自动呼叫", "自动赎回"), ("累计通话次数", "累计赎回"), ("呼叫", "赎回"), ("通话", "赎回"),
+    ("笔记", "票据"), ("注释", "票据"), ("优惠券", "票息"), ("成熟度", "到期"), ("欧洲", "欧式"),
+    ("壁垒", "障碍"), ("区块引导", "区块自助抽样"), ("引导", "自助抽样"), ("日志回报", "对数回报"),
+    ("日志返回", "对数回报"), ("日志", "对数"), ("型号", "模型"), ("校准样品", "校准样本"),
+    ("索引", "指数"), ("原面", "原始面值"), ("美元面的", "加元面值的"), ("美元", "加元"),
+)
+NOTES_YEARS = re.compile(r"(\d)\s*岁")
+
+
+def notes_fix(value: str) -> str:
+    for old, new in NOTES_FIXES:
+        value = value.replace(old, new)
+    return NOTES_YEARS.sub(r"\1 年", value)
+
+
+notes_capture = RUNTIME / "notes.json"
+if notes_capture.exists():
+    values = {value: notes_fix(pairs[value]) for value in json.loads(notes_capture.read_text()) if value in pairs}
+    page_keys["notes"] = dict(sorted(values.items()))
+
 shared_keys = {key for key, count in frequency.items() if count >= 20}
 shared = {key: pairs[key] for key in sorted(shared_keys)}
-for values in page_keys.values():
-    for key in shared_keys:
-        values.pop(key, None)
+for key, values in page_keys.items():
+    # The notes dictionary carries its own fixed forms of shared strings.
+    if key == "notes":
+        continue
+    for shared_key in shared_keys:
+        values.pop(shared_key, None)
 
 OUT.mkdir(parents=True, exist_ok=True)
 for old in OUT.glob("*.json"):

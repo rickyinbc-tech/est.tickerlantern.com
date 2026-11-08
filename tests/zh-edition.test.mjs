@@ -53,3 +53,22 @@ test('Chinese routes canonicalize like English routes',async()=>{
   assert.equal(response.headers.get('Location'),'https://tickerlantern.com'+to);
  }
 });
+
+test('Chinese structured-note and GIC pages are served by the notes study',async()=>{
+ for(const path of ['/zh/notes/research','/zh/notes','/zh/notes/TLN16727','/zh/gics','/zh/indices/SOLCD265','/zh/probabilities','/zh/sources']){
+  let forwarded;
+  const response=await worker.fetch(new Request('https://tickerlantern.com'+path),{NOTES_RESEARCH:{fetch:async request=>{forwarded=new URL(request.url).pathname;return new Response('study',{headers:{'Content-Type':'text/plain'}});}}});
+  assert.equal(response.status,200,path);
+  assert.equal(forwarded,path);
+ }
+ const slash=await worker.fetch(new Request('https://tickerlantern.com/zh/gics/'),{});
+ assert.equal(slash.status,308);
+ assert.equal(slash.headers.get('Location'),'https://tickerlantern.com/zh/gics');
+});
+
+test('Chinese pages link to the Chinese structured-note and GIC pages',async()=>{
+ const html=await readFile('dist/zh/index.html','utf8');
+ assert.match(html,/href="\/zh\/notes\/research"/);
+ assert.match(html,/href="\/zh\/gics"/);
+ assert.doesNotMatch(html,/href="\/(?:notes|gics)\b/);
+});

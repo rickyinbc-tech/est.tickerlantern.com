@@ -48,7 +48,8 @@
     var clean = normalize(value);
     if (!clean || CJK.test(clean)) return null;
     if (dict[clean]) return dict[clean];
-    for (var index = 0; index < numeric.length; index += 1) {
+    // The page dictionary loads after the shared one; its templates win.
+    for (var index = numeric.length - 1; index >= 0; index -= 1) {
       var rule = numeric[index];
       var match = clean.match(rule.re);
       if (!match) continue;
@@ -107,7 +108,8 @@
   function flush() {
     queued = false;
     translateTree(document.body);
-    translateText(document.title ? document.title.firstChild : null);
+    var title = document.querySelector('title');
+    translateText(title ? title.firstChild : null);
   }
 
   function schedule() {

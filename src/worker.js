@@ -51,7 +51,7 @@ export default {
       url.pathname = url.pathname === '/index.html' ? '/' : url.pathname === '/research' || url.pathname === '/research/index.html' ? '/research/' : url.pathname.replace(/(?:\.html|\/)$/, '');
       return Response.redirect(url.href, 308);
     }
-    if (url.pathname.endsWith('/') && studyPages[url.pathname.slice(0, -1)]) {
+    if (url.pathname.endsWith('/') && studyPages[url.pathname.slice(0, -1).replace(/^\/zh(?=\/)/, '')]) {
       url.pathname = url.pathname.slice(0, -1);
       return Response.redirect(url.href, 308);
     }

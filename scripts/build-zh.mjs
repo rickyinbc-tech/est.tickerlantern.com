@@ -83,7 +83,8 @@ function injectSwitcher(html, href, lang, label, title) {
 }
 
 function rewriteInternal(html) {
-  const keep = /^\/(?:zh(?:\/|$)|notes(?:\/|$)|gics(?:\/|$)|api(?:\/|$)|data(?:\/|$)|zh-locales(?:\/|$)|favicon|social|sitemap|robots)/;
+  // Structured-note and GIC pages have Chinese editions under /zh/ as well.
+  const keep = /^\/(?:zh(?:\/|$)|api(?:\/|$)|data(?:\/|$)|downloads(?:\/|$)|notes-app(?:\/|$)|zh-locales(?:\/|$)|favicon|social|sitemap|robots)/;
   const asset = /\.(?:css|js|json|svg|png|jpe?g|webp|gif|xml|txt|csv|pdf|ico|woff2?)$/i;
   return html.replace(/(href|action)="(\/[^"]*)"/g, (match, attr, url) => {
     if (keep.test(url) || asset.test(url) || url.startsWith('//')) return match;
@@ -100,7 +101,7 @@ function localizeJsonLd(html, zhPath) {
       if (typeof value !== 'string' || !value.startsWith(ORIGIN)) return value;
       const rest = value.slice(ORIGIN.length);
       if (!rest || rest === '/' || rest.startsWith('/#')) return value;
-      if (/^\/(?:zh|notes|gics|api|data)\b/.test(rest)) return value;
+      if (/^\/(?:zh|api|data|downloads)\b/.test(rest)) return value;
       if (/\.(?:png|jpe?g|svg|webp|gif|css|js|json|xml|txt|csv|pdf)(?:[?#]|$)/i.test(rest)) return value;
       return ORIGIN + '/zh' + rest;
     };

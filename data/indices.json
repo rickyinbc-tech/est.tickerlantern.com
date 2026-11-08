@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-11-08T00:24:04Z",
+  "publishedAt": "2026-11-08T00:32:57Z",
   "sourceCheckAt": "2026-11-08T00:22:23Z",
   "refreshCadence": "Daily at 23:15 UTC plus daily scheduled browser source checks",
   "historyPolicy": "Published 10-year forward-P/E references retain their own dates, definitions and sources. An older dated reference is not relabelled as a current rolling mean.",
   "refresh": {
     "successful": 19,
-    "failed": 6,
+    "failed": 5,
     "notConnected": 0
   },
   "sourceJobs": [
@@ -55,21 +55,6 @@
       "discoveryIssues": [
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-2Q-Segal.pdf failed: No unique explicitly labelled historical-mean table",
         "Candidate https://cambridgeretirementma.gov/wp-content/uploads/2026-1Q-Segal.pdf failed: No unique explicitly labelled historical-mean table"
-      ]
-    },
-    {
-      "id": "nasdaq-dashboard",
-      "indices": [
-        "nasdaq100",
-        "russell2000",
-        "japan"
-      ],
-      "status": "retained",
-      "checkedAt": "2026-11-08T00:22:23Z",
-      "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is overdue (48-hour limit)",
-      "discoveryIssues": [
-        "Discovery failed: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR",
-        "Candidate https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026 failed: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR"
       ]
     },
     {
@@ -203,6 +188,18 @@
       "checkedAt": "2026-11-08T00:22:23Z",
       "error": "Expected one dated CSI factsheet header",
       "discoveryIssues": []
+    },
+    {
+      "id": "nasdaq-dashboard",
+      "indices": [
+        "japan",
+        "nasdaq100",
+        "russell2000"
+      ],
+      "status": "browser-verified",
+      "checkedAt": "2026-11-08T00:31:03Z",
+      "lastBrowserCheck": "2026-11-08T00:31:03Z",
+      "error": null
     }
   ],
   "indices": [
@@ -648,77 +645,77 @@
       "landingUrl": null,
       "pdfUrl": null,
       "adapter": null,
-      "forwardPE": 21.36,
-      "mean10YearForwardPE": 23.09,
+      "forwardPE": 20.3,
+      "mean10YearForwardPE": 23.1,
       "dividendYield": 0.5,
-      "asOf": "2026-10-13",
-      "meanAsOf": "2026-10-13",
+      "asOf": "2026-10-28",
+      "meanAsOf": "2026-10-28",
       "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
         "publicationDate": null
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
-      "yieldAsOf": "2026-10-13",
+      "yieldAsOf": "2026-10-28",
       "yieldSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -775,33 +772,33 @@
           "definitionId": "nasdaq-dashboard:forwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "NTM P/E",
-          "rawReportedValue": 21.36,
+          "rawReportedValue": 20.3,
           "units": "times",
           "precisionDecimals": 2,
           "classification": "estimate-based-published-statistic",
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Nasdaq-100 row; NTM P/E column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -836,33 +833,33 @@
           "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "10-year average of NTM P/E",
-          "rawReportedValue": 23.09,
+          "rawReportedValue": 23.1,
           "units": "times",
           "precisionDecimals": 2,
           "classification": "reported-historical-reference",
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Nasdaq-100 row; NTM P/E10yr Avg column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -896,7 +893,7 @@
             "windowYears": 10,
             "windowStart": null,
             "windowEnd": null,
-            "referenceDate": "2026-10-13",
+            "referenceDate": "2026-10-28",
             "windowEndpointBasis": "reference date known; precise sampled endpoints not separately disclosed",
             "samplingFrequency": "daily",
             "observationTreatment": "not disclosed",
@@ -909,7 +906,7 @@
           "definitionId": "nasdaq-dashboard:dividendYield",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "Dividend Yield",
           "rawReportedValue": 0.5,
@@ -919,23 +916,23 @@
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Nasdaq-100 row; Dividend Yield column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -1061,18 +1058,18 @@
         "dividendYield": "numeric"
       },
       "metricRawValues": {
-        "forwardPE": 21.36,
+        "forwardPE": 20.3,
         "dividendYield": 0.5
       },
       "yieldSync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       }
@@ -1086,77 +1083,77 @@
       "landingUrl": null,
       "pdfUrl": null,
       "adapter": null,
-      "forwardPE": 23.87,
-      "mean10YearForwardPE": 23.34,
+      "forwardPE": 23.85,
+      "mean10YearForwardPE": 23.33,
       "dividendYield": 1.5,
-      "asOf": "2026-10-13",
-      "meanAsOf": "2026-10-13",
+      "asOf": "2026-10-28",
+      "meanAsOf": "2026-10-28",
       "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
       "source": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1,
         "dateBasis": "explicit-observation-date",
         "publicationDate": null
       },
       "sync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
       "earningsBasis": "not disclosed",
       "forwardMethod": null,
-      "yieldAsOf": "2026-10-13",
+      "yieldAsOf": "2026-10-28",
       "yieldSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       },
@@ -1226,33 +1223,33 @@
           "definitionId": "nasdaq-dashboard:forwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "NTM P/E",
-          "rawReportedValue": 23.87,
+          "rawReportedValue": 23.85,
           "units": "times",
           "precisionDecimals": 2,
           "classification": "estimate-based-published-statistic",
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Russell 2000 row; NTM P/E column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -1287,33 +1284,33 @@
           "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "10-year average of NTM P/E",
-          "rawReportedValue": 23.34,
+          "rawReportedValue": 23.33,
           "units": "times",
           "precisionDecimals": 2,
           "classification": "reported-historical-reference",
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Russell 2000 row; NTM P/E10yr Avg column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -1347,7 +1344,7 @@
             "windowYears": 10,
             "windowStart": null,
             "windowEnd": null,
-            "referenceDate": "2026-10-13",
+            "referenceDate": "2026-10-28",
             "windowEndpointBasis": "reference date known; precise sampled endpoints not separately disclosed",
             "samplingFrequency": "daily",
             "observationTreatment": "not disclosed",
@@ -1360,7 +1357,7 @@
           "definitionId": "nasdaq-dashboard:dividendYield",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "Dividend Yield",
           "rawReportedValue": 1.5,
@@ -1370,23 +1367,23 @@
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact Russell 2000 row; Dividend Yield column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -1512,18 +1509,18 @@
         "dividendYield": "numeric"
       },
       "metricRawValues": {
-        "forwardPE": 23.87,
+        "forwardPE": 23.85,
         "dividendYield": 1.5
       },
       "yieldSync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "forwardPE",
-          "mean10YearForwardPE",
-          "dividendYield"
+          "dividendYield",
+          "mean10YearForwardPE"
         ],
         "ownerId": "nasdaq-dashboard"
       }
@@ -5973,7 +5970,7 @@
       "mean10YearForwardPE": 15.15,
       "dividendYield": 1.94,
       "asOf": "2026-11-05",
-      "meanAsOf": "2026-10-13",
+      "meanAsOf": "2026-10-28",
       "meanMethod": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
       "source": {
         "publisher": "J.P. Morgan / FactSet / MSCI",
@@ -6015,22 +6012,22 @@
       "forwardMethod": null,
       "meanSource": {
         "publisher": "Nasdaq / Bloomberg / FactSet",
-        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+        "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
         "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
-        "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
-        "parserVersion": "nasdaq-global-dashboard-2",
+        "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+        "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
         "frequency": "Daily scheduled browser check; requires the owner’s Mac and Codex to be available",
         "syncMode": "rolling-report",
         "adapterId": "nasdaq-dashboard",
-        "checkedAt": "2026-10-26T06:24:32Z",
+        "checkedAt": "2026-11-08T00:31:03Z",
         "transport": "scheduled-browser",
         "page": 1
       },
       "meanSync": {
-        "status": "retained",
-        "lastAttempt": "2026-11-08T00:22:23Z",
-        "lastSuccess": "2026-10-26T06:24:32Z",
-        "error": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
+        "status": "ok",
+        "lastAttempt": "2026-11-08T00:31:03Z",
+        "lastSuccess": "2026-11-08T00:31:03Z",
+        "error": null,
         "metrics": [
           "mean10YearForwardPE"
         ],
@@ -6154,7 +6151,7 @@
           "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
           "definitionVersion": "source-definitions-2026-10-26.1",
           "state": "numeric",
-          "observationDate": "2026-10-13",
+          "observationDate": "2026-10-28",
           "dateBasis": "explicit-observation-date",
           "rawReportedLabel": "10-year average of NTM P/E",
           "rawReportedValue": 15.15,
@@ -6164,23 +6161,23 @@
           "evidence": {
             "publisher": "Nasdaq / Bloomberg / FactSet",
             "publicationHost": "www.nasdaq.com",
-            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
             "discoveryUrl": "https://www.nasdaq.com/products/global-indexes/research-insights",
             "page": 1,
             "location": "Global Equities table; exact MSCI Japan row; NTM P/E10yr Avg column",
-            "observationDate": "2026-10-13",
+            "observationDate": "2026-10-28",
             "dateBasis": "explicit-observation-date",
-            "publicationDate": "2026-10-16",
+            "publicationDate": null,
             "priceDate": null,
             "estimateVintage": null,
-            "checkStatus": "retained",
-            "failureSummary": "Discovery: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Dashboard: Publisher navigation produced no public document response: net::ERR_HTTP2_PROTOCOL_ERROR; Scheduled-browser verification is over",
-            "lastAttempt": "2026-11-08T00:22:23Z",
-            "lastSuccess": "2026-10-26T06:24:32Z",
-            "checkedAt": "2026-10-26T06:24:32Z",
-            "latestAcceptedChange": "2026-10-26T11:03:14Z",
-            "parserVersion": "nasdaq-global-dashboard-2",
-            "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+            "checkStatus": "ok",
+            "failureSummary": null,
+            "lastAttempt": "2026-11-08T00:31:03Z",
+            "lastSuccess": "2026-11-08T00:31:03Z",
+            "checkedAt": "2026-11-08T00:31:03Z",
+            "latestAcceptedChange": "2026-11-08T00:32:57Z",
+            "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+            "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
             "transport": "scheduled-browser",
             "evidenceNote": "Dates not separately disclosed remain null. checkedAt is retrieval/validation evidence, never an observation date.",
             "underlyingProvider": "Nasdaq Global Indexes / Bloomberg / FactSet"
@@ -6214,7 +6211,7 @@
             "windowYears": 10,
             "windowStart": null,
             "windowEnd": null,
-            "referenceDate": "2026-10-13",
+            "referenceDate": "2026-10-28",
             "windowEndpointBasis": "reference date known; precise sampled endpoints not separately disclosed",
             "samplingFrequency": "daily",
             "observationTreatment": "not disclosed",
@@ -9581,8 +9578,8 @@
   },
   "definitionRegistryVersion": "source-definitions-2026-10-26.1",
   "modelConventionVersion": "tickerlantern-annual-forward-anchor-v2",
-  "snapshotId": "8fa816ba2353adf55ba037e332d87edb616aa155c82da74009985b4bb48b4ae8",
-  "snapshotVersion": 14,
+  "snapshotId": "cfadec375cdbc8c44a1303a7a64f3bcd6fe7c6d9ef44cbd323b58317b39651e1",
+  "snapshotVersion": 15,
   "changeHistory": [
     {
       "snapshotId": "0f351cbc35c8c9f5927c30263efbb5ffdab58fc2e9564761ff3b88a46d1dd07d",
@@ -43986,13 +43983,606 @@
           "reason": "growth-publisher-refresh"
         }
       ]
+    },
+    {
+      "snapshotId": "cfadec375cdbc8c44a1303a7a64f3bcd6fe7c6d9ef44cbd323b58317b39651e1",
+      "snapshotVersion": 15,
+      "acceptedAt": "2026-11-08T00:32:57Z",
+      "reason": "browser-verified-publisher-refresh",
+      "changes": [
+        {
+          "benchmark": "nasdaq100",
+          "metric": "forwardPE",
+          "old": {
+            "value": 21.36,
+            "observationDate": "2026-10-13",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 20.3,
+            "observationDate": "2026-10-28",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": "explicit-observation-date"
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": "explicit-observation-date"
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "nasdaq100",
+          "metric": "mean10YearForwardPE",
+          "old": {
+            "value": 23.09,
+            "observationDate": "2026-10-13",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 23.1,
+            "observationDate": "2026-10-28",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "nasdaq100",
+          "metric": "dividendYield",
+          "old": {
+            "value": 0.5,
+            "observationDate": "2026-10-13",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "dividend-yield construction not disclosed",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 0.5,
+            "observationDate": "2026-10-28",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "dividend-yield construction not disclosed",
+              "identity": "nasdaq100",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "russell2000",
+          "metric": "forwardPE",
+          "old": {
+            "value": 23.87,
+            "observationDate": "2026-10-13",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 23.85,
+            "observationDate": "2026-10-28",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:forwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "synthetic-scenario",
+              "rolling-NTM-scenario"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": "explicit-observation-date"
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": "explicit-observation-date"
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "russell2000",
+          "metric": "mean10YearForwardPE",
+          "old": {
+            "value": 23.34,
+            "observationDate": "2026-10-13",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 23.33,
+            "observationDate": "2026-10-28",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "russell2000",
+          "metric": "dividendYield",
+          "old": {
+            "value": 1.5,
+            "observationDate": "2026-10-13",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "dividend-yield construction not disclosed",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 1.5,
+            "observationDate": "2026-10-28",
+            "method": null,
+            "definitionId": "nasdaq-dashboard:dividendYield",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not applicable to yield",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "dividend-yield construction not disclosed",
+              "identity": "russell2000",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "first-payment-anchor"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        },
+        {
+          "benchmark": "japan",
+          "metric": "mean10YearForwardPE",
+          "old": {
+            "value": 15.15,
+            "observationDate": "2026-10-13",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "japan",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026"
+          },
+          "new": {
+            "value": 15.15,
+            "observationDate": "2026-10-28",
+            "method": "Nasdaq reported 10-year average of daily next-12-month P/E observations; Bloomberg / FactSet",
+            "definitionId": "nasdaq-dashboard:mean10YearForwardPE",
+            "definitionVersion": "source-definitions-2026-10-26.1",
+            "state": "numeric",
+            "economicDefinition": {
+              "earningsBasis": "not disclosed in the cited metric passage",
+              "aggregation": "same published exact-index NTM series; underlying per-company calculation not disclosed",
+              "negativeEarners": "not disclosed",
+              "missingEstimates": "not disclosed",
+              "weighting": "not disclosed for this statistic",
+              "currency": "not disclosed for this ratio; dimensionless, no FX return is implied",
+              "methodologyVersion": "not disclosed",
+              "yieldConstruction": "Dividend Yield column; trailing/indicated/forecast and special-distribution treatment not disclosed",
+              "taxTreatment": "not disclosed",
+              "horizon": "rolling-12m",
+              "identity": "japan",
+              "returnVariant": "dimensionless valuation or yield; no total-return series is being ingested"
+            },
+            "permittedUse": [
+              "display",
+              "historical-reference"
+            ],
+            "evidenceStatus": "published-transcription",
+            "publisher": "Nasdaq / Bloomberg / FactSet",
+            "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026"
+          },
+          "evidenceRevision": {
+            "oldSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-16-2026",
+              "sha256": "5fcc2162faf9abbb4165c777a84a99c48e61c2ab9d7047cc537774611ac8dc22",
+              "parserVersion": "nasdaq-global-dashboard-2",
+              "checkedAt": "2026-10-26T06:24:32Z",
+              "publicationDate": null,
+              "dateBasis": null
+            },
+            "newSource": {
+              "publisher": "Nasdaq / Bloomberg / FactSet",
+              "url": "https://www.nasdaq.com/docs/global-indexes/global-markets-dashboard-oct-30-2026",
+              "sha256": "992e4772be220eb18573cfef93bd1199e6dd1f0b45e2cfbd3f9b801869772c4f",
+              "parserVersion": "nasdaq-global-dashboard-2+visual-browser-review",
+              "checkedAt": "2026-11-08T00:31:03Z",
+              "publicationDate": null,
+              "dateBasis": null
+            }
+          },
+          "reason": "browser-verified-publisher-refresh"
+        }
+      ]
     }
   ],
   "pipelineRun": {
-    "event": "workflow_dispatch",
-    "runId": "42429395569",
-    "url": "https://github.com/rickyinbc-tech/est.tickerlantern.com/actions/runs/42429395569",
-    "checkedAt": "2026-11-08T00:24:04Z"
+    "event": "local",
+    "runId": null,
+    "url": null,
+    "checkedAt": "2026-11-08T00:32:57Z"
   },
   "statusMetadataRepair": {
     "appliedAt": "2026-10-23T10:22:07Z",
@@ -44012,7 +44602,7 @@
       }
     ]
   },
-  "browserSourceCheckAt": "2026-10-26T06:24:32Z",
+  "browserSourceCheckAt": "2026-11-08T00:31:03Z",
   "primarySourceJobs": [
     {
       "id": "primary:factset",

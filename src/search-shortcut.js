@@ -1,9 +1,9 @@
-import {searchLink} from './search-navigation.js';
+import {searchLink,zhSearchLink} from './search-navigation.js';
 // The notes/GIC application renders its shared header after HTML delivery and
 // can replace it on navigation. Keep the entry present across those renders.
 function ensureSearchLink(){
   const header=document.querySelector('.tl-header__inner');
-  if(header&&!header.querySelector('.tl-search-link'))header.querySelector('.tl-brand')?.insertAdjacentHTML('afterend',searchLink);
+  if(header&&!header.querySelector('.tl-search-link'))header.querySelector('.tl-brand')?.insertAdjacentHTML('afterend',/^\/zh(?:\/|$)/.test(location.pathname)?zhSearchLink:searchLink);
 }
 ensureSearchLink();
 const appRoot=document.querySelector('#root');

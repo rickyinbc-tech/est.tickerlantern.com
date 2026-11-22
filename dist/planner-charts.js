@@ -64,12 +64,16 @@ export function lineChart({ id, title, desc, series, bands = [], xFormat = Strin
   return frame({ id, title, desc, body, height }).replace('<svg ', `<svg data-unit="${unit}" data-x-kind="${xKind}" data-series="${data}" data-x-min="${xMin}" data-x-max="${xMax}" data-plot-left="${M.left}" data-plot-width="${iw}" data-plot-top="${M.top}" data-plot-height="${ih}" tabindex="0" `);
 }
 
-/** Rough text width for the chart font: about 0.6em per character. */
-export const textWidth = (text, size) => String(text).length * size * 0.6;
+/** Rough text width for the chart font: about 0.6em per Latin character, 1em per CJK character. */
+export const textWidth = (text, size) => [...String(text)].reduce((w, c) => w + (/[\u3000-\u9fff\uff00-\uffef]/.test(c) ? 1 : 0.6), 0) * size;
 /** Split a label into at most two lines at the space nearest its middle. */
 export function twoLines(label) {
   const words = String(label).split(' ');
-  if (words.length < 2) return [String(label)];
+  if (words.length < 2) {
+    // Chinese labels have no spaces: split near the middle character instead.
+    const chars = [...String(label)];
+    return chars.length > 3 && /[\u3000-\u9fff]/.test(label) ? [chars.slice(0, Math.ceil(chars.length / 2)).join(''), chars.slice(Math.ceil(chars.length / 2)).join('')] : [String(label)];
+  }
   let best = 1, diff = Infinity;
   for (let i = 1; i < words.length; i++) { const d = Math.abs(words.slice(0, i).join(' ').length - words.slice(i).join(' ').length); if (d < diff) { diff = d; best = i; } }
   return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
@@ -103,6 +107,33 @@ export function barChart({ id, title, desc, categories, series, yFormat = String
     if (valueLabels) body += `<text class="pc-value" x="${r1(x + (bw - 2) / 2)}" y="${r1(v >= 0 ? top - 6 : top + h + 14)}" text-anchor="middle">${esc(yFormat(v))}</text>`;
   }));
   return frame({ id, title, desc, body, height }).replace('<svg ', `<svg data-bars="${categories.length}" `);
+}
+
+/**
+ * One row per item, label above a full-width track, so it reads the same on a
+ * phone and a desktop. Each row is either a range (lo..hi with a dot at mid) or
+ * a bar from zero to `value`. `highlight` rows are drawn in the accent colour.
+ */
+export function rowChart({ id, title, desc, rows, format }) {
+  const rowH = 46, top = 6, lx = 8, left = 50, right = 56, height = top + rows.length * rowH + 26;
+  const vals = rows.flatMap(r => r.value != null ? [r.value, 0] : [r.lo, r.hi, 0]);
+  const x = niceTicks(Math.min(...vals), Math.max(...vals), W < 560 ? 4 : 6);
+  const iw = W - left - right, xs = v => left + (v - x.lo) / (x.hi - x.lo) * iw;
+  let body = '';
+  for (const t of x.ticks) body += `<line class="pc-gridline${t === 0 ? ' pc-zero' : ''}" x1="${r1(xs(t))}" x2="${r1(xs(t))}" y1="${top}" y2="${top + rows.length * rowH}"/><text class="pc-tick" x="${r1(xs(t))}" y="${top + rows.length * rowH + 18}" text-anchor="middle">${esc(format(t))}</text>`;
+  rows.forEach((r, i) => {
+    const y = top + i * rowH, ty = y + 16, by = y + 26, cls = r.highlight ? 'pc-b' : r.value != null && r.value < 0 ? 'pc-neg' : 'pc-a';
+    body += `<text class="pc-row-label${r.highlight ? ' pc-row-label--hi' : ''}" x="${lx}" y="${ty}">${esc(r.label)}</text>`;
+    if (r.value != null) {
+      const x0 = xs(Math.min(0, r.value)), x1 = xs(Math.max(0, r.value));
+      body += `<rect class="pc-bar ${cls}" x="${r1(x0)}" y="${by}" width="${r1(Math.max(1, x1 - x0))}" height="14" rx="2"><title>${esc(r.label + ': ' + format(r.value))}</title></rect>`;
+      body += `<text class="pc-value" x="${r1(r.value < 0 ? x0 - 6 : x1 + 6)}" y="${by + 11}" text-anchor="${r.value < 0 ? 'end' : 'start'}">${esc(format(r.value))}</text>`;
+    } else {
+      body += `<line class="pc-range ${cls}" x1="${r1(xs(r.lo))}" x2="${r1(xs(r.hi))}" y1="${by + 7}" y2="${by + 7}"><title>${esc(r.label + ': ' + format(r.lo) + ' – ' + format(r.hi))}</title></line><circle class="pc-range-dot ${cls}" cx="${r1(xs(r.mid))}" cy="${by + 7}" r="5"/>`;
+      body += `<text class="pc-value" x="${r1(xs(r.hi) + 6)}" y="${by + 11}">${esc(format(r.hi))}</text><text class="pc-value" x="${r1(xs(r.lo) - 6)}" y="${by + 11}" text-anchor="end">${esc(format(r.lo))}</text>`;
+    }
+  });
+  return frame({ id, title, desc, body, height }).replace('<svg ', `<svg data-rows="${rows.length}" `);
 }
 
 /** Legend markup shared by charts and tables. */

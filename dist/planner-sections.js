@@ -2,37 +2,81 @@
 // limits and a render() that returns chart SVG, a one-sentence summary and a
 // data table. The build calls render() with the defaults; the browser calls it
 // again after every input change, so both always show the same markup.
-import { CPI, cpiEquivalent, cpiAnnualRate, realValue, growthSchedule, recoveryGain, recoveryYears, outcomeBands, equalWeightVolatility, twoAssetMix, regularPurchases, bcMarginalRates, tfsaVsRrspIncremental, creditZones } from './planner-math.js';
-import { lineChart, barChart, legend, dataTable } from './planner-charts.js';
+import { CPI, cpiEquivalent, cpiAnnualRate, realValue, growthSchedule, recoveryGain, recoveryYears, outcomeBands, equalWeightVolatility, twoAssetMix, regularPurchases, bcMarginalRates, creditZones, gicVsFund, breakEvenFundReturn, portfolioStats, annualizedRange, normCdf } from './planner-math.js';
+import { lineChart, barChart, rowChart, legend, dataTable } from './planner-charts.js';
 import { STRINGS } from './planner-strings.js';
 
 export const CPI_LAST = 2025;
 
-export function formatters() {
-  const locale = 'en-CA';
-  const money = new Intl.NumberFormat(locale, { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
-  const cents = new Intl.NumberFormat(locale, { style: 'currency', currency: 'CAD' });
-  const compact = new Intl.NumberFormat(locale, { style: 'currency', currency: 'CAD', notation: 'compact', maximumFractionDigits: 1 });
+export const LANGS = ['en', 'zh'];
+const LOCALE = { en: 'en-CA', zh: 'zh-CN' };
+
+export function formatters(lang = 'en') {
+  const locale = LOCALE[lang] || LOCALE.en;
+  // Canadian dollars shown as "$" in both languages; Chinese uses 万 for compact axis labels.
+  const cur = { style: 'currency', currency: 'CAD', currencyDisplay: 'narrowSymbol' };
+  const money = new Intl.NumberFormat(locale, { ...cur, maximumFractionDigits: 0 });
+  const cents = new Intl.NumberFormat(locale, cur);
+  const compact = new Intl.NumberFormat(locale, { ...cur, notation: 'compact', maximumFractionDigits: 1 });
+  const ordinal = n => lang === 'zh' ? String(n) : n + ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 100 > 10 && n % 100 < 14 ? 0 : n % 10] || 'th');
   return {
     cents: v => cents.format(v),
     money: v => money.format(Math.round(v) === 0 ? 0 : v),
     axisMoney: v => Math.abs(v) >= 10000 ? compact.format(v) : money.format(v),
-    pct: (v, d = 1) => (v * 100).toFixed(d).replace(/\.0+$/, '').replace(/(\.\d*[1-9])0+$/, '$1') + '%',
-    fixed: (v, d = 1) => v.toFixed(d) + '%',
-    date: iso => new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z')),
+    pct: (v, d = 1) => (v * 100).toFixed(d).replace(/\.0+$/, '').replace(/(\.\d*[1-9])0+$/, '$1').replace(/^-/, '−') + '%',
+    fixed: (v, d = 1) => v.toFixed(d).replace(/^-/, '−') + '%',
     num: (v, d = 1) => new Intl.NumberFormat(locale, { maximumFractionDigits: d }).format(v),
-    year: v => String(v)
+    year: v => String(v),
+    ordinal
   };
 }
 
 const fill = (s, vars = {}) => s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
-export const translate = (key, vars) => {
-  const s = STRINGS[key];
-  if (s == null) throw new Error('Missing planner string: ' + key);
+export const translate = (key, vars, lang = 'en') => {
+  const s = STRINGS[lang]?.[key];
+  if (s == null) throw new Error(`Missing planner string (${lang}): ${key}`);
   return fill(s, vars);
 };
+// "1 year" / "5 years"; Chinese has no plural.
+const span = (t, n) => t(n === 1 ? 'span.one' : 'span.other', { n });
 const pick = (rows, every) => rows.filter((r, i) => i % every === 0 || i === rows.length - 1);
 const PRESETS = { cautious: { median: 4, sigma: 6 }, balanced: { median: 5, sigma: 10 }, growth: { median: 6.5, sigma: 15 } };
+
+// Hypothetical asset-class assumptions (annual, in Canadian dollars, before tax
+// and costs). They are rounded teaching inputs, not forecasts, not historical
+// returns and not data for any index or fund. Order matches `keys`.
+export const ASSETS = {
+  keys: ['cash', 'gov', 'hy', 'cdn', 'us', 'intl', 'em'],
+  means: [0.025, 0.035, 0.055, 0.065, 0.07, 0.065, 0.075],
+  vols: [0.01, 0.06, 0.10, 0.15, 0.16, 0.16, 0.22],
+  corr: [
+    [1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0.3, 0.1, 0.1, 0.1, 0.1],
+    [0, 0.3, 1, 0.6, 0.6, 0.6, 0.6],
+    [0, 0.1, 0.6, 1, 0.7, 0.65, 0.65],
+    [0, 0.1, 0.6, 0.7, 1, 0.75, 0.65],
+    [0, 0.1, 0.6, 0.65, 0.75, 1, 0.75],
+    [0, 0.1, 0.6, 0.65, 0.65, 0.75, 1]
+  ],
+  // Hypothetical balanced portfolio: 40% bonds, 60% equities.
+  weights: [0, 0.40, 0, 0.20, 0.25, 0.10, 0.05]
+};
+export const assetStats = () => portfolioStats(ASSETS.weights, ASSETS.means, ASSETS.vols, ASSETS.corr);
+
+// Hypothetical one-year returns (%) for stylized situations, in ASSETS order.
+// Invented to show how a blend behaves; not any actual year.
+export const SCENARIOS = {
+  ratesUp: [2, -11, -9, -6, -12, -8, -14],
+  equityBear: [3, 8, -6, -12, -18, -15, -20],
+  usLed: [4, 2, 7, 10, 25, 12, 8],
+  cadUp: [3, 4, 5, 9, -2, -3, 0],
+  commodity: [4, -12, 1, 12, -10, -8, -5]
+};
+/** Asset returns for a scenario plus the balanced portfolio's weighted return. */
+export function scenarioReturns(name) {
+  const v = SCENARIOS[name], rows = ASSETS.keys.map((k, i) => ({ k, value: v[i] }));
+  return [...rows, { k: 'bal', value: +ASSETS.weights.reduce((sum, w, i) => sum + w * v[i], 0).toFixed(2) }];
+}
 
 export const FIGURES = {
   inflation: {
@@ -55,7 +99,7 @@ export const FIGURES = {
     render(s, t, f) {
       const pts = [], real = [];
       for (let y = 0; y <= s.years; y++) { const nom = s.cash * (1 + s.rate / 100) ** y; pts.push([y, nom]); real.push([y, realValue(nom, s.infl / 100, y)]); }
-      const vars = { cash: f.money(s.cash), years: s.years, nominal: f.money(pts.at(-1)[1]), real: f.money(real.at(-1)[1]), rate: f.pct(s.rate / 100), infl: f.pct(s.infl / 100) };
+      const vars = { cash: f.money(s.cash), span: span(t, s.years), nominal: f.money(pts.at(-1)[1]), real: f.money(real.at(-1)[1]), rate: f.pct(s.rate / 100), infl: f.pct(s.infl / 100) };
       return {
         chart: lineChart({ id: 'fig-cash', title: t('cash.title'), desc: t('cash.summary', vars), series: [{ key: 'a', name: t('cash.nominal'), points: pts }, { key: 'b', name: t('cash.real'), points: real, kind: 'dash' }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.cash, label: t('cash.ref') }] }),
         legend: legend([{ key: 'a', name: t('cash.nominal') }, { key: 'b', name: t('cash.real'), dash: true }]),
@@ -64,28 +108,11 @@ export const FIGURES = {
       };
     }
   },
-  compounding: {
-    inputs: { initial: [5000, 0, 10000000], monthly: [300, 0, 100000], rate: [5, -5, 15], years: [30, 2, 50], delay: [10, 1, 49] },
-    render(s, t, f) {
-      const delay = Math.min(s.delay, s.years - 1), r = s.rate / 100;
-      const now = growthSchedule({ initial: s.initial, monthly: s.monthly, annualRate: r, years: s.years });
-      const late = growthSchedule({ initial: s.initial, monthly: s.monthly, annualRate: r, years: s.years - delay });
-      const latePts = now.filter(row => row.year >= delay).map(row => [row.year, late[row.year - delay].value]);
-      const lateAt = year => year < delay ? 0 : late[year - delay].value;
-      const vars = { years: s.years, delay, now: f.money(now.at(-1).value), nowIn: f.money(now.at(-1).contributed), late: f.money(late.at(-1).value), lateIn: f.money(late.at(-1).contributed), gap: f.money(now.at(-1).value - late.at(-1).value), rate: f.pct(r), share: f.pct(now.at(-1).value > 0 ? Math.max(0, now.at(-1).growth) / now.at(-1).value : 0, 0) };
-      return {
-        chart: lineChart({ id: 'fig-compounding', title: t('comp.title'), desc: t('comp.summary', vars), series: [{ key: 'a', name: t('comp.now'), points: now.map(x => [x.year, x.value]) }, { key: 'b', name: t('comp.late', vars), points: latePts, kind: 'dash' }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years') }),
-        legend: legend([{ key: 'a', name: t('comp.now') }, { key: 'b', name: t('comp.late', vars), dash: true }]),
-        summary: t('comp.summary', vars),
-        table: dataTable({ caption: t('comp.title'), head: [t('col.year'), t('comp.now'), t('comp.late', vars)], rows: pick(now, 5).map(x => [String(x.year), f.money(x.value), f.money(lateAt(x.year))]) })
-      };
-    }
-  },
   contributions: {
     inputs: { monthly: [250, 1, 100000], rate: [5, -5, 15], years: [20, 1, 50] },
     render(s, t, f) {
       const rows = growthSchedule({ monthly: s.monthly, annualRate: s.rate / 100, years: s.years }), last = rows.at(-1);
-      const vars = { monthly: f.money(s.monthly), years: s.years, value: f.money(last.value), contributed: f.money(last.contributed), growth: f.money(last.growth), share: f.pct(last.value > 0 ? Math.max(0, last.growth) / last.value : 0, 0), rate: f.pct(s.rate / 100) };
+      const vars = { monthly: f.money(s.monthly), span: span(t, s.years), value: f.money(last.value), contributed: f.money(last.contributed), growth: f.money(last.growth), share: f.pct(last.value > 0 ? Math.max(0, last.growth) / last.value : 0, 0), rate: f.pct(s.rate / 100) };
       return {
         chart: lineChart({ id: 'fig-contributions', title: t('pac.title'), desc: t('pac.summary', vars), series: [{ key: 'b', name: t('pac.contributed'), points: rows.map(x => [x.year, x.contributed]), kind: 'area' }, { key: 'a', name: t('pac.value'), points: rows.map(x => [x.year, x.value]) }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years') }),
         legend: legend([{ key: 'a', name: t('pac.value') }, { key: 'b', name: t('pac.contributed') }]),
@@ -114,7 +141,7 @@ export const FIGURES = {
     render(s, t, f) {
       const { median, sigma } = PRESETS[s.preset], b = outcomeBands({ median: median / 100, sigma: sigma / 100, years: s.years });
       const at = k => b.map(x => [x.year, x[k] * s.amount]), end = b.at(-1);
-      const vars = { years: s.years, amount: f.money(s.amount), mid: f.money(end.p50 * s.amount), lo: f.money(end.p10 * s.amount), hi: f.money(end.p90 * s.amount), loss: f.pct(end.lossChance, 0), median: f.pct(median / 100), sigma: f.pct(sigma / 100, 0), mix: t('preset.' + s.preset) };
+      const vars = { span: span(t, s.years), amount: f.money(s.amount), mid: f.money(end.p50 * s.amount), lo: f.money(end.p10 * s.amount), hi: f.money(end.p90 * s.amount), loss: f.pct(end.lossChance, 0), median: f.pct(median / 100), sigma: f.pct(sigma / 100, 0), mix: t('preset.' + s.preset) };
       return {
         chart: lineChart({ id: 'fig-volatility', title: t('vol.title', vars), desc: t('vol.summary', vars), bands: [{ key: 'outer', lower: at('p10'), upper: at('p90') }, { key: 'inner', lower: at('p25'), upper: at('p75') }], series: [{ key: 'a', name: t('vol.median'), points: at('p50') }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.amount, label: t('vol.start') }] }),
         legend: legend([{ key: 'a', name: t('vol.median') }, { key: 'inner', name: t('vol.inner') }, { key: 'outer', name: t('vol.outer') }]),
@@ -175,7 +202,7 @@ export const FIGURES = {
       const vals = this.returns, cats = vals.map((_, i) => t('hypo.year', { n: i + 1 })), down = vals.filter(v => v < 0).length;
       const vars = { down, n: vals.length, best: f.fixed(Math.max(...vals), 0), worst: f.fixed(Math.min(...vals), 0) };
       return {
-        chart: barChart({ id: 'fig-hypoReturns', title: t('hypo.returnsTitle'), desc: t('hypo.returnsSummary', vars), categories: cats, shortCategories: vals.map((_, i) => 'Y' + (i + 1)), series: [{ key: 'a', name: t('hypo.returnCol'), values: vals }], yFormat: v => f.fixed(v, 0), yLabel: t('hypo.returnCol'), height: 300 }),
+        chart: barChart({ id: 'fig-hypoReturns', title: t('hypo.returnsTitle'), desc: t('hypo.returnsSummary', vars), categories: cats, shortCategories: vals.map((_, i) => t('hypo.short', { n: i + 1 })), series: [{ key: 'a', name: t('hypo.returnCol'), values: vals }], yFormat: v => f.fixed(v, 0), yLabel: t('hypo.returnCol'), height: 300 }),
         legend: '',
         summary: t('hypo.returnsSummary', vars),
         table: dataTable({ caption: t('hypo.returnsTitle'), head: [t('hypo.yearCol'), t('hypo.returnCol')], rows: vals.map((v, i) => [cats[i], f.fixed(v, 0)]) })
@@ -183,77 +210,79 @@ export const FIGURES = {
     }
   },
   hypoPath: {
-    inputs: { amount: [10000, 1, 10000000], fee: [2, 0, 4] },
+    inputs: { amount: [10000, 1, 10000000] },
     render(s, t, f) {
-      const r = FIGURES.hypoReturns.returns, fee = s.fee / 100;
+      // The invented returns are already net of expenses.
+      const r = FIGURES.hypoReturns.returns;
       let v = s.amount; const bumpy = [[0, v]];
-      r.forEach((x, i) => { v *= (1 + x / 100) * (1 - fee); bumpy.push([i + 1, v]); });
+      r.forEach((x, i) => { v *= 1 + x / 100; bumpy.push([i + 1, v]); });
       const avg = (v / s.amount) ** (1 / r.length) - 1, smooth = bumpy.map(([y]) => [y, s.amount * (1 + avg) ** y]);
       const low = bumpy.reduce((m, p) => Math.min(m, p[1]), Infinity);
-      const vars = { amount: f.money(s.amount), fee: f.pct(fee, 2), end: f.money(v), avg: f.pct(avg, 1), low: f.money(low) };
+      const vars = { amount: f.money(s.amount), end: f.money(v), avg: f.pct(avg, 1), low: f.money(low) };
       return {
-        chart: lineChart({ id: 'fig-hypoPath', title: t('hypo.pathTitle'), desc: t('hypo.pathSummary', vars), series: [{ key: 'a', name: t('hypo.bumpy'), points: bumpy }, { key: 'b', name: t('hypo.smooth', vars), points: smooth, kind: 'dash' }], xFormat: y => y === 0 ? t('hypo.start') : 'Y' + y, yFormat: f.axisMoney, xLabel: t('hypo.yearsLabel'), refLines: [{ y: s.amount, label: t('hypo.invested') }] }),
+        chart: lineChart({ id: 'fig-hypoPath', title: t('hypo.pathTitle'), desc: t('hypo.pathSummary', vars), series: [{ key: 'a', name: t('hypo.bumpy'), points: bumpy }, { key: 'b', name: t('hypo.smooth', vars), points: smooth, kind: 'dash' }], xFormat: y => y === 0 ? t('hypo.start') : t('hypo.short', { n: y }), yFormat: f.axisMoney, xLabel: t('hypo.yearsLabel'), refLines: [{ y: s.amount, label: t('hypo.invested') }] }),
         legend: legend([{ key: 'a', name: t('hypo.bumpy') }, { key: 'b', name: t('hypo.smooth', vars), dash: true }]),
         summary: t('hypo.pathSummary', vars),
         table: dataTable({ caption: t('hypo.pathTitle'), head: [t('hypo.yearCol'), t('hypo.bumpy'), t('hypo.smooth', vars)], rows: bumpy.map(([y, val], i) => [y === 0 ? t('hypo.start') : t('hypo.year', { n: y }), f.money(val), f.money(smooth[i][1])]) })
       };
     }
-  },
-  fees: {
-    inputs: { initial: [50000, 0, 10000000], monthly: [300, 0, 100000], rate: [6, -5, 15], feeA: [2, 0, 4], feeB: [1, 0, 4], years: [25, 1, 50] },
+  }
+,
+  assetRange: {
+    inputs: { years: [1, 1, 20] },
     render(s, t, f) {
-      const g = fee => growthSchedule({ initial: s.initial, monthly: s.monthly, annualRate: s.rate / 100, annualFee: fee / 100, years: s.years });
-      const a = g(s.feeA), b = g(s.feeB), gap = b.at(-1).value - a.at(-1).value;
-      const vars = { feeA: f.pct(s.feeA / 100, 2), feeB: f.pct(s.feeB / 100, 2), years: s.years, a: f.money(a.at(-1).value), b: f.money(b.at(-1).value), gap: f.money(Math.abs(gap)), more: gap >= 0 ? t('fees.lowerMore') : t('fees.higherMore'), invested: f.money(a.at(-1).contributed) };
+      const A = ASSETS, stats = assetStats(), rows = [...A.keys.map((k, i) => ({ k, mean: A.means[i], vol: A.vols[i] })), { k: 'bal', mean: stats.mean, vol: stats.vol }];
+      const ranged = rows.map(r => ({ ...r, ...annualizedRange(r.mean, r.vol, s.years) }));
+      const bal = ranged.at(-1), loss = normCdf(-bal.mean * Math.sqrt(s.years) / bal.vol);
+      const lossNote = s.years === 1 ? t('asset.rangeLoss1', { loss: f.pct(loss, 0) }) : loss >= 0.005 ? t('asset.rangeLossN', { loss: f.pct(loss, 0), span: span(t, s.years) }) : t('asset.rangeLoss0', { span: span(t, s.years) });
+      const vars = { span: span(t, s.years), lo: f.pct(bal.low), hi: f.pct(bal.high), lossNote };
       return {
-        chart: lineChart({ id: 'fig-fees', title: t('fees.title'), desc: t('fees.summary', vars), series: [{ key: 'b', name: t('fees.seriesB', vars), points: b.map(x => [x.year, x.value]) }, { key: 'a', name: t('fees.seriesA', vars), points: a.map(x => [x.year, x.value]), kind: 'dash' }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years') }),
-        legend: legend([{ key: 'b', name: t('fees.seriesB', vars) }, { key: 'a', name: t('fees.seriesA', vars), dash: true }]),
-        summary: t('fees.summary', vars),
-        table: dataTable({ caption: t('fees.title'), head: [t('col.year'), t('fees.seriesB', vars), t('fees.seriesA', vars), t('fees.gapCol')], rows: pick(a, Math.max(1, Math.round(s.years / 5))).map(x => [String(x.year), f.money(b[x.year].value), f.money(x.value), f.money(b[x.year].value - x.value)]) })
+        chart: rowChart({ id: 'fig-assetRange', title: t('asset.rangeTitle', vars), desc: t('asset.rangeSummary', vars), rows: ranged.map(r => ({ label: t('asset.' + r.k), lo: r.low * 100, hi: r.high * 100, mid: r.mean * 100, highlight: r.k === 'bal' })), format: v => f.fixed(v, 0) }),
+        legend: '',
+        summary: t('asset.rangeSummary', vars),
+        table: dataTable({ caption: t('asset.rangeTable', vars), head: [t('asset.colAsset'), t('asset.colWeight'), t('asset.colMean'), t('asset.colVol'), t('asset.colLow'), t('asset.colHigh')], rows: ranged.map((r, i) => [t('asset.' + r.k), r.k === 'bal' ? '100%' : f.pct(A.weights[i], 0), f.pct(r.mean), f.pct(r.vol, 1), f.pct(r.low), f.pct(r.high)]) })
       };
     }
   },
-  units: {
-    inputs: { invest: [5000, 1, 10000000], nav: [12.5, 0.01, 10000] },
+  assetScenario: {
+    inputs: { scenario: ['ratesUp', Object.keys(SCENARIOS)] },
     render(s, t, f) {
-      const units = s.invest / s.nav, vars = { invest: f.money(s.invest), nav: f.cents(s.nav), units: f.num(units, 3), up: f.money(units * s.nav * 1.1), down: f.money(units * s.nav * 0.9) };
-      return { summary: t('units.summary', vars) };
-    }
-  },
-  rrsp: {
-    inputs: { pretax: [10000, 1, 10000000], rate: [5, -5, 15], years: [25, 1, 50], incomeNow: [95000, 0, 2000000], incomeLater: [50000, 0, 2000000], spread: [10, 1, 30] },
-    render(s, t, f) {
-      const r = tfsaVsRrspIncremental({ pretax: s.pretax, rate: s.rate / 100, years: s.years, incomeNow: s.incomeNow, incomeLater: s.incomeLater, spreadYears: s.spread });
-      // Check every income each side taxes, not just the endpoints.
-      const sides = [
-        { key: 'contribution', range: [Math.max(0, s.incomeNow - s.pretax), s.incomeNow] },
-        { key: 'withdrawal', range: [s.incomeLater, s.incomeLater + r.balance / s.spread] }
-      ];
-      const caution = creditZones(sides.map(x => x.range)).map(zone => {
-        const hit = sides.filter(x => creditZones([x.range]).includes(zone));
-        return t('caution.rrsp.' + zone + (hit.length > 1 ? '.plural' : ''), { sides: hit.map(x => t('caution.side.' + x.key, { lo: f.money(x.range[0]), hi: f.money(x.range[1]) })).join(t('caution.and')) });
-      }).join(' ');
-      const diff = r.rrsp - r.tfsa;
-      const vars = { pretax: f.money(s.pretax), years: s.years, now: f.pct(r.rateNow, 1), later: f.pct(r.rateLater, 1), tfsa: f.money(r.tfsa), rrsp: f.money(r.rrsp), spread: s.spread === 1 ? 'in a single year' : `over ${s.spread} years`, balance: f.money(r.balance), caution: caution ? caution + ' ' : '', winner: Math.abs(diff) < 0.5 ? t('rrsp.tie') : (diff > 0 ? t('rrsp.rrspAhead') : t('rrsp.tfsaAhead')) + t('rrsp.by', { diff: f.money(Math.abs(diff)) }) };
+      const r = scenarioReturns(s.scenario), name = t('scen.' + s.scenario);
+      const sorted = [...r].sort((a, b) => b.value - a.value), rank = sorted.findIndex(x => x.k === 'bal') + 1, bal = r.find(x => x.k === 'bal').value, cash = r.find(x => x.k === 'cash').value;
+      const vars = { scenario: name, bal: f.fixed(bal, 1), rank: f.ordinal(rank), n: r.length, cash: f.fixed(cash, 1), lossNote: bal < 0 ? t('asset.scenLoss') : t('asset.scenGain'), cashNote: cash > bal ? t('asset.scenBelowCash', { cash: f.fixed(cash, 1) }) : t('asset.scenAboveCash') };
       return {
-        chart: barChart({ id: 'fig-rrsp', title: t('rrsp.title'), desc: t('rrsp.summary', vars), categories: [t('rrsp.tfsa'), t('rrsp.rrsp')], series: [{ key: 'a', name: t('rrsp.afterTax'), values: [Math.round(r.tfsa), Math.round(r.rrsp)] }], yFormat: f.axisMoney, height: 280 }),
+        chart: rowChart({ id: 'fig-assetScenario', title: t('asset.scenTitle', vars), desc: t('asset.scenSummary', vars), rows: sorted.map(x => ({ label: t('asset.' + x.k), value: x.value, highlight: x.k === 'bal' })), format: v => f.fixed(v, 1) }),
         legend: '',
-        summary: t('rrsp.summary', vars),
-        table: dataTable({ caption: t('rrsp.title'), head: [t('rrsp.measure'), t('rrsp.tfsa'), t('rrsp.rrsp')], rows: [[t('rrsp.rowRateNow'), f.pct(r.rateNow, 2), f.pct(r.rateNow, 2)], [t('rrsp.rowRateLater'), '—', f.pct(r.rateLater, 2)], [t('rrsp.afterTax'), f.money(r.tfsa), f.money(r.rrsp)]] })
+        summary: t('asset.scenSummary', vars),
+        table: dataTable({ caption: t('asset.scenTable', vars), head: [t('asset.colRank'), t('asset.colAsset'), t('asset.colReturn')], rows: sorted.map((x, i) => [String(i + 1), t('asset.' + x.k), f.fixed(x.value, 1)]) })
       };
     }
   },
-  taxtypes: {
-    inputs: { income: [100000, 0, 2000000] },
+  gic: {
+    inputs: { account: ['nonreg', ['nonreg', 'tfsa', 'rrsp']], years: [10, 1, 30], gicRate: [3.25, 0, 10], fundReturn: [5, -10, 12], amount: [50000, 1, 10000000], income: [100000, 0, 2000000], withdraw: [30, 0, 54], sale: ['sell', ['sell', 'hold']], fi: [1, 0, 6], fd: [0.8, 0, 5], ff: [0.6, 0, 5], fg: [1, 0, 8] },
     render(s, t, f) {
-      const types = ['ordinary', 'eligible', 'other', 'capitalGains'], cur = bcMarginalRates(s.income);
-      const zones = creditZones([[s.income, s.income]]);
-      const vars = { caution: zones.length ? zones.map(z => t('caution.' + z)).join(' ') + ' ' : '', income: f.money(s.income), ordinary: f.pct(cur.ordinary, 2), eligible: f.pct(cur.eligible, 2), other: f.pct(cur.other, 2), capitalGains: f.pct(cur.capitalGains, 2) };
+      const rates = bcMarginalRates(s.income), pc = v => v / 100;
+      const fund = { interest: pc(s.fi), dividends: pc(s.fd), foreign: pc(s.ff), realized: pc(s.fg), growth: pc(s.fundReturn - s.fi - s.fd - s.ff - s.fg) };
+      const args = { amount: s.amount, years: s.years, gicRate: pc(s.gicRate), fund, account: s.account, rates, withdrawalRate: pc(s.withdraw), sellAtEnd: s.sale === 'sell' };
+      const r = gicVsFund(args), diff = r.fundAfterTax - r.gicAfterTax, nonreg = s.account === 'nonreg';
+      const be = breakEvenFundReturn(args), account = t('acct.' + s.account), accountIn = t('acctIn.' + s.account);
+      const rv = { ordinary: f.pct(rates.ordinary), eligible: f.pct(rates.eligible), cg: f.pct(rates.capitalGains), withdraw: f.pct(pc(s.withdraw), 0), unrealized: f.money(r.unrealized) };
+      const why = t(nonreg ? (s.sale === 'sell' ? 'gic.why.nonreg' : 'gic.why.nonregHold') : 'gic.why.' + s.account, rv);
+      const winner = Math.abs(diff) < Math.max(1, s.amount * 0.001) ? t('gic.ahead.tie') : t(diff > 0 ? 'gic.ahead.fund' : 'gic.ahead.gic', { diff: f.money(Math.abs(diff)) });
+      const caution = nonreg ? creditZones([[s.income, s.income]]).map(z => t('caution.' + z)).join(' ') : '';
+      const vars = { caution: caution ? caution + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(r.gicAfterTax), fund: f.money(r.fundAfterTax), winner, why, breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }) };
+      const tx = r.tax;
+      const extra = nonreg
+        ? `<p class="pc-extra-title">${t('gic.taxTitle', vars)}</p>` + rowChart({ id: 'fig-gicTax', title: t('gic.taxTitle', vars), desc: t('gic.taxTitle', vars), rows: [{ label: t('gic.rowGic', { kind: t('gic.taxGic') }), value: Math.round(tx.gicInterest), highlight: true }, ...[['taxIncome', tx.fundIncome], ['taxDividends', tx.fundDividends], ['taxRealized', tx.fundRealized], ['taxDeferred', tx.fundDeferred]].map(([k, v]) => ({ label: t('gic.rowFund', { kind: t('gic.' + k) }), value: Math.round(v) }))], format: f.axisMoney })
+        : `<p class="pc-extra-note">${t(s.account === 'rrsp' ? 'gic.taxRrspNone' : 'gic.taxNone', { accountIn, withdraw: rv.withdraw })}</p>`;
+      const head = [t('col.year'), t('gic.colGic'), t('gic.colFund'), ...(nonreg ? [t('gic.colAcb')] : [])];
       return {
-        chart: barChart({ id: 'fig-taxtypes', title: t('tax.title', vars), desc: t('tax.summary', vars), categories: types.map(k => t('tax.short.' + k)), series: [{ key: 'a', name: t('tax.rate'), values: types.map(k => +(cur[k] * 100).toFixed(2)) }], yFormat: v => f.num(v, 2) + '%', yLabel: t('tax.rate'), height: 300 }),
-        legend: '',
-        summary: t('tax.summary', vars),
-        table: dataTable({ caption: t('tax.tableCaption'), head: [t('tax.incomeCol'), ...types.map(k => t('tax.' + k))], rows: [60000, 80000, 100000, 120000, 150000, 300000].map(inc => { const m = bcMarginalRates(inc); return [f.money(inc), ...types.map(k => f.pct(m[k], 2))]; }) })
+        chart: lineChart({ id: 'fig-gic', title: t('gic.title', vars), desc: t('gic.summary', vars), series: [{ key: 'a', name: t('gic.gic'), points: r.rows.map(x => [x.year, x.gic]), kind: 'dash' }, { key: 'b', name: t('gic.fund'), points: r.rows.map(x => [x.year, x.fund]) }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.amount, label: t('gic.invested') }] }),
+        legend: legend([{ key: 'a', name: t('gic.gic'), dash: true }, { key: 'b', name: t('gic.fund') }]),
+        extra,
+        summary: t('gic.summary', vars),
+        assumptions: t('gic.assumptions', { gicRate: f.pct(pc(s.gicRate), 2), fi: f.pct(fund.interest, 2), fd: f.pct(fund.dividends, 2), ff: f.pct(fund.foreign, 2), fg: f.pct(fund.realized, 2), fu: f.pct(fund.growth, 2), ft: f.pct(r.fundTotalReturn, 2), income: f.money(s.income), ...rv }),
+        table: dataTable({ caption: t('gic.title', vars), head, rows: pick(r.rows, Math.max(1, Math.round(s.years / 6))).map(x => [String(x.year), f.money(x.gic), f.money(x.fund), ...(nonreg ? [f.money(x.acb ?? s.amount)] : [])]) })
       };
     }
   }
@@ -273,6 +302,6 @@ export function normalizeState(name, raw = {}) {
 
 export function defaults(name) { return normalizeState(name, {}); }
 
-export function renderFigure(name, raw) {
-  return FIGURES[name].render(normalizeState(name, raw), translate, formatters());
+export function renderFigure(name, raw, lang = 'en') {
+  return FIGURES[name].render(normalizeState(name, raw), (key, vars) => translate(key, vars, lang), formatters(lang));
 }

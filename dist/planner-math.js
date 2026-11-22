@@ -37,16 +37,14 @@ export const realValue = (nominal, inflation, years) => finite(nominal, 'nominal
  * Year-by-year growth of an initial amount plus level monthly contributions.
  * `annualRate` is an effective annual return; it is converted to the equivalent
  * monthly rate so 12 monthly steps compound to exactly one year. Contributions
- * are made at the end of each month. `annualFee` (e.g. an MER) is charged as a
- * share of assets, so the net growth factor is (1 + gross) × (1 − fee).
+ * are made at the end of each month.
  */
-export function growthSchedule({ initial = 0, monthly = 0, annualRate, years, annualFee = 0 }) {
-  for (const [k, v] of Object.entries({ initial, monthly, annualRate, years, annualFee })) finite(v, k);
+export function growthSchedule({ initial = 0, monthly = 0, annualRate, years }) {
+  for (const [k, v] of Object.entries({ initial, monthly, annualRate, years })) finite(v, k);
   if (initial < 0 || monthly < 0) throw new RangeError('Amounts cannot be negative');
-  if (annualRate <= -1 || annualFee < 0 || annualFee >= 1) throw new RangeError('Rate or fee out of range');
+  if (annualRate <= -1) throw new RangeError('Rate out of range');
   if (!Number.isInteger(years) || years < 0 || years > 80) throw new RangeError('Years must be a whole number from 0 to 80');
-  const netAnnual = (1 + annualRate) * (1 - annualFee) - 1;
-  const m = (1 + netAnnual) ** (1 / 12) - 1;
+  const m = (1 + annualRate) ** (1 / 12) - 1;
   const rows = [{ year: 0, contributed: initial, value: initial }];
   let value = initial, contributed = initial;
   for (let y = 1; y <= years; y++) {
@@ -156,43 +154,6 @@ export function bcMarginalRates(income, t = TAX_2026) {
   return { ordinary, eligible: div(t.dividends.eligible), other: div(t.dividends.other), capitalGains: ordinary * t.capitalGainsInclusion };
 }
 
-/** Tax from a bracket table alone (no credits), on taxable income `income`. */
-export function bracketTax(brackets, income) {
-  finite(income, 'income');
-  let tax = 0, lower = 0;
-  for (const [top, rate] of brackets) {
-    if (income <= lower) break;
-    tax += (Math.min(income, top) - lower) * rate;
-    lower = top;
-  }
-  return tax;
-}
-
-/** Combined federal + BC statutory bracket tax (no credits, surtaxes or clawbacks). */
-export const bcBracketTax = (income, t = TAX_2026) => bracketTax(t.federal, Math.max(0, income)) + bracketTax(t.bc, Math.max(0, income));
-
-/**
- * TFSA versus RRSP with tax calculated across brackets, not at one marginal rate.
- * - Today: the RRSP deduction saves bcBracketTax(incomeNow) − bcBracketTax(incomeNow − pretax);
- *   the TFSA receives pretax minus that same tax. The RRSP refund is assumed invested.
- * - Later: the RRSP balance is withdrawn in equal amounts over `spreadYears` years on top of
- *   `incomeLater`, each year taxed incrementally at 2026 brackets (held constant).
- * Excludes credits and benefit clawbacks; see the page note.
- */
-export function tfsaVsRrspIncremental({ pretax, rate, years, incomeNow, incomeLater, spreadYears = 1 }) {
-  for (const [k, v] of Object.entries({ pretax, rate, years, incomeNow, incomeLater, spreadYears })) finite(v, k);
-  const deductionValue = bcBracketTax(incomeNow) - bcBracketTax(Math.max(0, incomeNow - pretax));
-  const growth = (1 + rate) ** years, balance = pretax * growth, each = balance / spreadYears;
-  const withdrawalTax = spreadYears * (bcBracketTax(incomeLater + each) - bcBracketTax(incomeLater));
-  return {
-    tfsa: (pretax - deductionValue) * growth,
-    rrsp: balance - withdrawalTax,
-    rateNow: pretax > 0 ? deductionValue / pretax : 0,
-    rateLater: balance > 0 ? withdrawalTax / balance : 0,
-    balance
-  };
-}
-
 // Income ranges where 2026 credits change the actual marginal rate, so the
 // statutory bracket figures can mislead. BC tax reduction: up to $690, reduced
 // by 3.56% of net income over $25,570, nil at $44,952 (gov.bc.ca). Federal basic
@@ -210,4 +171,99 @@ export function creditZones(ranges) {
     if (lo < CREDIT_ZONES.bpa[1] && hi > CREDIT_ZONES.bpa[0]) hit.bpa = true;
   }
   return Object.keys(hit).filter(k => hit[k]);
+}
+
+/**
+ * GIC versus a hypothetical balanced fund, after tax, year by year.
+ * Amounts are invested once; nothing is added or withdrawn until the end.
+ *
+ * GIC: interest at `gicRate` compounds annually. In a non-registered account
+ * the interest is taxed every year at the ordinary rate, including interest on
+ * a compounding GIC that is not paid out (CRA annual accrual rule), and the tax
+ * is paid from the investment.
+ *
+ * Fund: `fund` gives yearly components as shares of the start-of-year value,
+ * all net of the fund's expenses: interest, Canadian eligible dividends
+ * (`dividends`), foreign income, distributed realized capital gains
+ * (`realized`), and the change in unit value (`growth`, may be negative). In a
+ * non-registered account each distribution is taxed in the year paid at its
+ * own rate; the after-tax amount is reinvested and added to the adjusted cost
+ * base (ACB). Growth in unit value is taxed only when units are sold: if
+ * `sellAtEnd`, the gain above ACB is taxed at the capital-gains rate in the
+ * final year (a loss is shown as no tax; its value against other gains is not
+ * counted). Foreign withholding tax and return of capital are not modelled.
+ *
+ * TFSA: no tax on either. RRSP/RRIF: both grow untaxed and the whole balance
+ * is taxed as income at `withdrawalRate` when taken out (applied to every year's
+ * "if cashed in now" value).
+ *
+ * `rates` are marginal rates {ordinary, eligible, capitalGains}, applied flat
+ * (no bracket creep). Returns rows for years 0..years and tax by type.
+ */
+export function gicVsFund({ amount, years, gicRate, fund, account = 'nonreg', rates, withdrawalRate = 0, sellAtEnd = true }) {
+  for (const [k, v] of Object.entries({ amount, years, gicRate, withdrawalRate, ...fund, ...rates })) finite(v, k);
+  if (!Number.isInteger(years) || years < 1 || years > 60) throw new RangeError('Years must be a whole number from 1 to 60');
+  if (amount < 0) throw new RangeError('Amount cannot be negative');
+  const taxed = account === 'nonreg', total = fund.interest + fund.dividends + fund.foreign + fund.realized + fund.growth;
+  if (total <= -1) throw new RangeError('Fund return out of range');
+  const tax = { gicInterest: 0, fundIncome: 0, fundDividends: 0, fundRealized: 0, fundDeferred: 0 };
+  let gic = amount, fv = amount, acb = amount;
+  const cashIn = (y, g, f, a) => {
+    if (account === 'rrsp') return { gic: g * (1 - withdrawalRate), fund: f * (1 - withdrawalRate) };
+    if (!taxed) return { gic: g, fund: f };
+    const deferred = (y === years ? sellAtEnd : true) ? Math.max(0, f - a) * rates.capitalGains : 0;
+    return { gic: g, fund: f - deferred, deferred };
+  };
+  const rows = [{ year: 0, gic, fund: fv, ...cashIn(0, gic, fv, acb) }];
+  for (let y = 1; y <= years; y++) {
+    const interest = gic * gicRate, gicTax = taxed ? interest * rates.ordinary : 0;
+    gic += interest - gicTax; tax.gicInterest += gicTax;
+    const d = { income: fv * (fund.interest + fund.foreign), dividends: fv * fund.dividends, realized: fv * fund.realized };
+    const t = taxed ? { income: d.income * rates.ordinary, dividends: d.dividends * rates.eligible, realized: d.realized * rates.capitalGains } : { income: 0, dividends: 0, realized: 0 };
+    const reinvested = d.income + d.dividends + d.realized - t.income - t.dividends - t.realized;
+    fv = fv * (1 + fund.growth) + reinvested;
+    acb += reinvested;
+    tax.fundIncome += t.income; tax.fundDividends += t.dividends; tax.fundRealized += t.realized;
+    rows.push({ year: y, gic, fund: fv, acb, ...cashIn(y, gic, fv, acb) });
+  }
+  const end = rows.at(-1);
+  if (taxed) tax.fundDeferred = end.deferred || 0;
+  // Unrealized gain still untaxed at the end when the units are kept.
+  const unrealized = taxed && !sellAtEnd ? Math.max(0, fv - acb) : 0;
+  return { rows, tax, gicAfterTax: end.gic, fundAfterTax: end.fund, fundValue: fv, acb, unrealized, fundTotalReturn: total };
+}
+
+/**
+ * The fund unit-value growth rate (other components fixed) at which the fund's
+ * after-tax ending value equals the GIC's, found by bisection. Returned as the
+ * fund's total annual return (income + growth). Null if not bracketed.
+ */
+export function breakEvenFundReturn(args) {
+  const gap = growth => { const r = gicVsFund({ ...args, fund: { ...args.fund, growth } }); return r.fundAfterTax - r.gicAfterTax; };
+  let lo = -0.5, hi = 0.5;
+  if (gap(lo) > 0 || gap(hi) < 0) return null;
+  for (let i = 0; i < 80; i++) { const mid = (lo + hi) / 2; if (gap(mid) < 0) lo = mid; else hi = mid; }
+  const f = args.fund;
+  return f.interest + f.dividends + f.foreign + f.realized + (lo + hi) / 2;
+}
+
+/**
+ * Portfolio average and volatility from asset averages, volatilities, a
+ * correlation matrix and weights: mean = Σ wᵢμᵢ, σ = √(wᵀΣw).
+ */
+export function portfolioStats(weights, means, vols, corr) {
+  const n = weights.length;
+  if (![means, vols, corr].every(a => a.length === n)) throw new RangeError('Inputs must have the same length');
+  let mean = 0, variance = 0;
+  for (let i = 0; i < n; i++) {
+    mean += weights[i] * means[i];
+    for (let j = 0; j < n; j++) variance += weights[i] * weights[j] * vols[i] * vols[j] * corr[i][j];
+  }
+  return { mean, vol: Math.sqrt(variance) };
+}
+
+/** Range of the annualized return over `years` under a normal approximation: mean ± z·σ/√years. */
+export function annualizedRange(mean, vol, years, z = Z.p90) {
+  const s = vol / Math.sqrt(finite(years, 'years'));
+  return { low: mean - z * s, mid: mean, high: mean + z * s };
 }

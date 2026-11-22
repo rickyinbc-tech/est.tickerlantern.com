@@ -115,6 +115,11 @@ body.pc-page{margin:0;background:var(--pc-soft);color:var(--pc-ink);font:16px/1.
 .pc-svg .pc-band.pc-outer{fill:rgba(11,110,138,.12)}.pc-svg .pc-band.pc-inner{fill:rgba(11,110,138,.24)}
 .pc-svg .pc-bar.pc-a{fill:var(--pc-a)}.pc-svg .pc-bar.pc-b{fill:var(--pc-b)}.pc-svg .pc-bar.pc-neg{fill:var(--pc-red)}
 .pc-svg .pc-value{fill:var(--pc-ink);font-size:12px;font-weight:600}
+.pc-svg .pc-row-label{fill:var(--pc-ink);font-size:13px;font-weight:600;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.pc-svg .pc-row-label--hi{fill:#8a4a08}
+.pc-svg .pc-range{stroke-width:8;stroke-linecap:round}
+.pc-svg .pc-range.pc-a{stroke:rgba(11,110,138,.45)}.pc-svg .pc-range.pc-b{stroke:rgba(194,106,16,.55)}
+.pc-svg .pc-range-dot{stroke:#fff;stroke-width:2}.pc-svg .pc-range-dot.pc-a{fill:var(--pc-a)}.pc-svg .pc-range-dot.pc-b{fill:var(--pc-b)}
 .pc-svg .pc-ref{stroke:#5f7487;stroke-width:1.2;stroke-dasharray:3 4}
 .pc-svg .pc-ref-label,.pc-svg .pc-marker-label{fill:#405568;font-size:12px;font-weight:600;paint-order:stroke;stroke:#fff;stroke-width:4px}
 .pc-svg .pc-marker{fill:#fff;stroke:var(--pc-navy);stroke-width:3}
@@ -140,8 +145,12 @@ body.pc-page{margin:0;background:var(--pc-soft);color:var(--pc-ink);font:16px/1.
 .pc-table th[scope=row],.pc-table thead th:first-child{text-align:left}
 .pc-table thead th{background:var(--pc-soft);color:var(--pc-navy)}
 .pc-panel>.pc-table-wrap{margin:0 0 20px}
-.pc-accounts td,.pc-accounts th{white-space:normal;text-align:left;vertical-align:top;min-width:140px}
-.pc-accounts tbody th{color:var(--pc-navy)}
+.pc-extra{margin-top:14px;padding-top:12px;border-top:1px solid var(--pc-line)}
+.pc-extra-title{margin:0 0 6px;color:var(--pc-navy);font:600 15px/1.4 var(--pc-sans)}
+.pc-extra-note{margin:0;color:var(--pc-muted);font-size:14px}
+.pc-stack tbody td{font-variant-numeric:normal}
+.pc-stack td,.pc-stack th{white-space:normal;text-align:left;vertical-align:top;min-width:140px}
+.pc-stack tbody th{color:var(--pc-navy)}
 
 /* Talking points */
 .pc-notes{margin:0 0 24px;padding:16px 18px;border:1px dashed #9db4c6;border-radius:var(--pc-radius);background:#fbfdff}
@@ -238,12 +247,12 @@ html:not(.pc-tabs) .pc-pager{display:none}
   .pc-pager__prev{display:none!important}
   .pc-svg[data-bars="10"] .pc-value{font-size:11px}
   /* Accounts table becomes stacked cards */
-  .pc-accounts thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-  .pc-accounts,.pc-accounts caption,.pc-accounts tbody,.pc-accounts tr,.pc-accounts th,.pc-accounts td{display:block;min-width:0}
-  .pc-accounts tr{padding:10px 12px;border-top:1px solid var(--pc-line)}
-  .pc-accounts tbody th{padding:0 0 4px;border:0;font-size:16px}
-  .pc-accounts td{padding:3px 0;border:0}
-  .pc-accounts td::before{content:attr(data-label);display:block;color:var(--pc-muted);font-size:12px;font-weight:600}
+  .pc-stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .pc-stack,.pc-stack caption,.pc-stack tbody,.pc-stack tr,.pc-stack th,.pc-stack td{display:block;min-width:0}
+  .pc-stack tr{padding:10px 12px;border-top:1px solid var(--pc-line)}
+  .pc-stack tbody th{padding:0 0 4px;border:0;font-size:16px}
+  .pc-stack td{padding:3px 0;border:0}
+  .pc-stack td::before{content:attr(data-label);display:block;color:var(--pc-muted);font-size:12px;font-weight:600}
 }
 @media (max-width:360px){.pc-controls,.pc-more-inputs>div{grid-template-columns:1fr}}
 @media print{

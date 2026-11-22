@@ -2,14 +2,17 @@
 // re-render a figure when its inputs change, draw each chart at its own width
 // so text stays legible, a readout under line charts (pointer and arrow keys),
 // and a client view that hides the talking points.
-import { renderFigure, formatters } from './planner-sections.js';
+import { renderFigure, formatters, translate } from './planner-sections.js';
 import { setChartWidth } from './planner-charts.js';
 
 // Old homepage bookmarks pointed at the valuation app's anchors; send them on.
 const MOVED = ['#indices', '#model', '#return-bridge', '#sensitivity', '#thesis', '#dividends', '#valuation', '#methodology', '#model-conventions', '#wealth-chart', '#research-library'];
 if (MOVED.includes(location.hash)) location.replace((location.pathname.startsWith('/zh') ? '/zh/valuations' : '/valuations') + location.hash);
 
-const f = formatters();
+// The page says which language it is in; every chart, summary and table renders in it.
+const lang = document.querySelector('[data-planner-lang]')?.dataset.plannerLang === 'zh' ? 'zh' : 'en';
+const t = (key, vars) => translate(key, vars, lang);
+const f = formatters(lang);
 const figures = [...document.querySelectorAll('.pc-figure[data-figure]')];
 const panels = [...document.querySelectorAll('.pc-panel')];
 const railLinks = [...document.querySelectorAll('.pc-topics a')];
@@ -32,8 +35,8 @@ function render(fig) {
   const name = fig.dataset.figure, form = fig.querySelector('form.pc-controls');
   const width = widthFor(fig);
   if (width) { setChartWidth(width); fig.dataset.width = width; }
-  const result = renderFigure(name, stateOf(form));
-  for (const key of ['chart', 'legend', 'summary', 'table', 'assumptions']) {
+  const result = renderFigure(name, stateOf(form), lang);
+  for (const key of ['chart', 'legend', 'extra', 'summary', 'table', 'assumptions']) {
     const out = fig.querySelector(`[data-out="${key}"]`);
     if (!out || result[key] == null) continue;
     if (key === 'summary' || key === 'assumptions') { if (out.textContent !== result[key]) out.textContent = result[key]; }
@@ -44,7 +47,7 @@ function render(fig) {
   if (readout) readout.textContent = fig.querySelector('svg[data-series]') ? HINT : '';
 }
 
-const HINT = matchMedia('(pointer: coarse)').matches ? 'Tap or drag across the chart to read values.' : 'Point at the chart, or focus it and use the arrow keys, to read values.';
+const HINT = t(matchMedia('(pointer: coarse)').matches ? 'hint.touch' : 'hint.pointer');
 
 let pending = new Set(), frame = 0;
 function schedule(fig) {
@@ -116,8 +119,8 @@ function readoutAt(svg, index) {
   const xs = series[0].p.map(p => p[0]);
   index = Math.max(0, Math.min(xs.length - 1, index));
   const x = xs[index], fig = svg.closest('.pc-figure');
-  const label = kind === 'count' ? `${x} holdings` : x >= 1900 ? String(x) : x === 0 ? 'Today' : `Year ${x}`;
-  fig.querySelector('[data-out="readout"]').textContent = label + ': ' + series.map(s => { const pt = s.p.find(p => p[0] === x); return pt ? `${s.n} ${fmt[unit](pt[1])}` : null; }).filter(Boolean).join(' · ');
+  const label = kind === 'count' ? t('readout.holdings', { n: x }) : x >= 1900 ? String(x) : x === 0 ? t('readout.today') : t('readout.year', { n: x });
+  fig.querySelector('[data-out="readout"]').textContent = label + (lang === 'zh' ? '：' : ': ') + series.map(s => { const pt = s.p.find(p => p[0] === x); return pt ? `${s.n} ${fmt[unit](pt[1])}` : null; }).filter(Boolean).join(' · ');
   const left = +svg.dataset.plotLeft, width = +svg.dataset.plotWidth, min = +svg.dataset.xMin, max = +svg.dataset.xMax;
   const gx = left + (max === min ? 0 : (x - min) / (max - min) * width), guide = svg.querySelector('.pc-guide');
   if (guide) { guide.removeAttribute('hidden'); guide.querySelector('line').setAttribute('x1', gx); guide.querySelector('line').setAttribute('x2', gx); }

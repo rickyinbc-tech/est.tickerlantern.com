@@ -2,6 +2,7 @@ import { enrichStudyHTML, studyPages } from './seo.js';
 import { validateFeed } from './index-data.js';
 import { isNotesResearchPath, handleNotesResearch } from './notes-research.js';
 import { enrichSearchNavigation } from './search-navigation.js';
+import { enrichSiteNavigation } from './site-navigation.js';
 const SNAPSHOT = 'https://raw.githubusercontent.com/rickyinbc-tech/est.tickerlantern.com/main/data/indices.json';
 // The full, provenance-rich snapshot now exceeds 2 MB. Keep a bounded limit
 // with room for normal growth so a valid refresh cannot silently fall back.
@@ -61,7 +62,7 @@ export default {
     }
     if (isNotesResearchPath(url.pathname)) {
       const response = await handleNotesResearch(request, env);
-      return enrichSearchNavigation(enrichStudyHTML(response, url.pathname), url.pathname);
+      return enrichSiteNavigation(enrichSearchNavigation(enrichStudyHTML(response, url.pathname), url.pathname), url.pathname);
     }
     if (url.pathname !== '/api/indices') {
       const response = await env.ASSETS.fetch(request);

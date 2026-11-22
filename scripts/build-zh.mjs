@@ -135,7 +135,7 @@ function canonical(html, zhPath) {
 function zhDocument(html, enPath, zhPath, fallback, dict) {
   // The translated homepage is maintained separately from the English build.
   // Match its preview to the English homepage while keeping the library intact.
-  if (enPath === '/' && !fallback) {
+  if (enPath === '/valuations' && !fallback) {
     const original = html;
     html = html.replace(/(<section\b[^>]*\bid="research-library"[^>]*>[\s\S]*?<div class="valuation-columns">)([\s\S]*?)(<\/div><\/section>)/, (match, start, cards, end) => {
       const articles = cards.match(/<article>[\s\S]*?<\/article>/g);
@@ -163,6 +163,8 @@ function zhDocument(html, enPath, zhPath, fallback, dict) {
   html = html.replace(/"inLanguage":"en"/g, '"inLanguage":"zh-Hans"');
   html = localizeJsonLd(html, zhPath);
   if (fallback) {
+    // An untranslated page stays English; its title says so in Chinese ("English page").
+    html = html.replace(/<title>/, '<title>英文页面：');
     html = html.replace(/<body([^>]*)>/, `<body$1><div class="tl-translation-banner">本页的完整中文译文尚未生成，以下保留英文原文。<a href="${enPath}" hreflang="en" lang="en">Read in English</a></div>`);
   }
   const note = `<div class="tl-translation-foot"><span>简体中文为机器翻译，术语与数字已校对。</span><a href="${enPath}" hreflang="en" lang="en">英文原文</a><a href="mailto:support@tickerlantern.com?subject=Translation%20correction">报告翻译问题</a></div>`;

@@ -14,7 +14,7 @@ await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 const m = project(DEFAULTS);
 const pct = x => (x * 100).toFixed(2) + '%';
-let html = await readFile('src/index.html', 'utf8');
+let html = await readFile('src/valuations.html', 'utf8');
 html = html.replace('{{INDEX_EXPLORER}}', await readFile('src/index-explorer.html', 'utf8'));
 const feed = validateFeed(JSON.parse(await readFile('data/indices.json', 'utf8')));
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -37,7 +37,8 @@ for(const [key,value] of Object.entries(initial))html=html.replaceAll('{{'+key+'
 html=html.replaceAll('{{DEFAULT_GROWTH_ROWS}}',firstGrowth?firstGrowth.estimates.map(point=>`<tr><th scope="row">${esc(point.periodLabel||point.year)}</th><td>${esc(point.growth)}%</td></tr>`).join(''):'<tr><td colspan="2">No verified forecast available.</td></tr>');
 for (const [key,value] of Object.entries({ INDEX_BUTTONS:indexButtons, INDEX_TABLE_ROWS:tableRows, COVERAGE_COUNT:`${observed} of ${feed.indices.length} benchmarks have sourced forward P/E`, SOURCE_CHECK_DATE:dated(feed.sourceCheckAt), HISTORY_COVERAGE:historyCoverage(feed), GROWTH_COVERAGE:growthCoverage(feed), SNAPSHOT_STATUS:esc(`Published ${checkTime(feed.publishedAt)}. ${updateHealth(feed).message} Loading a snapshot does not contact publishers.`) })) html = html.replaceAll(`{{${key}}}`, value);
 for (const [key, value] of Object.entries({ PRICE_CAGR: pct(m.priceCAGR), CASH_IRR: pct(m.cashIRR), REINVEST_CAGR: pct(m.reinvestedCAGR), FINAL_PRICE: m.last.price.toFixed(2), DIVIDENDS: m.last.cumulativeDividend.toFixed(2), CASH_WEALTH: m.last.cashWealth.toFixed(2), REINVEST_WEALTH: m.last.reinvestedWealth.toFixed(2) })) html = html.replaceAll(`{{${key}}}`, value);
-await writeFile('dist/index.html', html);
+await writeFile('dist/valuations.html', html);
+await import('./build-planner.mjs');
 // Restore only the reviewed public article and its exact supporting assets.
 const research = JSON.parse(await readFile('data/rbc-research-restoration.json', 'utf8'));
 await mkdir('dist/research', { recursive: true });
@@ -52,7 +53,7 @@ await mkdir('dist/data', { recursive: true });
 for (const file of ['indices.json','source-definitions.json','model-conventions.json']) await copyFile('data/'+file,'dist/data/'+file);
 await writeFile('dist/robots.txt', 'User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: https://tickerlantern.com/sitemap.xml\n');
 const researchPaths = [...await buildResearch(), ...await buildBankResearch()];
-await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url><url><loc>https://tickerlantern.com/research/royal-bank-valuation</loc><lastmod>2026-10-18</lastmod></url>'+researchPaths.map(path => `<url><loc>https://tickerlantern.com${path}</loc><lastmod>${publishedAt}</lastmod></url>`).join('')+'</urlset>');
+await writeFile('dist/sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tickerlantern.com/</loc></url><url><loc>https://tickerlantern.com/valuations</loc></url><url><loc>https://tickerlantern.com/research/royal-bank-valuation</loc><lastmod>2026-10-18</lastmod></url>'+researchPaths.map(path => `<url><loc>https://tickerlantern.com${path}</loc><lastmod>${publishedAt}</lastmod></url>`).join('')+'</urlset>');
 await copyFile('src/404.html', 'dist/404.html');
 await writeFile('dist/_headers', '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\'; img-src \'self\' data:; font-src \'self\'; connect-src \'self\'; object-src \'none\'; base-uri \'self\'; frame-ancestors \'none\'\n');
 console.log('Built static report. Illustrative baseline:', JSON.stringify({ priceCAGR: m.priceCAGR, cashIRR: m.cashIRR, reinvestedCAGR: m.reinvestedCAGR }));
@@ -60,4 +61,7 @@ await writeFile('dist/_headers', await readFile('dist/_headers', 'utf8') + '/res
 
 await import('./build-seo.mjs');
 await import('./build-search.mjs');
-if (!process.env.TL_EN_ONLY) await import('./build-zh.mjs');
+if (!process.env.TL_EN_ONLY) {
+  await import('./build-zh.mjs');
+  await import('./build-navigation.mjs');
+}

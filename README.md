@@ -7,6 +7,17 @@ Audited 23 October 2026 · `tickerlantern-forward-timing-v2`.
 The website compares 21 exact benchmarks and always models ten holding years. It supports conditional scenario exploration, not an underwritten point forecast or a uniform return ranking. Source observations retain their dates, definitions and freshness warnings.
 
 
+## Planner conversation toolkit at / (21 November 2026)
+
+The homepage is a conversation toolkit for Canadian and BC planners: inflation, compounding, monthly plans, volatility and recovery, a hypothetical balanced-fund example, diversification, fees, mutual-fund basics, and accounts and BC 2026 tax. The index valuation workbench moved unchanged to `/valuations`; old `/#indices`-style bookmarks are forwarded by `src/planner.js`.
+
+- Calculations: `src/planner-math.js` (pinned by `tests/planner-math.test.mjs`, including KPMG's 2026 BC top rates).
+- Figures: `src/planner-sections.js` renders chart SVG, summaries and tables; the build pre-renders them and the browser re-renders on input. Charts: `src/planner-charts.js`. Strings: `src/planner-strings.js`.
+- Page: `scripts/build-planner.mjs`, which holds the numbered source list. Every citation must resolve (`tests/planner-page.test.mjs`).
+- Balanced-fund example: section 05 uses an invented, clearly labelled return sequence (`FIGURES.hypoReturns.returns`). The page shows no real fund's name, data or performance; a test forbids it.
+- Navigation: `src/site-navigation.js` replaces each page's legacy "Indices" link with Planner toolkit and Valuations, applied in `scripts/build-navigation.mjs` (static pages) and in the worker (notes pages).
+- Chinese: the toolkit is English-only until a reviewed translation exists. `/zh/` shows the English page under the untranslated-page banner (`lang="en"`, `data-tl-ignore`); the existing Chinese valuation translation moved to `/zh/valuations`.
+
 ## Ten-year holding period (8 November 2026)
 
 The index workbench, the 21-benchmark comparison, the sensitivity grid, the fixed teaching example and both CSV exports now use a ten-year holding period (policy `tickerlantern-forward-bridge-long-term-ten-year-v7`). Eleven calendar inputs feed ten NTM transitions. Long-term EPS proxies use Invesco's 2026 CMA Q3 update (estimates as of 30 June 2026), whose 10-year horizon matches the holding period. Saved browser scenarios migrate automatically; custom yearly paths keep every edited year and fill added years with the custom constant rate. See [docs/five-year-forecast-policy.md](docs/five-year-forecast-policy.md) (file name retained for existing links).

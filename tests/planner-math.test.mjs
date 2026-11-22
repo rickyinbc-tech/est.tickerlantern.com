@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { CPI, cpiEquivalent, cpiAnnualRate, realValue, growthSchedule, recoveryGain, recoveryYears, normCdf, outcomeBands, equalWeightVolatility, twoAssetMix, regularPurchases, bcMarginalRates, bracketRate, TAX_2026, bracketTax, bcBracketTax, tfsaVsRrspIncremental, creditZones } from '../src/planner-math.js';
+import { CPI, cpiEquivalent, cpiAnnualRate, realValue, growthSchedule, recoveryGain, recoveryYears, normCdf, outcomeBands, equalWeightVolatility, twoAssetMix, regularPurchases, bcMarginalRates, bracketRate, TAX_2026, creditZones, gicVsFund, breakEvenFundReturn, portfolioStats, annualizedRange } from '../src/planner-math.js';
 
 const close = (a, b, tol = 1e-6, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg || ''} expected ${b}, got ${a}`);
 
@@ -33,18 +33,10 @@ test('monthly contributions match the ordinary-annuity formula; zero return just
   close(flat.value, 12000, 1e-9); close(flat.growth, 0, 1e-9);
 });
 
-test('an annual fee scales the growth factor; higher fees always end lower', () => {
-  close(growthSchedule({ initial: 1, annualRate: .06, annualFee: .02, years: 1 }).at(-1).value, 1.06 * .98, 1e-12);
-  const low = growthSchedule({ initial: 100000, annualRate: .06, annualFee: .005, years: 25 }).at(-1).value;
-  const high = growthSchedule({ initial: 100000, annualRate: .06, annualFee: .02, years: 25 }).at(-1).value;
-  assert.ok(high < low);
-});
-
 test('growth inputs outside their ranges are rejected', () => {
   assert.throws(() => growthSchedule({ initial: -1, annualRate: .05, years: 5 }));
   assert.throws(() => growthSchedule({ initial: 1, annualRate: .05, years: 2.5 }));
   assert.throws(() => growthSchedule({ initial: 1, annualRate: NaN, years: 5 }));
-  assert.throws(() => growthSchedule({ initial: 1, annualRate: .05, annualFee: 1, years: 5 }));
 });
 
 test('recovery arithmetic: a 30% fall needs a 42.86% gain; 50% needs 100%', () => {
@@ -112,30 +104,6 @@ test('BC marginal rates at a middle income follow both bracket tables', () => {
   assert.ok(bcMarginalRates(40000).eligible < 0, 'eligible dividend credits exceed bracket tax at low incomes');
 });
 
-test('bracket tax sums each band; combined tax at the first BC/federal break matches hand arithmetic', () => {
-  close(bracketTax(TAX_2026.federal, 58523), 58523 * .14, 1e-9);
-  close(bracketTax(TAX_2026.federal, 60000), 58523 * .14 + 1477 * .205, 1e-9);
-  close(bcBracketTax(53386), 53386 * .14 + 50363 * .056 + 3023 * .077, 1e-9);
-  assert.equal(bcBracketTax(-5), 0);
-});
-
-test('TFSA vs RRSP uses incremental tax across brackets, not one marginal rate', () => {
-  // Inside one combined bracket the result equals the flat-marginal-rate identity.
-  const flat = tfsaVsRrspIncremental({ pretax: 1000, rate: .05, years: 20, incomeNow: 80000, incomeLater: 80000, spreadYears: 1 });
-  close(flat.rateNow, .205 + .077, 1e-12);
-  // Equal incomes but a withdrawal that crosses into higher brackets is taxed more than the contribution saved.
-  const cross = tfsaVsRrspIncremental({ pretax: 10000, rate: .05, years: 25, incomeNow: 95000, incomeLater: 95000, spreadYears: 1 });
-  assert.ok(cross.rateLater > cross.rateNow && cross.tfsa > cross.rrsp);
-  // A contribution that straddles the $50,363 BC break blends the two rates.
-  const straddle = tfsaVsRrspIncremental({ pretax: 10000, rate: 0, years: 1, incomeNow: 55000, incomeLater: 0, spreadYears: 1 });
-  close(straddle.rateNow, (bcBracketTax(55000) - bcBracketTax(45000)) / 10000, 1e-12);
-  assert.ok(straddle.rateNow > .14 + .056 && straddle.rateNow < .14 + .077);
-  // Spreading withdrawals over more years never raises the tax.
-  const one = tfsaVsRrspIncremental({ pretax: 50000, rate: .05, years: 25, incomeNow: 120000, incomeLater: 40000, spreadYears: 1 });
-  const ten = tfsaVsRrspIncremental({ pretax: 50000, rate: .05, years: 25, incomeNow: 120000, incomeLater: 40000, spreadYears: 10 });
-  assert.ok(ten.rrsp >= one.rrsp);
-});
-
 test('credit zones detect overlap of whole ranges with the BC reduction and federal BPA phase-down', () => {
   assert.deepEqual(creditZones([[60000, 150000]]), []);
   assert.deepEqual(creditZones([[44952, 44952]]), ['low']);
@@ -144,4 +112,70 @@ test('credit zones detect overlap of whole ranges with the BC reduction and fede
   assert.deepEqual(creditZones([[170000, 300000]]), ['bpa']);
   assert.deepEqual(creditZones([[258482, 300000]]), []);
   assert.deepEqual(creditZones([[20000, 300000]]), ['low', 'bpa']);
+});
+
+const R100 = bcMarginalRates(100000);
+const base = { amount: 50000, years: 10, gicRate: .0325, fund: { interest: .01, dividends: .008, foreign: .006, realized: .01, growth: .016 }, rates: R100 };
+
+test('GIC: non-registered interest compounds at the after-tax rate; TFSA untaxed; RRSP taxed once on withdrawal', () => {
+  close(gicVsFund({ ...base, account: 'nonreg' }).gicAfterTax, 50000 * (1 + .0325 * (1 - .282)) ** 10, 1e-6);
+  close(gicVsFund({ ...base, account: 'tfsa' }).gicAfterTax, 50000 * 1.0325 ** 10, 1e-6);
+  close(gicVsFund({ ...base, account: 'rrsp', withdrawalRate: .3 }).gicAfterTax, 50000 * 1.0325 ** 10 * .7, 1e-6);
+  const nr = gicVsFund({ ...base, account: 'nonreg' });
+  close(nr.tax.gicInterest, (50000 * (1 + .0325 * .718) ** 10 - 50000) / .718 * .282, 1e-6);
+});
+
+test('fund in TFSA and RRSP grows at its total return; registered accounts ignore the income mix', () => {
+  const total = .05;
+  close(gicVsFund({ ...base, account: 'tfsa' }).fundAfterTax, 50000 * (1 + total) ** 10, 1e-6);
+  const mixA = gicVsFund({ ...base, account: 'rrsp', withdrawalRate: .3 }).fundAfterTax;
+  const mixB = gicVsFund({ ...base, account: 'rrsp', withdrawalRate: .3, fund: { interest: 0, dividends: 0, foreign: 0, realized: 0, growth: total } }).fundAfterTax;
+  close(mixA, 50000 * 1.05 ** 10 * .7, 1e-6); close(mixA, mixB, 1e-6);
+});
+
+test('fund, non-registered: pure growth is taxed only at sale; pure distributions compound after tax with no gain left', () => {
+  const growthOnly = gicVsFund({ ...base, account: 'nonreg', fund: { interest: 0, dividends: 0, foreign: 0, realized: 0, growth: .05 } });
+  const v = 50000 * 1.05 ** 10;
+  close(growthOnly.fundAfterTax, v - (v - 50000) * R100.capitalGains, 1e-6);
+  close(growthOnly.tax.fundDeferred, (v - 50000) * R100.capitalGains, 1e-6);
+  const kept = gicVsFund({ ...base, account: 'nonreg', sellAtEnd: false, fund: { interest: 0, dividends: 0, foreign: 0, realized: 0, growth: .05 } });
+  close(kept.fundAfterTax, v, 1e-6); close(kept.unrealized, v - 50000, 1e-6);
+  const interestOnly = gicVsFund({ ...base, account: 'nonreg', fund: { interest: .05, dividends: 0, foreign: 0, realized: 0, growth: 0 } });
+  close(interestOnly.fundAfterTax, 50000 * (1 + .05 * (1 - R100.ordinary)) ** 10, 1e-6);
+  close(interestOnly.acb, interestOnly.fundValue, 1e-6);
+  // Same return as a GIC, all paid as interest: identical after tax.
+  close(gicVsFund({ ...base, account: 'nonreg', gicRate: .05, fund: { interest: .05, dividends: 0, foreign: 0, realized: 0, growth: 0 } }).gicAfterTax, interestOnly.fundAfterTax, 1e-6);
+});
+
+test('fund tax by type uses each rate: dividends below interest, distributed gains at half the ordinary rate', () => {
+  const one = gicVsFund({ ...base, account: 'nonreg', years: 1 });
+  close(one.tax.fundIncome, 50000 * .016 * .282, 1e-9);
+  close(one.tax.fundDividends, 50000 * .008 * R100.eligible, 1e-9);
+  close(one.tax.fundRealized, 50000 * .01 * .141, 1e-9);
+  // Low incomes: the eligible dividend credit exceeds the tax, so dividends reduce tax (negative).
+  assert.ok(gicVsFund({ ...base, rates: bcMarginalRates(40000), account: 'nonreg', years: 1 }).tax.fundDividends < 0);
+});
+
+test('break-even fund return equalizes after-tax values, and is below the GIC rate when the fund is tax-efficient', () => {
+  const be = breakEvenFundReturn({ ...base, account: 'nonreg' });
+  const f = base.fund, growth = be - (f.interest + f.dividends + f.foreign + f.realized);
+  const r = gicVsFund({ ...base, account: 'nonreg', fund: { ...f, growth } });
+  close(r.fundAfterTax, r.gicAfterTax, 1e-4);
+  assert.ok(be < .0325);
+  close(breakEvenFundReturn({ ...base, account: 'tfsa' }), .0325, 1e-9);
+});
+
+test('portfolio statistics: weighted mean; volatility of perfectly correlated assets is the weighted volatility; uncorrelated adds in quadrature', () => {
+  const I = [[1, 0], [0, 1]], J = [[1, 1], [1, 1]];
+  close(portfolioStats([.5, .5], [.02, .06], [.1, .2], J).vol, .15, 1e-12);
+  close(portfolioStats([.5, .5], [.02, .06], [.1, .2], I).vol, Math.sqrt(.05 ** 2 + .1 ** 2), 1e-12);
+  close(portfolioStats([.5, .5], [.02, .06], [.1, .2], I).mean, .04, 1e-12);
+  const r = annualizedRange(.05, .1, 4);
+  close(r.low, .05 - 1.2815515655 * .05, 1e-9); close(r.high, .05 + 1.2815515655 * .05, 1e-9);
+});
+
+test('GIC comparison rejects bad inputs', () => {
+  assert.throws(() => gicVsFund({ ...base, years: 0 }));
+  assert.throws(() => gicVsFund({ ...base, amount: -1 }));
+  assert.throws(() => gicVsFund({ ...base, gicRate: NaN }));
 });

@@ -5,3 +5,4 @@ qa/
 *.log
 __pycache__/
 .pytest_cache/
+.build/

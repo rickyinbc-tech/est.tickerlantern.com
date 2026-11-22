@@ -8,6 +8,8 @@ const ORIGIN = 'https://tickerlantern.com';
 const DIST = 'dist';
 const ZH_PAGES = 'src/locales/zh/pages';
 const ZH_DICTS = 'src/locales/zh/dicts';
+// Written by build-planner.mjs from the same bilingual content as the English homepage.
+const PLANNER_ZH = '.build/planner-zh.html';
 const metaPath = 'src/locales/zh/meta.json';
 const meta = existsSync(metaPath) ? JSON.parse(await readFile(metaPath, 'utf8')) : {};
 const revision = (meta.sourceRevision || '').slice(0, 12);
@@ -167,7 +169,9 @@ function zhDocument(html, enPath, zhPath, fallback, dict) {
     html = html.replace(/<title>/, '<title>英文页面：');
     html = html.replace(/<body([^>]*)>/, `<body$1><div class="tl-translation-banner">本页的完整中文译文尚未生成，以下保留英文原文。<a href="${enPath}" hreflang="en" lang="en">Read in English</a></div>`);
   }
-  const note = `<div class="tl-translation-foot"><span>简体中文为机器翻译，术语与数字已校对。</span><a href="${enPath}" hreflang="en" lang="en">英文原文</a><a href="mailto:support@tickerlantern.com?subject=Translation%20correction">报告翻译问题</a></div>`;
+  // The planner toolkit's Chinese page is generated from bilingual source, not machine translated.
+  const notice = enPath === '/' && !fallback ? '本页中文与英文版由同一份双语内容生成，数字与术语已逐项核对；如有出入，以英文版为准。' : '简体中文为机器翻译，术语与数字已校对。';
+  const note = `<aside class="tl-translation-foot" aria-label="翻译说明"><span>${notice}</span><a href="${enPath}" hreflang="en" lang="en">英文原文</a><a href="mailto:support@tickerlantern.com?subject=Translation%20correction">报告翻译问题</a></aside>`;
   return html.replace('</body>', note + '</body>');
 }
 
@@ -231,7 +235,9 @@ for await (const file of htmlFiles(DIST)) {
   const source = join(ZH_PAGES, zhRelative(enPath));
   let zh;
   let fallback = false;
-  if (existsSync(source)) {
+  if (enPath === '/' && existsSync(PLANNER_ZH)) {
+    zh = await readFile(PLANNER_ZH, 'utf8');
+  } else if (existsSync(source)) {
     zh = await readFile(source, 'utf8');
   } else {
     zh = await readFile(file, 'utf8');

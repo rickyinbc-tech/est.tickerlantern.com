@@ -2,7 +2,7 @@
 // current pair: the planner toolkit at / and index valuations at /valuations.
 // The build applies it to every static page (English and Chinese); the worker
 // applies the same change to pages streamed from the notes service.
-const LABELS = { en: { home: 'Planner toolkit', valuations: 'Valuations' }, zh: { home: '理财沟通工具（英文版）', valuations: '指数估值' } };
+const LABELS = { en: { home: 'Planner toolkit', valuations: 'Valuations' }, zh: { home: '理财沟通工具', valuations: '指数估值' } };
 const LEGACY = /<a(?: aria-current="page")? href="(\/|\/zh\/)"(?: aria-current="page")?>(?:Indices|指数)<\/a>/g;
 
 export const isZhPath = path => /^\/zh(?:\/|$)/.test(path);

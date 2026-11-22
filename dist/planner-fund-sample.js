@@ -4,8 +4,11 @@
 // comparison's fund-return slider as an illustrative, editable assumption.
 // Verified on the official fund page (Series A selected), Trailing returns %
 // table, 10 yr column. Update all fields together when the page changes.
+// nameZh is this site's Simplified Chinese rendering: no RBC GAM Chinese name
+// was found (2026-11-22), so the source list also keeps the official English name.
 export const FUND_SAMPLE = {
   name: 'RBC Select Balanced Portfolio',
+  nameZh: 'RBC精选平衡投资组合',
   series: 'A',
   code: 'RBF460',
   tenYearPct: 6.6,

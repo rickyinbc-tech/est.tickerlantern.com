@@ -124,8 +124,10 @@ test('the Chinese homepage is a full Chinese page, not the English fallback', ()
   assert.match(zh, /由同一份双语内容生成/); assert.doesNotMatch(zh, /简体中文为机器翻译/);
   assert.match(zh, /<link rel="canonical" href="https:\/\/tickerlantern\.com\/zh\/">/);
   // Visible text in the main content has no stray English sentences (product names, acronyms and the source links are allowed).
-  // The fund's official English name is a proper noun and stays in English.
-  const main = zh.slice(zh.indexOf('<main'), zh.indexOf('</main>')).replaceAll('RBC Select Balanced Portfolio', ' ').replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/<(svg|title|desc)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
+  // The fund is named in Chinese; its official English name appears only in the source list, to identify the source.
+  assert.match(zh, /RBC精选平衡投资组合（A系列，基金代码RBF460）/);
+  const main = zh.slice(zh.indexOf('<main'), zh.indexOf('</main>')).replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/<(svg|title|desc)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
+  assert.ok(!main.includes('Select Balanced'), 'the English fund name belongs only in the Chinese source list');
   const english = main.match(/[A-Za-z][a-z]+(?:[ ,'’-]+[A-Za-z][a-z]+){2,}/g) || [];
   assert.deepEqual(english, [], 'English phrases left on the Chinese page');
   // Every control label, option and button is Chinese.

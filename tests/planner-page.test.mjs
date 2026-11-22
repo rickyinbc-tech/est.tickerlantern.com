@@ -48,13 +48,13 @@ test('historical data and illustrations are labelled distinctly; every asset and
   assert.match(block(home, 'assetRange'), /Not historical returns, not forecasts and not data for any index or fund/);
   assert.match(block(zh, 'assetRange'), /并非历史回报，并非预测，也不是任何指数或基金的数据/);
   assert.match(block(home, 'assetScenario'), /not any actual year/);
-  assert.match(block(home, 'gic'), /not data for any fund/);
+  assert.match(block(home, 'gic'), /not any fund’s actual distributions/);
   assert.match(home, /returns and recoveries are not guaranteed/i);
   assert.doesNotMatch(home, /guaranteed (?:return|growth|recovery)/i);
 });
 
 test('caveats that separate history from hypothesis stay visible, not inside a disclosure', () => {
-  for (const [html, pairs] of [[home, [['hypoReturns', 'Hypothetical and invented for teaching'], ['volatility', 'not market history and not a forecast'], ['assetRange', 'Not historical returns'], ['assetScenario', 'not any actual year'], ['gic', 'not data for any fund']]], [zh, [['hypoReturns', '为教学而虚构'], ['assetRange', '并非历史回报'], ['assetScenario', '并非任何实际年份'], ['gic', '并非任何基金的数据']]]]) {
+  for (const [html, pairs] of [[home, [['hypoReturns', 'Hypothetical and invented for teaching'], ['volatility', 'not market history and not a forecast'], ['assetRange', 'Not historical returns'], ['assetScenario', 'not any actual year'], ['gic', 'not any fund’s actual distributions'], ['gic', 'Past performance does not guarantee future results']]], [zh, [['hypoReturns', '为教学而虚构'], ['assetRange', '并非历史回报'], ['assetScenario', '并非任何实际年份'], ['gic', '并非任何基金的实际分派'], ['gic', '过去的表现不保证未来的结果']]]]) {
     for (const [name, text] of pairs) {
       const b = block(html, name), at = b.indexOf(text), details = b.indexOf('<details class="pc-about"');
       assert.ok(at > 0, name); assert.ok(details < 0 || at < details, name + ' caveat must sit before the disclosure');
@@ -124,7 +124,8 @@ test('the Chinese homepage is a full Chinese page, not the English fallback', ()
   assert.match(zh, /由同一份双语内容生成/); assert.doesNotMatch(zh, /简体中文为机器翻译/);
   assert.match(zh, /<link rel="canonical" href="https:\/\/tickerlantern\.com\/zh\/">/);
   // Visible text in the main content has no stray English sentences (product names, acronyms and the source links are allowed).
-  const main = zh.slice(zh.indexOf('<main'), zh.indexOf('</main>')).replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/<(svg|title|desc)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
+  // The fund's official English name is a proper noun and stays in English.
+  const main = zh.slice(zh.indexOf('<main'), zh.indexOf('</main>')).replaceAll('RBC Select Balanced Portfolio', ' ').replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/<(svg|title|desc)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
   const english = main.match(/[A-Za-z][a-z]+(?:[ ,'’-]+[A-Za-z][a-z]+){2,}/g) || [];
   assert.deepEqual(english, [], 'English phrases left on the Chinese page');
   // Every control label, option and button is Chinese.
@@ -133,17 +134,30 @@ test('the Chinese homepage is a full Chinese page, not the English fallback', ()
   for (const name of Object.keys(FIGURES)) assert.match(renderFigure(name, {}, 'zh').summary, /[一-鿿]/, name);
 });
 
-test('the toolkit names, quotes or calculates no real fund: no fund names, codes, fund-company data or sources', async () => {
-  const assets = [home, zh, ...await Promise.all(['planner.js', 'planner-sections.js', 'planner-strings.js', 'planner-math.js'].map(f => readFile('dist/' + f, 'utf8')))].join('\n');
-  assert.doesNotMatch(assets, /RBC[^<.]{0,40}(?:Balanced|Fund|Portfolio)|RBF\d{3}|rbcgam/i);
-  assert.ok(!(await readdir('src')).includes('planner-fund-data.js'));
-  // The invented sequence must not be the real fund's published calendar returns.
-  // Compared by hash so the real fund's returns are never written into this repository.
+test('the one real fund figure is the published RBF460 10-year return, dated, sourced and used only as an editable assumption', async () => {
+  const { FUND_SAMPLE } = await import('../src/planner-fund-sample.js');
+  assert.deepEqual({ code: FUND_SAMPLE.code, series: FUND_SAMPLE.series, tenYearPct: FUND_SAMPLE.tenYearPct, asOf: FUND_SAMPLE.asOf }, { code: 'RBF460', series: 'A', tenYearPct: 6.6, asOf: '2026-10-31' });
+  assert.equal(FUND_SAMPLE.url, 'https://www.rbcgam.com/en/ca/products/mutual-funds/RBF460/detail');
+  // The figure seeds the slider, which stays editable across its full range.
+  assert.deepEqual(FIGURES.gic.inputs.fundReturn, [6.6, -10, 12]);
+  for (const [html, asOf, past] of [[home, 'as of October 31, 2026', 'Past performance does not guarantee future results'], [zh, '截至2026年10月31日', '过去的表现不保证未来的结果']]) {
+    const card = html.slice(html.indexOf('<aside class="pc-sample"'), html.indexOf('</aside>', html.indexOf('<aside class="pc-sample"')));
+    assert.match(card, /pc-badge--history/); assert.ok(card.includes(asOf), asOf); assert.ok(card.includes(past)); assert.match(card, /RBF460/); assert.match(card, /href="#src-rbcgam-rbf460"/);
+    assert.match(html, /<li id="src-rbcgam-rbf460">[^<]*<a href="https:\/\/www\.rbcgam\.com\/en\/ca\/products\/mutual-funds\/RBF460\/detail"/);
+    assert.match(html, /<input id="gic-fundReturn" name="fundReturn" type="range" min="-10" max="12" step="0.1" value="6.6">/);
+  }
+  assert.match(renderFigure('gic', {}).summary, /6\.6% return is an illustrative assumption that starts at a dated, published 10-year figure/);
+  assert.match(renderFigure('gic', { fundReturn: 3 }).summary, /3% return is your assumption for the future/);
+  // No other fund data: no other fund code, no MER or calendar returns, no fund-specific distribution split.
+  const assets = [home, zh, ...await Promise.all(['planner.js', 'planner-sections.js', 'planner-strings.js', 'planner-math.js', 'planner-fund-sample.js'].map(f => readFile('dist/' + f, 'utf8')))].join('\n');
+  assert.deepEqual([...new Set(assets.match(/RBF\d{3}/g))], ['RBF460']);
+  assert.doesNotMatch(assets, /\b1\.94\b|\b13\.9\b|\b11\.6\b/, 'no MER or calendar returns copied');
+  assert.ok(Object.keys(FIGURES.gic.inputs).filter(k => /^f[idfg]$/.test(k)).every(k => !String(FIGURES.gic.inputs[k][0]).includes('RBF')));
+  // The invented year-by-year sequence elsewhere must still not be the real fund's calendar returns (compared by hash).
   const { createHash } = await import('node:crypto');
   assert.notEqual(createHash('sha256').update(JSON.stringify(FIGURES.hypoReturns.returns)).digest('hex'), '529b3ddfff4ffddbc1d2fc006a3c04a913ae43a7e102af065dc2fde6095ae3ca');
   assert.match(renderFigure('hypoReturns', {}).summary, /not data for any real fund/);
 });
-
 test('valuation app moved intact to /valuations; old homepage anchors are forwarded', async () => {
   const v = await readFile('dist/valuations.html', 'utf8');
   assert.ok(v.includes('<link rel="canonical" href="https://tickerlantern.com/valuations">'));
@@ -291,8 +305,8 @@ test('deposit insurance: CDIC limit, category, member institution and BC credit 
   }
 });
 
-test('tax-payment convention, cautious middle case with a lower–higher range, and weak-case tax notes', () => {
-  assert.equal(normalizeState('gic', {}).fundReturn, 4, 'cautious middle default');
+test('tax-payment convention, published-figure middle case with a lower–higher range, and weak-case tax notes', () => {
+  assert.equal(normalizeState('gic', {}).fundReturn, 6.6, 'middle case starts at the published RBF460 10-year return');
   for (const lang of LANGS) {
     const t = STRINGS[lang], nr = renderFigure('gic', {}, lang);
     assert.ok(nr.extra.includes(t['gic.payNote']), 'convention note is visible, not only in the disclosure');

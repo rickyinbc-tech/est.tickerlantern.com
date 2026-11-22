@@ -5,6 +5,7 @@
 import { CPI, cpiEquivalent, cpiAnnualRate, realValue, growthSchedule, recoveryGain, recoveryYears, outcomeBands, equalWeightVolatility, twoAssetMix, regularPurchases, bcMarginalRates, creditZones, gicVsFund, breakEvenFundReturn, portfolioStats, annualizedRange, normCdf } from './planner-math.js';
 import { lineChart, barChart, rowChart, legend, dataTable } from './planner-charts.js';
 import { STRINGS } from './planner-strings.js';
+import { FUND_SAMPLE } from './planner-fund-sample.js';
 
 export const CPI_LAST = 2025;
 
@@ -262,7 +263,7 @@ export const FIGURES = {
     }
   },
   gic: {
-    inputs: { account: ['nonreg', ['nonreg', 'tfsa', 'rrsp']], amount: [50000, 1, 10000000], income: [100000, 0, 2000000], withdraw: [30, 0, 54], years: [10, 1, 30], term: [5, 1, 5], gicRate: [3.25, 0, 10], renewRate: [3.25, 0, 10], fundReturn: [4, -10, 12], sale: ['sell', ['sell', 'hold']], fi: [1, 0, 6], fd: [0.8, 0, 5], ff: [0.6, 0, 5], fg: [1, 0, 8] },
+    inputs: { account: ['nonreg', ['nonreg', 'tfsa', 'rrsp']], amount: [50000, 1, 10000000], income: [100000, 0, 2000000], withdraw: [30, 0, 54], years: [10, 1, 30], term: [5, 1, 5], gicRate: [3.25, 0, 10], renewRate: [3.25, 0, 10], fundReturn: [FUND_SAMPLE.tenYearPct, -10, 12], sale: ['sell', ['sell', 'hold']], fi: [1, 0, 6], fd: [0.8, 0, 5], ff: [0.6, 0, 5], fg: [1, 0, 8] },
     render(s, t, f) {
       const rates = bcMarginalRates(s.income), pc = v => v / 100, acct = s.account, nonreg = acct === 'nonreg', rrsp = acct === 'rrsp';
       const income = pc(s.fi + s.fd + s.ff + s.fg), fundAt = total => ({ interest: pc(s.fi), dividends: pc(s.fd), foreign: pc(s.ff), realized: pc(s.fg), growth: total - income });
@@ -283,7 +284,8 @@ export const FIGURES = {
       const nextMat = Math.ceil(s.years / s.term) * s.term, termSpan = t('span.adj', { n: s.term });
       const timing = s.years % s.term ? t('gic.timing', { years: s.years, next: nextMat }) : '';
       const vars = { caution: cautions.length ? cautions.join(' ') + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(val(r, 'gic')), fund: f.money(val(r, 'fund')), basis: t('gic.basisShort.' + acct), winner, why, timing,
-        lo: f.pct(lo), hi: f.pct(hi), fundLo: f.money(val(rLo, 'fund')), fundHi: f.money(val(rHi, 'fund')), breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }) };
+        lo: f.pct(lo), hi: f.pct(hi), fundLo: f.money(val(rLo, 'fund')), fundHi: f.money(val(rHi, 'fund')), breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }),
+        sample: s.fundReturn === FUND_SAMPLE.tenYearPct ? t('gic.sampleUsed', { ret: f.pct(pc(s.fundReturn)) }) : t('gic.sampleChanged', { ret: f.pct(pc(s.fundReturn)) }) };
       const tx = r.tax, notes = [];
       notes.push(t(s.years > s.term ? 'gic.termNote.renew' : 'gic.termNote', { termSpan, renew: f.pct(pc(s.renewRate), 2) }));
       if (nonreg) notes.push(t('gic.payNote'));

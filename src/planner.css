@@ -296,3 +296,9 @@ html:not(.pc-tabs) .pc-pager{display:none}
   .pc-figure,.pc-cards article,.pc-notes{break-inside:avoid;box-shadow:none}
   .pc-figure__body{grid-template-columns:1fr!important}
 }
+
+/* Dated published figure that seeds the GIC comparison's fund-return assumption */
+.pc-sample{margin:0 0 16px;padding:12px 14px;border:1px solid #b9dcd7;border-left:4px solid var(--pc-teal);border-radius:8px;background:#f3faf9;font-size:15px}
+.pc-sample p{margin:0 0 6px}.pc-sample p:last-child{margin-bottom:0}
+.pc-sample__head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;color:var(--pc-navy)}
+.pc-sample__use{color:var(--pc-muted);font-size:14px}

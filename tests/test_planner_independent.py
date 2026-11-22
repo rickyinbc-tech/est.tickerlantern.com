@@ -138,9 +138,12 @@ class IndependentPlannerMath(unittest.TestCase):
         z = 1.2815515655446004
         rendered = js("import {renderFigure} from './src/planner-sections.js';"
                       "console.log(JSON.stringify(['nonreg','tfsa','rrsp'].map(a => renderFigure('gic', {account: a}).summary)))")
+        # The default middle case is the published RBF460 10-year return (src/planner-fund-sample.js).
+        mid_rate = js("import {FUND_SAMPLE} from './src/planner-fund-sample.js'; console.log(JSON.stringify(FUND_SAMPLE.tenYearPct))") / 100
+        self.assertAlmostEqual(mid_rate, .066, places=12)
         for account, summary in zip(["nonreg", "tfsa", "rrsp"], rendered):
-            lo, hi = .04 - z * sigma / math.sqrt(10), .04 + z * sigma / math.sqrt(10)
-            mid = model(50000, 10, .0325, fund_at(.04), account, marginal(100000), .3, True, 5, .0325, detail=True)
+            lo, hi = mid_rate - z * sigma / math.sqrt(10), mid_rate + z * sigma / math.sqrt(10)
+            mid = model(50000, 10, .0325, fund_at(mid_rate), account, marginal(100000), .3, True, 5, .0325, detail=True)
             low = model(50000, 10, .0325, fund_at(lo), account, marginal(100000), .3, True, 5, .0325, detail=True)
             high = model(50000, 10, .0325, fund_at(hi), account, marginal(100000), .3, True, 5, .0325, detail=True)
             # RRSP/RRIF compares balances before withdrawal tax; other accounts compare values after any tax.

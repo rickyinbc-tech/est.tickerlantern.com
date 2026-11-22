@@ -114,13 +114,18 @@ export function barChart({ id, title, desc, categories, series, yFormat = String
  * phone and a desktop. Each row is either a range (lo..hi with a dot at mid) or
  * a bar from zero to `value`. `highlight` rows are drawn in the accent colour.
  */
-export function rowChart({ id, title, desc, rows, format }) {
+export function rowChart({ id, title, desc, rows, format, tickFormat = format }) {
   const rowH = 46, top = 6, lx = 8, left = 50, right = 56, height = top + rows.length * rowH + 26;
   const vals = rows.flatMap(r => r.value != null ? [r.value, 0] : [r.lo, r.hi, 0]);
   const x = niceTicks(Math.min(...vals), Math.max(...vals), W < 560 ? 4 : 6);
   const iw = W - left - right, xs = v => left + (v - x.lo) / (x.hi - x.lo) * iw;
   let body = '';
-  for (const t of x.ticks) body += `<line class="pc-gridline${t === 0 ? ' pc-zero' : ''}" x1="${r1(xs(t))}" x2="${r1(xs(t))}" y1="${top}" y2="${top + rows.length * rowH}"/><text class="pc-tick" x="${r1(xs(t))}" y="${top + rows.length * rowH + 18}" text-anchor="middle">${esc(format(t))}</text>`;
+  // Gridlines run only through each row's bar band, so they never cross the row labels above the bars.
+  for (const t of x.ticks) {
+    const gx = r1(xs(t)), cls = `pc-gridline${t === 0 ? ' pc-zero' : ''}`;
+    body += rows.map((_, i) => `<line class="${cls}" x1="${gx}" x2="${gx}" y1="${top + i * rowH + 22}" y2="${top + (i + 1) * rowH}"/>`).join('');
+    body += `<text class="pc-tick" x="${gx}" y="${top + rows.length * rowH + 18}" text-anchor="middle">${esc(tickFormat(t))}</text>`;
+  }
   rows.forEach((r, i) => {
     const y = top + i * rowH, ty = y + 16, by = y + 26, cls = r.highlight ? 'pc-b' : r.value != null && r.value < 0 ? 'pc-neg' : 'pc-a';
     body += `<text class="pc-row-label${r.highlight ? ' pc-row-label--hi' : ''}" x="${lx}" y="${ty}">${esc(r.label)}</text>`;
@@ -137,7 +142,7 @@ export function rowChart({ id, title, desc, rows, format }) {
 }
 
 /** Legend markup shared by charts and tables. */
-export const legend = items => `<ul class="pc-legend">${items.map(i => `<li><i class="pc-key pc-${i.key}${i.dash ? ' pc-dash' : ''}" aria-hidden="true"></i>${esc(i.name)}</li>`).join('')}</ul>`;
+export const legend = items => `<ul class="pc-legend">${items.map(i => `<li><i class="pc-key ${(i.key.startsWith('range') ? 'pc-key--' : 'pc-') + i.key}${i.dash ? ' pc-dash' : ''}" aria-hidden="true"></i>${esc(i.name)}</li>`).join('')}</ul>`;
 
 /** Accessible data table that mirrors a chart. */
 export function dataTable({ caption, head, rows }) {

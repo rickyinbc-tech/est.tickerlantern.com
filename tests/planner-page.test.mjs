@@ -222,3 +222,34 @@ test('chart labels fit at phone width in both languages', async () => {
     }
   } finally { setChartWidth(720); }
 });
+
+test('GIC charts keep one colour per product: GIC teal (pc-a), hypothetical fund orange (pc-b)', () => {
+  for (const lang of LANGS) {
+    const r = renderFigure('gic', {}, lang);
+    assert.match(r.legend, /pc-key pc-a pc-dash[^<]*<\/i>GIC</, 'line legend: GIC is pc-a');
+    const bars = [...r.extra.matchAll(/<rect class="pc-bar (pc-\w+)"[^>]*><title>([^<]+)</g)].map(m => [m[1], m[2]]);
+    assert.equal(bars.length, 5);
+    assert.equal(bars[0][0], 'pc-a', 'tax chart: GIC interest row in the GIC colour');
+    for (const [cls, title] of bars.slice(1)) assert.equal(cls, 'pc-b', 'tax chart: fund row in the fund colour: ' + title);
+    assert.match(r.stats, /pc-stat--a.*pc-stat--b/s, 'headline tiles use the same colours');
+  }
+});
+
+test('row-chart gridlines stay inside each bar band, clear of the row labels', () => {
+  for (const name of ['assetRange', 'assetScenario']) {
+    const svg = renderFigure(name, {}, 'en').chart;
+    const labels = [...svg.matchAll(/class="pc-row-label[^"]*" x="[\d.]+" y="([\d.]+)"/g)].map(m => +m[1]);
+    const lines = [...svg.matchAll(/class="pc-gridline[^"]*" x1="[\d.]+" x2="[\d.]+" y1="([\d.]+)" y2="([\d.]+)"/g)].map(m => [+m[1], +m[2]]);
+    assert.ok(labels.length && lines.length);
+    for (const y of labels) for (const [a, b] of lines) assert.ok(!(y - 13 < b && y + 4 > a), `${name}: gridline ${a}-${b} crosses label at ${y}`);
+  }
+});
+
+test('the scenario picker is a labelled radio group with one choice checked', () => {
+  for (const html of [home, zh]) {
+    const b = block(html, 'assetScenario');
+    assert.match(b, /<fieldset class="pc-field pc-choices" id="assetScenario-scenario"><legend>/);
+    assert.equal([...b.matchAll(/type="radio" name="scenario"/g)].length, Object.keys(SCENARIOS).length);
+    assert.equal([...b.matchAll(/type="radio" name="scenario" value="\w+" checked/g)].length, 1);
+  }
+});

@@ -20,7 +20,7 @@ const railLinks = [...document.querySelectorAll('.pc-topics a')];
 function stateOf(form) {
   const state = {};
   if (!form) return state;
-  for (const el of form.elements) if (el.name) state[el.name] = el.type === 'number' || el.type === 'range' ? (el.value === '' ? '' : Number(el.value)) : el.value;
+  for (const el of form.elements) if (el.name && !(el.type === 'radio' && !el.checked)) state[el.name] = el.type === 'number' || el.type === 'range' ? (el.value === '' ? '' : Number(el.value)) : el.value;
   return state;
 }
 
@@ -36,13 +36,13 @@ function render(fig) {
   const width = widthFor(fig);
   if (width) { setChartWidth(width); fig.dataset.width = width; }
   const result = renderFigure(name, stateOf(form), lang);
-  for (const key of ['chart', 'legend', 'extra', 'summary', 'table', 'assumptions']) {
+  for (const key of ['chart', 'legend', 'extra', 'stats', 'summary', 'table', 'assumptions']) {
     const out = fig.querySelector(`[data-out="${key}"]`);
     if (!out || result[key] == null) continue;
     if (key === 'summary' || key === 'assumptions') { if (out.textContent !== result[key]) out.textContent = result[key]; }
     else out.innerHTML = result[key];
   }
-  if (form) for (const echo of form.querySelectorAll('output[data-echo]')) echo.textContent = form.elements[echo.dataset.echo].value + echo.dataset.unit;
+  if (form) for (const echo of form.querySelectorAll('output[data-echo]')) echo.textContent = form.elements[echo.dataset.echo].value.replace(/^-/, '−') + echo.dataset.unit;
   const readout = fig.querySelector('[data-out="readout"]');
   if (readout) readout.textContent = fig.querySelector('svg[data-series]') ? HINT : '';
 }

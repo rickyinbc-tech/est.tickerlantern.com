@@ -63,6 +63,7 @@ export const STRINGS = {
     'asset.rangeLoss1': 'In a single year it loses money in roughly {loss} of outcomes under these assumptions. ',
     'asset.rangeLossN': 'Even averaged over {span}, about {loss} of outcomes are below zero under these assumptions. ',
     'asset.rangeLoss0': 'Under these assumptions, a negative average over {span} is unlikely but not impossible. ',
+    'asset.legendRange': '8 in 10 outcomes (assumed)', 'asset.legendMean': 'Assumed average',
     'asset.colAsset': 'Asset class', 'asset.colMean': 'Assumed average', 'asset.colVol': 'Assumed volatility', 'asset.colLow': '8-in-10 low', 'asset.colHigh': '8-in-10 high', 'asset.colWeight': 'Balanced weight',
     'asset.rangeTable': 'Hypothetical assumptions and the resulting ranges (average annual return over {span})',
     'asset.scenTitle': 'One hypothetical year: {scenario}',
@@ -89,7 +90,7 @@ export const STRINGS = {
     'gic.taxIncome': 'interest and foreign income', 'gic.taxDividends': 'Canadian dividends', 'gic.taxRealized': 'distributed capital gains', 'gic.taxDeferred': 'gain on sale at the end',
     'gic.taxNone': 'Inside {accountIn} no tax is paid along the way, so there is no breakdown by income type.',
     'gic.taxRrspNone': 'Inside an RRSP or RRIF no tax is paid along the way; the whole withdrawal is taxed as income at the end ({withdraw} assumed).',
-    'gic.colGic': 'GIC after tax', 'gic.colFund': 'Fund after tax', 'gic.colAcb': 'Fund cost base (ACB)',
+    'gic.statBreakeven': 'Fund return needed to match', 'gic.colGic': 'GIC after tax', 'gic.colFund': 'Fund after tax', 'gic.colAcb': 'Fund cost base (ACB)',
     'gic.assumptions': 'Assumptions: one deposit, no additions or withdrawals. GIC interest {gicRate} compounding yearly. Fund, net of expenses: interest {fi}, Canadian eligible dividends {fd}, foreign income {ff}, distributed gains {fg} and unit-value change {fu} a year (total {ft}). Marginal rates at {income} taxable income in BC, 2026: interest {ordinary}, eligible dividends {eligible}, capital gains {cg}, held flat.',
     'caution.low': 'Caution: at or below $44,952 these figures can mislead. The BC tax reduction raises the actual BC marginal rate by up to 3.56 points as it phases out, and basic personal amounts can make actual tax zero.',
     'caution.bpa': 'Caution: between about $181,440 and $258,482 the federal basic personal amount phases down, so the actual marginal rate is slightly higher than shown.'
@@ -118,7 +119,7 @@ export const STRINGS = {
     'pac.summary': '每月{monthly}、持续{span}，累计供款{contributed}。按假设年回报{rate}，可能增长到{value}；其中增长部分为{growth}，占余额的{share}。',
 
     'dca.title': '每月投入相同金额所买到的单位数（虚构价格）',
-    'dca.units': '买入单位数', 'dca.month': '{n}月', 'dca.monthCol': '月份', 'dca.price': '单位价格',
+    'dca.units': '买入单位数', 'dca.month': '第{n}个月', 'dca.monthCol': '月份', 'dca.price': '单位价格',
     'dca.summary': '每月投入{amount}，价格低时能买到更多单位。平均成本为每单位{avgCost}，而平均价格为{avgPrice}。价格最后回到起点（{last}），但已投入的{invested}现值为{end}。',
 
     'preset.cautious': '保守组合', 'preset.balanced': '平衡组合', 'preset.growth': '增长组合',
@@ -154,6 +155,7 @@ export const STRINGS = {
     'asset.rangeLoss1': '按这些假设，单看一年，大约{loss}的结果会亏损。',
     'asset.rangeLossN': '即使按{span}平均，按这些假设仍约有{loss}的结果低于零。',
     'asset.rangeLoss0': '按这些假设，{span}的平均回报为负的可能性不大，但并非不可能。',
+    'asset.legendRange': '十分之八的结果（假设）', 'asset.legendMean': '假设平均值',
     'asset.colAsset': '资产类别', 'asset.colMean': '假设平均值', 'asset.colVol': '假设波动率', 'asset.colLow': '十分之八范围低端', 'asset.colHigh': '十分之八范围高端', 'asset.colWeight': '平衡组合权重',
     'asset.rangeTable': '假设参数及由此得出的范围（{span}平均年回报）',
     'asset.scenTitle': '假设的一年：{scenario}',
@@ -164,7 +166,7 @@ export const STRINGS = {
     'asset.scenTable': '各资产类别的假设一年回报：{scenario}',
     'scen.equityBear': '股市下跌、利率下降', 'scen.ratesUp': '利率上升，股票和债券同时下跌', 'scen.usLed': '美股领涨的强劲年份', 'scen.cadUp': '加元大幅升值', 'scen.commodity': '大宗商品繁荣、利率上升',
 
-    'gic.title': '若此时兑现的税后价值：GIC与假设的平衡型基金（{account}）',
+    'gic.title': '若当年兑现的税后价值：GIC与假设的平衡型基金（{account}）',
     'gic.gic': 'GIC', 'gic.fund': '假设的平衡型基金', 'gic.invested': '投入金额',
     'acct.nonreg': '非注册账户', 'acct.tfsa': '免税储蓄账户（TFSA）', 'acct.rrsp': 'RRSP或RRIF',
     'acctIn.nonreg': '非注册账户', 'acctIn.tfsa': '免税储蓄账户（TFSA）', 'acctIn.rrsp': 'RRSP或RRIF',
@@ -180,7 +182,7 @@ export const STRINGS = {
     'gic.taxIncome': '利息和外国收入', 'gic.taxDividends': '加拿大股息', 'gic.taxRealized': '派发的资本利得', 'gic.taxDeferred': '期末卖出时的增值',
     'gic.taxNone': '在{accountIn}内持有期间不缴税，因此没有按收入类型的税款明细。',
     'gic.taxRrspNone': '在RRSP或RRIF内持有期间不缴税；提取时全部金额按收入缴税（假设税率{withdraw}）。',
-    'gic.colGic': 'GIC税后价值', 'gic.colFund': '基金税后价值', 'gic.colAcb': '基金调整后成本基数（ACB）',
+    'gic.statBreakeven': '基金持平所需年回报', 'gic.colGic': 'GIC税后价值', 'gic.colFund': '基金税后价值', 'gic.colAcb': '基金调整后成本基数（ACB）',
     'gic.assumptions': '假设：一次性投入，期间不追加也不提取。GIC利率{gicRate}，每年复利。基金（已扣除费用）每年：利息{fi}、加拿大合格股息{fd}、外国收入{ff}、派发的资本利得{fg}、单位价值变动{fu}（合计{ft}）。按2026年卑诗省应税收入{income}的边际税率：利息{ordinary}、合格股息{eligible}、资本利得{cg}，并保持不变。',
     'caution.low': '提示：收入在$44,952或以下时，这些数字可能有误导。卑诗省减税额逐步取消期间，实际省边际税率最多会高出3.56个百分点，而基本个人免税额可能使实际税款为零。',
     'caution.bpa': '提示：收入约在$181,440至$258,482之间时，联邦基本个人免税额会逐步减少，因此实际边际税率会略高于显示的数字。'

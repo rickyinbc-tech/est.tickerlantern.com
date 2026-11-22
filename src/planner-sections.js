@@ -39,6 +39,9 @@ export const translate = (key, vars, lang = 'en') => {
 };
 // "1 year" / "5 years"; Chinese has no plural.
 const span = (t, n) => t(n === 1 ? 'span.one' : 'span.other', { n });
+// Headline figures shown above a summary; the summary sentence still states each of them.
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const stats = items => `<dl class="pc-stats">${items.map(([k, v, key]) => `<div${key ? ` class="pc-stat--${key}"` : ''}><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
 const pick = (rows, every) => rows.filter((r, i) => i % every === 0 || i === rows.length - 1);
 const PRESETS = { cautious: { median: 4, sigma: 6 }, balanced: { median: 5, sigma: 10 }, growth: { median: 6.5, sigma: 15 } };
 
@@ -238,7 +241,7 @@ export const FIGURES = {
       const vars = { span: span(t, s.years), lo: f.pct(bal.low), hi: f.pct(bal.high), lossNote };
       return {
         chart: rowChart({ id: 'fig-assetRange', title: t('asset.rangeTitle', vars), desc: t('asset.rangeSummary', vars), rows: ranged.map(r => ({ label: t('asset.' + r.k), lo: r.low * 100, hi: r.high * 100, mid: r.mean * 100, highlight: r.k === 'bal' })), format: v => f.fixed(v, 0) }),
-        legend: '',
+        legend: legend([{ key: 'rangeBar', name: t('asset.legendRange') }, { key: 'rangeDot', name: t('asset.legendMean') }]),
         summary: t('asset.rangeSummary', vars),
         table: dataTable({ caption: t('asset.rangeTable', vars), head: [t('asset.colAsset'), t('asset.colWeight'), t('asset.colMean'), t('asset.colVol'), t('asset.colLow'), t('asset.colHigh')], rows: ranged.map((r, i) => [t('asset.' + r.k), r.k === 'bal' ? '100%' : f.pct(A.weights[i], 0), f.pct(r.mean), f.pct(r.vol, 1), f.pct(r.low), f.pct(r.high)]) })
       };
@@ -251,7 +254,7 @@ export const FIGURES = {
       const sorted = [...r].sort((a, b) => b.value - a.value), rank = sorted.findIndex(x => x.k === 'bal') + 1, bal = r.find(x => x.k === 'bal').value, cash = r.find(x => x.k === 'cash').value;
       const vars = { scenario: name, bal: f.fixed(bal, 1), rank: f.ordinal(rank), n: r.length, cash: f.fixed(cash, 1), lossNote: bal < 0 ? t('asset.scenLoss') : t('asset.scenGain'), cashNote: cash > bal ? t('asset.scenBelowCash', { cash: f.fixed(cash, 1) }) : t('asset.scenAboveCash') };
       return {
-        chart: rowChart({ id: 'fig-assetScenario', title: t('asset.scenTitle', vars), desc: t('asset.scenSummary', vars), rows: sorted.map(x => ({ label: t('asset.' + x.k), value: x.value, highlight: x.k === 'bal' })), format: v => f.fixed(v, 1) }),
+        chart: rowChart({ id: 'fig-assetScenario', title: t('asset.scenTitle', vars), desc: t('asset.scenSummary', vars), rows: sorted.map(x => ({ label: t('asset.' + x.k), value: x.value, highlight: x.k === 'bal' })), format: v => f.fixed(v, 1), tickFormat: v => f.fixed(v, 0) }),
         legend: '',
         summary: t('asset.scenSummary', vars),
         table: dataTable({ caption: t('asset.scenTable', vars), head: [t('asset.colRank'), t('asset.colAsset'), t('asset.colReturn')], rows: sorted.map((x, i) => [String(i + 1), t('asset.' + x.k), f.fixed(x.value, 1)]) })
@@ -273,13 +276,14 @@ export const FIGURES = {
       const vars = { caution: caution ? caution + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(r.gicAfterTax), fund: f.money(r.fundAfterTax), winner, why, breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }) };
       const tx = r.tax;
       const extra = nonreg
-        ? `<p class="pc-extra-title">${t('gic.taxTitle', vars)}</p>` + rowChart({ id: 'fig-gicTax', title: t('gic.taxTitle', vars), desc: t('gic.taxTitle', vars), rows: [{ label: t('gic.rowGic', { kind: t('gic.taxGic') }), value: Math.round(tx.gicInterest), highlight: true }, ...[['taxIncome', tx.fundIncome], ['taxDividends', tx.fundDividends], ['taxRealized', tx.fundRealized], ['taxDeferred', tx.fundDeferred]].map(([k, v]) => ({ label: t('gic.rowFund', { kind: t('gic.' + k) }), value: Math.round(v) }))], format: f.axisMoney })
+        ? `<p class="pc-extra-title">${t('gic.taxTitle', vars)}</p>` + rowChart({ id: 'fig-gicTax', title: t('gic.taxTitle', vars), desc: t('gic.taxTitle', vars), rows: [{ label: t('gic.rowGic', { kind: t('gic.taxGic') }), value: Math.round(tx.gicInterest) }, ...[['taxIncome', tx.fundIncome], ['taxDividends', tx.fundDividends], ['taxRealized', tx.fundRealized], ['taxDeferred', tx.fundDeferred]].map(([k, v]) => ({ label: t('gic.rowFund', { kind: t('gic.' + k) }), value: Math.round(v), highlight: true }))], format: f.axisMoney })
         : `<p class="pc-extra-note">${t(s.account === 'rrsp' ? 'gic.taxRrspNone' : 'gic.taxNone', { accountIn, withdraw: rv.withdraw })}</p>`;
       const head = [t('col.year'), t('gic.colGic'), t('gic.colFund'), ...(nonreg ? [t('gic.colAcb')] : [])];
       return {
         chart: lineChart({ id: 'fig-gic', title: t('gic.title', vars), desc: t('gic.summary', vars), series: [{ key: 'a', name: t('gic.gic'), points: r.rows.map(x => [x.year, x.gic]), kind: 'dash' }, { key: 'b', name: t('gic.fund'), points: r.rows.map(x => [x.year, x.fund]) }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.amount, label: t('gic.invested') }] }),
         legend: legend([{ key: 'a', name: t('gic.gic'), dash: true }, { key: 'b', name: t('gic.fund') }]),
         extra,
+        stats: stats([[t('gic.colGic'), vars.gic, 'a'], [t('gic.colFund'), vars.fund, 'b'], ...(be == null ? [] : [[t('gic.statBreakeven'), f.pct(be, 2)]])]),
         summary: t('gic.summary', vars),
         assumptions: t('gic.assumptions', { gicRate: f.pct(pc(s.gicRate), 2), fi: f.pct(fund.interest, 2), fd: f.pct(fund.dividends, 2), ff: f.pct(fund.foreign, 2), fg: f.pct(fund.realized, 2), fu: f.pct(fund.growth, 2), ft: f.pct(r.fundTotalReturn, 2), income: f.money(s.income), ...rv }),
         table: dataTable({ caption: t('gic.title', vars), head, rows: pick(r.rows, Math.max(1, Math.round(s.years / 6))).map(x => [String(x.year), f.money(x.gic), f.money(x.fund), ...(nonreg ? [f.money(x.acb ?? s.amount)] : [])]) })

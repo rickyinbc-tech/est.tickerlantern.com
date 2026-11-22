@@ -124,12 +124,15 @@ test('the Chinese homepage is a full Chinese page, not the English fallback', ()
   assert.match(zh, /由同一份双语内容生成/); assert.doesNotMatch(zh, /简体中文为机器翻译/);
   assert.match(zh, /<link rel="canonical" href="https:\/\/tickerlantern\.com\/zh\/">/);
   // Visible text in the main content has no stray English sentences (product names, acronyms and the source links are allowed).
-  // The fund is named in Chinese; its official English name appears only in the source list, to identify the source.
-  assert.match(zh, /RBC精选平衡投资组合（A系列，基金代码RBF460）/);
+  // Ricky's conditional instruction: on the page the sample is "a balanced fund"; its names and code appear only in the cited sources.
+  assert.match(zh, /一只平衡型基金（A系列）：/);
   const main = zh.slice(zh.indexOf('<main'), zh.indexOf('</main>')).replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/<(svg|title|desc)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
-  assert.ok(!main.includes('Select Balanced'), 'the English fund name belongs only in the Chinese source list');
   const english = main.match(/[A-Za-z][a-z]+(?:[ ,'’-]+[A-Za-z][a-z]+){2,}/g) || [];
   assert.deepEqual(english, [], 'English phrases left on the Chinese page');
+  for (const html of [home, zh]) {
+    const page = html.slice(html.indexOf('<main'), html.indexOf('</main>')).replace(/<ol class="pc-source-list">[\s\S]*?<\/ol>/, '').replace(/href="[^"]*"/g, '');
+    for (const name of ['Select Balanced', '精选平衡', 'RBF460']) assert.ok(!page.includes(name), `${name} belongs only in the source list`);
+  }
   // Every control label, option and button is Chinese.
   for (const m of zh.matchAll(/<label for="[^"]+">(?:<span>)?([^<]+)/g)) assert.match(m[1], /[一-鿿]/, m[1]);
   for (const m of zh.matchAll(/<option value="([a-z]+)"[^>]*>([^<]+)/g)) if (!/^(?:tfsa)$/.test(m[1])) assert.match(m[2], /[一-鿿]/, m[2]);
@@ -144,7 +147,7 @@ test('the one real fund figure is the published RBF460 10-year return, dated, so
   assert.deepEqual(FIGURES.gic.inputs.fundReturn, [6.6, -10, 12]);
   for (const [html, asOf, past] of [[home, 'as of October 31, 2026', 'Past performance does not guarantee future results'], [zh, '截至2026年10月31日', '过去的表现不保证未来的结果']]) {
     const card = html.slice(html.indexOf('<aside class="pc-sample"'), html.indexOf('</aside>', html.indexOf('<aside class="pc-sample"')));
-    assert.match(card, /pc-badge--history/); assert.ok(card.includes(asOf), asOf); assert.ok(card.includes(past)); assert.match(card, /RBF460/); assert.match(card, /href="#src-rbcgam-rbf460"/);
+    assert.match(card, /pc-badge--history/); assert.ok(card.includes(asOf), asOf); assert.ok(card.includes(past)); assert.match(card, /A balanced fund \(Series A\)|一只平衡型基金（A系列）/); assert.match(card, /href="#src-rbcgam-rbf460"/);
     assert.match(html, /<li id="src-rbcgam-rbf460">[^<]*<a href="https:\/\/www\.rbcgam\.com\/en\/ca\/products\/mutual-funds\/RBF460\/detail"/);
     assert.match(html, /<input id="gic-fundReturn" name="fundReturn" type="range" min="-10" max="12" step="0.1" value="6.6">/);
   }

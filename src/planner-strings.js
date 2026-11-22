@@ -95,7 +95,7 @@ export const STRINGS = {
     'gic.taxNone': 'Inside {accountIn} no tax is paid along the way, so there is no breakdown by income type.',
     'gic.lossNote': 'The fund units end {loss} below their cost base. The comparison gives that capital loss no value; in practice half of it can reduce taxable capital gains in the same year, the three previous years or any later year, but not other income.',
     'gic.lossNoteLow': 'At {lo} a year the fund units would end {loss} below their cost base, because distributions keep being taxed while the unit value falls. The lower result gives that capital loss no value; in practice half of it can reduce taxable capital gains in the same year, the three previous years or any later year, but not other income.',
-    'gic.negDivNote': 'At this income the eligible-dividend rate is negative ({eligible}). The dividend tax credit can only reduce tax owed on other income and cannot create a refund, so this benefit may not apply in full to an individual.',
+    'gic.negDivNote': 'At this income the eligible-dividend rate is negative ({eligible}). The dividend tax credit is non-refundable: it can reduce tax owed on other income, or increase a refund of tax already paid (for example, tax withheld at source), but it cannot reduce total tax below zero, so this benefit may not apply in full to an individual.',
     'gic.taxTitle': 'Tax paid over {span} by type of income (non-registered)',
     'gic.rowGic': 'GIC: {kind}', 'gic.taxGic': 'interest', 'gic.rowFund': 'Fund: {kind}',
     'gic.taxIncome': 'interest and foreign income', 'gic.taxDividends': 'Canadian dividends', 'gic.taxRealized': 'distributed capital gains', 'gic.taxDeferred': 'gain on sale at the end',
@@ -107,7 +107,7 @@ export const STRINGS = {
     'gic.assumptions': 'Assumptions: one deposit, no additions or withdrawals. GIC: {gicRate} for a {termSpan} term, then renewed at an assumed {renew}, compounding yearly. Fund, net of expenses: interest {fi}, Canadian eligible dividends {fd}, foreign income {ff}, distributed gains {fg} and unit-value change {fu} a year (total {ft}). The lower and higher fund results use the 8-in-10 range of the average yearly return over the period, from the hypothetical balanced portfolio’s assumed {vol} volatility in the asset-class section. Marginal rates at {income} taxable income in BC, 2026: interest {ordinary}, eligible dividends {eligible}, capital gains {cg}, held flat. Income-tested credits and benefits and their phase-outs are not modelled and can change an individual’s actual rate.',
     'caution.low': 'Caution: at or below $44,952 these figures can mislead. The BC tax reduction raises the actual BC marginal rate by up to 3.56 points as it phases out, and basic personal amounts can make actual tax zero.',
     'caution.bpa': 'Caution: between about $181,440 and $258,482 the federal basic personal amount phases down, so the actual marginal rate is slightly higher than shown.',
-    'caution.cdic': 'Deposit insurance: CDIC covers eligible deposits up to $100,000 of principal and interest per insured category at each member institution. This GIC would grow to {bal}, so at one CDIC member in one category the amount above $100,000 would not be insured. BC credit union deposits are covered by CUDIC with no dollar limit.'
+    'caution.cdic': 'Deposit insurance: CDIC covers eligible deposits up to $100,000 of principal and interest per insured category at each member institution. This GIC would grow to {bal}, so at one CDIC member in one category the amount above $100,000 would not be insured. Other deposits in the same category at the same institution count toward the same limit. BC credit union deposits are covered by CUDIC with no dollar limit.'
   },
   zh: {
     'region.canada': '加拿大', 'region.bc': '不列颠哥伦比亚省',
@@ -201,7 +201,7 @@ export const STRINGS = {
     'gic.taxNone': '在{accountIn}内持有期间不缴税，因此没有按收入类型的税款明细。',
     'gic.lossNote': '基金单位期末比调整后成本基数低{loss}。本比较未计入这笔资本亏损的价值；实际上其一半可抵减当年、前三年或以后任何年度的应税资本利得，但不能抵减其他收入。',
     'gic.lossNoteLow': '若每年回报为{lo}，基金单位期末会比调整后成本基数低{loss}，因为单位价值下跌的同时，分派仍须缴税。较低的结果未计入这笔资本亏损的价值；实际上其一半可抵减当年、前三年或以后任何年度的应税资本利得，但不能抵减其他收入。',
-    'gic.negDivNote': '在这个收入水平，合格股息税率为负（{eligible}）。股息税收抵免只能减少其他收入的应缴税款，不能产生退税，因此个人未必能完全享有这项好处。',
+    'gic.negDivNote': '在这个收入水平，合格股息税率为负（{eligible}）。股息税收抵免属于不可退还的抵免：它可以减少其他收入的应缴税款，或增加已缴税款（例如源头预扣税款）的退税，但不能使总税款低于零，因此个人未必能完全享有这项好处。',
     'gic.taxTitle': '{span}间按收入类型缴纳的税款（非注册账户）',
     'gic.rowGic': 'GIC：{kind}', 'gic.taxGic': '利息', 'gic.rowFund': '基金：{kind}',
     'gic.taxIncome': '利息和外国收入', 'gic.taxDividends': '加拿大股息', 'gic.taxRealized': '派发的资本利得', 'gic.taxDeferred': '期末卖出时的增值',
@@ -213,6 +213,6 @@ export const STRINGS = {
     'gic.assumptions': '假设：一次性投入，期间不追加也不提取。GIC：{termSpan}期利率{gicRate}，之后假设按{renew}续期，每年复利。基金（已扣除费用）每年：利息{fi}、加拿大合格股息{fd}、外国收入{ff}、派发的资本利得{fg}、单位价值变动{fu}（合计{ft}）。基金的较低和较高结果采用期间平均年回报的十分之八范围，依据资产类别部分中假设的平衡型组合波动率{vol}。按2026年卑诗省应税收入{income}的边际税率：利息{ordinary}、合格股息{eligible}、资本利得{cg}，并保持不变。按收入审查的税收抵免和福利及其逐步取消未建模，可能改变个人的实际税率。',
     'caution.low': '提示：收入在$44,952或以下时，这些数字可能有误导。卑诗省减税额逐步取消期间，实际省边际税率最多会高出3.56个百分点，而基本个人免税额可能使实际税款为零。',
     'caution.bpa': '提示：收入约在$181,440至$258,482之间时，联邦基本个人免税额会逐步减少，因此实际边际税率会略高于显示的数字。',
-    'caution.cdic': '存款保险：CDIC对每家成员机构、每个受保类别的合资格存款，本金加利息最多保障$100,000。这笔GIC会增长到{bal}，因此在同一家CDIC成员机构的同一类别中，超过$100,000的部分不受保障。卑诗省信用合作社的存款由CUDIC保障，没有金额上限。'
+    'caution.cdic': '存款保险：CDIC对每家成员机构、每个受保类别的合资格存款，本金加利息最多保障$100,000。这笔GIC会增长到{bal}，因此在同一家CDIC成员机构的同一类别中，超过$100,000的部分不受保障。同一机构同一类别中的其他存款也计入同一上限。卑诗省信用合作社的存款由CUDIC保障，没有金额上限。'
   }
 };

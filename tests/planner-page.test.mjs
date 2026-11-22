@@ -314,3 +314,16 @@ test('GIC controls: amount and income up front; account-specific settings marked
     assert.match(b, /<div data-when="rrsp" class="pc-field[^"]*"><label for="gic-withdraw"/);
   }
 });
+
+test('wording: dividend credit is non-refundable (not "no refund"); CDIC limit is shared within a category; intro matches the caveat', () => {
+  for (const [html, lang] of [[home, 'en'], [zh, 'zh']]) {
+    const note = renderFigure('gic', { income: 40000 }, lang).extra;
+    assert.match(note, lang === 'en' ? /non-refundable.*increase a refund of tax already paid.*cannot reduce total tax below zero/ : /不可退还.*增加已缴税款.*退税.*不能使总税款低于零/);
+    assert.doesNotMatch(note, /cannot create a refund|不能产生退税/);
+    assert.match(renderFigure('gic', { amount: 90000 }, lang).summary, lang === 'en' ? /Other deposits in the same category at the same institution count toward the same limit/ : /同一机构同一类别中的其他存款也计入同一上限/);
+    const b = block(html, 'gic');
+    assert.match(b, lang === 'en' ? /Other eligible deposits you hold in the same category at the same institution count toward the same limit/ : /同一机构同一类别中持有的其他合资格存款也计入同一上限/);
+    assert.match(html, lang === 'en' ? /Eligible GIC deposits at an insured institution are protected, principal and interest, within deposit-insurance limits/ : /在受保机构持有的合资格GIC存款，其本金和利息在存款保险限额内受保障/);
+    assert.doesNotMatch(html, /its principal is protected|本金在存款保险限额内受保障。平衡/);
+  }
+});

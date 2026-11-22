@@ -29,16 +29,20 @@ def marginal(income):
     return {"ordinary": ordinary, "eligible": eligible, "capitalGains": ordinary / 2}
 
 
-def model(amount, years, gic_rate, fund, account, rates, withdrawal, sell):
-    """Year-by-year ledger. Returns (gic_after_tax, fund_after_tax)."""
+def model(amount, years, gic_rate, fund, account, rates, withdrawal, sell, term=None, renewal=None, detail=False):
+    """Year-by-year ledger. Returns (gic_after_tax, fund_after_tax), or a dict with balances and loss if detail."""
+    term = term or years
+    renewal = gic_rate if renewal is None else renewal
     gic = amount
     units_value = amount
     cost_base = amount
-    for _ in range(years):
+    for year in range(1, years + 1):
+        # The first term earns gic_rate; every later term (after a maturity) earns the renewal rate.
+        rate = gic_rate if year <= term else renewal
         if account == "nonreg":
-            gic = gic + gic * gic_rate - gic * gic_rate * rates["ordinary"]
+            gic = gic + gic * rate - gic * rate * rates["ordinary"]
         else:
-            gic = gic * (1 + gic_rate)
+            gic = gic * (1 + rate)
         paid = {k: units_value * fund[k] for k in ("interest", "dividends", "foreign", "realized")}
         if account == "nonreg":
             tax = ((paid["interest"] + paid["foreign"]) * rates["ordinary"]
@@ -50,11 +54,16 @@ def model(amount, years, gic_rate, fund, account, rates, withdrawal, sell):
         units_value = units_value * (1 + fund["growth"]) + reinvest
         cost_base += reinvest
     if account == "rrsp":
-        return gic * (1 - withdrawal), units_value * (1 - withdrawal)
-    if account == "tfsa":
-        return gic, units_value
-    deferred = max(0.0, units_value - cost_base) * rates["capitalGains"] if sell else 0.0
-    return gic, units_value - deferred
+        out = (gic * (1 - withdrawal), units_value * (1 - withdrawal))
+    elif account == "tfsa":
+        out = (gic, units_value)
+    else:
+        deferred = max(0.0, units_value - cost_base) * rates["capitalGains"] if sell else 0.0
+        out = (gic, units_value - deferred)
+    if not detail:
+        return out
+    loss = max(0.0, cost_base - units_value) if account == "nonreg" and sell else 0.0
+    return {"gic": out[0], "fund": out[1], "gicBalance": gic, "fundBalance": units_value, "loss": loss}
 
 
 def js(script):
@@ -94,14 +103,51 @@ class IndependentPlannerMath(unittest.TestCase):
             self.assertAlmostEqual(g, mg, delta=1e-6 * max(1, mg), msg=str(c))
             self.assertAlmostEqual(f, mf, delta=1e-6 * max(1, abs(mf)), msg=str(c))
 
+    def test_renewals_balances_and_losses(self):
+        """GIC renewals at a different rate, pre-tax balances and unused capital losses match the ledger."""
+        cases = []
+        for account, years, term, renew, total in itertools.product(
+                ["nonreg", "tfsa", "rrsp"], [1, 4, 5, 7, 30], [1, 3, 5], [0.0, .02, .05], [-.06, .004, .04]):
+            fund = {"interest": .01, "dividends": .008, "foreign": .006, "realized": .01}
+            fund["growth"] = total - sum(fund.values())
+            cases.append(dict(amount=50000, years=years, term=term, renewalRate=renew, gicRate=.0325, fund=fund,
+                              account=account, income=100000, withdrawalRate=.3, sellAtEnd=True))
+        got = js("import {gicVsFund, bcMarginalRates} from './src/planner-math.js';"
+                 f"const cases = {json.dumps(cases)};"
+                 "console.log(JSON.stringify(cases.map(c => { const r = gicVsFund({...c, rates: bcMarginalRates(c.income)});"
+                 " return [r.gicAfterTax, r.fundAfterTax, r.gicBalance, r.fundBalance, r.capitalLoss, r.rows.filter(x => x.maturity).map(x => x.year)]; })))")
+        for c, (g, f, gb, fb, loss, mats) in zip(cases, got):
+            m = model(c["amount"], c["years"], c["gicRate"], c["fund"], c["account"], marginal(c["income"]),
+                      c["withdrawalRate"], True, c["term"], c["renewalRate"], detail=True)
+            for got_v, want in [(g, m["gic"]), (f, m["fund"]), (gb, m["gicBalance"]), (fb, m["fundBalance"]), (loss, m["loss"])]:
+                self.assertAlmostEqual(got_v, want, delta=1e-6 * max(1, abs(want)), msg=str(c))
+            self.assertEqual(mats, [y for y in range(1, c["years"] + 1) if y % c["term"] == 0], msg=str(c))
+
     def test_page_default_numbers(self):
-        """The default GIC summary numbers equal the independent ledger."""
-        fund = {"interest": .01, "dividends": .008, "foreign": .006, "realized": .01, "growth": .016}
-        g, f = model(50000, 10, .0325, fund, "nonreg", marginal(100000), 0, True)
-        summary = js("import {renderFigure} from './src/planner-sections.js';"
-                     "console.log(JSON.stringify(renderFigure('gic', {}).summary))")
-        self.assertIn(f"${round(g):,}", summary)
-        self.assertIn(f"${round(f):,}", summary)
+        """The default GIC summary numbers, range and break-even inputs equal the independent ledger."""
+        def fund_at(total):
+            f = {"interest": .01, "dividends": .008, "foreign": .006, "realized": .01}
+            f["growth"] = total - sum(f.values())
+            return f
+        # Balanced portfolio volatility from the asset-class assumptions: sqrt(w' S w).
+        w = [0, .40, 0, .20, .25, .10, .05]
+        vol = [.01, .06, .10, .15, .16, .16, .22]
+        corr = [[1, 0, 0, 0, 0, 0, 0], [0, 1, .3, .1, .1, .1, .1], [0, .3, 1, .6, .6, .6, .6], [0, .1, .6, 1, .7, .65, .65],
+                [0, .1, .6, .7, 1, .75, .65], [0, .1, .6, .65, .75, 1, .75], [0, .1, .6, .65, .65, .75, 1]]
+        sigma = math.sqrt(sum(w[i] * w[j] * vol[i] * vol[j] * corr[i][j] for i in range(7) for j in range(7)))
+        z = 1.2815515655446004
+        rendered = js("import {renderFigure} from './src/planner-sections.js';"
+                      "console.log(JSON.stringify(['nonreg','tfsa','rrsp'].map(a => renderFigure('gic', {account: a}).summary)))")
+        for account, summary in zip(["nonreg", "tfsa", "rrsp"], rendered):
+            lo, hi = .04 - z * sigma / math.sqrt(10), .04 + z * sigma / math.sqrt(10)
+            mid = model(50000, 10, .0325, fund_at(.04), account, marginal(100000), .3, True, 5, .0325, detail=True)
+            low = model(50000, 10, .0325, fund_at(lo), account, marginal(100000), .3, True, 5, .0325, detail=True)
+            high = model(50000, 10, .0325, fund_at(hi), account, marginal(100000), .3, True, 5, .0325, detail=True)
+            # RRSP/RRIF compares balances before withdrawal tax; other accounts compare values after any tax.
+            key = ("gicBalance", "fundBalance") if account == "rrsp" else ("gic", "fund")
+            for value in (mid[key[0]], mid[key[1]], low[key[1]], high[key[1]]):
+                self.assertIn(f"${round(value):,}", summary, msg=account)
+            self.assertIn(f"{lo * 100:.1f}% to {hi * 100:.1f}%", summary, msg=account)
 
     def test_portfolio_and_scenarios(self):
         got = js("import {ASSETS, assetStats, scenarioReturns, SCENARIOS} from './src/planner-sections.js';"

@@ -253,3 +253,64 @@ test('the scenario picker is a labelled radio group with one choice checked', ()
     assert.equal([...b.matchAll(/type="radio" name="scenario" value="\w+" checked/g)].length, 1);
   }
 });
+
+test('RRSP/RRIF: chart compares balances before withdrawal tax from the deductible contribution (no apparent day-one loss)', () => {
+  for (const lang of LANGS) {
+    const r = renderFigure('gic', { account: 'rrsp' }, lang), t = STRINGS[lang];
+    assert.ok(r.chart.includes(t['gic.contribution']), 'reference line names the deductible contribution');
+    assert.ok(r.chart.includes(t['gic.basis.rrsp'].slice(0, 6)), 'title says before withdrawal tax');
+    assert.match(r.extra, lang === 'en' ? /deducted from taxable income.*after that tax the GIC leaves \$[\d,]+ and the fund \$[\d,]+/s : /可从应税收入中扣除.*缴税后GIC剩下\$[\d,]+，基金剩下\$[\d,]+/s);
+    assert.ok(r.table.includes(t['gic.colGicPre']) && r.table.includes(t['gic.colGicNet']), 'table shows both bases');
+    // Both lines start on the contribution, not 30% below it, and end at the pre-tax balances.
+    const series = JSON.parse(r.chart.match(/data-series="([^"]+)"/)[1].replace(/&quot;/g, '"'));
+    assert.equal(series.length, 2);
+    for (const s of series) assert.equal(s.p[0][1], 50000, s.n);
+    assert.equal(Math.round(series[0].p.at(-1)[1]), Math.round(50000 * 1.0325 ** 10));
+  }
+});
+
+test('GIC term: renewals are labelled as assumed, maturities are marked, and no early cash-in is implied', () => {
+  for (const lang of LANGS) {
+    const t = STRINGS[lang], r = renderFigure('gic', { years: 7, term: 5, renewRate: 2 }, lang);
+    assert.ok(r.extra.includes(t['gic.termNote.renew'].replace('{termSpan}', lang === 'en' ? '5-year' : '5年').replace('{renew}', '2%').slice(0, 30)));
+    assert.match(r.summary, lang === 'en' ? /Year 7 falls before the GIC’s next maturity in year 10/ : /第7年早于GIC的下一次到期（第10年）/);
+    assert.ok(r.table.includes(t['gic.yearMat'].replace('{n}', '5')));
+    assert.doesNotMatch(r.chart + r.summary, /if cashed in|若当年兑现/);
+    assert.doesNotMatch(renderFigure('gic', { years: 10, term: 5 }, lang).summary, /next maturity|下一次到期/);
+  }
+  assert.equal(normalizeState('gic', { term: 30 }).term, 5, 'GIC terms are capped at five years');
+});
+
+test('deposit insurance: CDIC limit, category, member institution and BC credit unions are spelled out; large balances warn', () => {
+  for (const [html, lang] of [[home, 'en'], [zh, 'zh']]) {
+    const b = block(html, 'gic');
+    assert.match(b, lang === 'en' ? /\$100,000 of principal and interest combined, per insured category.*per member institution/s : /本金加利息合计，每个受保类别.*每家成员机构最多保障\$100,000/s);
+    assert.match(b, lang === 'en' ? /BC credit unions are not CDIC members.*CUDIC with no dollar limit/s : /卑诗省信用合作社不是CDIC成员.*CUDIC保障，没有金额上限/s);
+    assert.match(renderFigure('gic', { amount: 90000 }, lang).summary, lang === 'en' ? /^Deposit insurance: CDIC covers/ : /^存款保险/);
+    assert.doesNotMatch(renderFigure('gic', { amount: 50000 }, lang).summary, /Deposit insurance|存款保险/);
+  }
+});
+
+test('tax-payment convention, cautious middle case with a lower–higher range, and weak-case tax notes', () => {
+  assert.equal(normalizeState('gic', {}).fundReturn, 4, 'cautious middle default');
+  for (const lang of LANGS) {
+    const t = STRINGS[lang], nr = renderFigure('gic', {}, lang);
+    assert.ok(nr.extra.includes(t['gic.payNote']), 'convention note is visible, not only in the disclosure');
+    assert.ok(nr.legend.includes('pc-fundRange') && nr.chart.includes('pc-band pc-fundRange'), 'range band drawn and in the legend');
+    assert.equal([...nr.stats.matchAll(/<dt>/g)].length, 4);
+    assert.ok(renderFigure('gic', { fundReturn: -5 }, lang).extra.includes(t['gic.lossNote'].slice(0, 8)), 'unused capital loss explained');
+    assert.ok(nr.extra.includes(t['gic.lossNoteLow'].split('}').at(-1).slice(0, 40)), 'lower-case loss explained (default lower case ends below cost)');
+    assert.ok(!renderFigure('gic', { account: 'tfsa' }, lang).extra.includes(t['gic.lossNoteLow'].split('}').at(-1).slice(0, 40)), 'no loss note where no tax applies');
+    assert.ok(renderFigure('gic', { income: 40000 }, lang).extra.includes(t['gic.negDivNote'].slice(0, 6)), 'negative dividend rate explained');
+    assert.ok(!renderFigure('gic', { account: 'tfsa', income: 40000 }, lang).extra.includes(t['gic.negDivNote'].slice(0, 6)));
+  }
+});
+
+test('GIC controls: amount and income up front; account-specific settings marked for hiding', () => {
+  for (const html of [home, zh]) {
+    const b = block(html, 'gic'), front = b.slice(0, b.indexOf('pc-more-inputs'));
+    for (const key of ['account', 'amount', 'income', 'withdraw', 'years', 'term', 'gicRate', 'renewRate', 'fundReturn']) assert.ok(front.includes(`id="gic-${key}"`), key);
+    assert.match(b, /<div data-when="nonreg" class="pc-field[^"]*"><label for="gic-income"/);
+    assert.match(b, /<div data-when="rrsp" class="pc-field[^"]*"><label for="gic-withdraw"/);
+  }
+});

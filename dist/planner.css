@@ -109,6 +109,24 @@ body.pc-page{margin:0;background:var(--pc-soft);color:var(--pc-ink);font:16px/1.
 .pc-stats dd{margin:4px 0 0;color:var(--pc-navy);font:700 18px/1.2 var(--pc-sans);font-variant-numeric:tabular-nums}
 .pc-summary{margin:0;padding:14px 16px;border-left:4px solid var(--pc-a);border-radius:8px;background:#eef6f8;color:var(--pc-ink);font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums}
 .pc-figure__visual .pc-caveat{margin-top:10px}
+.pc-field[hidden],.pc-more-inputs[hidden]{display:none}
+.pc-stats-cap{margin:0 0 6px;color:var(--pc-muted);font:600 12px/1.3 var(--pc-sans);text-transform:none}
+.pc-key.pc-fundRange{height:12px;border:0;background:rgba(194,106,16,.18)}
+.pc-svg .pc-band.pc-fundRange{fill:rgba(194,106,16,.14)}
+/* One column: put the controls and result right under the chart and its legend; notes and caveats follow. */
+@container (max-width:719px){
+  .pc-figure__visual,.pc-figure__side{display:contents}
+  .pc-figure__body{gap:0}
+  .pc-figure__body>*,.pc-figure__visual>*,.pc-figure__side>*{order:9}
+  .pc-figure__visual>.pc-chart{order:1}
+  .pc-figure__visual>[data-out="legend"]{order:2}
+  .pc-figure__visual>.pc-readout{order:3}
+  .pc-figure__side>.pc-controls{order:4;margin-top:12px}
+  .pc-figure__side>[data-out="stats"]{order:5;margin-top:12px}
+  .pc-figure__side>.pc-summary{order:6;margin-top:12px}
+  .pc-figure__visual>.pc-extra{order:7}
+  .pc-figure__visual>.pc-caveat{order:8}
+}
 .pc-caveat{margin:0;color:var(--pc-muted);font-size:14px;line-height:1.5}
 .pc-chart{position:relative;width:100%}
 .pc-svg .pc-guide[hidden]{display:none}
@@ -161,7 +179,7 @@ body.pc-page{margin:0;background:var(--pc-soft);color:var(--pc-ink);font:16px/1.
 .pc-panel>.pc-table-wrap{margin:0 0 20px}
 .pc-extra{margin-top:14px;padding-top:12px;border-top:1px solid var(--pc-line)}
 .pc-extra-title{margin:0 0 6px;color:var(--pc-navy);font:600 15px/1.4 var(--pc-sans)}
-.pc-extra-note{margin:0;color:var(--pc-muted);font-size:14px}
+.pc-extra-note{margin:10px 0 0;color:var(--pc-muted);font-size:14px}
 .pc-stack tbody td{font-variant-numeric:normal}
 .pc-stack td,.pc-stack th{white-space:normal;text-align:left;vertical-align:top;min-width:140px}
 .pc-stack tbody th{color:var(--pc-navy)}
@@ -251,7 +269,7 @@ html:not(.pc-tabs) .pc-pager{display:none}
   .pc-figure{padding:14px}
   .pc-figure figcaption{font-size:16px}
   .pc-controls{grid-template-columns:1fr 1fr;padding:12px;gap:12px}
-  .pc-controls>.pc-field--range,.pc-more-inputs,.pc-controls>.pc-field:only-of-type,.pc-controls>.pc-choices{grid-column:1/-1}
+  .pc-controls>.pc-field--range,.pc-more-inputs,.pc-controls>.pc-field:only-of-type,.pc-controls>.pc-choices,.pc-controls>.pc-field:has(select){grid-column:1/-1}
   .pc-more-inputs>div{grid-template-columns:1fr 1fr}
   .pc-more-inputs>div>.pc-field--range{grid-column:1/-1}
   .pc-lead{font-size:16px}

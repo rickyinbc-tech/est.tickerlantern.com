@@ -177,10 +177,15 @@ export function creditZones(ranges) {
  * GIC versus a hypothetical balanced fund, after tax, year by year.
  * Amounts are invested once; nothing is added or withdrawn until the end.
  *
- * GIC: interest at `gicRate` compounds annually. In a non-registered account
+ * GIC: interest compounds annually at `gicRate` for the first `term` years;
+ * the GIC is then assumed to renew every `term` years at `renewalRate` (an
+ * assumption: future GIC rates are unknown). Rows mark each maturity year.
+ * In a non-registered account
  * the interest is taxed every year at the ordinary rate, including interest on
- * a compounding GIC that is not paid out (CRA annual accrual rule), and the tax
- * is paid from the investment.
+ * a compounding GIC that is not paid out (CRA annual accrual rule). As a
+ * modelling convention the tax is taken from the investment; in practice it is
+ * usually paid from other money, which gives the same result if that money
+ * would otherwise have earned the same after-tax return.
  *
  * Fund: `fund` gives yearly components as shares of the start-of-year value,
  * all net of the fund's expenses: interest, Canadian eligible dividends
@@ -190,19 +195,21 @@ export function creditZones(ranges) {
  * own rate; the after-tax amount is reinvested and added to the adjusted cost
  * base (ACB). Growth in unit value is taxed only when units are sold: if
  * `sellAtEnd`, the gain above ACB is taxed at the capital-gains rate in the
- * final year (a loss is shown as no tax; its value against other gains is not
- * counted). Foreign withholding tax and return of capital are not modelled.
+ * final year. A loss is shown as no tax and returned as `capitalLoss`; its
+ * value against other capital gains is not counted. Foreign withholding tax and return of capital are not modelled.
  *
  * TFSA: no tax on either. RRSP/RRIF: both grow untaxed and the whole balance
  * is taxed as income at `withdrawalRate` when taken out (applied to every year's
- * "if cashed in now" value).
+ * "if withdrawn now" value). Every row also carries the balances before any
+ * tax on cashing in (`gicBalance`, `fundBalance`).
  *
  * `rates` are marginal rates {ordinary, eligible, capitalGains}, applied flat
  * (no bracket creep). Returns rows for years 0..years and tax by type.
  */
-export function gicVsFund({ amount, years, gicRate, fund, account = 'nonreg', rates, withdrawalRate = 0, sellAtEnd = true }) {
-  for (const [k, v] of Object.entries({ amount, years, gicRate, withdrawalRate, ...fund, ...rates })) finite(v, k);
+export function gicVsFund({ amount, years, gicRate, fund, account = 'nonreg', rates, withdrawalRate = 0, sellAtEnd = true, term = years, renewalRate = gicRate }) {
+  for (const [k, v] of Object.entries({ amount, years, gicRate, renewalRate, withdrawalRate, ...fund, ...rates })) finite(v, k);
   if (!Number.isInteger(years) || years < 1 || years > 60) throw new RangeError('Years must be a whole number from 1 to 60');
+  if (!Number.isInteger(term) || term < 1) throw new RangeError('GIC term must be a whole number of years');
   if (amount < 0) throw new RangeError('Amount cannot be negative');
   const taxed = account === 'nonreg', total = fund.interest + fund.dividends + fund.foreign + fund.realized + fund.growth;
   if (total <= -1) throw new RangeError('Fund return out of range');
@@ -214,9 +221,9 @@ export function gicVsFund({ amount, years, gicRate, fund, account = 'nonreg', ra
     const deferred = (y === years ? sellAtEnd : true) ? Math.max(0, f - a) * rates.capitalGains : 0;
     return { gic: g, fund: f - deferred, deferred };
   };
-  const rows = [{ year: 0, gic, fund: fv, ...cashIn(0, gic, fv, acb) }];
+  const rows = [{ year: 0, gic, fund: fv, gicBalance: gic, fundBalance: fv, maturity: false, ...cashIn(0, gic, fv, acb) }];
   for (let y = 1; y <= years; y++) {
-    const interest = gic * gicRate, gicTax = taxed ? interest * rates.ordinary : 0;
+    const interest = gic * (y <= term ? gicRate : renewalRate), gicTax = taxed ? interest * rates.ordinary : 0;
     gic += interest - gicTax; tax.gicInterest += gicTax;
     const d = { income: fv * (fund.interest + fund.foreign), dividends: fv * fund.dividends, realized: fv * fund.realized };
     const t = taxed ? { income: d.income * rates.ordinary, dividends: d.dividends * rates.eligible, realized: d.realized * rates.capitalGains } : { income: 0, dividends: 0, realized: 0 };
@@ -224,13 +231,15 @@ export function gicVsFund({ amount, years, gicRate, fund, account = 'nonreg', ra
     fv = fv * (1 + fund.growth) + reinvested;
     acb += reinvested;
     tax.fundIncome += t.income; tax.fundDividends += t.dividends; tax.fundRealized += t.realized;
-    rows.push({ year: y, gic, fund: fv, acb, ...cashIn(y, gic, fv, acb) });
+    rows.push({ year: y, gic, fund: fv, acb, gicBalance: gic, fundBalance: fv, maturity: y % term === 0, ...cashIn(y, gic, fv, acb) });
   }
   const end = rows.at(-1);
   if (taxed) tax.fundDeferred = end.deferred || 0;
   // Unrealized gain still untaxed at the end when the units are kept.
   const unrealized = taxed && !sellAtEnd ? Math.max(0, fv - acb) : 0;
-  return { rows, tax, gicAfterTax: end.gic, fundAfterTax: end.fund, fundValue: fv, acb, unrealized, fundTotalReturn: total };
+  // Units sold below their cost base: a capital loss the comparison gives no credit for.
+  const capitalLoss = taxed && sellAtEnd ? Math.max(0, acb - fv) : 0;
+  return { rows, tax, gicAfterTax: end.gic, fundAfterTax: end.fund, gicBalance: end.gicBalance, fundBalance: end.fundBalance, fundValue: fv, acb, unrealized, capitalLoss, fundTotalReturn: total };
 }
 
 /**

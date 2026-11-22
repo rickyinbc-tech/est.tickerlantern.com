@@ -41,7 +41,7 @@ export const translate = (key, vars, lang = 'en') => {
 const span = (t, n) => t(n === 1 ? 'span.one' : 'span.other', { n });
 // Headline figures shown above a summary; the summary sentence still states each of them.
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const stats = items => `<dl class="pc-stats">${items.map(([k, v, key]) => `<div${key ? ` class="pc-stat--${key}"` : ''}><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
+const stats = (cap, items) => `<p class="pc-stats-cap">${esc(cap)}</p><dl class="pc-stats">${items.map(([k, v, key]) => `<div${key ? ` class="pc-stat--${key}"` : ''}><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
 const pick = (rows, every) => rows.filter((r, i) => i % every === 0 || i === rows.length - 1);
 const PRESETS = { cautious: { median: 4, sigma: 6 }, balanced: { median: 5, sigma: 10 }, growth: { median: 6.5, sigma: 15 } };
 
@@ -262,31 +262,54 @@ export const FIGURES = {
     }
   },
   gic: {
-    inputs: { account: ['nonreg', ['nonreg', 'tfsa', 'rrsp']], years: [10, 1, 30], gicRate: [3.25, 0, 10], fundReturn: [5, -10, 12], amount: [50000, 1, 10000000], income: [100000, 0, 2000000], withdraw: [30, 0, 54], sale: ['sell', ['sell', 'hold']], fi: [1, 0, 6], fd: [0.8, 0, 5], ff: [0.6, 0, 5], fg: [1, 0, 8] },
+    inputs: { account: ['nonreg', ['nonreg', 'tfsa', 'rrsp']], amount: [50000, 1, 10000000], income: [100000, 0, 2000000], withdraw: [30, 0, 54], years: [10, 1, 30], term: [5, 1, 5], gicRate: [3.25, 0, 10], renewRate: [3.25, 0, 10], fundReturn: [4, -10, 12], sale: ['sell', ['sell', 'hold']], fi: [1, 0, 6], fd: [0.8, 0, 5], ff: [0.6, 0, 5], fg: [1, 0, 8] },
     render(s, t, f) {
-      const rates = bcMarginalRates(s.income), pc = v => v / 100;
-      const fund = { interest: pc(s.fi), dividends: pc(s.fd), foreign: pc(s.ff), realized: pc(s.fg), growth: pc(s.fundReturn - s.fi - s.fd - s.ff - s.fg) };
-      const args = { amount: s.amount, years: s.years, gicRate: pc(s.gicRate), fund, account: s.account, rates, withdrawalRate: pc(s.withdraw), sellAtEnd: s.sale === 'sell' };
-      const r = gicVsFund(args), diff = r.fundAfterTax - r.gicAfterTax, nonreg = s.account === 'nonreg';
-      const be = breakEvenFundReturn(args), account = t('acct.' + s.account), accountIn = t('acctIn.' + s.account);
+      const rates = bcMarginalRates(s.income), pc = v => v / 100, acct = s.account, nonreg = acct === 'nonreg', rrsp = acct === 'rrsp';
+      const income = pc(s.fi + s.fd + s.ff + s.fg), fundAt = total => ({ interest: pc(s.fi), dividends: pc(s.fd), foreign: pc(s.ff), realized: pc(s.fg), growth: total - income });
+      const args = { amount: s.amount, years: s.years, gicRate: pc(s.gicRate), renewalRate: pc(s.renewRate), term: s.term, account: acct, rates, withdrawalRate: pc(s.withdraw), sellAtEnd: s.sale === 'sell' };
+      // Lower and higher fund returns: the 8-in-10 range of the average yearly return over the period,
+      // using the hypothetical balanced portfolio's assumed volatility from the asset-class section.
+      const range = annualizedRange(pc(s.fundReturn), assetStats().vol, s.years), lo = Math.max(-0.5, range.low), hi = range.high;
+      const r = gicVsFund({ ...args, fund: fundAt(pc(s.fundReturn)) }), rLo = gicVsFund({ ...args, fund: fundAt(lo) }), rHi = gicVsFund({ ...args, fund: fundAt(hi) });
+      // RRSP/RRIF: compare balances before withdrawal tax (the contribution was deducted); other accounts: value after any tax.
+      const val = (x, k) => rrsp ? x[k + 'Balance'] : x[k === 'gic' ? 'gicAfterTax' : 'fundAfterTax'];
+      const rowVal = (x, k) => rrsp ? x[k + 'Balance'] : x[k];
+      const diff = val(r, 'fund') - val(r, 'gic');
+      const be = breakEvenFundReturn({ ...args, fund: fundAt(pc(s.fundReturn)) }), account = t('acct.' + acct), accountIn = t('acctIn.' + acct);
       const rv = { ordinary: f.pct(rates.ordinary), eligible: f.pct(rates.eligible), cg: f.pct(rates.capitalGains), withdraw: f.pct(pc(s.withdraw), 0), unrealized: f.money(r.unrealized) };
-      const why = t(nonreg ? (s.sale === 'sell' ? 'gic.why.nonreg' : 'gic.why.nonregHold') : 'gic.why.' + s.account, rv);
+      const why = t(nonreg ? (s.sale === 'sell' ? 'gic.why.nonreg' : 'gic.why.nonregHold') : 'gic.why.' + acct, rv);
       const winner = Math.abs(diff) < Math.max(1, s.amount * 0.001) ? t('gic.ahead.tie') : t(diff > 0 ? 'gic.ahead.fund' : 'gic.ahead.gic', { diff: f.money(Math.abs(diff)) });
-      const caution = nonreg ? creditZones([[s.income, s.income]]).map(z => t('caution.' + z)).join(' ') : '';
-      const vars = { caution: caution ? caution + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(r.gicAfterTax), fund: f.money(r.fundAfterTax), winner, why, breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }) };
-      const tx = r.tax;
-      const extra = nonreg
-        ? `<p class="pc-extra-title">${t('gic.taxTitle', vars)}</p>` + rowChart({ id: 'fig-gicTax', title: t('gic.taxTitle', vars), desc: t('gic.taxTitle', vars), rows: [{ label: t('gic.rowGic', { kind: t('gic.taxGic') }), value: Math.round(tx.gicInterest) }, ...[['taxIncome', tx.fundIncome], ['taxDividends', tx.fundDividends], ['taxRealized', tx.fundRealized], ['taxDeferred', tx.fundDeferred]].map(([k, v]) => ({ label: t('gic.rowFund', { kind: t('gic.' + k) }), value: Math.round(v), highlight: true }))], format: f.axisMoney })
-        : `<p class="pc-extra-note">${t(s.account === 'rrsp' ? 'gic.taxRrspNone' : 'gic.taxNone', { accountIn, withdraw: rv.withdraw })}</p>`;
-      const head = [t('col.year'), t('gic.colGic'), t('gic.colFund'), ...(nonreg ? [t('gic.colAcb')] : [])];
+      const cautions = [...(nonreg ? creditZones([[s.income, s.income]]).map(z => t('caution.' + z)) : []), ...(r.gicBalance > 100000 ? [t('caution.cdic', { bal: f.money(r.gicBalance) })] : [])];
+      const nextMat = Math.ceil(s.years / s.term) * s.term, termSpan = t('span.adj', { n: s.term });
+      const timing = s.years % s.term ? t('gic.timing', { years: s.years, next: nextMat }) : '';
+      const vars = { caution: cautions.length ? cautions.join(' ') + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(val(r, 'gic')), fund: f.money(val(r, 'fund')), basis: t('gic.basisShort.' + acct), winner, why, timing,
+        lo: f.pct(lo), hi: f.pct(hi), fundLo: f.money(val(rLo, 'fund')), fundHi: f.money(val(rHi, 'fund')), breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }) };
+      const tx = r.tax, notes = [];
+      notes.push(t(s.years > s.term ? 'gic.termNote.renew' : 'gic.termNote', { termSpan, renew: f.pct(pc(s.renewRate), 2) }));
+      if (nonreg) notes.push(t('gic.payNote'));
+      if (rrsp) notes.push(t('gic.rrspNote', { amount: vars.amount, withdraw: rv.withdraw, gicNet: f.money(r.gicAfterTax), fundNet: f.money(r.fundAfterTax) }));
+      if (!nonreg && !rrsp) notes.push(t('gic.taxNone', { accountIn }));
+      if (r.capitalLoss > 0.5) notes.push(t('gic.lossNote', { loss: f.money(r.capitalLoss) }));
+      else if (rLo.capitalLoss > 0.5) notes.push(t('gic.lossNoteLow', { loss: f.money(rLo.capitalLoss), lo: vars.lo }));
+      if (nonreg && rates.eligible < 0 && s.fd > 0) notes.push(t('gic.negDivNote', { eligible: rv.eligible }));
+      const notesHtml = notes.map(n => `<p class="pc-extra-note">${esc(n)}</p>`).join('');
+      const extra = (nonreg
+        ? `<p class="pc-extra-title">${esc(t('gic.taxTitle', vars))}</p>` + rowChart({ id: 'fig-gicTax', title: t('gic.taxTitle', vars), desc: t('gic.taxTitle', vars), rows: [{ label: t('gic.rowGic', { kind: t('gic.taxGic') }), value: Math.round(tx.gicInterest) }, ...[['taxIncome', tx.fundIncome], ['taxDividends', tx.fundDividends], ['taxRealized', tx.fundRealized], ['taxDeferred', tx.fundDeferred]].map(([k, v]) => ({ label: t('gic.rowFund', { kind: t('gic.' + k) }), value: Math.round(v), highlight: true }))], format: f.axisMoney })
+        : '') + notesHtml;
+      const yearLabel = x => x.maturity ? t('gic.yearMat', { n: x.year }) : String(x.year);
+      let shown = r.rows.filter(x => x.year === 0 || x.maturity || x.year === s.years);
+      if (shown.length > 12) shown = pick(r.rows, Math.max(1, Math.round(s.years / 6)));
+      const head = rrsp ? [t('col.year'), t('gic.colGicPre'), t('gic.colGicNet'), t('gic.colFundPre'), t('gic.colFundNet')] : [t('col.year'), t('gic.colGic.' + acct), t('gic.colFund.' + acct), ...(nonreg ? [t('gic.colAcb')] : [])];
+      const rowsOut = shown.map(x => rrsp ? [yearLabel(x), f.money(x.gicBalance), f.money(x.gic), f.money(x.fundBalance), f.money(x.fund)] : [yearLabel(x), f.money(x.gic), f.money(x.fund), ...(nonreg ? [f.money(x.acb ?? s.amount)] : [])]);
+      const pts = (res, k) => res.rows.map(x => [x.year, rowVal(x, k)]);
       return {
-        chart: lineChart({ id: 'fig-gic', title: t('gic.title', vars), desc: t('gic.summary', vars), series: [{ key: 'a', name: t('gic.gic'), points: r.rows.map(x => [x.year, x.gic]), kind: 'dash' }, { key: 'b', name: t('gic.fund'), points: r.rows.map(x => [x.year, x.fund]) }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.amount, label: t('gic.invested') }] }),
-        legend: legend([{ key: 'a', name: t('gic.gic'), dash: true }, { key: 'b', name: t('gic.fund') }]),
+        chart: lineChart({ id: 'fig-gic', title: t('gic.title', { ...vars, basis: t('gic.basis.' + acct) }), desc: t('gic.summary', vars), bands: [{ key: 'fundRange', lower: pts(rLo, 'fund'), upper: pts(rHi, 'fund') }], series: [{ key: 'a', name: t('gic.gic'), points: pts(r, 'gic'), kind: 'dash' }, { key: 'b', name: t('gic.fundMid', { rate: f.pct(pc(s.fundReturn)) }), points: pts(r, 'fund') }], xFormat: v => t('axis.yearN', { n: v }), yFormat: f.axisMoney, xLabel: t('axis.years'), refLines: [{ y: s.amount, label: t(rrsp ? 'gic.contribution' : 'gic.invested') }] }),
+        legend: legend([{ key: 'a', name: t('gic.gic'), dash: true }, { key: 'b', name: t('gic.fundMid', { rate: f.pct(pc(s.fundReturn)) }) }, { key: 'fundRange', name: t('gic.fundRange', { lo: vars.lo, hi: vars.hi }) }]),
         extra,
-        stats: stats([[t('gic.colGic'), vars.gic, 'a'], [t('gic.colFund'), vars.fund, 'b'], ...(be == null ? [] : [[t('gic.statBreakeven'), f.pct(be, 2)]])]),
+        stats: stats(t('gic.statCap.' + acct, { span: vars.span }), [[t('gic.gic'), vars.gic, 'a'], [t('gic.statFund', { rate: f.pct(pc(s.fundReturn)) }), vars.fund, 'b'], [t('gic.statRange', { lo: vars.lo, hi: vars.hi }), vars.fundLo + ' – ' + vars.fundHi, 'b'], ...(be == null ? [] : [[t('gic.statBreakeven'), f.pct(be, 2)]])]),
         summary: t('gic.summary', vars),
-        assumptions: t('gic.assumptions', { gicRate: f.pct(pc(s.gicRate), 2), fi: f.pct(fund.interest, 2), fd: f.pct(fund.dividends, 2), ff: f.pct(fund.foreign, 2), fg: f.pct(fund.realized, 2), fu: f.pct(fund.growth, 2), ft: f.pct(r.fundTotalReturn, 2), income: f.money(s.income), ...rv }),
-        table: dataTable({ caption: t('gic.title', vars), head, rows: pick(r.rows, Math.max(1, Math.round(s.years / 6))).map(x => [String(x.year), f.money(x.gic), f.money(x.fund), ...(nonreg ? [f.money(x.acb ?? s.amount)] : [])]) })
+        assumptions: t('gic.assumptions', { gicRate: f.pct(pc(s.gicRate), 2), renew: f.pct(pc(s.renewRate), 2), termSpan, fi: f.pct(pc(s.fi), 2), fd: f.pct(pc(s.fd), 2), ff: f.pct(pc(s.ff), 2), fg: f.pct(pc(s.fg), 2), fu: f.pct(pc(s.fundReturn) - income, 2), ft: f.pct(pc(s.fundReturn), 2), vol: f.pct(assetStats().vol, 1), income: f.money(s.income), ...rv }),
+        table: dataTable({ caption: t('gic.title', { ...vars, basis: t('gic.basis.' + acct) }), head, rows: rowsOut })
       };
     }
   }
@@ -300,7 +323,7 @@ export function normalizeState(name, raw = {}) {
     const [fallback, min, max] = def, v = Number(raw[key]);
     out[key] = Number.isFinite(v) && raw[key] !== '' && raw[key] != null ? Math.min(max, Math.max(min, v)) : fallback;
   }
-  for (const key of ['years', 'delay', 'n', 'from']) if (key in out) out[key] = Math.round(out[key]);
+  for (const key of ['years', 'delay', 'n', 'from', 'term']) if (key in out) out[key] = Math.round(out[key]);
   return out;
 }
 

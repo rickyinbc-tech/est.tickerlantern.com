@@ -42,9 +42,24 @@ function render(fig) {
     if (key === 'summary' || key === 'assumptions') { if (out.textContent !== result[key]) out.textContent = result[key]; }
     else out.innerHTML = result[key];
   }
+  if (form) syncFields(form);
   if (form) for (const echo of form.querySelectorAll('output[data-echo]')) echo.textContent = form.elements[echo.dataset.echo].value.replace(/^-/, '−') + echo.dataset.unit;
   const readout = fig.querySelector('[data-out="readout"]');
   if (readout) readout.textContent = fig.querySelector('svg[data-series]') ? HINT : '';
+}
+
+// Hide settings that do not apply to the chosen account, and count what is left under "More settings".
+function syncFields(form) {
+  const account = form.elements.account?.value;
+  if (!account) return;
+  for (const el of form.querySelectorAll('[data-when]')) el.hidden = el.dataset.when !== account;
+  const more = form.querySelector('.pc-more-inputs');
+  if (more) {
+    const left = [...more.querySelectorAll('.pc-field')].filter(el => !el.hidden).length;
+    more.hidden = left === 0;
+    const count = more.querySelector('summary span');
+    if (count) count.textContent = `(${left})`;
+  }
 }
 
 const HINT = t(matchMedia('(pointer: coarse)').matches ? 'hint.touch' : 'hint.pointer');

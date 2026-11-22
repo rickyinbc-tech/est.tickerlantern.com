@@ -277,10 +277,11 @@ export const FIGURES = {
       const rowVal = (x, k) => rrsp ? x[k + 'Balance'] : x[k];
       const diff = val(r, 'fund') - val(r, 'gic');
       const ahead = d => Math.abs(d) < Math.max(1, s.amount * 0.001) ? t('gic.ahead.tie') : t(d > 0 ? 'gic.ahead.fund' : 'gic.ahead.gic', { diff: f.money(Math.abs(d)) });
-      // At the slider's published starting value, also show the fund's own lowest published 10-year return.
+      // At the slider's published starting value, also show the fund's lowest published return for the
+      // longest period (1, 3, 5 or 10 years) that fits the horizon; beyond it, that return is repeated every year.
       const sampleUsed = () => {
-        const low = FUND_SAMPLE.tenYearHistory.lowPct, rLow = gicVsFund({ ...args, fund: fundAt(pc(low)) });
-        return t('gic.sampleUsed', { ret: f.pct(pc(s.fundReturn)), low: f.pct(pc(low)), fundLow: f.money(val(rLow, 'fund')), lowWinner: ahead(val(rLow, 'fund') - val(rLow, 'gic')) });
+        const period = [10, 5, 3, 1].find(n => n <= s.years), low = FUND_SAMPLE.lowest[period].pct, rLow = gicVsFund({ ...args, fund: fundAt(pc(low)) });
+        return t('gic.sampleUsed', { ret: f.pct(pc(s.fundReturn)) }) + t('gic.sampleLow', { period: t('span.adj', { n: period }), low: f.pct(pc(low)), perYear: period > 1 ? t('gic.sampleLow.perYear') : '', repeat: s.years > period ? t('gic.sampleLow.repeat') : '', fundLow: f.money(val(rLow, 'fund')), lowWinner: ahead(val(rLow, 'fund') - val(rLow, 'gic')) });
       };
       const be = breakEvenFundReturn({ ...args, fund: fundAt(pc(s.fundReturn)) }), account = t('acct.' + acct), accountIn = t('acctIn.' + acct);
       const rv = { ordinary: f.pct(rates.ordinary), eligible: f.pct(rates.eligible), cg: f.pct(rates.capitalGains), withdraw: f.pct(pc(s.withdraw), 0), unrealized: f.money(r.unrealized) };

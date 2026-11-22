@@ -151,16 +151,26 @@ test('the one real fund figure is the published RBF460 10-year return, dated, so
   assert.match(renderFigure('gic', {}).summary, /6\.6% return is an illustrative assumption that starts at a dated, published 10-year figure/);
   assert.match(renderFigure('gic', { fundReturn: 3 }).summary, /3% return is your assumption for the future/);
   // The single figure is balanced by the fund's own published 10-year history, from the dated monthly update.
-  assert.deepEqual(FUND_SAMPLE.tenYearHistory, { inception: 1986, lowPct: 2.1, lowEnded: '2010-08', highPct: 10.5, highEnded: '2000-08', averagePct: 6.3, periods: 359 });
+  assert.deepEqual(FUND_SAMPLE.tenYearHistory, { inception: 1986, highPct: 10.5, highEnded: '2000-08', averagePct: 6.3, periods: 359 });
+  // Lowest row of the same table, since inception, by period.
+  assert.deepEqual(FUND_SAMPLE.lowest, { 1: { pct: -19.8, ended: '2009-02' }, 3: { pct: -5.2, ended: '2009-02' }, 5: { pct: -0.7, ended: '2012-05' }, 10: { pct: 2.1, ended: '2010-08' } });
   for (const [html, history] of [[home, 'ranged from 2.1% to 10.5% a year (average 6.3%, 359 periods)'], [zh, '滚动10年回报介于每年2.1%至10.5%之间（平均6.3%，共359个期间）']]) {
     const card = html.slice(html.indexOf('<aside class="pc-sample"'), html.indexOf('</aside>', html.indexOf('<aside class="pc-sample"')));
     assert.ok(card.includes(history), history); assert.match(card, /href="#src-rbcgam-rbf460-monthly"/);
     assert.match(html, /<li id="src-rbcgam-rbf460-monthly">[^<]*<a href="https:\/\/www\.rbcgam\.com\/documents\/fund-pages\/monthly\/rbf460_e\.pdf"/);
   }
-  // At the starting value the summary also shows the fund's lowest published 10-year return, from the same model.
-  const atLow = renderFigure('gic', { fundReturn: 2.1 }).summary.match(/the GIC is ahead by (\$[\d,]+)/)[1];
-  assert.match(renderFigure('gic', {}).summary, new RegExp(`lowest published 10-year return \\(2\\.1% a year\\), it would end at \\$[\\d,]+, so the GIC is ahead by \\${atLow}`));
-  assert.match(renderFigure('gic', {}, 'zh').summary, /按该基金已公布的最低10年回报（每年2\.1%），期末为\$[\d,]+，GIC领先/);
+  // At the starting value the summary also shows the fund's lowest published return for the period that fits
+  // the horizon (1, 3, 5 or 10 years), repeated every year only when the horizon is longer than that period.
+  const fundEnd = st => renderFigure('gic', st).summary.match(/and (\$[\d,]+) in the hypothetical fund/)[1];
+  for (const [years, period, low, zhLow, repeated] of [[1, 1, '−19.8%', '−19.8%', false], [2, 1, '−19.8%', '−19.8%', true], [3, 3, '−5.2% a year', '每年−5.2%', false], [4, 3, '−5.2% a year', '每年−5.2%', true], [5, 5, '−0.7% a year', '每年−0.7%', false], [9, 5, '−0.7% a year', '每年−0.7%', true], [10, 10, '2.1% a year', '每年2.1%', false], [30, 10, '2.1% a year', '每年2.1%', true]]) {
+    const en = renderFigure('gic', { years }).summary, zhSum = renderFigure('gic', { years }, 'zh').summary;
+    const m = en.match(new RegExp(`At the fund’s lowest published ${period}-year return \\(${low.replace(/[.]/g, '\\.')}\\), (if repeated every year, )?it would end at (\\$[\\d,]+), so the GIC is ahead by \\$[\\d,]+\\.`));
+    assert.ok(m, `years=${years}: ${en}`); assert.equal(Boolean(m[1]), repeated, `years=${years} repeat wording`);
+    assert.ok(zhSum.includes(`按该基金已公布的最低${period}年回报（${zhLow}），${repeated ? '若每年皆如此，' : ''}期末为${m[2]}，GIC领先`), `zh years=${years}`);
+    // Same model: within the slider's range, the figure equals the fund's result at that return.
+    const pct = Number(low.replace('−', '-').replace(/%.*/, ''));
+    if (pct >= -10) assert.equal(m[2], fundEnd({ years, fundReturn: pct }), `years=${years} uses the model`);
+  }
   assert.doesNotMatch(renderFigure('gic', { fundReturn: 3 }).summary, /lowest published/);
   // The shaded band is the tool's assumption, not this fund's data.
   assert.match(renderFigure('gic', {}).legend, /Assumed 8-in-10 range, 2\.9% to 10\.3% \(not this fund’s data\)/);

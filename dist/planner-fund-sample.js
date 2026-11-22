@@ -17,10 +17,12 @@ export const FUND_SAMPLE = {
   url: 'https://www.rbcgam.com/en/ca/products/mutual-funds/RBF460/detail',
   retrieved: '2026-11-22',
   // The fund's monthly update (same as-of date), "Highest/lowest returns (%)"
-  // table, 10 yr column, based on data since the fund's inception.
+  // table, based on data since the fund's inception. lowest: the Lowest row of
+  // its 1, 3, 5 and 10 yr columns (annualized over 1 year), with the month each period ended.
   monthly: {
     url: 'https://www.rbcgam.com/documents/fund-pages/monthly/rbf460_e.pdf',
     sha256: '28596bac4f03928515fa4e2e55109db0f25d70f24087acbb0e274c5bb1166392'
   },
-  tenYearHistory: { inception: 1986, lowPct: 2.1, lowEnded: '2010-08', highPct: 10.5, highEnded: '2000-08', averagePct: 6.3, periods: 359 }
+  tenYearHistory: { inception: 1986, highPct: 10.5, highEnded: '2000-08', averagePct: 6.3, periods: 359 },
+  lowest: { 1: { pct: -19.8, ended: '2009-02' }, 3: { pct: -5.2, ended: '2009-02' }, 5: { pct: -0.7, ended: '2012-05' }, 10: { pct: 2.1, ended: '2010-08' } }
 };

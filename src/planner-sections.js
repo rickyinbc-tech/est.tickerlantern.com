@@ -276,16 +276,22 @@ export const FIGURES = {
       const val = (x, k) => rrsp ? x[k + 'Balance'] : x[k === 'gic' ? 'gicAfterTax' : 'fundAfterTax'];
       const rowVal = (x, k) => rrsp ? x[k + 'Balance'] : x[k];
       const diff = val(r, 'fund') - val(r, 'gic');
+      const ahead = d => Math.abs(d) < Math.max(1, s.amount * 0.001) ? t('gic.ahead.tie') : t(d > 0 ? 'gic.ahead.fund' : 'gic.ahead.gic', { diff: f.money(Math.abs(d)) });
+      // At the slider's published starting value, also show the fund's own lowest published 10-year return.
+      const sampleUsed = () => {
+        const low = FUND_SAMPLE.tenYearHistory.lowPct, rLow = gicVsFund({ ...args, fund: fundAt(pc(low)) });
+        return t('gic.sampleUsed', { ret: f.pct(pc(s.fundReturn)), low: f.pct(pc(low)), fundLow: f.money(val(rLow, 'fund')), lowWinner: ahead(val(rLow, 'fund') - val(rLow, 'gic')) });
+      };
       const be = breakEvenFundReturn({ ...args, fund: fundAt(pc(s.fundReturn)) }), account = t('acct.' + acct), accountIn = t('acctIn.' + acct);
       const rv = { ordinary: f.pct(rates.ordinary), eligible: f.pct(rates.eligible), cg: f.pct(rates.capitalGains), withdraw: f.pct(pc(s.withdraw), 0), unrealized: f.money(r.unrealized) };
       const why = t(nonreg ? (s.sale === 'sell' ? 'gic.why.nonreg' : 'gic.why.nonregHold') : 'gic.why.' + acct, rv);
-      const winner = Math.abs(diff) < Math.max(1, s.amount * 0.001) ? t('gic.ahead.tie') : t(diff > 0 ? 'gic.ahead.fund' : 'gic.ahead.gic', { diff: f.money(Math.abs(diff)) });
+      const winner = ahead(diff);
       const cautions = [...(nonreg ? creditZones([[s.income, s.income]]).map(z => t('caution.' + z)) : []), ...(r.gicBalance > 100000 ? [t('caution.cdic', { bal: f.money(r.gicBalance) })] : [])];
       const nextMat = Math.ceil(s.years / s.term) * s.term, termSpan = t('span.adj', { n: s.term });
       const timing = s.years % s.term ? t('gic.timing', { years: s.years, next: nextMat }) : '';
       const vars = { caution: cautions.length ? cautions.join(' ') + ' ' : '', span: span(t, s.years), account, accountIn, amount: f.money(s.amount), gic: f.money(val(r, 'gic')), fund: f.money(val(r, 'fund')), basis: t('gic.basisShort.' + acct), winner, why, timing,
         lo: f.pct(lo), hi: f.pct(hi), fundLo: f.money(val(rLo, 'fund')), fundHi: f.money(val(rHi, 'fund')), breakeven: be == null ? '' : t('gic.breakeven', { rate: f.pct(be, 2) }),
-        sample: s.fundReturn === FUND_SAMPLE.tenYearPct ? t('gic.sampleUsed', { ret: f.pct(pc(s.fundReturn)) }) : t('gic.sampleChanged', { ret: f.pct(pc(s.fundReturn)) }) };
+        sample: s.fundReturn === FUND_SAMPLE.tenYearPct ? sampleUsed() : t('gic.sampleChanged', { ret: f.pct(pc(s.fundReturn)) }) };
       const tx = r.tax, notes = [];
       notes.push(t(s.years > s.term ? 'gic.termNote.renew' : 'gic.termNote', { termSpan, renew: f.pct(pc(s.renewRate), 2) }));
       if (nonreg) notes.push(t('gic.payNote'));

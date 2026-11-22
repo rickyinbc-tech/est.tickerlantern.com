@@ -301,4 +301,4 @@ html:not(.pc-tabs) .pc-pager{display:none}
 .pc-sample{margin:0 0 16px;padding:12px 14px;border:1px solid #b9dcd7;border-left:4px solid var(--pc-teal);border-radius:8px;background:#f3faf9;font-size:15px}
 .pc-sample p{margin:0 0 6px}.pc-sample p:last-child{margin-bottom:0}
 .pc-sample__head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;color:var(--pc-navy)}
-.pc-sample__use{color:var(--pc-muted);font-size:14px}
+.pc-sample__use{color:var(--pc-muted);font-size:14px}.pc-sample__use summary{color:var(--pc-a);font:600 14px/1.5 var(--pc-sans);min-height:28px}.pc-sample__use p{margin:4px 0 0}

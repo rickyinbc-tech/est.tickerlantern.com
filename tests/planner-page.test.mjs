@@ -150,6 +150,21 @@ test('the one real fund figure is the published RBF460 10-year return, dated, so
   }
   assert.match(renderFigure('gic', {}).summary, /6\.6% return is an illustrative assumption that starts at a dated, published 10-year figure/);
   assert.match(renderFigure('gic', { fundReturn: 3 }).summary, /3% return is your assumption for the future/);
+  // The single figure is balanced by the fund's own published 10-year history, from the dated monthly update.
+  assert.deepEqual(FUND_SAMPLE.tenYearHistory, { inception: 1986, lowPct: 2.1, lowEnded: '2010-08', highPct: 10.5, highEnded: '2000-08', averagePct: 6.3, periods: 359 });
+  for (const [html, history] of [[home, 'ranged from 2.1% to 10.5% a year (average 6.3%, 359 periods)'], [zh, '滚动10年回报介于每年2.1%至10.5%之间（平均6.3%，共359个期间）']]) {
+    const card = html.slice(html.indexOf('<aside class="pc-sample"'), html.indexOf('</aside>', html.indexOf('<aside class="pc-sample"')));
+    assert.ok(card.includes(history), history); assert.match(card, /href="#src-rbcgam-rbf460-monthly"/);
+    assert.match(html, /<li id="src-rbcgam-rbf460-monthly">[^<]*<a href="https:\/\/www\.rbcgam\.com\/documents\/fund-pages\/monthly\/rbf460_e\.pdf"/);
+  }
+  // At the starting value the summary also shows the fund's lowest published 10-year return, from the same model.
+  const atLow = renderFigure('gic', { fundReturn: 2.1 }).summary.match(/the GIC is ahead by (\$[\d,]+)/)[1];
+  assert.match(renderFigure('gic', {}).summary, new RegExp(`lowest published 10-year return \\(2\\.1% a year\\), it would end at \\$[\\d,]+, so the GIC is ahead by \\${atLow}`));
+  assert.match(renderFigure('gic', {}, 'zh').summary, /按该基金已公布的最低10年回报（每年2\.1%），期末为\$[\d,]+，GIC领先/);
+  assert.doesNotMatch(renderFigure('gic', { fundReturn: 3 }).summary, /lowest published/);
+  // The shaded band is the tool's assumption, not this fund's data.
+  assert.match(renderFigure('gic', {}).legend, /Assumed 8-in-10 range, 2\.9% to 10\.3% \(not this fund’s data\)/);
+  assert.match(renderFigure('gic', {}, 'zh').legend, /假设的十分之八范围，2\.9%至10\.3%（并非该基金的数据）/);
   // No other fund data: no other fund code, no MER or calendar returns, no fund-specific distribution split.
   const assets = [home, zh, ...await Promise.all(['planner.js', 'planner-sections.js', 'planner-strings.js', 'planner-math.js', 'planner-fund-sample.js'].map(f => readFile('dist/' + f, 'utf8')))].join('\n');
   assert.deepEqual([...new Set(assets.match(/RBF\d{3}/g))], ['RBF460']);
